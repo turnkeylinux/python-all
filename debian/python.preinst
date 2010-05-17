@@ -2,11 +2,4 @@
 
 [ -L /usr/share/doc/python/html ] || rm -rf /usr/share/doc/python/html
 
-# remove the python alternatives before installing our own python link
-
-update-alternatives --auto /usr/bin/python >/dev/null 2>&1 || true
-update-alternatives --remove python /usr/bin/python1.5 || true
-update-alternatives --remove python /usr/bin/python2.1 || true
-update-alternatives --remove python /usr/bin/python2.2 || true
-
 #DEBHELPER#

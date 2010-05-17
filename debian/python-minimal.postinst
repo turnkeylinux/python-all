@@ -13,6 +13,11 @@ case "$1" in
     configure)
 	[ -d /etc/python ] || mkdir /etc/python
 	[ -f /etc/python/debian_config ] || new_config_file
+
+        if [ -n "$2" ] && dpkg --compare-versions $2 lt 2.4; then
+	    oldv=$(echo $2 | sed 's/^\(...\).*/\1/')
+	    pycentral updatedefault python$oldv python2.4
+        fi
 esac
 
 #DEBHELPER#

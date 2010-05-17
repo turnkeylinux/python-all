@@ -8,13 +8,14 @@ export SHELL = /bin/bash
 
 DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
-export VER=2.3
-export NVER=2.4
-export PVER=python2.3
-export PRIORITY=$(shell echo $(VER) | tr -d '.')0
+export VER=2.4
+export NVER=2.5
+export PVER=python2.4
+
+VERSIONS = 2.3 2.4
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
-PREVVER := 2.3.5-14
+PREVVER := 2.4.3
 
 PWD		:= $(shell pwd)
 
@@ -48,7 +49,6 @@ control-file:
 	    -e "s/@NVER@/$(NVER)/g" \
 	    -e "s/@VER@/$(VER)/g" \
 	    -e "s/@PREVVER@/$(PREVVER)/g" \
-	    -e "s/@PRIO@/$(PY_PRIO)/g" \
 		<debian/control.in >debian/control.tmp
 	[ -e debian/control ] \
 	  && cmp -s debian/control debian/control.tmp \
@@ -71,7 +71,7 @@ get-faq:
 	) >> faq/FAQ.ht
 	rm -f faq/index.ht
 
-clean:
+clean: control-file
 	dh_testdir
 	dh_testroot
 	rm -f stamp-*
@@ -82,19 +82,18 @@ clean:
 	rm -f faq/*.h2 faq/*.html
 
 	for f in debian/*.in; do \
-	    f2=`echo $$f | sed "s,PVER,$(PVER),g;s/@VER@/$(VER)/g;s,\.in$$,,"`; \
+	    f2=`echo $$f | sed "s,PVER,$(PVER),g;s/VER/$(VER)/g;s,\.in$$,,"`; \
 	    if [ $$f2 != debian/control ]; then \
 	        rm -f $$f2; \
 	    fi; \
 	done
-	rm -f debian/*.py[co]
 	dh_clean
 
 stamp-control:
 	: # We have to prepare the various control files
 
 	for f in debian/*.in; do \
-	    f2=`echo $$f | sed "s,PVER,$(PVER),g;s/@VER@/$(VER)/g;s,\.in$$,,"`; \
+	    f2=`echo $$f | sed "s,PVER,$(PVER),g;s/VER/$(VER)/g;s,\.in$$,,"`; \
 	    if [ $$f2 != debian/control ]; then \
 		sed -e "s/@PVER@/$(PVER)/g;s/@VER@/$(VER)/g" \
 		    -e "s/@PRIORITY@/$(PRIORITY)/g" \
@@ -130,32 +129,39 @@ binary-indep: build install stamp-doc
 	dh_testroot -i
 
 	: # provide the python and python.1 defaults
+	mkdir -p debian/python-minimal/usr/bin
+	ln -sf python$(VER) debian/python-minimal/usr/bin/python
+	mkdir -p debian/python-minimal/usr/share/man/man1
+	ln -sf python$(VER).1.gz \
+		debian/python-minimal/usr/share/man/man1/python.1.gz
+
+	: # 
+	mkdir -p debian/python-minimal/usr/share/python
+	cp -p debian/debian_defaults \
+		debian/python-minimal/usr/share/python/
+
+	cp -p debian/pyversions.py \
+		debian/python-minimal/usr/share/python/
+	install -m 755 debian/pyversions \
+		debian/python-minimal/usr/bin/
+	cp -p debian/pyversions.1 \
+		debian/python-minimal/usr/share/man/man1/
+
+#	mkdir debian/python-minimal/usr/share/python-central
+#	cp -p debian/python.pycentral debian/python-minimal/usr/share/python-central/
+
 	mkdir -p debian/python/usr/bin
-	ln -sf python$(VER) debian/python/usr/bin/python
 	ln -sf pydoc$(VER) debian/python/usr/bin/pydoc
 	ln -sf pygettext$(VER) debian/python/usr/bin/pygettext
 	ln -sf pdb$(VER) debian/python/usr/bin/pdb
 
 	mkdir -p debian/python/usr/share/man/man1
-	ln -sf python$(VER).1.gz \
-		debian/python/usr/share/man/man1/python.1.gz
 	ln -sf pydoc$(VER).1.gz \
 		debian/python/usr/share/man/man1/pydoc.1.gz
 	ln -sf pygettext$(VER).1.gz \
 		debian/python/usr/share/man/man1/pygettext.1.gz
 	ln -sf pdb$(VER).1.gz \
 		debian/python/usr/share/man/man1/pdb.1.gz
-
-	: # 
-	mkdir -p debian/python/usr/share/python
-	cp -p debian/debian_defaults \
-		debian/python/usr/share/python/
-
-	install -m 755 debian/pyversions.py \
-		debian/python/usr/share/python/
-	install -m 644 debian/pyversions.1 \
-		debian/python/usr/share/man/man1/
-	dh_link -ppython /usr/share/python/pyversions.py /usr/bin/pyversions
 
 	mkdir -p debian/python/usr/share/doc/python
 	cp -a debian/python-policy.{html,sgml,txt} \
@@ -200,8 +206,13 @@ endif
 	dh_installdocs -i $(NOPKGS) --all debian/README.Debian
 	dh_installmenu -i $(NOPKGS)
 	dh_installchangelogs -i $(NOPKGS)
-#	rm -rf debian/python-all-dev/usr/share/doc/python-all-dev
-#	ln -sf python$(VER)-all debian/python-all-dev/usr/share/doc/python-all-dev
+
+	for p in all all-dev dbg dev examples idle; do \
+	  [ $$p = idle ] || p=python-$$p; \
+	  rm -rf debian/$$p/usr/share/doc/$$p; \
+	  ln -sf python debian/$$p/usr/share/doc/$$p; \
+	done
+
 	dh_compress -i $(NOPKGS)
 	dh_fixperms -i $(NOPKGS)
 	dh_installdeb -i $(NOPKGS)
