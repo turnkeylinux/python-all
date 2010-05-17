@@ -9,7 +9,7 @@ Package: python
 Architecture: all
 Priority: standard
 Depends: @PVER@ (>= @PREVVER@)
-Conflicts: python2.3 (<= 2.3.2-6), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base
+Conflicts: python2.3 (<= 2.3.2-6), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.4.8)
 Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base
 Provides: python-email, python-xmlbase
 Suggests: python-doc, python-tk, python-profiler

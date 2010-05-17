@@ -87,6 +87,7 @@ clean:
 	        rm -f $$f2; \
 	    fi; \
 	done
+	rm -f debian/*.py[co]
 	dh_clean
 
 stamp-control:
