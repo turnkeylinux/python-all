@@ -1,3 +1,9 @@
+python-defaults (2.4.4-2) unstable; urgency=medium
+
+  * python-all{,-dev}: Drop dependencies on python2.3{,-dev}.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 16 Dec 2006 15:42:21 +0100
+
 python-defaults (2.4.4-1) unstable; urgency=medium
 
   * Depend on the 2.4.4 versions of the packages.
