@@ -35,9 +35,10 @@ from debpython.version import SUPPORTED, DEFAULT, debsorted, vrepr, \
 from debpython.option import Option, compile_regexpr
 
 # initialize script
-logging.basicConfig()
+logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
+                           '%(message)s')
 log = logging.getLogger('pycompile')
-# TODO: /usr/share/python2/foo/2.5-/bar/-2.7/baz.py
+# TODO: /usr/share/python3/foo/3.1-/bar/-3.5/baz.py
 STDINS = {}
 
 """TODO: move it to manpage

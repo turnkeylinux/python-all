@@ -41,7 +41,7 @@ from debpython.tools import sitedir, relative_symlink, guess_dependency, \
 from debpython.option import Option
 
 # initialize script
-logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: ' +\
+logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
                            '%(message)s')
 log = logging.getLogger('dh_python')
 os.umask(022)
@@ -382,19 +382,21 @@ def dependencies(package, stats, options):
                 depends.append(interpreter)
             # TODO: if versions[0] not in requested_versions: FTBFS
         else:  # no hardcoded versions
-            dep = ''
+            dep = args = ''
             vr = options.vrange
             if vr:
-                args = "-V %s" % vrange_str(vr)
-                for pattern in options.regexpr or []:
-                    args += " -X '%s'" % pattern.replace("'", r"\'")
-                rtscripts.append((private_dir, args))
-
+                args += "-V %s" % vrange_str(vr)
                 if vr[0]:  # minumum version specified
                     dep = "python (>= %s)" % vrepr(vr[0])
                 if vr[1]:  # maximum version specified
                     dep += ", python (<< %s)" % vrepr(vr[1])
                     dep = dep.lstrip(', ')
+
+            if details.get('compile', False):
+                for pattern in options.regexpr or []:
+                    args += " -X '%s'" % pattern.replace("'", r"\'")
+                rtscripts.append((private_dir, args))
+
             dep = dep or 'python'
             if dep not in depends:
                 depends.append(dep)
@@ -432,6 +434,8 @@ def parse_pydep(fname):
 
 ################################################################
 def main():
+    if exists('debian/pycompat'):
+        sys.exist(0)  # be compatible with old dh_python
     usage = '%prog -p PACKAGE [-V [X.Y][-][A.B]] DIR_OR_FILE [-X REGEXPR]\n'
     parser = OptionParser(usage, version='%prog 2.0~alpha1',
                                    option_class=Option)

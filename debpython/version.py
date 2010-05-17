@@ -229,7 +229,7 @@ def getver(value):
     """
     if not value:
         return ''
-    return tuple(int(i) for i in value.split('.'))[:2]
+    return tuple(int(i) for i in value.split('.', 2))[:2]
 
 
 def debsorted(versions, return_str=None):
