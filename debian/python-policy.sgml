@@ -394,13 +394,13 @@
 	<p>
 	  Public modules used by other packages must have their binary
 	  package name prefixed with <var>python-</var>.  It is recommended
-	  to use this prefix for all packages with public modules as they be
-	  used by other packages in the future.
+	  to use this prefix for all packages with public modules as they may
+	  be used by other packages in the future.
 
 	  The binary package for module foo should preferably be named
 	  <package>python-<var>foo</var></package>, if the module name
 	  allows, but this is not required if the binary package ships
-	  multiple modules.  In the latter case the maintainer choses the
+	  multiple modules.  In the latter case the maintainer chooses the
 	  name of the module which represents the package the most.
 
 	  Such a package should support the current Debian Python version,
