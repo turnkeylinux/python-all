@@ -5,8 +5,8 @@ Content-type: text/x-rst
 General Python FAQ
 ====================================
 
-:Date: $Date: 2005-12-17 03:21:20 +0100 (Sat, 17 Dec 2005) $
-:Version: $Revision: 8684 $
+:Date: $Date: 2006-02-26 06:15:13 +0100 (Sun, 26 Feb 2006) $
+:Version: $Revision: 8958 $
 :Web site: http://www.python.org/
 
 .. contents::
@@ -121,8 +121,8 @@ the versions labeled 2.0bN, which precede versions labeled 2.0cN, and
 *those* precede 2.0.
 
 You may also find version numbers with a "+" suffix, e.g. "2.2+".
-These are unreleased versions, built directly from the CVS trunk.  In
-practice, after a final minor release is made, the CVS trunk is
+These are unreleased versions, built directly from the subversion trunk.  
+In practice, after a final minor release is made, the subversion trunk is
 incremented to the next minor version, which becomes the "a0" version,
 e.g. "2.4a0".
 
@@ -151,8 +151,8 @@ How do I obtain a copy of the Python source?
 
 The latest Python source distribution is always available from
 python.org, at http://www.python.org/download/.  The latest
-development sources can be obtained via anonymous CVS from
-SourceForge, at http://www.sourceforge.net/projects/python.
+development sources can be obtained via anonymous subversion from
+SourceForge, at http://svn.python.org/projects/python/trunk.
 
 The source distribution is a gzipped tar file containing the complete
 C source, LaTeX documentation, Python library modules, example
@@ -217,11 +217,8 @@ announced on the comp.lang.python and comp.lang.python.announce
 newsgroups.  All announcements also appear on the Python
 home page, at http://www.python.org/; an RSS feed of news is available.
 
-You can also access the development version of Python through CVS.
-See http://sourceforge.net/cvs/?group_id=5470 for details.  If you're
-not familiar with CVS, documents such as
-http://linux.oreillynet.com/pub/a/linux/2002/01/03/cvs_intro.html
-provide an introduction.
+You can also access the development version of Python through subversion.
+See http://www.python.org/dev/devfaq.html#subversion-svn for details.
 
 How do I submit bug reports and patches for Python?
 ----------------------------------------------------------
@@ -307,7 +304,7 @@ managed for stability; only fixes for known problems are included in a
 bugfix release, and it's guaranteed that interfaces will remain the
 same throughout a series of bugfix releases.
 
-The `2.4.1 release <../../2.4.1/>`_ is the most stable
+The `2.4.2 release <../../2.4.2/>`_ is the most stable
 version at this point in time.
 
 
@@ -565,6 +562,11 @@ a lot more work than 20 lines of C.  This is not solely due to the lack of
 begin/end brackets -- the lack of declarations and the high-level data types
 are also responsible -- but the indentation-based syntax certainly helps.
 
+
+Why am I getting strange results with simple arithmetic operations?
+-------------------------------------------------------------------
+
+See the next question.
 
 Why are floating point calculations so inaccurate?
 --------------------------------------------------

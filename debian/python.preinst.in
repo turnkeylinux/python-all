@@ -21,7 +21,10 @@ case "$1" in
 		if ! $hook pre-rtupdate python$oldv @PVER@; then
 		    hb=$(basename $hook .rtupdate)
 		    echo >&2 "error running python pre-rtupdate hook $hb"
+		    echo >&2 "running python failed-pre-rtupdate hook $hb"
+		    $hook failed-pre-rtupdate python$oldv @PVER@
 		    errors=yes
+		    break
 		fi
 	    done
 	    [ -z "$errors" ] || exit 3

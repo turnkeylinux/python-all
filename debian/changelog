@@ -1,3 +1,13 @@
+python-defaults (2.4.3-10) unstable; urgency=low
+
+  * Upload to unstable. Closes: #347440, #360851.
+  * Let the preinst fail on the first failing pre-rtupdate hook,
+    after running the corresponding failed-pre-rtupdate hook.
+  * Reflect renaming of the docutils binaries. Closes: #377601.
+  * Update the upstream FAQ.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 12 Aug 2006 20:28:30 +0200
+
 python-defaults (2.4.3-9) experimental; urgency=low
 
   * Fix syntax error in python.preinst. Closes: #381673.
