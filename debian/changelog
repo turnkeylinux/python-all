@@ -1,3 +1,11 @@
+python-defaults (2.5.2-0.1) unstable; urgency=low
+
+  * NMU by the Release Team not to lose the sweet spot for the Python
+    transition.
+  * Make python2.5 the default Python version.
+
+ -- Adeodato Simó <dato@net.com.org.es>  Sun, 13 Apr 2008 11:29:32 +0200
+
 python-defaults (2.4.4-6) unstable; urgency=low
 
   * python.postinst: Fix cleanup of temporary files. Closes: #424703, #424704.
