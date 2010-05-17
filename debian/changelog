@@ -1,3 +1,10 @@
+python-defaults (2.4.4-5) unstable; urgency=low
+
+  * Run the python2.5 rtinstall hooks, if python2.5 was already
+    installed as an unsupported version.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 16 May 2007 21:19:51 +0200
+
 python-defaults (2.4.4-4) unstable; urgency=low
 
   * New package python-all-dbg.

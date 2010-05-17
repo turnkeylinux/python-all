@@ -29,6 +29,14 @@ case "$1" in
 	    done
 	    [ -z "$errors" ] || exit 3
 	fi
+
+	# 2.4.4-5 is the first version, which adds python2.5 as supported
+	# version; need to run an rtinstall python2.5 in the postinst.
+        if dpkg --compare-versions $2 lt 2.4.4-5 && [ -x /usr/bin/python2.5 ]; then
+	    version=$(dpkg -s python2.5-minimal | awk '/^Version:/ {print $2}')
+	    mkdir -p /var/lib/python
+	    echo "$version" > /var/lib/python/python2.5_already_installed
+	fi
 esac
 
 #DEBHELPER#
