@@ -1,3 +1,16 @@
+python-defaults (2.5.4-5) unstable; urgency=low
+
+  * Fix typos from policy update (Closes: #561091, #561093)
+  * Drop python2.4 as a supported Python
+    - Remove python2.4 depends and update descriptions for python-all,
+      python-all-dev, and python-all-dbg
+    - Drop python2.4 from supported versions and add to old and unsupported
+      versions
+    - Update pyversions.py to drop python2.4 from the supported list
+  * Correct path to Konsole Python desktop file (Closes: #381659)
+
+ -- Scott Kitterman <scott@kitterman.com>  Wed, 23 Dec 2009 19:59:15 -0500
+
 python-defaults (2.5.4-4) unstable; urgency=low
 
   [ Scott Kitterman ]
