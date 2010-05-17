@@ -1,3 +1,14 @@
+python-defaults (2.3.5-11) unstable; urgency=low
+
+  * pyversions -r: If the XS-Python-Version field cannot be found in
+    debian/control, fall back to debian/pyversions for the version
+    information. Return with an error code, if the intersection of
+    the versions in debian/pyversions and the supported python versions
+    is empty. Fall back to the supported versions if no version
+    information can be found. Based on a patch from Raphael Hertzog.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 22 Jun 2006 23:28:32 +0200
+
 python-defaults (2.3.5-10) unstable; urgency=low
 
   * Tighten dependencies between packages built from this source.

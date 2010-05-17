@@ -128,6 +128,11 @@ def installed_versions(version_only=False):
     else:
         return versions
 
+class ControlFileValueError(ValueError):
+    pass
+class MissingVersionValueError(ValueError):
+    pass
+
 def extract_pyversion_attribute(fn, pkg):
     """read the debian/control file, extract the XS-Python-Version
     field; check that XB-Python-Version exists for the package."""
@@ -138,11 +143,13 @@ def extract_pyversion_attribute(fn, pkg):
     for line in file(fn):
         line = line.strip()
         if line == '':
+            if pkg == 'Source':
+                break
             section = None
         elif line.startswith('Source:'):
             section = 'Source'
         elif line.startswith('Package: ' + pkg):
-            section = self.name
+            section = pkg
         elif line.startswith('XS-Python-Version:'):
             if section != 'Source':
                 raise ValueError, \
@@ -151,15 +158,55 @@ def extract_pyversion_attribute(fn, pkg):
         elif line.startswith('XB-Python-Version:'):
             if section == pkg:
                 version = line.split(':', 1)[1].strip()
+    if section == None:
+        raise ControlFileValueError, 'not a control file'
     if pkg == 'Source':
         if sversion == None:
-            raise ValueError, 'missing XS-Python-Version in control file'
+            raise MissingVersionValueError, \
+                  'missing XS-Python-Version in control file'
         return sversion
     if version == None:
-        raise ValueError, \
+        raise MissingVersionValueError, \
               'missing XB-Python-Version for package `%s' % pkg
     return version
 
+# compatibility functions to parse debian/pyversions
+
+def version_cmp(ver1,ver2):
+    v1=[int(i) for i in ver1.split('.')]
+    v2=[int(i) for i in ver2.split('.')]
+    return cmp(v1,v2)
+
+def requested_versions_bis(vstring, version_only=False):
+    versions = []
+    py_supported_short = supported_versions(version_only=True)
+    for item in vstring.split(','):
+        v=item.split('-')
+        if len(v)>1:
+            if not v[0]:
+                v[0] = py_supported_short[0]
+            if not v[1]:
+                v[1] = py_supported_short[-1]
+            for ver in py_supported_short:
+                try:
+                    if version_cmp(ver,v[0]) >= 0 \
+                           and version_cmp(ver,v[1]) <= 0:
+                        versions.append(ver)
+                except ValueError:
+                    pass
+        else:
+            if v[0] in py_supported_short:
+                versions.append(v[0])
+    versions.sort(version_cmp)
+    if not versions:
+        raise ValueError, 'empty set of versions'
+    if not version_only:
+        versions=['python'+i for i in versions]
+    return versions
+
+def extract_pyversion_attribute_bis(fn):
+    vstring = file(fn).readline().rstrip('\n')
+    return vstring
 
 def main():
     from optparse import OptionParser
@@ -173,7 +220,7 @@ def main():
                       action='store_true', dest='supported')
     parser.add_option('-r', '--requested',
                       help='print the python versions requested by a build; the argument is either the name of a control file or the value of the XS-Python-Version attribute',
-                      action='store', dest='versions')
+                      action='store_true', dest='requested')
     parser.add_option('-i', '--installed',
                       help='print the installed supported python versions',
                       action='store_true', dest='installed')
@@ -183,24 +230,46 @@ def main():
     opts, args = parser.parse_args()
     program = os.path.basename(sys.argv[0])
 
-    if opts.default:
+    if opts.default and len(args) == 0:
         print default_version(opts.version_only)
-    elif opts.supported:
+    elif opts.supported and len(args) == 0:
         print ' '.join(supported_versions(opts.version_only))
-    elif opts.installed:
+    elif opts.installed and len(args) == 0:
         print ' '.join(installed_versions(opts.version_only))
-    elif opts.versions:
+    elif opts.requested and len(args) <= 1:
+        if len(args) == 0:
+            versions = 'debian/control'
+        else:
+            versions = args[0]
         try:
-            if os.path.isfile(opts.versions):
-                vs = extract_pyversion_attribute(opts.versions, 'Source')
+            if os.path.isfile(versions):
+                fn = versions
+                try:
+                    vstring = extract_pyversion_attribute(fn, 'Source')
+                    vs = requested_versions(vstring, opts.version_only)
+                except ControlFileValueError:
+                    sys.stderr.write("%s: not a control file: %s, " \
+                                     % (program, fn))
+                    sys.exit(1)
+                except MissingVersionValueError:
+                    fn = os.path.join(os.path.dirname(fn), 'pyversions')
+                    sys.stderr.write("%s: missing XS-Python-Version in control file, fall back to %s\n" \
+                                     % (program, fn))
+                    try:
+                        vstring = extract_pyversion_attribute_bis(fn)
+                        vs = requested_versions_bis(vstring, opts.version_only)
+                    except IOError:
+                        sys.stderr.write("%s: missing debian/pyversions file, fall back to supported versions\n" \
+                                         % program)
+                        vs = supported_versions(opts.version_only)
             else:
-                vs = opts.versions
-            print ' '.join(requested_versions(vs, opts.version_only))
+                vs = requested_versions(versions, opts.version_only)
+            print ' '.join(vs)
         except ValueError, msg:
-            print "%s: %s" % (program, msg)
+            sys.stderr.write("%s: %s\n" % (program, msg))
             sys.exit(1)
     else:
-        print "usage: %s %s" % (program, usage)
+        sys.stderr.write("usage: %s %s\n" % (program, usage))
         sys.exit(1)
 
 if __name__ == '__main__':

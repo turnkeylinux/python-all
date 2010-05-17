@@ -19,12 +19,15 @@ Show the default python version.
 .I -s, --supported
 Show the supported python versions.
 .TP
-.I -r, --requested <version string> | <control file>
-Reads the
+.I -r, --requested [<version string> | <control file>]
+Reads the value of the
 .B XS-Python-Version
-value in the source section of a control file and shows all
-matching python versions. The parameter is interpreted as
-a version string, if it is not the name of a file.
+field in the source section of a control file and shows all matching
+python versions. The parameter is interpreted as a version string, if
+it is not the name of a file. If the XS-Python-Version field is
+missing, get the version information from debian/pyversions.
+Without any parameter, it will fall back to list the supported Python
+versions after checking debian/control and debian/pyversions.
 .TP
 .I -i, --installed
 Show the installed supported python versions.
