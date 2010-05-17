@@ -2,14 +2,15 @@ Source: python-defaults
 Section: python
 Priority: optional
 Maintainer: Matthias Klose <doko@debian.org>
-Build-Depends-Indep: debhelper (>= 4), libhtml-tree-perl, debiandoc-sgml, python-docutils, python, python2.4
+Build-Depends-Indep: debhelper (>= 4), libhtml-tree-perl, debiandoc-sgml, python-docutils (>= 0.4-3), python
 Standards-Version: 3.7.2
 
 Package: python
 Architecture: all
 Priority: standard
+Pre-Depends: python-minimal (>= 2.4)
 Depends: python2.4 (>= 2.4.3-7), python-minimal (= ${Source-Version})
-Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.4.17)
+Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.3)
 Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base
 Provides: python-email, python-xmlbase
 Suggests: python-doc, python-tk, python-profiler
@@ -24,8 +25,8 @@ Description: An interactive high-level object-oriented language (default version
 Package: python-minimal
 Architecture: all
 Priority: standard
-Depends: python2.4-minimal (>= 2.4.3-7), python-central (>= 0.4.11), dpkg (>= 1.13.20)
-Conflicts: python (<= 2.4-1), python-central (<< 0.4.8)
+Depends: python2.4-minimal (>= 2.4.3-7), dpkg (>= 1.13.20)
+Conflicts: python (<= 2.4-1), python-central (<< 0.5)
 Replaces: python (<= 2.4-1)
 Description: A minimal subset of the Python language (default version)
  This package contains the interpreter and some essential modules.  It's used
@@ -35,7 +36,7 @@ Description: A minimal subset of the Python language (default version)
 
 Package: python-examples
 Architecture: all
-Depends: python (= ${Source-Version}), python (<< 2.5), python2.4-examples (>= 2.4.3-7)
+Depends: python (= ${Source-Version}), python2.4-examples (>= 2.4.3-7)
 Description: Examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in
  the upstream Python distribution.
@@ -60,6 +61,7 @@ Description: Header files and a static library for Python (default)
 Package: idle
 Architecture: all
 Depends: python (= ${Source-Version}), idle-python2.4 (>= 2.4.3-7)
+Enhances: python
 Description: An IDE for Python using Tkinter (default version)
  IDLE is an Integrated Development Environment for Python.
  IDLE is written using Tkinter and therefore quite platform-independent.

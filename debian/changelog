@@ -1,3 +1,27 @@
+python-defaults (2.4.3-6) experimental; urgency=low
+
+  * Remove python's dependency on python-central. Closes: #372658.
+  * On upgrade of the runtime to a new major version, call the hooks
+    (executable files) in /usr/share/python/runtime.d/*.rtupdate.
+    - in python.preinst, call the script with parameters
+        pre-rtupdate <old runtime> <new runtime>.
+      run all hooks, then return exit with the correct exit status.
+    - in python.postinst, call the script with parameters
+        rtupdate <old runtime> <new runtime>.
+      run all hooks, then return exit with the correct exit status.
+    - in python.postinst, call the script with parameters
+        post-rtupdate <old runtime> <new runtime>.
+      run all hooks, then return exit with the correct exit status.
+  * pyversions -r: If the XS-Python-Version field cannot be found in
+    debian/control, fall back to debian/pyversions for the version
+    information. Return with an error code, if the intersection of
+    the versions in debian/pyversions and the supported python versions
+    is empty. Fall back to the supported versions if no version
+    information can be found. Based on a patch from Raphael Hertzog.
+  * Reflect renaming of the docutils binaries. Closes: #377601.
+
+ -- Matthias Klose <doko@debian.org>  Sat,  5 Aug 2006 17:54:43 +0200
+
 python-defaults (2.4.3-5) experimental; urgency=low
 
   * Tighten dependencies between packages built from this source.

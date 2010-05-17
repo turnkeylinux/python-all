@@ -1,5 +1,0 @@
-#! /bin/sh -e
-
-[ -L /usr/share/doc/python/html ] || rm -rf /usr/share/doc/python/html
-
-#DEBHELPER#

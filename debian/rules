@@ -25,9 +25,12 @@ scriptdir	=  usr/share/python$(VER)
 scriptdir	=  usr/lib/python$(VER)
 
 rst2html	= $(PVER) /usr/share/python-docutils/rst2html.py
+rst2html	= rst2html
 
 with_doc	= no
-NOPKGS		= -Npython-doc
+ifneq ($(with_doc),yes)
+  NOPKGS	= -Npython-doc
+endif
 
 build: stamp-build
 stamp-build:
