@@ -91,8 +91,8 @@ Section: doc
 Architecture: all
 Depends: python@VER@-doc (>= @PREVVER@)
 Suggests: python
-Conflicts: python-doc-info
-Replaces: python-doc-info
+Conflicts: python-doc-info, python (<< 2.3.5)
+Replaces: python-doc-info, python (<< 2.3.5)
 Description: Documentation for the high-level object-oriented language Python
  This is the official set of documentation for the interactive high-level
  object-oriented language Python (v@VER@). All documents are provided

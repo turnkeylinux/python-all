@@ -1,3 +1,11 @@
+python-defaults (2.3.5-2) unstable; urgency=low
+
+  * Add valgrind support file /usr/lib/valgrind/python.supp (closes: #291128).
+  * python-doc: Add an conflict/replace to older python packages.
+    Closes: #297266.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 19 Mar 2005 22:49:29 +0100
+
 python-defaults (2.3.5-1) unstable; urgency=low
 
   * Depend on python-2.3.5 packages.

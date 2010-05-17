@@ -160,6 +160,10 @@ binary-indep: build install stamp-doc
 	mkdir -p debian/python/usr/share/apps/konsole
 	cp -p debian/python.desktop debian/python/usr/share/apps/konsole/
 
+	mkdir -p debian/python/usr/lib/valgrind
+	cp -p debian/valgrind-python.supp \
+		debian/python/usr/lib/valgrind/python.supp
+
 	: # provide the idle and idle.1 defaults
 	mkdir -p debian/idle/usr/bin
 	ln -sf idle-python$(VER) debian/idle/usr/bin/idle
