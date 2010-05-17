@@ -1,0 +1,66 @@
+python-defaults (2.3.5-1) unstable; urgency=low
+
+  * Depend on python-2.3.5 packages.
+  * Update FAQ.
+  * python suggests python-profiler.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 12 Feb 2005 19:26:48 +0100
+
+python-defaults (2.3.4-6) unstable; urgency=low
+
+  * Add an 'Enhances: konsole' to the python package (closes: #286161).
+
+ -- Matthias Klose <doko@debian.org>  Sun, 16 Jan 2005 12:53:58 +0100
+
+python-defaults (2.3.4-5) unstable; urgency=low
+
+  * Add conflict/replaces to ooold python-base package (closes: #279035).
+
+ -- Matthias Klose <doko@debian.org>  Sun, 14 Nov 2004 11:44:14 +0100
+
+python-defaults (2.3.4-4) unstable; urgency=low
+
+  * Regenerate control file after adding python-docutils build dependency.
+    Closes: #270177.
+
+ -- Matthias Klose <doko@debian.org>  Mon,  6 Sep 2004 07:19:49 +0200
+
+python-defaults (2.3.4-3) testing-proposed-updates; urgency=low
+
+  * Unmodified 2.3.4-3sid, destination sarge, fixing build failure.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 20 Aug 2004 18:24:25 +0200
+
+python-defaults (2.3.4-3sid) unstable; urgency=low
+
+  * Add build dependency on python-docutils (closes: #266550).
+
+ -- Matthias Klose <doko@debian.org>  Wed, 18 Aug 2004 12:30:37 +0200
+
+python-defaults (2.3.4-2sid) unstable; urgency=low
+
+  * Add pdb and pdb.1 symlinks.
+  * Update FAQ.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 17 Aug 2004 16:17:06 +0200
+
+python-defaults (2.3.4-1) unstable; urgency=low
+
+  * Depend on python-2.3.4 packages.
+  * Update FAQ.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 10 May 2004 06:58:24 +0200
+
+python-defaults (2.3.3-7) unstable; urgency=low
+
+  * Fix symlinks to proposed policy files (closes: #234874).
+
+ -- Matthias Klose <doko@debian.org>  Thu, 26 Feb 2004 22:28:07 +0100
+
+python-defaults (2.3.3-6) unstable; urgency=low
+
+  * Build the default packages from a separate source package to ease
+    migration between python versions.
+  * Update to the proposed python-policy: byte-compile using -E.
+
+ -- Matthias Klose <doko@debian.org>  Wed,  4 Feb 2004 23:16:35 +0100
