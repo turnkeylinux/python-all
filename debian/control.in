@@ -11,7 +11,7 @@ Priority: standard
 Depends: @PVER@ (>= @PREVVER@), python-minimal (= ${Source-Version})
 Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.5)
 Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base
-Provides: python-email, python-xmlbase
+Provides: python-email, python-xmlbase, python-plistlib
 Suggests: python-doc (>= ${Source-Version}), python-tk (>= ${Source-Version}), python-profiler (>= ${Source-Version})
 Description: An interactive high-level object-oriented language (default version)
  Python, the high-level, interactive object oriented language,
@@ -27,6 +27,7 @@ Priority: standard
 Depends: @PVER@-minimal (>= @PREVVER@), dpkg (>= 1.13.20)
 Conflicts: python (<= 2.4-1), python-central (<< 0.5.5)
 Replaces: python (<= 2.4-1)
+Recommends: python
 Description: A minimal subset of the Python language (default version)
  This package contains the interpreter and some essential modules.  It's used
  in the boot process for some basic tasks.

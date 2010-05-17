@@ -1,3 +1,10 @@
+python-defaults (2.5.2-2) unstable; urgency=low
+
+  * python: Provide python-plistlib.
+  * python-minimal: Provide python (suggested by Neil McGovern).
+
+ -- Matthias Klose <doko@debian.org>  Sat, 26 Jul 2008 02:37:00 +0200
+
 python-defaults (2.5.2-1) unstable; urgency=low
 
   * Maintainer upload; asking the Release Team to better coordinate
