@@ -24,11 +24,8 @@ Description: An interactive high-level object-oriented language (default version
 
 Package: python-minimal
 Architecture: all
-Essential: yes
-Priority: required
+Priority: standard
 Depends: @PVER@ (>= @PREVVER@)
-Conflicts: python (<< 2.3.5-4)
-Replaces: python (<< 2.3.5-4)
 Description: A minimal subset of the Python language (default version)
  This package contains the interpreter and some essential modules.  It's used
  in the boot process for some basic tasks.

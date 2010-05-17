@@ -14,7 +14,7 @@ export PVER=python2.3
 export PRIORITY=$(shell echo $(VER) | tr -d '.')0
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
-PREVVER := 2.3.4-18
+PREVVER := 2.3.5-1
 
 PWD		:= $(shell pwd)
 

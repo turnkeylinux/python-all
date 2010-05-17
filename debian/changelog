@@ -1,3 +1,9 @@
+python-defaults (2.3.5-5) unstable; urgency=low
+
+  * Fix upgrade issues (closes: #348319, #348354).
+
+ -- Matthias Klose <doko@debian.org>  Mon, 16 Jan 2006 16:50:11 +0000
+
 python-defaults (2.3.5-4) unstable; urgency=low
 
   * Add a package python-minimal. This package still depends on python2.3,
