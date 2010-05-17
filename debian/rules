@@ -244,7 +244,7 @@ endif
 	dh_desktop -i $(NOPKGS)
 	dh_installchangelogs -i $(NOPKGS)
 
-	for p in all all-dev dbg dev examples idle; do \
+	for p in all all-dev all-dbg dbg dev examples idle; do \
 	  [ $$p = idle ] || p=python-$$p; \
 	  rm -rf debian/$$p/usr/share/doc/$$p; \
 	  ln -sf python debian/$$p/usr/share/doc/$$p; \

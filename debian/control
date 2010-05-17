@@ -125,3 +125,15 @@ Description: Package depending on all supported Python development packages
  .
  This package is used as a build dependency for other packages to
  avoid hardcoded dependencies on specific Python development packages.
+
+Package: python-all-dbg
+Architecture: all
+Priority: optional
+Depends: python-all (= ${Source-Version}), python-dbg (= ${Source-Version}), python2.4-dbg (>= 2.4.4-4), python2.5-dbg (>= 2.5.1-1)
+Description: Package depending on all supported Python debugging packages
+ The package currently depends on python2.4-dbg and python2.5-dbg, in the
+ future, dependencies on jython (Python for a JVM) and ironpython (Python
+ for Mono) may be added.
+ .
+ This package is used as a build dependency for other packages to
+ avoid hardcoded dependencies on specific Python development packages.
