@@ -1,3 +1,9 @@
+python-defaults (2.4.3-11) unstable; urgency=low
+
+  * Add a conflict to python-central (<< 0.5.5).
+
+ -- Matthias Klose <doko@debian.org>  Sun, 13 Aug 2006 19:32:59 +0000
+
 python-defaults (2.4.3-10) unstable; urgency=low
 
   * Upload to unstable. Closes: #347440, #360851.

@@ -9,7 +9,7 @@ Package: python
 Architecture: all
 Priority: standard
 Depends: @PVER@ (>= @PREVVER@), python-minimal (= ${Source-Version})
-Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.4)
+Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.5)
 Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base
 Provides: python-email, python-xmlbase
 Suggests: python-doc, python-tk, python-profiler
@@ -25,7 +25,7 @@ Package: python-minimal
 Architecture: all
 Priority: standard
 Depends: @PVER@-minimal (>= @PREVVER@), dpkg (>= 1.13.20)
-Conflicts: python (<= 2.4-1), python-central (<< 0.5)
+Conflicts: python (<= 2.4-1), python-central (<< 0.5.5)
 Replaces: python (<= 2.4-1)
 Description: A minimal subset of the Python language (default version)
  This package contains the interpreter and some essential modules.  It's used
