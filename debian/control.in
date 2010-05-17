@@ -2,8 +2,8 @@ Source: python-defaults
 Section: python
 Priority: optional
 Maintainer: Matthias Klose <doko@debian.org>
-Build-Depends-Indep: debhelper (>= 4), libhtml-tree-perl, debiandoc-sgml, python-docutils (>= 0.4-3), python
-Standards-Version: 3.7.2
+Build-Depends-Indep: debhelper (>= 5), libhtml-tree-perl, debiandoc-sgml, python-docutils (>= 0.4-3), python
+Standards-Version: 3.8.0
 
 Package: python
 Architecture: all

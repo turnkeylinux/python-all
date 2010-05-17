@@ -1,3 +1,13 @@
+python-defaults (2.5.4-1) unstable; urgency=medium
+
+  * Depend on python2.5-2.5.4.
+  * python: Install /usr/share/python/python.mk, helper functions for
+    getting the python library dir and install args for distutils installs.
+  * Accept initial blank line in debian/control when parsing version
+    information.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 25 Feb 2009 02:19:09 +0000
+
 python-defaults (2.5.2-3) unstable; urgency=low
 
   * python: Provide python-ctypes and python-wsgiref.
@@ -7,7 +17,7 @@ python-defaults (2.5.2-3) unstable; urgency=low
 python-defaults (2.5.2-2) unstable; urgency=low
 
   * python: Provide python-plistlib.
-  * python-minimal: Provide python (suggested by Neil McGovern).
+  * python-minimal: Recommend python (suggested by Neil McGovern).
 
  -- Matthias Klose <doko@debian.org>  Sat, 26 Jul 2008 02:37:00 +0200
 

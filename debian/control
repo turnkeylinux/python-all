@@ -2,13 +2,13 @@ Source: python-defaults
 Section: python
 Priority: optional
 Maintainer: Matthias Klose <doko@debian.org>
-Build-Depends-Indep: debhelper (>= 4), libhtml-tree-perl, debiandoc-sgml, python-docutils (>= 0.4-3), python
-Standards-Version: 3.7.2
+Build-Depends-Indep: debhelper (>= 5), libhtml-tree-perl, debiandoc-sgml, python-docutils (>= 0.4-3), python
+Standards-Version: 3.8.0
 
 Package: python
 Architecture: all
 Priority: standard
-Depends: python2.5 (>= 2.5.2), python-minimal (= ${Source-Version})
+Depends: python2.5 (>= 2.5.4), python-minimal (= ${Source-Version})
 Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.5)
 Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base
 Provides: python-email, python-xmlbase, python-plistlib, python-ctypes, python-wsgiref
@@ -24,7 +24,7 @@ Description: An interactive high-level object-oriented language (default version
 Package: python-minimal
 Architecture: all
 Priority: standard
-Depends: python2.5-minimal (>= 2.5.2), dpkg (>= 1.13.20)
+Depends: python2.5-minimal (>= 2.5.4), dpkg (>= 1.13.20)
 Conflicts: python (<= 2.4-1), python-central (<< 0.5.5)
 Replaces: python (<= 2.4-1)
 Recommends: python
@@ -36,7 +36,7 @@ Description: A minimal subset of the Python language (default version)
 
 Package: python-examples
 Architecture: all
-Depends: python (= ${Source-Version}), python2.5-examples (>= 2.5.2)
+Depends: python (= ${Source-Version}), python2.5-examples (>= 2.5.4)
 Description: Examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in
  the upstream Python distribution.
@@ -46,7 +46,7 @@ Description: Examples for the Python language (default version)
 
 Package: python-dev
 Architecture: all
-Depends: python (= ${Source-Version}), python2.5-dev (>= 2.5.2)
+Depends: python (= ${Source-Version}), python2.5-dev (>= 2.5.4)
 Description: Header files and a static library for Python (default)
  Header files, a static library and development tools for building
  Python modules, extending the Python interpreter or embedding Python
@@ -72,7 +72,7 @@ Description: An IDE for Python using Tkinter (default version)
 Package: python-doc
 Section: doc
 Architecture: all
-Depends: python2.5-doc (>= 2.5.2)
+Depends: python2.5-doc (>= 2.5.4)
 Suggests: python
 Conflicts: python-doc-info, python (<< 2.3.5)
 Replaces: python-doc-info, python (<< 2.3.5)
@@ -97,7 +97,7 @@ Description: Documentation for the high-level object-oriented language Python
 Package: python-dbg
 Architecture: all
 Priority: extra
-Depends: python (= ${Source-Version}), python2.5-dbg (>= 2.5.2)
+Depends: python (= ${Source-Version}), python2.5-dbg (>= 2.5.4)
 Provides: python-gdbm-dbg, python-tk-dbg
 Description: Debug Build of the Python Interpreter (version 2.5)
  Python interpreter configured with --pydebug. Dynamically loaded modules are

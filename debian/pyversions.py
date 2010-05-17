@@ -25,7 +25,7 @@ def read_default(name=None):
         return value
     return None
 
-def parse_versions(vstring):
+def parse_versions(vstring, add_exact=False):
     import operator
     operators = { None: operator.eq, '=': operator.eq,
                   '>=': operator.ge, '<=': operator.le,
@@ -33,7 +33,8 @@ def parse_versions(vstring):
                   }
     vinfo = {}
     exact_versions = set([])
-    version_range = set(supported_versions(version_only=True))
+    version_range = set(supported_versions(version_only=True)
+                        + old_versions(version_only=True))
     relop_seen = False
     for field in vstring.split(','):
         field = field.strip()
@@ -56,10 +57,19 @@ def parse_versions(vstring):
                 version_range = [av for av in version_range if filtop(av ,v)]
         except Exception:
             raise ValueError, 'error parsing Python-Version attribute'
-    if 'versions' in vinfo:
-        vinfo['versions'] = exact_versions
-        if relop_seen:
-            vinfo['versions'] = exact_versions.union(version_range)
+    if add_exact:
+        if exact_versions:
+            vinfo['vexact'] = exact_versions
+        if 'versions' in vinfo:
+            if relop_seen:
+                vinfo['versions'] = set(version_range)
+            else:
+                del vinfo['versions']
+    else:
+        if 'versions' in vinfo:
+            vinfo['versions'] = exact_versions
+            if relop_seen:
+                vinfo['versions'] = exact_versions.union(version_range)
     return vinfo
 
 _old_versions = None
@@ -112,8 +122,13 @@ def supported_versions(version_only=False):
                 if line.startswith('Depends:'):
                     depends = line.split(':', 1)[1].strip().split(',')
             fd.close()
-            depends = [re.sub(r'\s*(\S+)[ (]?.*', r'\1', s) for s in depends]
-            _supported_versions = depends
+            if depends:
+                depends = [re.sub(r'\s*(\S+)[ (]?.*', r'\1', s) for s in depends]
+                _supported_versions = depends
+            if not _supported_versions:
+                # last resort: python-minimal not installed, apt-cache
+                # not available, hard code the value, #394084
+                _supported_versions = ['python2.4', 'python2.5']
     if version_only:
         return [v[6:] for v in _supported_versions]
     else:
@@ -123,12 +138,30 @@ _default_version = None
 def default_version(version_only=False):
     global _default_version
     if not _default_version:
-        _default_version = link = os.readlink('/usr/bin/python')
-    # consistency check
-    debian_default = read_default('default-version')
-    if not _default_version in (debian_default, os.path.join('/usr/bin', debian_default)):
-        raise ValueError, "the symlink /usr/bin/python does not point to the python default version. It must be reset to point to %s" % debian_default
-    _default_version = debian_default
+        try:
+            _default_version = link = os.readlink('/usr/bin/python')
+        except OSError:
+            _default_version = None
+            try:
+                cmd = ['/usr/bin/python', '-c', 'import sys; print sys.version[:3]']
+                import subprocess
+                p = subprocess.Popen(cmd, bufsize=1,
+                                     shell=False, stdout=subprocess.PIPE)
+                fd = p.stdout
+            except ImportError:
+                fd = os.popen("/usr/bin/python -c 'import sys; print sys.version[:3]'")
+            line = fd.readline().strip()
+            fd.close()
+            if re.match(r'\d\.\d$', line):
+                _default_version = 'python' + line
+        # consistency check
+        try:
+            debian_default = read_default('default-version')
+        except ValueError:
+            debian_default = "python2.5"
+        if not _default_version in (debian_default, os.path.join('/usr/bin', debian_default)):
+            raise ValueError, "/usr/bin/python does not match the python default version. It must be reset to point to %s" % debian_default
+        _default_version = debian_default
     if version_only:
         return _default_version[6:]
     else:
@@ -136,28 +169,41 @@ def default_version(version_only=False):
 
 def requested_versions(vstring, version_only=False):
     versions = None
-    vinfo = parse_versions(vstring)
+    vinfo = parse_versions(vstring, add_exact=True)
     supported = supported_versions(version_only=True)
     if len(vinfo) == 1:
         if 'all' in vinfo:
             versions = supported
         elif 'current' in vinfo:
             versions = [default_version(version_only=True)]
+        elif 'vexact' in vinfo:
+            versions = vinfo['vexact']
         else:
             versions = vinfo['versions'].intersection(supported)
     elif 'all' in vinfo and 'current' in vinfo:
         raise ValueError, "both `current' and `all' in version string"
     elif 'all' in vinfo:
-        versions = versions = vinfo['versions'].intersection(supported)
+        if 'versions' in vinfo:
+            versions = vinfo['versions'].intersection(supported)
+        else:
+            versions = set(supported)
+        if 'vexact' in vinfo:
+            versions.update(vinfo['vexact'])
     elif 'current' in vinfo:
         current = default_version(version_only=True)
         if not current in vinfo['versions']:
             raise ValueError, "`current' version not in supported versions"
         versions = [current]
+    elif 'versions' in vinfo or 'vexact' in vinfo:
+        versions = set()
+        if 'versions' in vinfo:
+            versions = vinfo['versions'].intersection(supported)
+        if 'vexact' in vinfo:
+            versions.update(vinfo['vexact'])
     else:
         raise ValueError, 'error in version string'
     if not versions:
-        raise ValueError, 'empty set of versions'
+        raise PyCentralEmptyValueError, 'empty set of versions'
     if version_only:
         return versions
     else:
@@ -190,6 +236,8 @@ def extract_pyversion_attribute(fn, pkg):
     for line in file(fn):
         line = line.strip()
         if line == '':
+            if section == None:
+                continue
             if pkg == 'Source':
                 break
             section = None
