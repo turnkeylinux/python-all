@@ -118,8 +118,10 @@ def requested_versions(vstring, version_only=False):
 
 def installed_versions(version_only=False):
     import glob
+    supported = supported_versions()
     versions = [os.path.basename(s)
-                for s in glob.glob('/usr/bin/python[0-9].[0-9]')]
+                for s in glob.glob('/usr/bin/python[0-9].[0-9]')
+                if os.path.basename(s) in supported]
     versions.sort()
     if version_only:
         return [v[6:] for v in versions]

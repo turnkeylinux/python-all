@@ -20,14 +20,13 @@
         <name>Josselin Mouette</name>
 	<email>joss@debian.org</email>
       </author>
-      <version>version 0.3.7.2</version>
+      <author>
+        <name>Joe Wreschnig</name>
+	<email>piman@debian.org</email>
+      </author>
+      <version>version 0.4.1.0</version>
 
       <abstract>
-        The Python policy is currently in change; a draft
-         for the new policy can be found
-	  <url id="http://people.debian.org/~piman/python-policy/"
-	  name="here">.
-
 	This document describes the packaging of Python within the
 	Debian GNU/Linux distribution and the policy requirements for
 	packaged Python programs and modules.
@@ -35,7 +34,8 @@
 
       <copyright>
 	<copyrightsummary>
-	  Copyright &copy; 1999, 2001, 2003 Software in the Public Interest
+	  Copyright &copy; 1999, 2001, 2003, 2006 Software in the
+	  Public Interest
 	</copyrightsummary>
 	<p>
 	  This manual is free software; you can redistribute it and/or
@@ -91,9 +91,12 @@
 	</p>
 	<p>
 	  For any version, the main package must be called
-	  <package>python<var>X</var>.<var>Y</var></package>. Names of
-	  related packages must include the
-	  <package>python<var>X</var>.<var>Y</var></package> part.
+	  <package>python<var>X</var>.<var>Y</var></package>.
+	</p>
+
+	<p>
+	  The set of currently supported python versions can be found
+	  in <file>/usr/share/python/debian_defaults</file>.
 	</p>
 
       </sect>
@@ -130,7 +133,6 @@
 	</p>
       </sect>
 
-
       <sect id="interpreter">
         <heading>Python Interpreter</heading>
         <sect1 id="interpreter_name">
@@ -142,7 +144,7 @@
 	    </p>
           <p>
 	    Python scripts that only work with a specific Python version must
-	    explicitely use the versioned interpreter name
+	    explicitly use the versioned interpreter name
 	    (<file>python<var>X</var>.<var>Y</var></file>).
           </p>
         </sect1>
@@ -167,8 +169,6 @@
         </sect1>
       </sect>
 
-
-
       <sect id="paths">
 	<heading>Module Path</heading>
 	<p>
@@ -177,43 +177,27 @@
 	  the path. By default, sys.path is searched in the following
 	  order:
 	  <example>
-/usr/lib/python<var>X</var>.<var>Y</var>.zip
+/usr/lib/python<var>XY</var>.zip
 /usr/lib/python<var>X</var>.<var>Y</var>
 /usr/lib/python<var>X</var>.<var>Y</var>/plat-linux2
 /usr/lib/python<var>X</var>.<var>Y</var>/lib-tk
 /usr/lib/python<var>X</var>.<var>Y</var>/lib-dynload
 /usr/local/lib/python<var>X</var>.<var>Y</var>/site-packages
 /usr/lib/python<var>X</var>.<var>Y</var>/site-packages
+/var/lib/python-support/python<var>X</var>.<var>Y</var>
 /usr/lib/python<var>X</var>.<var>Y</var>/site-packages/<var>module-dir</var>
 /usr/lib/site-python
 	  </example>
 	</p>
 	<p>
-	  Note that the use of the site-python directories in Python is
-	  depreciated. The directories might be dropped from the path in a
-	  future version.
+	  The use of the <file>/usr/lib/site-python</file> directory
+	  is deprecated. The directory may be dropped from the path in
+	  a future version.  The /usr/lib/python<var>XY</var>.zip
+	  archive appeared in python2.3; it is not currently used in
+	  Debian.  Modules should not install directly to the
+	  <file>/var/lib/python-support</file> directory; it is for
+	  use by <ref id="pysupport">.
 	</p>
-	<p>
-	  The /usr/lib/python<var>X</var>.<var>Y</var>.zip archive
-	  appeared in python2.3.
-	</p>
-
-	<p>
-	  TODO: in fact this directory was not deprecated at all, and is
-	  widely used for shipping modules for the default python version.
-	  It has been suggested to automatically bytecompile modules in this
-	  directory for the current python version, which is technically
-	  feasible and would make it a place of choice for version-independent
-	  python modules (e.g. for modules shipped with a single script).
-	</p>
-
-	<p>
-	  TODO: What about
-	  <file>/usr/share/python<var>X</var>.<var>Y</var></file>?
-	  Wait for upstream ... see <url id="http://python.org/sf/588756"
-	  name="http://python.org/sf/588756">.
-	</p>
-
       </sect>
 
       <sect id="docs">
@@ -232,249 +216,142 @@
 
     <chapt id="module_packages">
       <heading>Packaged Modules</heading>
-
+      <p>
+	The goal of these policies is to reduce the work necessary for
+	Python transitions. Python modules are internally very
+	dependent on a specific Python version. However, we want to
+	automate recompiling modules when possible, either during the
+	upgrade itself (re-bytecompiling pyc and pyo files) or shortly
+	thereafter with automated rebuilds (to handle C
+	extensions). These policies encourage automated dependency
+	generation and loose version bounds whenever possible.
       <sect>
-        <heading>Rationale: A different view</heading>
-        <p>
-	  A package with a name
-	  <package>python-<var>foo</var></package> will always
-	  provide the module <var>foo</var> for the default Debian
-	  Python version of the distribution. I.e. the package will
-	  extend the function of <file>/usr/bin/python</file> (which
-	  is installed by the package <package>python</package>).
+	<heading>Types of Python Modules</heading>
+	<p>
+	  There are two kinds of Python modules, "pure" Python
+	  modules, and extension modules. Pure Python modules are
+	  Python source code that works across many versions of
+	  Python. Extensions are C code compiled and linked against a
+	  specific version of the libpython library, and so can only
+	  be used by one version of Python.
 	</p>
 	<p>
-	  The system of dependencies of the default packages is robust
-	  against upgrades, but introduces a strong dependency:
-	  I.e. an upgrade of the <package>python</package> package
-	  will be hold back as long as there are still default modules
-	  packages left over on the system that can't be upgraded to
-	  the new version.
+          Python packages are directories containing at least a
+          <file>__init__.py</file>, other modules, extensions and
+          packages (A package in the Python sense is unrelated to a
+          Debian package). Python packages must be packaged into the
+          same directory (as done by upstream). Splitting components
+          of a package across directories changes the import order and
+          may confuse documentation tools and IDEs.
 	</p>
 	<p>
-	  The versioned packages (legacy versions) ensure that an
-	  upgrade to a new version can take place before upgrading
-	  *all* packages with dependencies on Python.
+	  There are two ways to distribute Python modules. Public
+	  modules are installed in one of the directories listed
+	  in <ref id="paths">. They are accessible to any
+	  program. Private modules are installed in a directory such
+	  as <file>/usr/share/<var>packagename</var></file>
+	  or <file>/usr/lib/<var>packagename</var></file>. They are
+	  generally only accessible to a specific program or suite of
+	  programs included in the same package.
 	</p>
       </sect>
-
-      <sect id="variants">
-	<heading>Packaging Variants</heading>
-	<p>
-	  There is more than one way to package a Python module:
-	  <enumlist>
-	    <item>
-	      <p>
-		Support only the default Python version.
-	      </p>
-	    </item>
-	    <item>
-	      <p>
-		Support a particular version, or some but not all versions of
-		Python available in Debian.
-	      </p>
-	    </item>
-	    <item>
-	      <p>
-		Support all/most versions of python, including the default.
-		This variant is still not completely supported.
-	      </p>
-	    </item>
-	  </enumlist>
-	</p>
-
-	<sect1 id="default_version">
-	  <heading>Support Only The Default Version</heading>
-	  <p>
-	    Name your package
-	    <package>python-<var>foo</var></package>.  This kind of
-	    package is called a <em>default module package</em>.
-	    Install your modules into
-	    <file>/usr/lib/python<var>X</var>.<var>Y</var>/site-packages/</file>.
-	    Make your package dependency look like
-	    <example>
-Depends: python (>= X.Y), python (<< X.Y+1)
-	    </example>
-	    Note that this kind of packaging means that your package will
-	    trigger a conflict when the default Debian Python version in the
-	    distribution is changed, and that you will have to provide a new
-	    version as soon as possible, since the package will block the
-	    upgrade of <package>python</package>.
-	  </p>
-	  <p>
-	    You should not make a default, unversioned module package
-	    <package>python-<var>foo</var></package> depend on the
-	    versioned Python package
-	    <package>python<var>X</var>.<var>Y</var></package>!
-	  </p>
-	  <p>
-	    If the build process uses distutils and/or binary modules are built,
-	    the source package must declare:
-	    <example>
-Build-Depends: pythonX.Y-dev
-	    </example>
-	    where <var>X</var>.<var>Y</var> is the version used in
-	    the <tt>Depends</tt>.
-	    If the packaging process can deal with later versions of python
-	    without any changes to the packaging, it can instead declare:
-	    <example>
-Build-Depends: python-dev (>= X.Y)
-	    </example>
-	    When the default python version is changed, these packages
-	    still need to be rebuilt, if modules are installed in a
-	    module path specific to the python version.
-	  </p>
-	  <p>
-	    Any scripts and examples provided in the package should use
-	    <file>/usr/bin/python</file> as interpreter.
-	  </p>
-	  <p>
-	    TODO: Should a <package>python-foo</package> provide
-	    <package>python<var>X</var>.<var>Y</var>-foo</package>,
-	    provided that the Debian policy allows us to create such a
-	    mass of virtual packages?
-	  </p>
-
-	</sect1>
-
-	<sect1 id="particular_version">
-	  <heading>Support one or several Particular Version(s)</heading>
-	  <p>
-	    For each python<var>X</var>.<var>Y</var> version you want to
-	    support, name the package
-	    <package>python<var>X</var>.<var>Y</var>-<var>foo</var></package>
-	    (a <em>versioned module package</em>). Make the dependency
-	    look like
-	    <example>
-Depends: python<var>X</var>.<var>Y</var>
-	    </example>
-	    Each of them should install modules somewhere inside
-	    <file>/usr/lib/python<var>X</var>.<var>Y</var>/site-packages/</file>.
-	    Any included scripts and examples should use
-	    <file>/usr/bin/python<var>X</var>.<var>Y</var></file> as
-	    interpreter.
-	  </p>
-	  <p>
-	    If necessary, the packaged source must declare
-	    <example>
-Build-Depends: pythonX.Y-dev, ...
-            </example>
-	    including all <var>X</var>.<var>Y</var> supported versions.
-	  </p>
-	</sect1>
-
-	<sect1 id="all_versions">
-	  <heading>Support All/Most Versions (Including Default)</heading>
-	  <p>
-	    This option is recommended for most modules packages. There are two
-	    different cases:
-	    <enumlist>
-	      <item>
-	        <p>Multiple versioned packages</p>
-		<p>
-		  You have binary extensions that must be compiled
-		  against particular versions of Python.  Create
-		  multiple
-		  <package>python<var>X</var>.<var>Y</var>-<var>foo</var></package>
-		  packages as in <ref id="particular_version">. Also
-		  create an empty default package
-		  <package>python-<var>foo</var></package> with
-		  <example>
-Depends: python (>= X.Y), python (<< X.Y+1), pythonX.Y-foo
-		  </example>
-		  Note that this kind of packaging means that the
-		  default package will trigger a conflict when the
-		  default Debian Python version in the distribution is
-		  changed, and that you will have to provide a new
-		  version of your package as soon as possible, since
-		  the package will block the upgrade of
-		  <package>python</package>.
-		</p>
-		<p>
-		  The packaged sources <tt>Build-Depends</tt> must contain all
-		  <package>python<var>X</var>.<var>Y</var>-dev</package>
-		  packages that the module is built for.
-		</p>
-	      </item>
-
-	      <item>A single package for all versions (NOT YET SUPPORTED!)
-		<p>
-		  You have a version independent Python module. Create
-		  a single package
-		  <package>python-<var>foo</var></package> that has a
-		  dependency
-		  <example>
-Depends: python
-		  </example>
-		  It should install modules somewhere inside
-		  <file>/usr/lib/python/site-packages/</file> and use
-		  <tt>#!/usr/bin/python</tt> for programs. The
-		  <file>postinst</file> script should create symlinks
-		  in all
-		  <file>/usr/lib/pythonX.Y/site-packages/</file>
-		  directories that point to its
-		  <file>/usr/lib/python/site-packages/</file> files
-		  and compile them.
-		</p>
-		<p>
-		  NOT YET SUPPORTED: It's errorprone if the package itself
-		  supplies these scripts. And the package cannot know when a
-		  new upstream Python version is installed. So the
-		  <package>python<var>X</var>.<var>Y</var></package> must
-		  provide these scripts, which is not yet done.
-		</p>
-		<p>
-		  The packaged source must declare
-		  <tt>Build-Depends</tt> on one
-		  <package>python<var>X</var>.<var>Y</var>-dev</package>
-		  package. XXX: Or build-depend on each Python
-		  version, so that only checked modules are uploaded?
-		</p>
-		<p>
-		  TODO: Should policy demand that these packages must have a
-		  dependency on <package>python (<=
-		  <var>X</var>.<var>Y+1</var></package>)?
-		</p>
-	      </item>
-	    </enumlist>
-
-	  </p>
-	</sect1>
-	</sect>
-
       <sect id="package_names">
 	<heading>Module Package Names</heading>
 	<p>
-	  Python module packages should be named for the primary module
-	  provided.  The naming convention for a module <tt>Foo</tt> is
-	  <package>python-<var>foo</var></package> for the package for the
-	  default Python version (the <em>default module package</em>).
-	  (Packages which include multiple modules may additionally include
-	  provides for those modules using the same convention.)
+	  Public modules should be packaged with a name
+	  of <package>python-<var>foo</var></package>,
+	  where <var>foo</var> is the name of the module. Such a
+	  package should support the current Debian Python version,
+	  and more if possible (there are several tools to help
+	  implement this, see <ref id="packaging_tools">). For
+	  example, if Python 2.3, 2.4, and 2.5 are supported, the
+	  Python command
+	  <example>
+import foo
+	  </example>
+	  should import the module when the user is running any
+	  of <prgn>/usr/bin/python2.3</prgn>, <prgn>/usr/bin/python2.4</prgn>,
+	  and <prgn>/usr/bin/python2.5</prgn>. This requirement also
+	  applies to extension modules; binaries for all the supported
+	  Python versions should be included in a single package.
+	</p>
+      </sect>
+      <sect id="specifying_versions">
+	<heading>Specifying Supported Versions</heading>
+	<p>
+	  The <tt>XS-Python-Version</tt> field
+	  in <file>debian/control</file> specifies the versions of
+	  Python supported by the package. This is used to track
+	  packages during Python transitions, and is also used by some
+	  packaging scripts to automatically generate appropriate
+	  Depends and Provides lines. The format of the field may be
+	  one of the following:
+	  <example>
+XS-Python-Version: all
+XS-Python-Version: current
+XS-Python-Version: current, >= X.Y
+XS-Python-Version: >= X.Y
+XS-Python-Version: >= A.B, << X.Y
+XS-Python-Version: A.B, X.Y
+	  </example>
+	  Where "all" means the package supports any Python version
+	  available, and "current" means it supports Debian's current
+	  Python version. Explicit Versions or version ranges can also
+	  be used.
 	</p>
 	<p>
-	  Python module packages packaged for one particular version of Python
-	  (<em>versioned modules packages</em>) should be named
-	  <package>python<var>X</var>.<var>Y</var>-foo</package>.
+	  Your control file should also have a line:
+	  <example>
+XB-Python-Version: ${python:Versions}
+	  </example>
+	  The python:Versions is substituted by the supported Python
+	  versions of the binary package, based on
+	  <tt>XS-Python-Version</tt>. (If you are not using
+	  <prgn>dh_python</prgn> you will need to handle this
+	  substitution yourself.) The format of the field
+	  <tt>XB-Python-Version</tt> is the same as the
+	  <tt>XS-Python-Version</tt> field for packages not containing
+	  extensions. Packages with extensions must list the versions
+	  explicitely.
 	</p>
 	<p>
-	  A module package providing a module for python version,
-	  which is not the default python version, must not be named
-	  <package>python-<var>foo</var></package>, it has to be named
-	  <package>python<var>X</var>.<var>Y</var>-foo</package>.
+	  If your package is used by another module or application
+	  that requires a specific Python version, it should also
+	  <tt>Provide: python<var>X</var>.<var>Y</var>-foo</tt> for
+	  each version it supports.
 	</p>
       </sect>
 
       <sect id="dependencies">
 	<heading>Dependencies</heading>
 	<p>
-	  Packaged modules available for the default Python version as
-	  described in <ref id="default_version"> must depend on
-	  "<package>python (&gt;= <var>X</var>.<var>Y</var>),
-	  python (&lt;&lt; <var>X</var>.<var>Y+1</var>)</package>".
-	  If they require other modules to work, they must depend on the
-	  corresponding <package>python-foo</package>. They must not depend
-	  on any <package>python<var>X</var>.<var>Y</var>-foo</package>.
+	  Packaged modules available for the default Python version
+	  (or many versions including the default) as described
+	  in <ref id="package_names"> must depend on "<package>python
+	  (&gt;=&nbsp;<var>X</var>.<var>Y</var></package>)". If they
+	  require other modules to work, they must depend on the
+	  corresponding <package>python-foo</package>. They must not
+	  depend on
+	  any <package>python<var>X</var>.<var>Y</var>-foo</package>.
+	</p>
+	<p>
+	  Packaged modules available for one particular version of Python must
+	  depend on the corresponding
+	  <package>python<var>X</var>.<var>Y</var></package> package instead.
+	  If they need other modules, they must depend on the corresponding
+	  <package>python<var>X</var>.<var>Y</var>-foo</package> packages, and
+	  must not depend on any <package>python-foo</package>.
+	</p>
+      </sect>
+
+      <sect id="provides">
+	<heading>Provides</heading>
+	<p>
+          Provides in packages of the form
+          <package>python-<var>foo</var></package> must be specified,
+          if the package contains an extension for more than one
+          python version. Provides should also be added on request of
+          maintainers who depend on a non-default python version.
 	</p>
 	<p>
 	  Packaged modules available for one particular version of Python must
@@ -490,36 +367,30 @@ Depends: python
         <heading>Modules Bytecompilation</heading>
 	<p>
 	  If a package provides any binary-independent modules
-	  (<file>foo.py</file> files), the corresponding bytecompiled modules
-	  (<file>foo.pyc</file> files) and optimized modules (<file>foo.pyo</file>
-	  files) must not be shipped in the package. Instead, they should be
-	  generated at the package post-installation, using e.g.
-	  <example>
-PYTHON=python2.3
-if which $PYTHON >/dev/null 2>&1; then
-        DIRLIST="/usr/lib/python2.3/site-packages"
-        for i in $DIRLIST ; do
-                $PYTHON -E -O /usr/lib/$PYTHON/compileall.py -q $i
-                $PYTHON -E /usr/lib/$PYTHON/compileall.py -q $i
-        done
-fi
-	  </example>
-	  and removed in the package's pre-removal script, e.g.
-	  <example>
-dpkg -L python2.3-somemodule |
-        awk '$0~/\.py$/ {print $0"c\n" $0"o"}' |
-        xargs rm -f >&2
-	  </example>
+	  (<file>foo.py</file> files), the corresponding bytecompiled
+	  modules (<file>foo.pyc</file> files) and optimized modules
+	  (<file>foo.pyo</file> files) must not ship in the
+	  package. Instead, they should be generated in the package's
+	  postinst, and removed in the package's prerm. The package's
+	  prerm has to make sure that both <file>foo.pyc</file> and
+	  <file>foo.pyo</file> are removed.
 	</p>
 	<p>
-	  If you use debhelper, it is a good idea to use <tt>dh_python</tt>
-	  just before <tt>dh_installdeb</tt>, in which case you must
-	  Build-depend on <package>debhelper (>= 4.1.67)</package>.
-	  It removes undesired files and generates those scripts automatically.
-	  It also helps automating the package's dependencies generation,
-	  using the <tt>${python:Depends}</tt> substitution variable.
+          A package should only byte-compile the files which belong to
+          the package.
+	</p>
+	<p>
+          The file <file>/etc/python/debian_config</file> allows
+          configuration how modules should be byte-compiled. The
+          postinst scripts should respect these settings.
+	</p>
+	<p>
+          Modules in private installation directories and in
+          <file>/usr/lib/site-python</file> should be byte-compiled,
+          when the default python version changes.
 	</p>
       </sect>
+    </chapt>
 
     <chapt id="programs">
       <heading>Python Programs</heading>
@@ -527,115 +398,76 @@ dpkg -L python2.3-somemodule |
       <sect id="version_indep_progs">
 	<heading>Programs using the default python</heading>
 	<p>
-	  Programs that can run with any version of Python should be started
-	  with <tt>#!/usr/bin/python</tt>.  They must also specify a
-	  dependency on <package>python</package>, with a versioned dependency
-	  if necessary.
+	  Programs that can run with any version of Python must
+	  begin with <tt>#!/usr/bin/python</tt> or <tt>#!/usr/bin/env
+	  python</tt> (the former is preferred). They must also
+	  specify a dependency on <package>python</package>, with a
+	  versioned dependency if necessary.
 	</p>
 	<p>
-	  If the program needs the python module <tt>Foo</tt>,
-	  it must depend on <package>python-foo</package>. In the case
-	  where <package>python-foo</package> does not exist, but a
-	  <package>python<var>X</var>.<var>Y</var>-foo</package> package
-	  exists for the current python version, it can depend on
-	  "<package>python<var>X</var>.<var>Y</var>-foo,
-	  python (>= <var>X</var>.<var>Y</var>),
-	  python (<< <var>X</var>.<var>Y+1</var>)</package>"
-	  so that dependencies are robust upon the next major python upgrade.
-	</p>
-	<p>
-	  You're free to use <tt>#!/usr/bin/env python</tt>, if you'd like to
-	  give the user a chance to override the Debian Python package with a
-	  local version, but it is not recommended.
+	  If the program needs the python module <tt>foo</tt>,
+	  it must depend on <package>python-foo</package>.
 	</p>
 
         <sect1 id="current_version_progs">
           <heading>Programs Shipping Private Modules</heading>
 	  <p>
 	    A program using <file>/usr/bin/python</file> as
-	    interpreter can come up with private python modules. These
+	    interpreter can come up with private Python modules. These
 	    modules should be installed in
-	    <tt>/usr/lib/site-python/<var>module</var></tt>,
-	    <tt>/usr/lib/python<var>X</var>.<var>Y</var>/site-packages/<var>module</var></tt>
-	    (where python<var>X</var>.<var>Y</var> is the current
-	    python version).
+	    <tt>/usr/share/<var>module</var></tt>, or
+	    <tt>/usr/lib/<var>module</var></tt> if the modules are
+	    architecture-dependent (e.g. extensions).
 	  </p>
 	  <p>
-	    If the private modules would pollute the name space in
-	    <tt>sys.path</tt>, the modules should be installed in
-	    <tt>/usr/lib/<var>package</var></tt> (for architecture
-	    any) or <tt>/usr/share/<var>package</var></tt> (for
-	    architecture all). In this case, the directory should be
-	    added to <tt>sys.path</tt> at the program startup.
-	  </p>
-	  <p>
-	    Such a package must depend on
-	    "<package>python (&gt;= <var>X</var>.<var>Y</var>),
-	    python (&lt;&lt; <var>X</var>.<var>Y+1</var>)</package>".
+	    <file>/usr/lib/site-python</file> is deprecated and should
+	    no longer be used for this purpose.
 	  </p>
 	  <p>
 	    The rules explained in <ref id="bytecompilation"> apply to
 	    those private modules: the bytecompiled modules must not
 	    be shipped with the package, they should be generated in
-	    the package's postinst, using the current default python
-	    version, and removed in the prerm.
+	    the package's postinst, using the current default Python
+	    version, and removed in the prerm. Modules should be
+	    bytecompiled using the current default Python version.
 	  </p>
 	  <p>
-	    TODO: Currently there is no mechanism to automatically
-	    recompile such modules when the default python version
-	    changes. The required dependency on "<package>python
-	    (&gt;= <var>X</var>.<var>Y</var>), python (&lt;&lt;
-	    <var>X</var>.<var>Y+1</var>)</package>" ensures the
-	    package is upgraded, and hence recompiled, when the
-	    default python version changes. In the future, a mechanism
-	    may be introduced to automatically recompile such modules
-	    when the <package>python</package> package is upgraded,
-	    allowing such packages which support several python
-	    versions to only depend on "<package>python (&gt;=
-	    <var>min.version</var>)</package>".
+	    Programs that have private compiled extensions must either
+	    handle multiple version support themselves, or declare a
+	    tight dependency on the current Python version
+	    (e.g. <tt>Depends: python (>= 2.4), python (<= 2.5)</tt>. No 
+	    tools currently exist to alleviate this situation.
+	  </p>
 	</sect1>
       </sect>
 
       <sect id="version_dep_progs">
 	<heading>Programs Using a Particular Python Version</heading>
 	<p>
-	  Programs which require a specific version of Python must
-	  start with
-	  <tt>#!/usr/bin/python<var>X</var>.<var>Y</var></tt>.  They
+	  A program which requires a specific version of Python must
+	  begin with
+	  <tt>#!/usr/bin/python<var>X</var>.<var>Y</var></tt> (or
+	  <tt>#!/usr/bin/env python<var>X</var>.<var>Y</var></tt>). It
 	  must also specify a dependency on
 	  <package>python<var>X</var>.<var>Y</var></package> and on
 	  any <package>python<var>X</var>.<var>Y</var>-foo</package>
-	  package providing necessary modules. They must not depend on
-	  any <package>python-foo</package> package.
+	  package providing necessary modules. It should not depend on
+	  any <package>python-foo</package> package, unless it
+	  requires a specific version of the package (since virtual
+	  packages cannot be versioned). If this is the case, it
+	  should depend on both the virtual package and the main
+	  package (e.g. <tt>Depends: python2.4-foo, python-foo (>=
+	  1.0)</tt>).
 	</p>
 	<p>
-	  Again, if you're using <tt>#!/usr/bin/env
-	  python<var>X</var>.<var>Y</var></tt>, please be aware that a user
-	  might override the Debian Python package with a local version.
-	</p>
-	<p>
-	  If the program ships private python modules, these modules
-	  should be installed in
-	  <tt>/usr/lib/python<var>X</var>.<var>Y</var>/site-packages/<var>module</var></tt>
-	  (where python<var>X</var>.<var>Y</var> is the same python
-	  version the program uses) or
-	  <tt>/usr/lib/<var>package</var></tt>. In the latter case,
-	  this directory should be added to <tt>sys.path</tt> at the
-	  program startup.  They must not be shipped in
-	  <tt>/usr/lib/site-python/</tt>. The latter case is
-	  recommended, if the private modules would pollute the name
-	  space in <tt>sys.path</tt>.
-	</p>
-	<p>
-	  The bytecompiled versions of the modules must not be shipped
-	  in the package, and they should be generated as explained in
-	  <ref id="bytecompilation">, using the same
-	  python<var>X</var>.<var>Y</var> version as the program.
+	  The notes on installation directories and bytecompilation
+	  for programs that support any version of Python also apply
+	  to programs supporting only a single Python version. Modules
+	  to be bytecompiled should use the same Python version as the
+	  package itself.
 	</p>
       </sect>
-
     </chapt>
-
 
     <chapt id="embed">
       <heading>Programs Embedding Python</heading>
@@ -685,33 +517,145 @@ dpkg -L python2.3-somemodule |
       <p>
 	Build dependencies for Python dependent packages must be
 	declared for every Python version that the package is built
-	for. To build for a specific version, add the versioned
-	dependencies; to build for the default version, add the
-	unversioned dependency.
-
-	Architecture dependent packages must depend on the
-	<package>-dev</package> package; for architecture independent
-	packages, it may be sufficient to depend on the
-	<package>python</package> or
-	<package>python<var>X</var>.<var>Y</var></package> package.
+	for. The <package>python-all-dev</package> should be used when
+	building modules for any or all Python versions. To build for
+	a specific version or versions, Build-Depend on
+	<package>python<var>X</var>.<var>Y</var>-dev</package>.
       </p>
+      <p>
+	Some applications and pure Python modules may be able to
+	depend only on <package>python</package>
+	or <package>python-all</package> and not require the -dev
+	packages.
+      </p>
+
       <p>
 	Build-Depend on at least:
 	<example>
-Build-Depends: python1.5
-Build-Depends: python2.1
-Build-Depends: python2.2 (>= 2.2.3)
 Build-Depends: python2.3 (>= 2.3-1)
-Build-Depends: python (>= 2.3)
+Build-Depends: python2.4 (>= 2.4-1)
+Build-Depends: python (>= 2.3.5-7)
+Build-Depends: python-all
 
-Build-Depends: python1.5-dev (>= 1.5.2-18.6)
-Build-Depends: python1.5-distutils
-Build-Depends: python2.1-dev (>= 2.1.1-1.4)
-Build-Depends: python2.2-dev (>= 2.2.3)
 Build-Depends: python2.3-dev (>= 2.3-1)
-Build-Depends: python-dev (>= 2.3)
+Build-Depends: python2.4-dev (>= 2.4-1)
+Build-Depends: python-dev (>= 2.3.5-7)
+Build-Depends: python-all-dev
 	</example>
       </p>
+      <p>
+	If you use either <package>python-support</package> or
+	<package>python-central</package> you must additionally
+	Build-Depend on those. If you are using <prgn>dh_python</prgn>
+	at all, you must Build-Depend on <package>python</package>, as
+	<package>debhelper</package> does not depend on it.
+      </p>
+    </appendix>
+
+    <appendix id="packaging_tools">
+      <heading>Packaging Tools</heading>
+      <p>
+	This section describes the various tools to help package
+	Python programs and modules for Debian. Although none of these
+	tools are mandatory, their use is strongly encouraged, as the
+	above policy has been designed with them in mind (and vice
+	versa). This appendix is just an overview. If you use these
+	tools, you should read their full documentation.
+      </p>
+      <sect id="pysupport">
+	<heading>python-support</heading>
+	<p>
+	  The python-support system provides a simple way to
+	  bytecompile pure Python modules and manage dependencies. It
+	  integrates with <package>debhelper</package>. When using
+	  python-support, you should install your modules
+	  to <file>/usr/share/python-support/<var>package</var></file>
+	  rather than the standard Python directories. python-support
+	  will then handle compiling the modules and making
+	  appropriate symbolic links for installed Python versions to
+	  find them,
+	  substitute <tt>${python:Depends}</tt>, <tt>${python:Versions}</tt>,
+	  and <tt>${python:Provides}</tt> in your control file, and
+	  manage bytecompilation in your postinst/prerm.
+	</p>
+	<p>
+	  To use it, call <prgn>dh_pysupport</prgn>
+	  before <prgn>dh_python</prgn>, and make sure you've
+	  installed the modules in the right place:
+	  <example>
+PREFIX := debian/python-package/usr
+...
+install:
+	...
+	./setup.py install --no-compile \
+		--install-lib=$(PREFIX)/share/python-support/python-package
+binary-indep: build install
+	...
+	dh_pysupport
+	dh_python
+	...
+	  </example>
+	</p>
+	<p>
+	  python-support can also manage private modules. To use this
+	  feature, pass a list of directories to be managed by
+	  python-support to <prgn>dh_pysupport</prgn>
+	  and <prgn>dh_python</prgn>. python-support cannot handle
+	  compiled extensions.
+	</p>
+      </sect>
+
+      <sect id="pycentral">
+	<heading>python-central</heading>
+	<p>
+	  python-central provides another way to manage Python
+	  modules. It integrates with <package>debhelper</package>,
+	  but can also be used without it. When using python-central,
+	  you should install your modules normally. It will then move
+	  them to its private directory, and manage the same things
+	  python-support does.
+	</p>
+	<p>
+	  To use it, call <prgn>dh_pycentral</prgn>
+	  before <prgn>dh_python</prgn>:
+	  <example>
+install:
+	...
+	./setup.py install
+
+binary-indep: build install
+	...
+	dh_pycentral
+	dh_python
+	...
+	  </example>
+	</p>
+	<p>
+	  python-central can handle compiled extensions for multiple
+	  Python versions. If you want python-central to handle
+	  private modules, you must pass the list of directories
+	  containing them to <prgn>dh_python</prgn> (but
+	  not <prgn>dh_pycentral</prgn>).
+	</p>
+	<p>
+          If python-central should not move the files to its private
+          directory, use<prgn>DH_PYCENTRAL=nomove dh_pycentral</prgn>
+          instead.
+	</p>
+	<p>
+          Examples for source packages using python-central are
+          pyenchant, python-imaging (modules and extensions),
+          pyparallel (modules only).
+	</p>
+      </sect>
+
+      <sect id="cdbs">
+	<heading>CDBS</heading>
+	<p>
+	  FIXME: Someone familiar with CDBS should write this part.
+	</p>
+      </sect>
+
     </appendix>
 
     <appendix id="upgrade">
@@ -726,6 +670,11 @@ Build-Depends: python-dev (>= 2.3)
 	<enumlist>
 	  <item>
 	    <p>
+	      Have a long and heated discussion.
+	    </p>
+	  </item>
+	  <item>
+	    <p>
 	      The Debian Python maintainer decides for the new default Debian
 	      Python version and announces the upgrade.
 	    </p>
@@ -738,43 +687,12 @@ Build-Depends: python-dev (>= 2.3)
 	      the new <package>python<var>X</var>.<var>Y</var></package>,
 	      <package>python<var>X</var>.<var>Y</var>-dev</package> and so on.
 	    </p>
-	    <p>
-	      These new packages will make uninstallable all python packages
-	      depending on the previous <package>python</package> with a
-	      dependency requiring version less than <var>X</var>.<var>Y</var>.
-	    </p>
 	  </item>
 	  <item>
 	    <p>
-	      From this point, all these python modules/packages which are
-	      uninstallable have to be rebuilt against the new python version,
-	      fixing dependencies and build-dependencies.
-	    </p>
-	    <p>
-	      NMUs are allowed after notifying the package maintainer
-	      to have all these packages rebuilt in a reasonable
-	      timeline.
-	    </p>
-	  </item>
-	  <item>
-	    <p>
-	      File bug report against packages and/or make NMU's for packages
-	      that are not adapted by their maintainer.
-	    </p>
-	  </item>
-	  <item>
-	    <p>
-	      If a package doesn't work with the new python version,
-	      make it use the older version as described in <ref
-	      id="version_dep_progs">.
-	    </p>
-	  </item>
-	  <item>
-	    <p>
-	      When all packages are updated (or removed), the new
-	      <package>python</package> packages can migrate to
-	      <tt>testing</tt> together with all packages depending on
-	      it.
+	      The release team schedules rebuilds for packages that
+	      may need it. Packages that require manual work get
+	      updated and uploaded.
 	    </p>
 	  </item>
 	</enumlist>

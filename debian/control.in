@@ -24,7 +24,7 @@ Description: An interactive high-level object-oriented language (default version
 Package: python-minimal
 Architecture: all
 Priority: standard
-Depends: @PVER@-minimal (>= @PREVVER@), python-central (>= 0.4.8), dpkg (>= 1.13.20)
+Depends: @PVER@-minimal (>= @PREVVER@), python-central (>= 0.4.11), dpkg (>= 1.13.20)
 Conflicts: python (<= 2.4-1), python-central (<< 0.4.8)
 Replaces: python (<= 2.4-1)
 Description: A minimal subset of the Python language (default version)
