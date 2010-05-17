@@ -9,7 +9,7 @@ Package: python
 Architecture: all
 Priority: standard
 Depends: @PVER@ (>= @PREVVER@)
-Conflicts: python2.3 (<= 2.3.2-6), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.4.8)
+Conflicts: python2.3 (<= 2.3.2-6), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.4.11)
 Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base
 Provides: python-email, python-xmlbase
 Suggests: python-doc, python-tk, python-profiler
@@ -33,7 +33,7 @@ Description: A minimal subset of the Python language (default version)
  contained in this package.
  .
  NOTE: There is no python2.3-minimal package yet, this package will depend
- on the python2.4-minimal package after a change of default python version.
+ on the python2.4-minimal package after a change of the default python version.
 
 Package: python-examples
 Architecture: all

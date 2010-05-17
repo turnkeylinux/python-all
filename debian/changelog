@@ -1,7 +1,14 @@
+python-defaults (2.3.5-8) unstable; urgency=low
+
+  * Include version 0.4.1.0 of the python policy.
+  * Fix 'pyversions -i'.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 13 Jun 2006 09:44:22 +0200
+
 python-defaults (2.3.5-7) unstable; urgency=low
 
   * Point to the draft of the reworked Python policy.
-  * Fiy 'pyversions -r current' (Raphael Hertzog).
+  * Fix 'pyversions -r current' (Raphael Hertzog).
 
  -- Matthias Klose <doko@debian.org>  Mon, 12 Jun 2006 13:38:41 +0200
 
