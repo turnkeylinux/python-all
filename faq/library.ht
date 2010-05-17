@@ -5,8 +5,8 @@ Content-type: text/x-rst
 Python Library and Extension FAQ
 ====================================
 
-:Date: $Date: 2003/11/02 09:39:28 $
-:Version: $Revision: 1.12 $
+:Date: $Date: 2005-12-17 03:21:20 +0100 (Sat, 17 Dec 2005) $
+:Version: $Revision: 8684 $
 :Web site: http://www.python.org/
 
 .. contents::
@@ -22,7 +22,7 @@ Check `the Library Reference <http://www.python.org/doc/lib/>`_ to see
 if there's a relevant standard library module.  (Eventually you'll
 learn what's in the standard library and will able to skip this step.)
 
-Search the `Python Package Index <http://www.python.org/pypi>`_.
+Search the `Python Package Index <http://cheeseshop.python.org/pypi>`_.
 
 Next, check the `Vaults of Parnassus <http://www.vex.net/parnassus/>`_, 
 an older index of packages.

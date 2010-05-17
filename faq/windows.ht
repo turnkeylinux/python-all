@@ -5,8 +5,8 @@ Content-type: text/x-rst
 Python Windows FAQ
 ====================================
 
-:Date: $Date: 2003/12/05 03:27:09 $
-:Version: $Revision: 1.4 $
+:Date: $Date: 2005-07-26 15:21:45 +0200 (Tue, 26 Jul 2005) $
+:Version: $Revision: 8295 $
 :Web site: http://www.python.org/
 
 .. contents::
@@ -200,8 +200,8 @@ How do I make python scripts executable?
 
 On Windows 2000, the standard Python installer already associates the
 .py extension with a file type (Python.File) and gives that file type
-an open command that runs the interpreter (D:\Program
-Files\Python\python.exe "%1" %*).  This is enough to make scripts
+an open command that runs the interpreter (D:\\Program
+Files\\Python\\python.exe "%1" %*).  This is enough to make scripts
 executable from the command prompt as 'foo.py'.  If you'd rather be
 able to execute the script by simple typing 'foo' with no extension
 you need to add .py to the PATHEXT environment variable.

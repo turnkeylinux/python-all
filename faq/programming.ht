@@ -5,8 +5,8 @@ Content-type: text/x-rst
 Programming FAQ
 ====================================
 
-:Date: $Date: 2004/07/30 21:38:58 $
-:Version: $Revision: 1.19 $
+:Date: $Date: 2005-12-22 06:00:52 +0100 (Thu, 22 Dec 2005) $
+:Version: $Revision: 8721 $
 :Web site: http://www.python.org/
 
 .. contents::
@@ -161,8 +161,7 @@ shouldn't pay the costs of reduced clarity (increased development
 time, greater likelihood of bugs) unless the resulting performance
 benefit is worth it.
 
-Skip Montanaro has a page of tips for speeding up Python code at
-http://manatee.mojam.com/~skip/python/fastpython.html.  
+There is a page on the wiki devoted to `performance tips <http://wiki.python.org/moin/PythonSpeed/PerformanceTips>`_.
 
 Guido van Rossum has written up an anecdote related to optimization at
 http://www.python.org/doc/essays/list2str.html.
@@ -227,7 +226,7 @@ Consider using the string formatting operations
 ``string % tuple`` and ``string % dictionary``.  
 
 Be sure to use the ``list.sort()`` builtin method to do sorting, and see
-the `sorting mini-HOWTO <http://www.amk.ca/python/howto/sorting/>`_ for examples of moderately advanced usage.
+the `sorting mini-HOWTO <http://wiki.python.org/moin/HowTo/Sorting>`_ for examples of moderately advanced usage.
 ``list.sort()`` beats other techniques for sorting in all but the most
 extreme circumstances.
 
@@ -1322,6 +1321,10 @@ A method defined as ``meth(self, a, b, c)`` should be called as
 ``x.meth(a, b, c)`` for some instance ``x`` of the class in which the
 definition occurs; the called method will think it is called as
 ``meth(x, a, b, c)``.
+
+See also
+`Why must 'self' be used explicitly in method definitions and calls?
+<general.html#why-must-self-be-used-explicitly-in-method-definitions-and-calls>`_
 
 How do I check if an object is an instance of a given class or of a subclass of it?
 -------------------------------------------------------------------------------------------

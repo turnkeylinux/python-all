@@ -3,7 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Matthias Klose <doko@debian.org>
 Build-Depends-Indep: debhelper (>= 4), libhtml-tree-perl, debiandoc-sgml, python-docutils
-Standards-Version: 3.6.1
+Standards-Version: 3.6.2
 
 Package: python
 Architecture: all
@@ -21,6 +21,22 @@ Description: An interactive high-level object-oriented language (default version
  .
  This package is a dependency package, which depends on Debian's default
  Python version (currently v2.3).
+
+Package: python-minimal
+Architecture: all
+Essential: yes
+Priority: required
+Depends: python2.3 (>= 2.3.4-18)
+Conflicts: python (<< 2.3.5-4)
+Replaces: python (<< 2.3.5-4)
+Description: A minimal subset of the Python language (default version)
+ This package contains the interpreter and some essential modules.  It's used
+ in the boot process for some basic tasks.
+ See /usr/share/doc/python-minimal/README.Debian for a list of the modules
+ contained in this package.
+ .
+ NOTE: There is no python2.3-minimal package yet, this package will depend
+ on the python2.4-minimal package after a change of default python version.
 
 Package: python-tk
 Architecture: all
@@ -119,3 +135,27 @@ Depends: python (>= 2.3), python2.3-dbg (>= 2.3.4-18)
 Description: Debug Build of the Python Interpreter (version 2.3)
  Python interpreter configured with --pydebug. Dynamically loaded modules are
  searched in /usr/lib/python2.3/lib-dynload/debug first.
+
+Package: python-all
+Architecture: all
+Priority: optional
+Depends: python2.3, python2.4
+Description: Package depending on all supported Python runtime versions
+ The package currently depends on python2.3 and python2.4, in the future,
+ dependencies on jython (Python for a JVM) and ironpython (Python for Mono)
+ may be added.
+ .
+ This package is used as a build dependency for other packages to
+ avoid hardcoded dependencies on specific Python runtimes.
+
+Package: python-all-dev
+Architecture: all
+Priority: optional
+Depends: python-all (>= 2.3), python2.3-dev, python2.4-dev
+Description: Package depending on all supported Python development packages
+ The package currently depends on python2.3-dev and python2.4-dev, in the
+ future, dependencies on jython (Python for a JVM) and ironpython (Python
+ for Mono) may be added.
+ .
+ This package is used as a build dependency for other packages to
+ avoid hardcoded dependencies on specific Python development packages.

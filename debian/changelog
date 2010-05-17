@@ -1,3 +1,16 @@
+python-defaults (2.3.5-4) unstable; urgency=low
+
+  * Add a package python-minimal. This package still depends on python2.3,
+    will depend on python2.4-minimal when changing the default python version.
+  * Add two dependency packages python-all and python-all-dev. These
+    packages are used as build dependencies to determine the set of
+    python version and implementations, which should be / currently are
+    supported. Currently it depends on python2.3 and python2.4.  Future
+    versions may add an updated version of jython and ironpython.
+  * Update FAQ.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 12 Jan 2006 00:32:32 +0100
+
 python-defaults (2.3.5-3) unstable; urgency=low
 
   * Add python-dbg package.

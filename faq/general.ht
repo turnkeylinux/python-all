@@ -5,8 +5,8 @@ Content-type: text/x-rst
 General Python FAQ
 ====================================
 
-:Date: $Date: 2004/10/20 17:10:37 $
-:Version: $Revision: 1.21 $
+:Date: $Date: 2005-12-17 03:21:20 +0100 (Sat, 17 Dec 2005) $
+:Version: $Revision: 8684 $
 :Web site: http://www.python.org/
 
 .. contents::
@@ -90,7 +90,7 @@ interfaces (system calls, filesystems, TCP/IP sockets).  Look at the
 table of contents for `the Library Reference
 <http://docs.python.org/lib/>`_ to get an idea of what's available.
 A wide variety of third-party extensions are also available.
-Consult `the Python Package Index <http://www.python.org/pypi>`_ to find
+Consult `the Python Package Index <http://cheeseshop.python.org/pypi>`_ to find
 packages of interest to you.
 
 
@@ -307,7 +307,7 @@ managed for stability; only fixes for known problems are included in a
 bugfix release, and it's guaranteed that interfaces will remain the
 same throughout a series of bugfix releases.
 
-The `2.3.3 release <../../2.3.3/>`_ is the most stable
+The `2.4.1 release <../../2.4.1/>`_ is the most stable
 version at this point in time.
 
 
@@ -618,7 +618,7 @@ two numbers is less than a certain threshold::
        ...
 
 Please see the chapter on
-`floating point arithmetic <http://docs.python.org/tut/node15.html>`_
+`floating point arithmetic <http://docs.python.org/tut/node16.html>`_
 in the Python tutorial for more information.
 
 
@@ -674,7 +674,9 @@ have declarations and it would be a pity having to introduce them just for
 this purpose.  Using the explicit "self.var" solves this nicely.  Similarly,
 for using instance variables, having to write "self.var" means that
 references to unqualified names inside a method don't have to search the
-instance's directories.
+instance's directories.  To put it another way, local variables and
+instance variables live in two different namespaces, and you need to
+tell Python which namespace to use.
 
 
 Why can't I use an assignment in an expression?
