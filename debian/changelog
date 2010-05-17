@@ -1,3 +1,25 @@
+python-defaults (2.4.4-3) unstable; urgency=low
+
+  * Add python2.5 as a supported python version.
+  * Depend on python2.4 packages (>= 2.4.4-4), built for ldbl128 on
+    alpha, powerpc, s390, sparc.
+  * python-all*: Depend on python2.5 packages (>= 2.4.5-1), built
+    for ldbl128 on alpha, powerpc, s390, sparc.
+  * Update the upstream FAQ.
+  * Merge pyversions.py changes from python-central.
+  * Merge changes from Ubuntu:
+    - Add a sanity check, that /usr/bin/python points to the default
+      python version. Users tend to modify this symlink, which then
+      breaks stuff in obscure ways. Ubuntu #75557, closes: #418002.
+    - python-dbg: Provide python-gdbm-dbg, python-tk-dbg,
+      link to README.debug, SpecialBuilds.txt.gz.
+    - python-dev: Add an unversioned python-config binary (backport
+      from python2.5 (appears in python2.4 2.4.4-4).
+    - Robustify building the faq html pages.
+    - Make the suggestions of various packages versioned.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  4 May 2007 06:05:12 +0200
+
 python-defaults (2.4.4-2) unstable; urgency=medium
 
   * python-all{,-dev}: Drop dependencies on python2.3{,-dev}.

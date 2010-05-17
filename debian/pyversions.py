@@ -8,6 +8,23 @@ except NameError:
     SetType = sets.Set
     set = sets.Set
 
+_defaults = None
+def read_default(name=None):
+    global _defaults
+    from ConfigParser import SafeConfigParser, NoOptionError
+    if not _defaults:
+        if os.path.exists('/usr/share/python/debian_defaults'):
+            config = SafeConfigParser()
+            config.readfp(file('/usr/share/python/debian_defaults'))
+            _defaults = config
+    if _defaults and name:
+        try:
+            value = _defaults.get('DEFAULT', name)
+        except NoOptionError:
+            raise ValueError
+        return value
+    return None
+
 def parse_versions(vstring):
     import operator
     operators = { None: operator.eq, '=': operator.eq,
@@ -49,15 +66,11 @@ _old_versions = None
 def old_versions(version_only=False):
     global _old_versions
     if not _old_versions:
-        if os.path.exists('/usr/share/python/debian_defaults'):
-            from ConfigParser import SafeConfigParser, NoOptionError
-            config = SafeConfigParser()
-            config.readfp(file('/usr/share/python/debian_defaults'))
-            try:
-                value = config.get('DEFAULT', 'old-versions')
-                _old_versions = [s.strip() for s in value.split(',')]
-            except NoOptionError:
-                _old_versions = []
+        try:
+            value = read_default('old-versions')
+            _old_versions = [s.strip() for s in value.split(',')]
+        except ValueError:
+            _old_versions = []
     if version_only:
         return [v[6:] for v in _old_versions]
     else:
@@ -67,15 +80,11 @@ _unsupported_versions = None
 def unsupported_versions(version_only=False):
     global _unsupported_versions
     if not _unsupported_versions:
-        if os.path.exists('/usr/share/python/debian_defaults'):
-            from ConfigParser import SafeConfigParser, NoOptionError
-            config = SafeConfigParser()
-            config.readfp(file('/usr/share/python/debian_defaults'))
-            try:
-                value = config.get('DEFAULT', 'unsupported-versions')
-                _unsupported_versions = [s.strip() for s in value.split(',')]
-            except NoOptionError:
-                _unsupported_versions = []
+        try:
+            value = read_default('unsupported-versions')
+            _unsupported_versions = [s.strip() for s in value.split(',')]
+        except ValueError:
+            _unsupported_versions = []
     if version_only:
         return [v[6:] for v in _unsupported_versions]
     else:
@@ -85,13 +94,10 @@ _supported_versions = None
 def supported_versions(version_only=False):
     global _supported_versions
     if not _supported_versions:
-        if os.path.exists('/usr/share/python/debian_defaults'):
-            from ConfigParser import SafeConfigParser
-            config = SafeConfigParser()
-            config.readfp(file('/usr/share/python/debian_defaults'))
-            value = config.get('DEFAULT', 'supported-versions')
+        try:
+            value = read_default('supported-versions')
             _supported_versions = [s.strip() for s in value.split(',')]
-        else:
+        except ValueError:
             cmd = ['/usr/bin/apt-cache', '--no-all-versions',
                    'show', 'python-all']
             try:
@@ -118,6 +124,11 @@ def default_version(version_only=False):
     global _default_version
     if not _default_version:
         _default_version = link = os.readlink('/usr/bin/python')
+    # consistency check
+    debian_default = read_default('default-version')
+    if not _default_version in (debian_default, os.path.join('/usr/bin', debian_default)):
+        raise ValueError, "the symlink /usr/bin/python does not point to the python default version. It must be reset to point to %s" % debian_default
+    _default_version = debian_default
     if version_only:
         return _default_version[6:]
     else:
@@ -267,7 +278,11 @@ def main():
     program = os.path.basename(sys.argv[0])
 
     if opts.default and len(args) == 0:
-        print default_version(opts.version_only)
+        try:
+            print default_version(opts.version_only)
+        except ValueError, msg:
+            print "%s:" % program, msg
+            sys.exit(1)
     elif opts.supported and len(args) == 0:
         print ' '.join(supported_versions(opts.version_only))
     elif opts.installed and len(args) == 0:
