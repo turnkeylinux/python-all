@@ -9,7 +9,7 @@ Package: python
 Architecture: all
 Priority: standard
 Depends: @PVER@ (>= @PREVVER@)
-Conflicts: python2.3 (<= 2.3.2-6), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.4.11)
+Conflicts: python2.3 (<= 2.3.2-6), python2.4 (<< 2.4.3-7), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.4.17)
 Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base
 Provides: python-email, python-xmlbase
 Suggests: python-doc, python-tk, python-profiler
@@ -37,7 +37,7 @@ Description: A minimal subset of the Python language (default version)
 
 Package: python-examples
 Architecture: all
-Depends: python (>= @VER@), python (<< @NVER@), @PVER@-examples (>= @PREVVER@)
+Depends: python (= ${Source-Version}), @PVER@-examples (>= @PREVVER@)
 Description: Examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in
  the upstream Python distribution.
@@ -47,7 +47,7 @@ Description: Examples for the Python language (default version)
 
 Package: python-dev
 Architecture: all
-Depends: python (>= @VER@), python (<< @NVER@), @PVER@-dev (>= @PREVVER@)
+Depends: python (= ${Source-Version}), @PVER@-dev (>= @PREVVER@)
 Description: Header files and a static library for Python (default)
  Header files, a static library and development tools for building
  Python modules, extending the Python interpreter or embedding Python
@@ -61,7 +61,7 @@ Description: Header files and a static library for Python (default)
 
 Package: idle
 Architecture: all
-Depends: python (>= @VER@), python (<< @NVER@), idle-@PVER@ (>= @PREVVER@)
+Depends: python (= ${Source-Version}), idle-@PVER@ (>= @PREVVER@)
 Enhances: python
 Description: An IDE for Python using Tkinter (default version)
  IDLE is an Integrated Development Environment for Python.
@@ -98,7 +98,7 @@ Description: Documentation for the high-level object-oriented language Python
 Package: python-dbg
 Architecture: all
 Priority: extra
-Depends: python (>= @VER@), python@VER@-dbg (>= @PREVVER@)
+Depends: python (= ${Source-Version}), python@VER@-dbg (>= @PREVVER@)
 Description: Debug Build of the Python Interpreter (version @VER@)
  Python interpreter configured with --pydebug. Dynamically loaded modules are
  searched in /usr/lib/python@VER@/lib-dynload/debug first.
@@ -106,7 +106,7 @@ Description: Debug Build of the Python Interpreter (version @VER@)
 Package: python-all
 Architecture: all
 Priority: optional
-Depends: python (>= @VER@), python2.3, python2.4
+Depends: python (= ${Source-Version}), python2.3, python2.4
 Description: Package depending on all supported Python runtime versions
  The package currently depends on python2.3 and python2.4, in the future,
  dependencies on jython (Python for a JVM) and ironpython (Python for Mono)
@@ -118,7 +118,7 @@ Description: Package depending on all supported Python runtime versions
 Package: python-all-dev
 Architecture: all
 Priority: optional
-Depends: python-all (>= @VER@), python-dev, python2.3-dev, python2.4-dev
+Depends: python-all (= ${Source-Version}), python-dev (= ${Source-Version}), python2.3-dev, python2.4-dev
 Description: Package depending on all supported Python development packages
  The package currently depends on python2.3-dev and python2.4-dev, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python

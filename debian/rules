@@ -14,7 +14,7 @@ export PVER=python2.3
 export PRIORITY=$(shell echo $(VER) | tr -d '.')0
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
-PREVVER := 2.3.5-1
+PREVVER := 2.3.5-14
 
 PWD		:= $(shell pwd)
 
@@ -151,12 +151,11 @@ binary-indep: build install stamp-doc
 	cp -p debian/debian_defaults \
 		debian/python/usr/share/python/
 
-	cp -p debian/pyversions.py \
+	install -m 755 debian/pyversions.py \
 		debian/python/usr/share/python/
-	install -m 755 debian/pyversions \
-		debian/python/usr/bin/
-	cp -p debian/pyversions.1 \
+	install -m 644 debian/pyversions.1 \
 		debian/python/usr/share/man/man1/
+	dh_link -ppython /usr/share/python/pyversions.py /usr/bin/pyversions
 
 	mkdir -p debian/python/usr/share/doc/python
 	cp -a debian/python-policy.{html,sgml,txt} \
