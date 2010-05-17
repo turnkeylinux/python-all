@@ -1,3 +1,12 @@
+python-defaults (2.4.3-7) experimental; urgency=low
+
+  * Update pyversions.py from 2.3.5-11.
+  * Fix pyversions(1), -r takes exactly one parameter.
+  * idle: Remove the dependency on idle-pythonX.Y, add start script
+    and man page.
+
+ -- Matthias Klose <doko@debian.org>  Sat,  5 Aug 2006 17:34:43 +0000
+
 python-defaults (2.4.3-6) experimental; urgency=low
 
   * Remove python's dependency on python-central. Closes: #372658.

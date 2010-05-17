@@ -170,6 +170,9 @@ binary-indep: build install stamp-doc
 	cp -a debian/python-policy.{html,sgml,txt} \
 		debian/python/usr/share/doc/python/
 
+	mkdir -p debian/python/usr/share/pixmaps
+	cp -p debian/pylogo.xpm debian/python/usr/share/pixmaps/python.xpm
+
 	: # add symlinks to policy files
 	mkdir -p debian/python/usr/share/doc/python$(VER)
 	for ext in html sgml.gz txt.gz; do \
@@ -199,15 +202,21 @@ endif
 
 	: # provide the idle and idle.1 defaults
 	mkdir -p debian/idle/usr/bin
-	ln -sf idle-python$(VER) debian/idle/usr/bin/idle
+	install -m 755 debian/idle.py debian/idle/usr/bin/idle
 
 	mkdir -p debian/idle/usr/share/man/man1
-	ln -sf idle-python$(VER).1.gz \
-		debian/idle/usr/share/man/man1/idle.1.gz
+	install -m 644 debian/idle.1 debian/idle/usr/share/man/man1/idle.1
+
+	mkdir -p debian/idle/usr/share/pixmaps
+	cp -p debian/pylogo.xpm debian/idle/usr/share/pixmaps/idle.xpm
+
+	mkdir -p debian/idle/usr/share/applications
+	cp -p debian/idle.desktop debian/idle/usr/share/applications/
 
 #	dh_installdebconf -i $(NOPKGS)
 	dh_installdocs -i $(NOPKGS) --all debian/README.Debian
 	dh_installmenu -i $(NOPKGS)
+	dh_desktop -i $(NOPKGS)
 	dh_installchangelogs -i $(NOPKGS)
 
 	for p in all all-dev dbg dev examples idle; do \

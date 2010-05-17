@@ -60,7 +60,7 @@ Description: Header files and a static library for Python (default)
 
 Package: idle
 Architecture: all
-Depends: python (= ${Source-Version}), idle-python2.4 (>= 2.4.3-7)
+Depends: python (= ${Source-Version})
 Enhances: python
 Description: An IDE for Python using Tkinter (default version)
  IDLE is an Integrated Development Environment for Python.
