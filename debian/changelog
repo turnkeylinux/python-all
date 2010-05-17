@@ -1,3 +1,9 @@
+python-defaults (2.5.4-3) experimental; urgency=low
+
+  * Add 2.6 as a supported version, remove 2.4 as a supported version.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 26 Feb 2009 18:52:35 +0100
+
 python-defaults (2.5.4-2) unstable; urgency=high
 
   * python-all*: Tighten the dependencies on the python-* packages.
