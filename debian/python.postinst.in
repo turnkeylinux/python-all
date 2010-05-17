@@ -14,7 +14,7 @@ case "$1" in
 	[ -d /etc/python ] || mkdir /etc/python
 	[ -f /etc/python/debian_config ] || new_config_file
 
-        if [ -n "$2" ] && dpkg --compare-versions $2 lt 2.4; then
+        if [ -n "$2" ] && dpkg --compare-versions $2 lt 2.5.2-1; then
 	    oldv=$(echo $2 | sed 's/^\(...\).*/\1/')
 	    if [ "$DEBIAN_FRONTEND" != noninteractive ]; then
 		echo "running python rtupdate hooks for @PVER@..."
