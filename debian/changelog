@@ -1,3 +1,12 @@
+python-defaults (2.4.4-1) unstable; urgency=medium
+
+  * Depend on the 2.4.4 versions of the packages.
+  * Sync pyversions.py with python-central.
+  * Move 2.3 to old-versions, from supported-versions.
+  * Add 2.5 to unsupported-versions.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 29 Oct 2006 11:06:39 +0100
+
 python-defaults (2.4.3-11) unstable; urgency=low
 
   * Add a conflict to python-central (<< 0.5.5).

@@ -2,6 +2,8 @@
 # the default python version
 default-version = python2.4
 # all supported python versions
-supported-versions = python2.3, python2.4
+supported-versions = python2.4
 # formerly supported python versions
-#old-versions = python2.3
+old-versions = python2.3
+# unsupported versions, including older versions
+unsupported-versions = python2.3, python2.5

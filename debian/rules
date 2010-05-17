@@ -12,10 +12,8 @@ export VER=2.4
 export NVER=2.5
 export PVER=python2.4
 
-VERSIONS = 2.3 2.4
-
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
-PREVVER := 2.4.3-7
+PREVVER := 2.4.4
 
 PWD		:= $(shell pwd)
 

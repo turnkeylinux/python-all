@@ -45,6 +45,42 @@ def parse_versions(vstring):
             vinfo['versions'] = exact_versions.union(version_range)
     return vinfo
 
+_old_versions = None
+def old_versions(version_only=False):
+    global _old_versions
+    if not _old_versions:
+        if os.path.exists('/usr/share/python/debian_defaults'):
+            from ConfigParser import SafeConfigParser, NoOptionError
+            config = SafeConfigParser()
+            config.readfp(file('/usr/share/python/debian_defaults'))
+            try:
+                value = config.get('DEFAULT', 'old-versions')
+                _old_versions = [s.strip() for s in value.split(',')]
+            except NoOptionError:
+                _old_versions = []
+    if version_only:
+        return [v[6:] for v in _old_versions]
+    else:
+        return _old_versions
+
+_unsupported_versions = None
+def unsupported_versions(version_only=False):
+    global _unsupported_versions
+    if not _unsupported_versions:
+        if os.path.exists('/usr/share/python/debian_defaults'):
+            from ConfigParser import SafeConfigParser, NoOptionError
+            config = SafeConfigParser()
+            config.readfp(file('/usr/share/python/debian_defaults'))
+            try:
+                value = config.get('DEFAULT', 'unsupported-versions')
+                _unsupported_versions = [s.strip() for s in value.split(',')]
+            except NoOptionError:
+                _unsupported_versions = []
+    if version_only:
+        return [v[6:] for v in _unsupported_versions]
+    else:
+        return _unsupported_versions
+
 _supported_versions = None
 def supported_versions(version_only=False):
     global _supported_versions
