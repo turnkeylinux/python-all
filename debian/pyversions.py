@@ -50,9 +50,9 @@ def supported_versions(version_only=False):
     global _supported_versions
     if not _supported_versions:
         if os.path.exists('/usr/share/python/debian_defaults'):
-            import ConfigParser
-            config = ConfigParser.SafeConfigParser()
-            config.read('/usr/share/python/debian_defaults')
+            from ConfigParser import SafeConfigParser
+            config = SafeConfigParser()
+            config.readfp(file('/usr/share/python/debian_defaults'))
             value = config.get('DEFAULT', 'supported-versions')
             _supported_versions = [s.strip() for s in value.split(',')]
         else:
@@ -92,11 +92,10 @@ def requested_versions(vstring, version_only=False):
     vinfo = parse_versions(vstring)
     supported = supported_versions(version_only=True)
     if len(vinfo) == 1:
-        vkey = vinfo[vinfo.keys()[0]]
         if 'all' in vinfo:
             versions = supported
         elif 'current' in vinfo:
-            versions = [default_version()]
+            versions = [default_version(version_only=True)]
         else:
             versions = vinfo['versions'].intersection(supported)
     elif 'all' in vinfo and 'current' in vinfo:

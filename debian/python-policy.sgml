@@ -23,6 +23,11 @@
       <version>version 0.3.7.2</version>
 
       <abstract>
+        The Python policy is currently in change; a draft
+         for the new policy can be found
+	  <url id="http://people.debian.org/~piman/python-policy/"
+	  name="here">.
+
 	This document describes the packaging of Python within the
 	Debian GNU/Linux distribution and the policy requirements for
 	packaged Python programs and modules.
