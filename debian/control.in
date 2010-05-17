@@ -6,6 +6,7 @@ Uploaders: Scott Kitterman <scott@kitterman.com>
 Build-Depends: debhelper (>= 5)
 Build-Depends-Indep: libhtml-tree-perl, debiandoc-sgml, python-docutils (>= 0.4-3)
 Standards-Version: 3.8.4
+Vcs-Bzr: https://alioth.debian.org/anonscm/bzr/pkg-python/python-defaults-debian
 
 Package: python
 Architecture: all
