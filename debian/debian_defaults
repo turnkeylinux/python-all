@@ -1,0 +1,3 @@
+[DEFAULT]
+default-version = python2.3
+supported-versions = python2.3, python2.4

@@ -1,3 +1,18 @@
+python-defaults (2.3.5-6) unstable; urgency=low
+
+  * Last 2.3.5 upload, 2.4.3 can be found in experimental.
+  * Do not build the python-mpz, python-tk and python-gdbm packages from
+    this source.
+  * Let the -all packages depend on the default packages (closes: #365219).
+  * Add /usr/share/python/debian_defaults for some default values (i.e.
+    the supported python versions).
+  * Add /etc/python/debian_config for byte-compilation options.
+  * Add a pyversions script to give information about python versions and
+    parse the XS-Python-Version attribute.
+  * Do not build the python-doc package from this source.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 11 Jun 2006 23:42:42 +0200
+
 python-defaults (2.3.5-5) unstable; urgency=low
 
   * Fix upgrade issues (closes: #348319, #348354).

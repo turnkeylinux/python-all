@@ -25,6 +25,9 @@ scriptdir	=  usr/lib/python$(VER)
 
 rst2html	= $(PVER) /usr/share/python-docutils/rst2html.py
 
+with_doc	= no
+NOPKGS		= -Npython-doc
+
 build: stamp-build
 stamp-build:
 	touch stamp-build
@@ -142,6 +145,18 @@ binary-indep: build install stamp-doc
 	ln -sf pdb$(VER).1.gz \
 		debian/python/usr/share/man/man1/pdb.1.gz
 
+	: # 
+	mkdir -p debian/python/usr/share/python
+	cp -p debian/debian_defaults \
+		debian/python/usr/share/python/
+
+	cp -p debian/pyversions.py \
+		debian/python/usr/share/python/
+	install -m 755 debian/pyversions \
+		debian/python/usr/bin/
+	cp -p debian/pyversions.1 \
+		debian/python/usr/share/man/man1/
+
 	mkdir -p debian/python/usr/share/doc/python
 	cp -a debian/python-policy.{html,sgml,txt} \
 		debian/python/usr/share/doc/python/
@@ -153,9 +168,11 @@ binary-indep: build install stamp-doc
 		debian/python/usr/share/doc/python$(VER)/python-policy.$$ext; \
 	done
 
+ifeq ($(with_doc),yes)
 	mkdir -p debian/python-doc/usr/share/doc/python
 	ln -sf ../python$(VER)-doc/html \
 		debian/python-doc/usr/share/doc/python/html
+endif
 
 	mkdir -p debian/python/usr/share/apps/konsole
 	cp -p debian/python.desktop debian/python/usr/share/apps/konsole/
@@ -179,21 +196,18 @@ binary-indep: build install stamp-doc
 	ln -sf idle-python$(VER).1.gz \
 		debian/idle/usr/share/man/man1/idle.1.gz
 
-	mkdir -p debian/python-tk/usr/share/doc/python-tk
-	cp -p debian/README.Tk debian/python-tk/usr/share/doc/python-tk/
-
-#	dh_installdebconf -i
-	dh_installdocs -i --all debian/README.Debian
-	dh_installmenu -i
-	dh_installchangelogs -i
+#	dh_installdebconf -i $(NOPKGS)
+	dh_installdocs -i $(NOPKGS) --all debian/README.Debian
+	dh_installmenu -i $(NOPKGS)
+	dh_installchangelogs -i $(NOPKGS)
 #	rm -rf debian/python-all-dev/usr/share/doc/python-all-dev
 #	ln -sf python$(VER)-all debian/python-all-dev/usr/share/doc/python-all-dev
-	dh_compress -i
-	dh_fixperms -i
-	dh_installdeb -i
-	dh_gencontrol -i
-	dh_md5sums -i
-	dh_builddeb -i
+	dh_compress -i $(NOPKGS)
+	dh_fixperms -i $(NOPKGS)
+	dh_installdeb -i $(NOPKGS)
+	dh_gencontrol -i $(NOPKGS)
+	dh_md5sums -i $(NOPKGS)
+	dh_builddeb -i $(NOPKGS)
 
 # Build architecture-dependent files here.
 binary-arch: build install

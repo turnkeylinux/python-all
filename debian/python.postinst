@@ -1,0 +1,18 @@
+#! /bin/sh -e
+
+new_config_file()
+{
+    cat > /etc/python/debian_config <<-EOF
+	[DEFAULT]
+	# how to byte-compile (comma separated: standard, optimize)
+	byte-compile = standard
+	EOF
+}
+
+case "$1" in
+    configure)
+	[ -d /etc/python ] || mkdir /etc/python
+	[ -f /etc/python/debian_config ] || new_config_file
+esac
+
+#DEBHELPER#

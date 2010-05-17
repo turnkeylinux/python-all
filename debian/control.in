@@ -35,36 +35,6 @@ Description: A minimal subset of the Python language (default version)
  NOTE: There is no python2.3-minimal package yet, this package will depend
  on the python2.4-minimal package after a change of default python version.
 
-Package: python-tk
-Architecture: all
-Depends: python (>= @VER@), python (<< @NVER@), @PVER@-tk (>= @PREVVER@)
-Description: Tkinter - Writing Tk applications with Python (default version)
- A module for writing portable GUI applications with Python sing Tk.
- Also known as Tkinter.
- .
- This package is a dependency package, which depends on Debian's default
- Python version (currently v@VER@).
-
-Package: python-gdbm
-Architecture: all
-Depends: python (>= @VER@), python (<< @NVER@), @PVER@-gdbm (>= @PREVVER@)
-Description: GNU dbm database support for Python (default version)
- GNU dbm database module for Python. Install this if you want to
- create or read GNU dbm database files with Python.
- .
- This package is a dependency package, which depends on Debian's default
- Python version (currently v@VER@).
-
-Package: python-mpz
-Architecture: all
-Depends: python (>= @VER@), python (<< @NVER@), @PVER@-mpz (>= @PREVVER@)
-Description: Multiple-precision arithmetic support for Python (default version)
- Arbitrary precision arithmetic for Python using the GNU MP
- library, i.e. bignum support.
- .
- This package is a dependency package, which depends on Debian's default
- Python version (currently v@VER@).
-
 Package: python-examples
 Architecture: all
 Depends: python (>= @VER@), python (<< @NVER@), @PVER@-examples (>= @PREVVER@)
@@ -136,7 +106,7 @@ Description: Debug Build of the Python Interpreter (version @VER@)
 Package: python-all
 Architecture: all
 Priority: optional
-Depends: python2.3, python2.4
+Depends: python-all (>= @VER@), python2.3, python2.4
 Description: Package depending on all supported Python runtime versions
  The package currently depends on python2.3 and python2.4, in the future,
  dependencies on jython (Python for a JVM) and ironpython (Python for Mono)
@@ -148,7 +118,7 @@ Description: Package depending on all supported Python runtime versions
 Package: python-all-dev
 Architecture: all
 Priority: optional
-Depends: python-all (>= @VER@), python2.3-dev, python2.4-dev
+Depends: python-all (>= @VER@), python-dev, python2.3-dev, python2.4-dev
 Description: Package depending on all supported Python development packages
  The package currently depends on python2.3-dev and python2.4-dev, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python
