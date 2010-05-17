@@ -1,3 +1,9 @@
+python-defaults (2.4.4-6) unstable; urgency=low
+
+  * python.postinst: Fix cleanup of temporary files. Closes: #424703, #424704.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 17 May 2007 08:17:16 +0200
+
 python-defaults (2.4.4-5) unstable; urgency=low
 
   * Run the python2.5 rtinstall hooks, if python2.5 was already
