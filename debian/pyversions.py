@@ -128,7 +128,7 @@ def supported_versions(version_only=False):
             if not _supported_versions:
                 # last resort: python-minimal not installed, apt-cache
                 # not available, hard code the value, #394084
-                _supported_versions = ['python2.5',]
+                _supported_versions = ['python2.4', 'python2.5']
     if version_only:
         return [v[6:] for v in _supported_versions]
     else:

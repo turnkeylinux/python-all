@@ -1,28 +1,8 @@
-python-defaults (2.5.4-6) unstable; urgency=low
+python-defaults (2.5.4-7) experimental; urgency=low
 
-  * Add python2.6 as a supported Python version.
-  * python-all{,-dev,-dbg}: Depend on the 2.6 packages.
-  * Run the rtinstall script, when 2.5 became a supported version (2.4.4-3)
-    and python2.5 is installed.
-  * Run the rtinstall script, when 2.6 became a supported version (2.5.4-6)
-    and python2.6 is installed. Closes: #565952.
-  * Fix reference to list of modules in the python-minimal package.
-    Closes: #558403.
+  * Add 2.6 as a supported version, remove 2.4 as a supported version.
 
- -- Matthias Klose <doko@debian.org>  Sun, 17 Jan 2010 01:38:21 +0100
-
-python-defaults (2.5.4-5) unstable; urgency=low
-
-  * Fix typos from policy update (Closes: #561091, #561093)
-  * Drop python2.4 as a supported Python
-    - Remove python2.4 depends and update descriptions for python-all,
-      python-all-dev, and python-all-dbg
-    - Drop python2.4 from supported versions and add to old and unsupported
-      versions
-    - Update pyversions.py to drop python2.4 from the supported list
-  * Correct path to Konsole Python desktop file (Closes: #381659)
-
- -- Scott Kitterman <scott@kitterman.com>  Wed, 23 Dec 2009 19:59:15 -0500
+ -- Scott Kitterman <scott@kitterman.com>  Mon, 14 Dec 2009 09:55:33 -0500
 
 python-defaults (2.5.4-4) unstable; urgency=low
 

@@ -10,7 +10,7 @@ Standards-Version: 3.8.3
 Package: python
 Architecture: all
 Priority: standard
-Depends: python2.5 (>= 2.5.4), python-minimal (>= ${binary:Version})
+Depends: python2.5-1 (>= 2.5.4), python-minimal (>= ${binary:Version})
 Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.5)
 Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base
 Provides: python-email, python-xmlbase, python-plistlib, python-ctypes, python-wsgiref
@@ -26,19 +26,19 @@ Description: An interactive high-level object-oriented language (default version
 Package: python-minimal
 Architecture: all
 Priority: standard
-Depends: python2.5-minimal (>= 2.5.4), dpkg (>= 1.13.20)
+Depends: python2.5-1-minimal (>= 2.5.4), dpkg (>= 1.13.20)
 Conflicts: python (<= 2.4-1), python-central (<< 0.5.5)
 Replaces: python (<= 2.4-1)
 Recommends: python
 Description: A minimal subset of the Python language (default version)
  This package contains the interpreter and some essential modules.  It's used
  in the boot process for some basic tasks.
- See /usr/share/doc/python2.5-minimal/README.Debian for a list of the modules
+ See /usr/share/doc/python-minimal/README.Debian for a list of the modules
  contained in this package.
 
 Package: python-examples
 Architecture: all
-Depends: python (>= ${binary:Version}), python2.5-examples (>= 2.5.4)
+Depends: python (>= ${binary:Version}), python2.5-1-examples (>= 2.5.4)
 Description: Examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in
  the upstream Python distribution.
@@ -48,7 +48,7 @@ Description: Examples for the Python language (default version)
 
 Package: python-dev
 Architecture: all
-Depends: python (>= ${binary:Version}), python2.5-dev (>= 2.5.4)
+Depends: python (>= ${binary:Version}), python2.5-1-dev (>= 2.5.4)
 Description: Header files and a static library for Python (default)
  Header files, a static library and development tools for building
  Python modules, extending the Python interpreter or embedding Python
@@ -62,7 +62,7 @@ Description: Header files and a static library for Python (default)
 
 Package: idle
 Architecture: all
-Depends: python (>= ${binary:Version}), python-tk (>= 2.4.3-3), idle-python2.5
+Depends: python (>= ${binary:Version}), python-tk (>= 2.4.3-3), idle-python2.5-1
 Enhances: python
 Description: An IDE for Python using Tkinter (default version)
  IDLE is an Integrated Development Environment for Python.
@@ -70,31 +70,6 @@ Description: An IDE for Python using Tkinter (default version)
  .
  This package is a dependency package, which depends on Debian's default
  Python version (currently v2.5) of IDLE.
-
-#Package: python-doc
-#Section: doc
-#Architecture: all
-#Depends: python2.5-doc (>= 2.5.4)
-#Suggests: python (>= ${binary:Version})
-#Conflicts: python-doc-info, python (<< 2.3.5)
-#Replaces: python-doc-info, python (<< 2.3.5)
-#Description: Documentation for the high-level object-oriented language Python
-# This is the official set of documentation for the interactive high-level
-# object-oriented language Python (v2.5). All documents are provided
-# in HTML format, some in info format. The package consists of nine documents:
-# .
-#   * Tutorial
-#   * Python Library Reference
-#   * Macintosh Module Reference
-#   * Python Language Reference
-#   * Extending and Embedding Python
-#   * Python/C API Reference
-#   * Installing Python Modules
-#   * Documenting Python
-#   * Distributing Python Modules
-# .
-# This package is a dependency package, which depends on Debian's default
-# Python version (currently v2.5).
 
 Package: python-dbg
 Architecture: all
@@ -109,7 +84,7 @@ Description: Debug Build of the Python Interpreter (version 2.5)
 Package: python-all
 Architecture: all
 Priority: optional
-Depends: python (>= ${binary:Version}), python2.5 (>= 2.5.4-1), python2.6 (>= 2.6.4-2)
+Depends: python (>= ${binary:Version}), python2.5 (>= 2.5.4-1), python2.6 (>= 2.6.1-1)
 Description: Package depending on all supported Python runtime versions
  The package currently depends on python2.5 and python2.6, in the future,
  dependencies on jython (Python for a JVM) and ironpython (Python for Mono)
@@ -121,7 +96,7 @@ Description: Package depending on all supported Python runtime versions
 Package: python-all-dev
 Architecture: all
 Priority: optional
-Depends: python (>= ${binary:Version}), python-all (>= ${binary:Version}), python-dev (>= ${binary:Version}), python2.5-dev (>= 2.5.4-1), python2.5-dev (>= 2.6.4-2)
+Depends: python (>= ${binary:Version}), python-all (>= ${binary:Version}), python-dev (>= ${binary:Version}), python2.5-dev (>= 2.5.4-1), python2.6-dev (>= 2.6.1-1)
 Description: Package depending on all supported Python development packages
  The package currently depends on python2.5-dev and python2.6-dev, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python
@@ -134,9 +109,9 @@ Package: python-all-dbg
 Architecture: all
 Section: debug
 Priority: extra
-Depends: python (>= ${binary:Version}), python-all (>= ${binary:Version}), python-dbg (>= ${binary:Version}), python2.5-dbg (>= 2.5.4-1), python2.6-dbg (>= 2.6.4-2)
+Depends: python (>= ${binary:Version}), python-all (>= ${binary:Version}), python-dbg (>= ${binary:Version}), python2.5-dbg (>= 2.5.4-1), python2.6-dbg (>= 2.6.1-1)
 Description: Package depending on all supported Python debugging packages
- The package currently depends on python2.5-dbg and python2.6-dbg, in the
+ The package currently depends on python2.4-dbg and python2.5-dbg, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python
  for Mono) may be added.
  .
