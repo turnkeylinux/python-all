@@ -1,3 +1,9 @@
+python-defaults (2.4.3-8) experimental; urgency=low
+
+  * idle: Depend on python-tk, add desktop and menu files.
+
+ -- Matthias Klose <doko@debian.org>  Sat,  5 Aug 2006 18:38:31 +0000
+
 python-defaults (2.4.3-7) experimental; urgency=low
 
   * Update pyversions.py from 2.3.5-11.
