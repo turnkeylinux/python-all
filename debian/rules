@@ -160,6 +160,13 @@ binary-indep: build install stamp-doc
 	mkdir -p debian/python/usr/share/apps/konsole
 	cp -p debian/python.desktop debian/python/usr/share/apps/konsole/
 
+	: # provide the python-dbg and python-dbg.1 defaults
+	mkdir -p debian/python-dbg/usr/bin
+	ln -sf python$(VER)-dbg debian/python-dbg/usr/bin/python-dbg
+	mkdir -p debian/python-dbg/usr/share/man/man1
+	ln -sf python$(VER)-dbg.1.gz \
+		debian/python-dbg/usr/share/man/man1/python-dbg.1.gz
+
 	mkdir -p debian/python/usr/lib/valgrind
 	cp -p debian/valgrind-python.supp \
 		debian/python/usr/lib/valgrind/python.supp
@@ -179,6 +186,8 @@ binary-indep: build install stamp-doc
 	dh_installdocs -i --all debian/README.Debian
 	dh_installmenu -i
 	dh_installchangelogs -i
+#	rm -rf debian/python-all-dev/usr/share/doc/python-all-dev
+#	ln -sf python$(VER)-all debian/python-all-dev/usr/share/doc/python-all-dev
 	dh_compress -i
 	dh_fixperms -i
 	dh_installdeb -i

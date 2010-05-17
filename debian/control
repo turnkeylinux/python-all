@@ -79,6 +79,7 @@ Description: Header files and a static library for Python (default)
 Package: idle
 Architecture: all
 Depends: python (>= 2.3), python (<< 2.4), idle-python2.3 (>= 2.3.4-18)
+Enhances: python
 Description: An IDE for Python using Tkinter (default version)
  IDLE is an Integrated Development Environment for Python.
  IDLE is written using Tkinter and therefore quite platform-independent.
@@ -110,3 +111,11 @@ Description: Documentation for the high-level object-oriented language Python
  .
  This package is a dependency package, which depends on Debian's default
  Python version (currently v2.3).
+
+Package: python-dbg
+Architecture: all
+Priority: extra
+Depends: python (>= 2.3), python2.3-dbg (>= 2.3.4-18)
+Description: Debug Build of the Python Interpreter (version 2.3)
+ Python interpreter configured with --pydebug. Dynamically loaded modules are
+ searched in /usr/lib/python2.3/lib-dynload/debug first.

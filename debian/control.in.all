@@ -1,0 +1,30 @@
+
+  * Add two dependency packages python-all and python-all-dev. These
+    packages are used as build dependencies to determine the set of
+    python version and implementations, which should be supported.
+    Currently it depends on python2.3 and python2.4.  Future versions
+    may add an updated version of jython and ironpython.
+
+Package: python-all
+Architecture: all
+Priority: optional
+Depends: python2.3, python2.4
+Description: Package depending on all supported Python runtime versions
+ The package currently depends on python2.3 and python2.4, in the future,
+ dependencies on jython (Python for a JVM) and ironpython (Python for Mono)
+ may be added.
+ .
+ This package is mostly used as a build dependency for other packages to
+ avoid hardcoded dependencies on specific Python runtimes.
+
+Package: python-all-dev
+Architecture: all
+Priority: optional
+Depends: python-all (>= @VER@), python2.3-dev, python2.4-dev
+Description: Package depending on all supported Python development packages
+ The package currently depends on python2.3-dev and python2.4-dev, in the
+ future, dependencies on jython (Python for a JVM) and ironpython (Python
+ for Mono) may be added.
+ .
+ This package is mostly used as a build dependency for other packages to
+ avoid hardcoded dependencies on specific Python development packages.

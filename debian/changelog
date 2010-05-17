@@ -1,3 +1,10 @@
+python-defaults (2.3.5-3) unstable; urgency=low
+
+  * Add python-dbg package.
+  * debian/control.in: idle enhances python.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 19 Jun 2005 13:49:16 +0200
+
 python-defaults (2.3.5-2) unstable; urgency=low
 
   * Add valgrind support file /usr/lib/valgrind/python.supp (closes: #291128).
