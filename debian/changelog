@@ -1,3 +1,9 @@
+python-defaults (2.5.4-2) unstable; urgency=high
+
+  * python-all*: Tighten the dependencies on the python-* packages.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 26 Feb 2009 12:44:47 +0000
+
 python-defaults (2.5.4-1) unstable; urgency=medium
 
   * Depend on python2.5-2.5.4.

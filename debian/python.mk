@@ -26,11 +26,11 @@ py_sitename = $(if $(filter $(subst python,,$(1)), 2.3 2.4 2.5),site,dist)-packa
 py_libdir = /usr/lib/python$(subst python,,$(1))/$(py_sitename)
 
 
-# The same macros for use in shell snippets
+# The same macros for use inside loops in shell snippets
 
-py_sitename_sh = $$(basename $$(python$(subst python,,$(1)) -c 'from distutils import sysconfig; print sysconfig.get_python_lib()'))
+py_sitename_sh = $$(basename $$(_py_=$(strip $(1)); python$${_py_\#python*} -c 'from distutils import sysconfig; print(sysconfig.get_python_lib())'))
 
-py_libdir_sh = $$(python$(subst python,,$(1)) -c 'from distutils import sysconfig; print sysconfig.get_python_lib()')
+py_libdir_sh = $$(_py_=$(strip $(1)); python$${_py_\#python*} -c 'from distutils import sysconfig; print(sysconfig.get_python_lib())')
 
 # Arguments to pass to setup.py install
 py_setup_install_args = --install-layout=deb

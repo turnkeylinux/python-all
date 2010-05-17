@@ -106,7 +106,7 @@ Description: Debug Build of the Python Interpreter (version @VER@)
 Package: python-all
 Architecture: all
 Priority: optional
-Depends: python (= ${Source-Version}), python2.4 (>= 2.4.4-4), python2.5 (>= 2.5.1-1)
+Depends: python (= ${Source-Version}), python2.4 (>= 2.4.6-2), python2.5 (>= 2.5.4-1)
 Description: Package depending on all supported Python runtime versions
  The package currently depends on python2.4 and python2.5, in the future,
  dependencies on jython (Python for a JVM) and ironpython (Python for Mono)
@@ -118,7 +118,7 @@ Description: Package depending on all supported Python runtime versions
 Package: python-all-dev
 Architecture: all
 Priority: optional
-Depends: python-all (= ${Source-Version}), python-dev (= ${Source-Version}), python2.4-dev (>= 2.4.4-4), python2.5-dev (>= 2.5.1-1)
+Depends: python-all (= ${Source-Version}), python-dev (= ${Source-Version}), python2.4-dev (>= 2.4.6-2), python2.5-dev (>= 2.5.4-1)
 Description: Package depending on all supported Python development packages
  The package currently depends on python2.4-dev and python2.5-dev, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python
@@ -130,7 +130,7 @@ Description: Package depending on all supported Python development packages
 Package: python-all-dbg
 Architecture: all
 Priority: optional
-Depends: python-all (= ${Source-Version}), python-dbg (= ${Source-Version}), python2.4-dbg (>= 2.4.4-4), python2.5-dbg (>= 2.5.1-1)
+Depends: python-all (= ${Source-Version}), python-dbg (= ${Source-Version}), python2.4-dbg (>= 2.4.6-2), python2.5-dbg (>= 2.5.4-1)
 Description: Package depending on all supported Python debugging packages
  The package currently depends on python2.4-dbg and python2.5-dbg, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python
