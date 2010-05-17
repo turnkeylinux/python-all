@@ -15,12 +15,12 @@ PKGVERSION := $(word 2, $(changelog_values))
 
 distribution := $(shell lsb_release -is)
 
-export VER=2.5
-export NVER=2.6
-export PVER=python2.5
+export VER=2.6
+export NVER=2.7
+export PVER=python2.6
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
-PREVVER := 2.5.4
+PREVVER := 2.6.5-2
 
 PWD		:= $(shell pwd)
 
@@ -31,7 +31,7 @@ scriptdir	=  usr/lib/python$(VER)
 
 rst2html	= rst2html
 
-with_doc	= no
+with_doc	= yes
 ifneq ($(with_doc),yes)
   NOPKGS	= -Npython-doc
 endif
@@ -117,11 +117,10 @@ stamp-control:
 	    fi; \
 	done
 
-install: build stamp-install
+install: build stamp-dh_python stamp-install
 stamp-install: stamp-build control-file stamp-control
 	dh_testdir
 	dh_testroot
-	dh_clean -k
 	dh_installdirs usr/share/doc/python/faq
 
 	set -e; \
@@ -138,6 +137,15 @@ stamp-install: stamp-build control-file stamp-control
 		debian/python/usr/share/doc/python/
 
 	touch stamp-install
+
+stamp-dh_python:
+	dh_testdir
+	dh_testroot
+	dh_installdirs
+	DESTDIR=debian/python-dev make install-dev
+	DESTDIR=debian/python-minimal make install-runtime
+	find debian/python-minimal
+	touch $@
 
 # Build architecture-independent files here.
 binary-indep: build install stamp-doc
@@ -161,6 +169,11 @@ binary-indep: build install stamp-doc
 	install -m 644 debian/pyversions.1 \
 		debian/python-minimal/usr/share/man/man1/
 	dh_link -ppython /usr/share/python/pyversions.py /usr/bin/pyversions
+
+#	install -m 755 debian/pycompile \
+#		debian/python-minimal/usr/bin/
+#	install -m 755 debian/pyclean \
+#		debian/python-minimal/usr/bin/
 
 #	mkdir debian/python-minimal/usr/share/python-central
 #	cp -p debian/python.pycentral debian/python-minimal/usr/share/python-central/

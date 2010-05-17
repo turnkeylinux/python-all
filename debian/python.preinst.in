@@ -37,6 +37,14 @@ case "$1" in
 	    mkdir -p /var/lib/python
 	    echo "$version" > /var/lib/python/python2.5_already_installed
 	fi
+
+	# 2.5.4-6 is the first version, which adds python2.6 as supported
+	# version; need to run an rtinstall python2.6 in the postinst.
+        if dpkg --compare-versions $2 lt 2.5.4-6 && [ -x /usr/bin/python2.6 ]; then
+	    version=$(dpkg -s python2.6-minimal | awk '/^Version:/ {print $2}')
+	    mkdir -p /var/lib/python
+	    echo "$version" > /var/lib/python/python2.6_already_installed
+	fi
 esac
 
 #DEBHELPER#
