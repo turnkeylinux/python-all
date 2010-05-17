@@ -25,5 +25,7 @@ case "$1" in
 		fi
 	    done
 	    [ -z "$errors" ] || exit 3
+	fi
+esac
 
 #DEBHELPER#

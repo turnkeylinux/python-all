@@ -8,9 +8,8 @@ Standards-Version: 3.7.2
 Package: python
 Architecture: all
 Priority: standard
-Pre-Depends: python-minimal (>= 2.4)
 Depends: python2.4 (>= 2.4.3-7), python-minimal (= ${Source-Version})
-Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.3)
+Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.4)
 Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base
 Provides: python-email, python-xmlbase
 Suggests: python-doc, python-tk, python-profiler

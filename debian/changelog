@@ -1,3 +1,9 @@
+python-defaults (2.4.3-9) experimental; urgency=low
+
+  * Fix syntax error in python.preinst. Closes: #381673.
+
+ -- Matthias Klose <doko@debian.org>  Sun,  6 Aug 2006 12:39:34 +0000
+
 python-defaults (2.4.3-8) experimental; urgency=low
 
   * idle: Depend on python-tk, add desktop and menu files.
