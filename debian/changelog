@@ -1,3 +1,10 @@
+python-defaults (2.5.4-8) experimental; urgency=low
+
+  * Correct definition of PVER in debian/rules so python is installable in
+    experimental again
+
+ -- Scott Kitterman <scott@kitterman.com>  Tue, 15 Dec 2009 16:57:40 -0500
+
 python-defaults (2.5.4-7) experimental; urgency=low
 
   * Add 2.6 as a supported version, remove 2.4 as a supported version.
