@@ -15,7 +15,7 @@ export PVER=python2.4
 VERSIONS = 2.3 2.4
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
-PREVVER := 2.4.3
+PREVVER := 2.4.3-7
 
 PWD		:= $(shell pwd)
 
@@ -141,12 +141,11 @@ binary-indep: build install stamp-doc
 	cp -p debian/debian_defaults \
 		debian/python-minimal/usr/share/python/
 
-	cp -p debian/pyversions.py \
+	install -m 755 debian/pyversions.py \
 		debian/python-minimal/usr/share/python/
-	install -m 755 debian/pyversions \
-		debian/python-minimal/usr/bin/
-	cp -p debian/pyversions.1 \
+	install -m 644 debian/pyversions.1 \
 		debian/python-minimal/usr/share/man/man1/
+	dh_link -ppython /usr/share/python/pyversions.py /usr/bin/pyversions
 
 #	mkdir debian/python-minimal/usr/share/python-central
 #	cp -p debian/python.pycentral debian/python-minimal/usr/share/python-central/

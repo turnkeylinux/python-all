@@ -1,3 +1,14 @@
+python-defaults (2.4.3-5) experimental; urgency=low
+
+  * Tighten dependencies between packages built from this source.
+    A versioned dependency on python-all / python-all-dev is enough
+    to depend on the same version of python / python-dev.
+  * python: Conflict with python-central (<< 0.4.17).
+  * python: Depend on a python2.4 built for the updated Python policy.
+  * python: Conflict with a python2.3 using the old Python policy.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 16 Jun 2006 18:15:00 +0200
+
 python-defaults (2.4.3-4) experimental; urgency=low
 
   * Include version 0.4.1.0 of the python policy.
