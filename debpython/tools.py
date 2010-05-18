@@ -118,13 +118,16 @@ def shebang2pyver(fname):
     :rtype: tuple
     :returns: pair of Python interpreter string and Python version
     """
-    with open(fname) as fp:
-        data = fp.read(32)
-        match = SHEBANG_RE.match(data)
-        if not match:
-            return None
-        res = match.groups()
-        if res != (None, None):
-            if res[1]:
-                res = res[0], getver(res[1])
-            return res
+    try:
+        with open(fname) as fp:
+            data = fp.read(32)
+            match = SHEBANG_RE.match(data)
+            if not match:
+                return None
+            res = match.groups()
+            if res != (None, None):
+                if res[1]:
+                    res = res[0], getver(res[1])
+                return res
+    except IOError:
+        log.error('cannot open %s', fname)

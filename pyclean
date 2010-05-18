@@ -34,7 +34,8 @@ from debpython.version import SUPPORTED
 
 
 # initialize script
-logging.basicConfig()
+logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
+                           '%(message)s')
 log = logging.getLogger('pyclean')
 
 """TODO: move it to manpage
