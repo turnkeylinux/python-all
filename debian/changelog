@@ -2,7 +2,7 @@ python-defaults (2.6.5-2) UNRELEASED; urgency=low
 
   * 
 
- -- Matthias Klose <doko@debian.org>  Mon, 17 May 2010 13:21:09 +0200
+ -- Matthias Klose <doko@debian.org>  Tue, 18 May 2010 12:28:25 +0200
 
 python-defaults (2.6.5-1) experimental; urgency=low
 
