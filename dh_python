@@ -46,7 +46,7 @@ logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
 log = logging.getLogger('dh_python')
 os.umask(022)
 
-EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d+)(.*?)(\.egg-info|\.pth)$')  # FIXME: optional group(2)
+EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d+)?(.*?)(\.egg-info|\.pth)$')
 PUBLIC_DIR_RE = re.compile(r'.*?/usr/lib/python(\d.\d+)/(site|dist)-packages')
 
 
@@ -132,12 +132,15 @@ def share(package, stats, options):
         # TODO: remove this once file conflicts will not be needed anymore
         move_to_pyshared(sitedir(pv_2x[0], package))
 
+    for version in stats['public_ext']:
+        create_ext_links(sitedir(version, package))
+
     if options.guess_versions and pv_2x:
         versions = get_requested_versions(options.vrange)
         for version in (i for i in versions if i[0] == 2):
             if version not in pv_2x:
                 log.debug('guessing files for Python %s', vrepr(version))
-                versions_without_ext = debsorted(set(pv_2x) - stats['ext_for'])
+                versions_without_ext = debsorted(set(pv_2x) - stats['public_ext'])
                 if not versions_without_ext:
                     log.error('you most probably have to build extension '
                               'for python%s.', vrepr(version))
@@ -151,10 +154,8 @@ def share(package, stats, options):
 def move_to_pyshared(dir1):
     # dir1 starts with debian/packagename/usr/lib/pythonX.Y/*-packages/
     debian, package, path = dir1.split('/', 2)
-    dstdir = join(debian, package, 'usr/share/pyshared/',\
+    dstdir = join(debian, package, 'usr/share/pyshared/', \
                   '/'.join(dir1.split('/')[6:]))
-    if not exists(dstdir):
-        os.makedirs(dstdir)
 
     fext = lambda fname: fname.rsplit('.', 1)[-1]
 
@@ -169,8 +170,35 @@ def move_to_pyshared(dir1):
                 continue
             fpath2 = join(dstdir, i)
             if not exists(fpath2):
+                if not exists(dstdir):
+                    os.makedirs(dstdir)
                 os.rename(fpath1, fpath2)
                 relative_symlink(fpath2, fpath1)
+
+
+def create_ext_links(dir1):
+    """Create extension symlinks in /usr/lib/pyshared/pythonX.Y.
+
+    These symlinks are used to let dpkg detect file conflicts with
+    python-support and python-central packages.
+    """
+
+    debian, package, path = dir1.split('/', 2)
+    python, _, module_subpath = path[8:].split('/', 2)
+    dstdir = join(debian, package, 'usr/lib/pyshared/', python, module_subpath)
+
+    for i in os.listdir(dir1):
+        fpath1 = join(dir1, i)
+        if isdir(fpath1):
+            create_ext_links(fpath1)
+        elif i.rsplit('.', 1)[-1] == 'so':
+            fpath2 = join(dstdir, i)
+            if exists(fpath2):
+                continue
+            if not exists(dstdir):
+                os.makedirs(dstdir)
+            print fpath1, join(dstdir, i)
+            relative_symlink(fpath1, join(dstdir, i))
 
 
 def share_2x(dir1, dir2, dc=None):
@@ -241,7 +269,7 @@ def scan(package, dname=None):
          'public_vers': set(),
          'private_dirs': {},
          'compile': False,
-         'ext_for': set()}
+         'public_ext': set()}
 
     dbg_package = package.endswith('-dbg')
 
@@ -316,7 +344,7 @@ def scan(package, dname=None):
                 if fext == 'so':
                     (r if public_dir else
                      r['private_dirs'].setdefault(private_dir, {}))\
-                    ['ext_for'].add(version)
+                    ['public_ext'].add(version)
                     continue
                 elif fext == 'py':
                     (r if public_dir else
@@ -341,9 +369,9 @@ def scan(package, dname=None):
 
     if dbg_package:
         # remove empty directories in -dbg packages
-        proot = proot + 'usr/lib'
+        proot = proot + '/usr/lib'
         for root, dirs, file_names in os.walk(proot, topdown=False):
-            if '-packages/' in root:
+            if '-packages/' in root and not file_names:
                 try:
                     os.rmdir(root)
                 except:
@@ -542,7 +570,7 @@ def main():
             args = "-p %s %s" % (package, private_dir)
             inst_args = ''
 
-            ext_for = details.get('ext_for')
+            ext_for = details.get('public_ext')
             if ext_for is None:  # no extension
                 if options.vrange:
                     inst_args += " -V %s" % vrange_str(options.vrange)
