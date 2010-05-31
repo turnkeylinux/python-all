@@ -23,7 +23,6 @@ from __future__ import with_statement
 import logging
 import re
 from os import symlink
-from subprocess import PIPE, Popen
 from sys import exit
 from debpython.version import getver, vrepr
 
@@ -75,41 +74,6 @@ def relpath(target, link):
 def relative_symlink(target, link):
     """Create relative symlink."""
     return symlink(relpath(target, link), link)
-
-
-def guess_dependency(req, version):
-    log.debug('trying to guess dependency for %s (python=%s)',
-              req, vrepr(version))
-    if isinstance(version, basestring):
-        version = getver(version)
-    name = req.split()[0]  # only dist name, without version
-    query = "'%s-?*\.egg-info'" % name  # TODO: .dist-info
-    if version and version[0] == 3:
-        query = "%s | grep '/python3" % query
-    else:
-        if version:
-            query = "%s | grep '/python%s/\|/pyshared/'" %\
-                    (query, vrepr(version))
-        else:
-            query = "%s | grep '/python2\../\|/pyshared/'" % query
-
-    log.debug("invoking dpkg -S %s", query)
-    process = Popen("/usr/bin/dpkg -S %s" % query,\
-                    shell=True, stdout=PIPE, stderr=PIPE)
-    if process.wait() != 0:
-        log.error('Cannot find package that provides %s.', name)
-        log.info("hint: `apt-file search -x '(packages|pyshared)/" +\
-                  "%s' -l` might help", name)
-        # TODO: false positive - .pydist
-        exit(8)
-
-    result = set()
-    for line in process.stdout:
-        result.add(line.split(':')[0])
-    if len(result) > 1:
-        log.error('more than one package name found for %s dist', name)
-        exit(9)
-    return result.pop()
 
 
 def shebang2pyver(fname):

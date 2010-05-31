@@ -36,7 +36,8 @@ from debpython.debhelper import DebHelper
 from debpython.version import SUPPORTED, DEFAULT, \
     debsorted, getver, vrepr, parse_pycentral_vrange, \
     get_requested_versions, parse_vrange, vrange_str
-from debpython.tools import sitedir, relative_symlink, guess_dependency, \
+from debpython.pydist import guess_dependency, validate as validate_pydist
+from debpython.tools import sitedir, relative_symlink, \
                             shebang2pyver
 from debpython.option import Option
 
@@ -48,7 +49,6 @@ os.umask(022)
 
 EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d+)?(.*?)(\.egg-info|\.pth)$')
 PUBLIC_DIR_RE = re.compile(r'.*?/usr/lib/python(\d.\d+)/(site|dist)-packages')
-
 
 """TODO: move it to manpage
 Examples:
@@ -88,7 +88,7 @@ def fix_locations(package):
                     log.error('files for version %s '
                               'found in two locations:\n %s\n %s',
                               ver, location, found_versions[ver])
-                    sys.exit(10)
+                    sys.exit(2)
                 if not isdir(dstdir):
                     os.makedirs(dstdir)
                 # TODO: what about relative symlinks?
@@ -197,7 +197,6 @@ def create_ext_links(dir1):
                 continue
             if not exists(dstdir):
                 os.makedirs(dstdir)
-            print fpath1, join(dstdir, i)
             relative_symlink(fpath1, join(dstdir, i))
 
 
@@ -463,7 +462,7 @@ def parse_pydep(fname):
 ################################################################
 def main():
     if exists('debian/pycompat'):
-        sys.exist(0)  # be compatible with old dh_python
+        sys.exit(0)  # be compatible with old dh_python
     usage = '%prog -p PACKAGE [-V [X.Y][-][A.B]] DIR_OR_FILE [-X REGEXPR]\n'
     parser = OptionParser(usage, version='%prog 2.0~alpha1',
                                    option_class=Option)
@@ -502,7 +501,7 @@ def main():
             pattern = re.compile(pattern)
         except:
             log.error('regular expression is not valid: %s', pattern)
-            sys.exit(14)
+            sys.exit(1)
 
     if not options.vrange and exists('debian/pyversions'):
         log.debug('parsing version range from debian/pyversions')
@@ -590,6 +589,14 @@ def main():
             dh.autoscript(package, 'postinst', 'postinst-pycompile',\
                           args + inst_args)
             dh.autoscript(package, 'prerm', 'prerm-pyclean', args)
+
+        pydist_file = join('debian', "%s.pydist" % package)
+        if exists(pydist_file) and validate_pydist(pydist_file, True):
+            dstdir = join('debian', package, 'usr/share/python/dist/')
+            if not exists(dstdir):
+                os.makedirs(dstdir)
+            fcopy(pydist_file, join(dstdir, package))
+
     dh.save()
 
 if __name__ == '__main__':
