@@ -48,7 +48,12 @@ def parse_versions(vstring, add_exact=False):
         ve = re.compile('(>=|<=|<<|=)? *(\d\.\d)$')
         m = ve.match(field)
         try:
+            if not m:
+                raise ValueError('error parsing Python-Version attribute')
             op, v = m.group(1), m.group(2)
+            vmaj, vmin = v.split('.')
+            if int(vmaj) > 2:
+                continue
             if op in (None, '='):
                 exact_versions.add(v)
             else:
@@ -201,7 +206,7 @@ def requested_versions(vstring, version_only=False):
         if 'vexact' in vinfo:
             versions.update(vinfo['vexact'])
     else:
-        raise ValueError, 'error in version string'
+        raise ValueError, 'No python versions in version string'
     if not versions:
         raise PyCentralEmptyValueError, 'empty set of versions'
     if version_only:
