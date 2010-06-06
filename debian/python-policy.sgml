@@ -421,9 +421,10 @@ import foo
 	<heading>Specifying Supported Versions</heading>
 	<p>
 	  The optional <tt>XS-Python-Version</tt> field
-	  in <file>debian/control</file> specifies the versions of
-	  Python supported by the source package.  When not specified, it
-	  defaults to all currently supported Python versions.
+	  in the general paragraph (the first one, for the source package) of
+	  <file>debian/control</file> specifies the versions of Python
+	  supported by the source package.  When not specified, it defaults to
+	  all currently supported Python versions.
 
 	  It is notably used to track packages during Python transitions,
 	  and is also used by some packaging scripts to automatically
@@ -445,7 +446,8 @@ XS-Python-Version: all
 	  across default version changes).
 	</p>
 	<p>
-	  Your control file should also have a line:
+	  The binary package paragraphs of your debian/control file should
+	  also have a line:
 	  <example>
 XB-Python-Version: ${python:Versions}
 	  </example>
