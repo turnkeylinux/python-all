@@ -32,7 +32,7 @@
         <name>Scott Kitterman</name>
 	<email>scott@kitterman.com</email>
       </author>
-      <version>version 0.9.0.0</version>
+      <version>version 0.9.1.0</version>
 
       <abstract>
 	This document describes the packaging of Python within the
@@ -42,7 +42,7 @@
 
       <copyright>
 	<copyrightsummary>
-	  Copyright &copy; 1999, 2001, 2003, 2006, 2009 Software in the
+	  Copyright &copy; 1999, 2001, 2003, 2006, 2009, 2010 Software in the
 	  Public Interest
 	</copyrightsummary>
 	<p>
@@ -80,7 +80,13 @@
 	<heading>Versions</heading>
 	<p>
 	  At any given time, the binary package <package>python</package>
-	  will represent the current default Debian Python version.
+	  will represent the current default Debian Python version.  The
+	  binary package <package>python3</package> will represent the current
+	  Debian Python 3 version.  As far as is reasonable, python and python3
+	  should be treated as separate runtime systems with minimal
+	  interdependencies.  Except as noted, policy for Python 3 is the same
+	  as Python with the addition of the version number as needed to
+	  distinguish them.
 	</p>
 	<p>
 	  The default Debian Python version should always be the latest stable
@@ -116,7 +122,9 @@
 	  might still be on the system but for which should not be built
 	  anymore, and unsupported-versions which is the list of runtimes
 	  which should not be supported at all, that is modules should not be
-	  built or byte-compiled for these.
+	  built or byte-compiled for these.  The supported interface to this
+	  file is <file>/usr/bin/pyversions</file>.  The Python 3 interface is
+	  through <file>/usr/bin/py3versions</file>.
 	</p>
 	<p>
 	  unsupported-versions is a superset of (includes) old-versions and
@@ -395,7 +403,9 @@
 	  Public modules used by other packages must have their binary
 	  package name prefixed with <var>python-</var>.  It is recommended
 	  to use this prefix for all packages with public modules as they may
-	  be used by other packages in the future.
+	  be used by other packages in the future.  Python 3 modules must be
+	  in a separate binary package prefixed with <var>python3-</var> to
+	  preserve run time separation between python and python3.
 
 	  The binary package for module foo should preferably be named
 	  <package>python-<var>foo</var></package>, if the module name
@@ -439,11 +449,13 @@ XS-Python-Version: all
 	  The keyword "all" means that the package supports any Python
 	  version available but might be deprecated in the future since
 	  using version numbers is clearer than "all" and encodes more
-	  information.
+	  information.  The keyword "all" is limited to Python versions and
+	  must be ignored for Python 3 versions.
 
 	  The keyword "current" has been deprecated and used to mean that
 	  the package would only have to support a single version (even
-	  across default version changes).
+	  across default version changes).  It must be ignored for Python 3
+	  versions.
 	</p>
 	<p>
 	  The binary package paragraphs of your debian/control file should
@@ -683,6 +695,7 @@ Build-Depends: python2.3-dev (>= 2.3-1)
 Build-Depends: python2.4-dev (>= 2.4-1)
 Build-Depends: python-dev (>= 2.3.5-7)
 Build-Depends: python-all-dev
+Build-Depends: python3-all-dev (>= 3.1)
 	</example>
       </p>
       <p>
