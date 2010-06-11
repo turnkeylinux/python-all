@@ -416,7 +416,7 @@
 	  Such a package should support the current Debian Python version,
 	  and more if possible (there are several tools to help implement
 	  this, see <ref id="packaging_tools">). For example, if Python 2.3,
-	  2.4, and 2.5 are supported, the Python command
+	  2.4, and 2.5 are supported, the Python statement
 	  <example>
 import foo
 	  </example>
