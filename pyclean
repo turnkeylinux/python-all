@@ -26,11 +26,9 @@ import logging
 import optparse
 import sys
 from glob import glob1
-from os import environ, remove, rmdir, walk
-from os.path import dirname, exists, isdir, isfile, join
+from os import environ, remove, walk
+from os.path import exists, isdir, isfile, join
 from subprocess import Popen, PIPE
-sys.path.insert(1, '/usr/share/python/')
-from debpython.version import SUPPORTED
 
 
 # initialize script
@@ -42,7 +40,6 @@ log = logging.getLogger('pyclean')
 Examples:
     pyclean -p python-mako # all .py[co] files from the package
     pyclean /usr/lib/python2.6/dist-packages # python2.6
-    pyclean -V 3.3 /usr/lib/python3/dist-packages # python 3.3 only
 """
 
 

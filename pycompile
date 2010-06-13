@@ -30,7 +30,7 @@ from os import environ, listdir, mkdir, walk
 from os.path import abspath, dirname, exists, isdir, isfile, join
 from subprocess import PIPE, Popen
 sys.path.insert(1, '/usr/share/python/')
-from debpython.version import SUPPORTED, DEFAULT, debsorted, vrepr, \
+from debpython.version import SUPPORTED, debsorted, vrepr, \
         get_requested_versions, parse_vrange
 from debpython.option import Option, compile_regexpr
 
