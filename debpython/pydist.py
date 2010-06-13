@@ -67,6 +67,8 @@ def load(dname='/usr/share/python/dist/', fname='debian/pydist-overrides'):
     """Load iformation about installed Python distributions."""
     if exists(fname):
         to_check = [fname]  # first one!
+    else:
+        to_check = []
     if isdir(dname):
         to_check.extend(join(dname, i) for i in os.listdir(dname))
 
