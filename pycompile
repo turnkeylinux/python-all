@@ -33,6 +33,7 @@ sys.path.insert(1, '/usr/share/python/')
 from debpython.version import SUPPORTED, debsorted, vrepr, \
         get_requested_versions, parse_vrange
 from debpython.option import Option, compile_regexpr
+from debpython.tools import memoize
 
 # initialize script
 logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
@@ -96,16 +97,13 @@ def get_public_files(files, versions):
 
 
 ### EXCLUDES ###################################################
+@memoize
 def get_exclude_patterns_from_dir(name='/usr/share/python/bcep/'):
     """Return patterns for files that shouldn't be bytecompiled."""
     if not isdir(name):
         return []
 
-    global _exclude_patterns
-    if _exclude_patterns is not None:  # use cache if available
-        return _exclude_patterns
-
-    _exclude_patterns = []
+    result = []
     for fn in listdir(name):
         with file(join(name, fn), 'r') as lines:
             for line in lines:
@@ -118,9 +116,8 @@ def get_exclude_patterns_from_dir(name='/usr/share/python/bcep/'):
                 pattern = pattern.rstrip('\n')
                 if type_ == 're':
                     pattern = compile_regexpr(None, None, pattern)
-                _exclude_patterns.append((type_, versions, dname, pattern))
-    return _exclude_patterns
-_exclude_patterns = None
+                result.append((type_, versions, dname, pattern))
+    return result
 
 
 def get_exclude_patterns(directory='/', patterns=None, versions=None):

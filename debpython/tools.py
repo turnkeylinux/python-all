@@ -22,6 +22,7 @@
 from __future__ import with_statement
 import logging
 import re
+from cPickle import dumps
 from os import symlink
 from sys import exit
 from debpython.version import getver, vrepr
@@ -91,3 +92,15 @@ def shebang2pyver(fname):
                 return res
     except IOError:
         log.error('cannot open %s', fname)
+
+
+class memoize(object):
+    def __init__(self, func):
+        self.func = func
+        self.cache = {}
+
+    def __call__(self, *args, **kwargs):
+        key = dumps((args, kwargs))
+        if key not in self.cache:
+            self.cache[key] = self.func(*args, **kwargs)
+        return self.cache[key]

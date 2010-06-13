@@ -27,6 +27,7 @@ from os.path import join, isdir
 from subprocess import PIPE, Popen
 from sys import exit
 from debpython.version import vrepr, getver, parse_vrange
+from debpython.tools import memoize
 
 log = logging.getLogger('dh_python')
 
@@ -61,12 +62,9 @@ def validate(fpath, exit=False):
     return True
 
 
+@memoize
 def load(dname='/usr/share/python/dist/'):
     """Load iformation about installed Python distributions."""
-    # use cached data if possible
-    global _data
-    if dname in _data:
-        return _data[dname]
     if not isdir(dname):
         log.warn('%s is not a dir', dname)
         return {}
@@ -91,10 +89,7 @@ def load(dname='/usr/share/python/dist/'):
                 else:
                     dist['rules'] = []
                 result[name] = dist
-
-    _data[dname] = result
     return result
-_data = {}
 
 
 def guess_dependency(req, version):
