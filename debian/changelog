@@ -1,7 +1,9 @@
 python-defaults (2.6.5-2) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
-  * dh_python2: Create extension symlinks in /usr/lib/pyshared/pythonX.Y
+  * dh_python2:
+    - create extension symlinks in /usr/lib/pyshared/pythonX.Y
+    - add support for debian/pydist-overrides
   * Support for Python3 removed in dh_python2, pycompile and pyclean
     (moved to python3-defaults) 
   * debian/copyright: Add a note about dh_python2, pycompile, pyclean and

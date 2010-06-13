@@ -23,10 +23,10 @@ from __future__ import with_statement
 import logging
 import os
 import re
-from os.path import join, isdir
+from os.path import exists, isdir, join
 from subprocess import PIPE, Popen
 from sys import exit
-from debpython.version import vrepr, getver, parse_vrange
+from debpython.version import vrepr, getver, get_requested_versions
 from debpython.tools import memoize
 
 log = logging.getLogger('dh_python')
@@ -63,15 +63,16 @@ def validate(fpath, exit=False):
 
 
 @memoize
-def load(dname='/usr/share/python/dist/'):
+def load(dname='/usr/share/python/dist/', fname='debian/pydist-overrides'):
     """Load iformation about installed Python distributions."""
-    if not isdir(dname):
-        log.warn('%s is not a dir', dname)
-        return {}
+    if exists(fname):
+        to_check = [fname]  # first one!
+    if isdir(dname):
+        to_check.extend(join(dname, i) for i in os.listdir(dname))
 
     result = {}
-    for fname in os.listdir(dname):
-        with open(join(dname, fname)) as fp:
+    for fpath in to_check:
+        with open(fpath) as fp:
             for line in fp:
                 line = line.strip('\r\n')
                 if line.startswith('#') or not line:
@@ -79,16 +80,13 @@ def load(dname='/usr/share/python/dist/'):
                     line = line.strip()
                 dist = PYDIST_RE.search(line).groupdict()
                 name = dist['name'].lower()
-                if name in result:
-                    log.error('Python distribution %s already listed twice'
-                              ' (last file: %s)', join(dname, fname))
-                dist['vrange'] = parse_vrange(dist['vrange'])
+                dist['versions'] = get_requested_versions(dist['vrange'])
                 dist['dependency'] = dist['dependency'].strip()
                 if dist['rules']:
                     dist['rules'] = dist['rules'].split(';')
                 else:
                     dist['rules'] = []
-                result[name] = dist
+                result.setdefault(name, []).append(dist)
     return result
 
 
@@ -97,24 +95,30 @@ def guess_dependency(req, version):
               req, vrepr(version) if version else None)
     if isinstance(version, basestring):
         version = getver(version)
+
     data = load()
     req = req.split(' ', 1)
     name = req[0].lower()
     if len(req) > 1:
-        req_version = req[1].split(',')  # FIXME: check requires.txt syntax
+        req_version = req[1]  # r"\s*(<=?|>=?|==|!=)\s*((\w|[-.])+)"
     else:
-        req_version = []
+        req_version = ''
     details = data.get(name)
     if details:
-        if details['dependency'].endswith(')'):
-            # no need to translate versions if version is hardcoded in Debian
-            # dependency
-            return data[name]['dependency']
-        if req_version:
-            # FIXME: rules, versions
-            pass
-        else:
-            return data[name]['dependency']
+        for item in details:
+            if version not in item.get('versions', version):
+                # rule doesn't match version, try next one
+                continue
+
+            if item['dependency'].endswith(')'):
+                # no need to translate versions if version is hardcoded in Debian
+                # dependency
+                return item['dependency']
+            if req_version:
+                # FIXME: translate it (rules, versions)
+                return item['dependency']
+            else:
+                return item['dependency']
 
     # try dpkg -S
 
@@ -135,7 +139,6 @@ def guess_dependency(req, version):
         log.error('Cannot find package that provides %s.', name)
         log.info("hint: `apt-file search -x '(packages|pyshared)/" +\
                   "%s' -l` might help", name)
-        # TODO: false positive - .pydist
         exit(8)
 
     result = set()
