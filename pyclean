@@ -41,112 +41,23 @@ log = logging.getLogger('pyclean')
 """TODO: move it to manpage
 Examples:
     pyclean -p python-mako # all .py[co] files from the package
-    pyclean -R -p python-mako # all __pycache__ dirs from the package
     pyclean /usr/lib/python2.6/dist-packages # python2.6
     pyclean -V 3.3 /usr/lib/python3/dist-packages # python 3.3 only
-    pyclean -R -V 3.3 /usr/lib/foo/bar.py # bar/__pycache__/bar.cpython-33.py[co]
-    pyclean -R /usr/lib/python3/dist-packages # all Python 3.X
 """
 
 
-def get_magic_tags_map():
-    """Return Python magic tags for installed Python versions."""
-
-    cmd = ''
-    for v in ('.'.join(str(j) for j in i) for i in SUPPORTED):
-        if v.startswith('2.'):  # tags are not available in Python 2.X
-            continue
-
-        if not exists("/usr/bin/python%s" % v):
-            log.debug("version %s not installed, skipping", v)
-            continue
-
-        cmd += "/usr/bin/python%s -c 'import imp; print('%s_'" % (v, v) + \
-               "+imp.magic_tags[imp.get_magic()])' && "
-
-    result = {}
-    cmd = cmd[:-3]  # cut last '&& '
-    log.debug("invoking %s", cmd)
-    p = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
-    if p.wait() != 0:
-        log.debug(p.stderr.read())
-        log.error('cannot get magic tags')
-        sys.exit(3)
-    else:
-        for line in p.stdout:
-            version, magic_tag = line.split('_', 2)
-            # Python 3.X returns bytes
-            magic_tag = magic_tag.strip().lstrip("b'").rstrip("'")
-            result.setdefault(version, set()).add(magic_tag)
-    log.debug('magic tags map: %s', result)
-    return result
-
-
-def get_magic_tags_to_remove(pyversion):
-    """Returns set of numbers or True if all of them should be removed."""
-    map_ = get_magic_tags_map()
-    if not map_.get(pyversion):
-        log.error('magic tag for %s not recognized', pyversion)
-        sys.exit(4)
-
-    if len(map_) == 1:
-        # only one Python version installed, no need to check magic tag
-        return True
-
-    result = set(map_[pyversion])  # make a copy
-    for version, numbers in map_.iteritems():
-        if version == pyversion:
-            continue
-        result = result.difference(numbers)
-
-    if not result:
-        log.info('magic tag(s) used by another installed\
-Python version. Nothing to remove.')
-        sys.exit(0)
-
-    log.debug('magic tags to remove: %s', result)
-    return result
-
-
-def destroyer(magic_tags=None):  # ;-)
+def destroyer():  # ;-)
     """Removes every .py[co] file associated to received .py file.
 
     :param magic_tags: if True, removes __pycache__ directories,
         if None, removes .py[co] files (PEP 3147 mode turned off),
         otherwise removes set of magic tags from __pycache__ directory
-    :type magic_tags: None or set or True"""
-    if magic_tags:
-        if magic_tags is True:
+    """
 
-            # remove all files in __pycache__ directory
-            def find_files_to_remove(pyfile):
-                directory = "%s/__pycache__/" % dirname(pyfile)
-                for fn in glob1(directory, '*'):
-                    yield join(directory, fn)
-        else:
-
-            # remove .pyc files for no longer needed magic tags
-            def find_files_to_remove(pyfile):
-                directory = "%s/__pycache__/" % dirname(pyfile)
-                for i in magic_tags:
-                    for fn in glob1(directory, "%s.py[co]" % i):
-                        yield join(directory, fn)
-
-        def myremove(fname):
-            remove(fname)
-            directory = dirname(fname)
-            # remove __pycache__ directory if it's empty
-            try:
-                rmdir(directory)
-            except:
-                log.debug('%s not removed', directory)
-    else:
-        myremove = remove
-
-        def find_files_to_remove(pyfile):
-            for filename in ("%sc" % pyfile, "%so" % pyfile):
-                if exists(filename):
-                    yield filename
+    def find_files_to_remove(pyfile):
+        for filename in ("%sc" % pyfile, "%so" % pyfile):
+            if exists(filename):
+                yield filename
 
     counter = 0
     try:
@@ -155,7 +66,7 @@ def destroyer(magic_tags=None):  # ;-)
             for filename in find_files_to_remove(pyfile):
                 try:
                     log.debug('removing %s', filename)
-                    myremove(filename)
+                    remove(filename)
                     counter += 1
                 except:
                     log.error('cannot remove %s', filename)
@@ -190,7 +101,7 @@ def get_package_files(package_name):
 
 
 def main():
-    usage = '%prog [-V VERSION] [-p PACKAGE | DIR_OR_FILE]'
+    usage = '%prog [-p PACKAGE | DIR_OR_FILE]'
     parser = optparse.OptionParser(usage, version='%prog 0.1')
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose',
         default=False, help='turn verbose more one')
@@ -198,10 +109,6 @@ def main():
         default=True, help='be quiet')
     parser.add_option('-p', '--package',
         help='specify Debian package name to clean')
-    parser.add_option('-R', action='store_true', default=False,
-        dest='pyr_mode', help='cleans .pyr directories (aka PEP 3147 mode)')
-    parser.add_option('-V', dest='version',
-        help='specify Python version to clean (implies -R)')
 
     (options, args) = parser.parse_args()
 
@@ -216,18 +123,12 @@ def main():
         log.debug('options: %s', options)
         log.debug('args: %s', args)
 
-    if options.version:
-        magic_tags = get_magic_tags_to_remove(options.version)
-        d = destroyer(magic_tags)
-    elif options.pyr_mode:
-        d = destroyer(True)
-    else:
-        d = destroyer()
+    d = destroyer()
     d.next()  # initialize coroutine
 
     if options.package and args:
-        parser.error('only one action is allowed at the same time (\
-cleaning directory or a package)')
+        parser.error('only one action is allowed at the same time ('
+                     'cleaning directory or a package)')
 
     if options.package:
         log.info('cleaning package %s', options.package)

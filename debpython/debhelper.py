@@ -21,7 +21,7 @@
 
 import logging
 from os import makedirs
-from os.path import exists
+from os.path import exists, join, dirname
 from sys import exit
 
 log = logging.getLogger('dh_python')
@@ -46,10 +46,15 @@ class DebHelper(object):
             if not line.strip():
                 source_package = False
                 continue
+            if binary_package and binary_package.startswith('python3'):
+                continue
             if line.startswith('Source:'):
                 self.source_name = line[7:].strip()
             elif line.startswith('Package:'):
                 binary_package = line[8:].strip()
+                if binary_package.startswith('python3'):
+                    log.debug('skipping Python 3.X package: %s', binary_package)
+                    continue
                 self.packages[binary_package] = {'substvars': {},
                                                  'autoscripts': {},
                                                  'rtupdates': []}
@@ -91,14 +96,18 @@ class DebHelper(object):
                 new_data = ''
                 for tpl_name, args in templates.iteritems():
                     for i in args:
-                        tpl = open("/usr/share/debhelper/autoscripts/%s" % \
-                                   tpl_name, 'r').read()
+                        # try local one first (useful while testing dh_python2)
+                        fpath = join(dirname(__file__), '..',
+                                     "autoscripts/%s" % tpl_name)
+                        if not exists(fpath):
+                            fpath = "/usr/share/debhelper/autoscripts/%s" % tpl_name
+                        tpl = open(fpath, 'r').read()
                         tpl = tpl.replace('#PACKAGE#', package)
                         tpl = tpl.replace('#ARGS#', i)
                         if tpl not in data and tpl not in new_data:
                             new_data += "\n%s" % tpl
                 if new_data:
-                    data += "\n# Automatically added by dh_python:" +\
+                    data += "\n# Automatically added by dh_python2:" +\
                             "%s\n# End automatically added section\n" % new_data
                     fp = open(fn, 'w')
                     fp.write(data)
@@ -153,10 +162,10 @@ class DebHelper(object):
                 data = open(fn, 'r').read()
             else:
                 data = ''
-            for dirname, args in values:
+            for dname, args in values:
                 cmd = 'if [ "$1" = rtupdate ]; then' +\
-                      "\n\tpyclean %s" % dirname +\
-                      "\n\tpycompile %s %s\nfi" % (args, dirname)
+                      "\n\tpyclean %s" % dname +\
+                      "\n\tpycompile %s %s\nfi" % (args, dname)
                 if cmd not in data:
                     data += "\n%s" % cmd
             if data:

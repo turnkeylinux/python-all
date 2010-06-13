@@ -54,9 +54,8 @@ PUBLIC_DIR_RE = re.compile(r'.*?/usr/lib/python(\d.\d+)/(site|dist)-packages')
 Examples:
     dh_python
     dh_python -V 2.4- # public files only, Python >= 2.4
-    dh_python -V -3.0 /usr/share/foo # private files only, Python < 3.0
     dh_python -p python-foo -X 'bar.*' /usr/lib/baz/ # private files in
-                                                      python-foo package
+                                                       python-foo package
 """
 
 # naming conventions used in the file:
@@ -75,6 +74,7 @@ def fix_locations(package):
         ver = vrepr(version)
         to_check = [i % ver for i in (\
                     'usr/local/lib/python%s/site-packages',
+                    'usr/local/lib/python%s/dist-packages',
                     'var/lib/python-support/python%s',
                     'usr/lib/pymodules/python%s')]
         if version >= (2, 6):
@@ -117,10 +117,6 @@ def share(package, stats, options):
         # nothing to share in debug packages
         return
     pv_2x = debsorted(i for i in stats['public_vers'] if i[0] == 2)
-    pv_3x = debsorted(i for i in stats['public_vers'] if i[0] == 3)
-    if not pv_2x and not pv_3x:  # skip packages without public modules
-        return
-
     if len(pv_2x) > 1:
         for pos, version1 in enumerate(pv_2x):
             dir1 = sitedir(version1, package)
@@ -255,11 +251,6 @@ def share_2x(dir1, dir2, dc=None):
         share_2x(join(dir1, dn), join(dir2, dn), dc)
 
 
-def share_3x(dir1, dir2, dc):
-    """Move uncommon files to versioned path."""
-    # FIXME: merge dh_python2-3.x
-
-
 ### PACKAGE DETAILS ############################################
 def scan(package, dname=None):
     """Gather statistics about Python files in given package."""
@@ -278,14 +269,23 @@ def scan(package, dname=None):
             private_to_check = []
         else:
             private_to_check = [i % package for i in
-                                'usr/lib/%s', 'usr/lib/games/%s',
-                                'usr/share/%s', 'usr/share/games/%s']
+                                ('usr/lib/%s', 'usr/lib/games/%s',
+                                'usr/share/%s', 'usr/share/games/%s')]
     else:
         proot = "debian/%s/%s" % (package, dname)
         private_to_check = [dname[1:]]
 
     for root, dirs, file_names in os.walk(proot):
-        # save few informations about the path
+        # ignore Python 3.X locations
+        if '/usr/lib/python3' in root or\
+           '/usr/local/lib/python3' in root:
+            # warn only once
+            warn = root[root.find('/lib/python'):].count('/') == 2
+            if warn:
+                log.warning('Python 3.x location detected, '
+                            'please use dh_python3: %s', root)
+            continue
+
         bin_dir = private_dir = None
         public_dir = PUBLIC_DIR_RE.match(root)
         if public_dir:
@@ -392,6 +392,14 @@ def dependencies(package, stats, options):
     dep = ' | '.join(tpl % i for i in debsorted(stats['public_vers']))
     if dep:
         depends.append(dep)
+
+    # make sure pycompile binary is available
+    if stats['compile']:
+        dep = "python2.6 (>= 2.6.5-1~)"  # python-minimal uses the same version
+        if depends == ['python2.6']:
+            depends = [dep]
+        else:
+            depends.append(dep)
 
     for interpreter, version in stats['shebangs']:
         if interpreter not in depends:
@@ -554,41 +562,45 @@ def main():
             dh.addsubstvar(package, 'python:Versions',\
                            ', '.join(sorted(vrepr(stats['public_vers']))))
             ps = package.split('-', 1)
-            if len(ps) > 1:
+            if len(ps) > 1 and ps[0] == 'python':
                 dh.addsubstvar(package, 'python:Provides',\
-                           ', '.join("%s%s-%s" % (ps[0], i, ps[1])\
+                           ', '.join("python%s-%s" % (i, ps[1])\
                            for i in sorted(vrepr(stats['public_vers']))))
 
+        pyclean_added = False  # invoke pyclean only once in maintainer script
         if stats['compile']:
             args = "-p %s" % package
             dh.autoscript(package, 'postinst', 'postinst-pycompile', args)
-            dh.autoscript(package, 'prerm', 'prerm-pyclean', args)
+            dh.autoscript(package, 'prerm', 'prerm-pyclean', '')
+            pyclean_added = True
+
         for private_dir, details in stats['private_dirs'].iteritems():
             if not details.get('compile'):
                 continue
+            if not pyclean_added:
+                dh.autoscript(package, 'prerm', 'prerm-pyclean', '')
+                pyclean_added = True
+
             args = "-p %s %s" % (package, private_dir)
-            inst_args = ''
 
             ext_for = details.get('public_ext')
             if ext_for is None:  # no extension
                 if options.vrange:
-                    inst_args += " -V %s" % vrange_str(options.vrange)
+                    args += " -V %s" % vrange_str(options.vrange)
             elif ext_for is False:  # extension's version not detected
                 if options.vrange and '-' not in vrange_str(options.vrange):
                     ver = vrange_str(options.vrange)
                 else:  # try shebang ...
                     ver = (list(v for i, v in details.get('shebangs', []) if v)\
                            or [None])[0] or DEFAULT  # ... or use default one
-                inst_args += " -V %s" % vrepr(ver)
+                args += " -V %s" % vrepr(ver)
             else:
-                inst_args += " -V %s" % vrepr(ext_for.pop())
+                args += " -V %s" % vrepr(ext_for.pop())
 
             for pattern in options.regexpr or []:
-                inst_args += " -X '%s'" % pattern.replace("'", r"\'")
+                args += " -X '%s'" % pattern.replace("'", r"\'")
 
-            dh.autoscript(package, 'postinst', 'postinst-pycompile',\
-                          args + inst_args)
-            dh.autoscript(package, 'prerm', 'prerm-pyclean', args)
+            dh.autoscript(package, 'postinst', 'postinst-pycompile', args)
 
         pydist_file = join('debian', "%s.pydist" % package)
         if exists(pydist_file) and validate_pydist(pydist_file, True):

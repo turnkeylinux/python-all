@@ -85,6 +85,7 @@ def load(dname='/usr/share/python/dist/'):
                     log.error('Python distribution %s already listed twice'
                               ' (last file: %s)', join(dname, fname))
                 dist['vrange'] = parse_vrange(dist['vrange'])
+                dist['dependency'] = dist['dependency'].strip()
                 if dist['rules']:
                     dist['rules'] = dist['rules'].split(';')
                 else:
@@ -98,17 +99,27 @@ _data = {}
 
 def guess_dependency(req, version):
     log.debug('trying to guess dependency for %s (python=%s)',
-              req, vrepr(version))
+              req, vrepr(version) if version else None)
     if isinstance(version, basestring):
         version = getver(version)
-    pydist_data = load()
+    data = load()
     req = req.split(' ', 1)
-    name = req[0]
+    name = req[0].lower()
     if len(req) > 1:
         req_version = req[1].split(',')  # FIXME: check requires.txt syntax
-    if name in pydist_data:
-        # FIXME: rules, versions
-        return pydist_data[name]['dependency']
+    else:
+        req_version = []
+    details = data.get(name)
+    if details:
+        if details['dependency'].endswith(')'):
+            # no need to translate versions if version is hardcoded in Debian
+            # dependency
+            return data[name]['dependency']
+        if req_version:
+            # FIXME: rules, versions
+            pass
+        else:
+            return data[name]['dependency']
 
     # try dpkg -S
 

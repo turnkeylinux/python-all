@@ -48,7 +48,6 @@ Examples:
     pycompile -p foo -V 2.6- /usr/share/foo # private files, Python >= 2.6
     pycompile -V 2.6 /usr/lib/python2.6/dist-packages # python2.6 only
     pycompile -V 2.6 /usr/lib/foo/bar.py # python2.6 only
-    pycompile -R -V 3.2- /usr/lib/python3/dist-packages
 """
 
 
@@ -87,17 +86,12 @@ def get_private_files(files, dname):
             yield fn
 
 
-def get_public_files(files, versions, pyr_mode=False):
+def get_public_files(files, versions):
     """Generate *.py file names that match given versions."""
-    if pyr_mode:
-        versions_str = set("%d/" % i[0] for i in versions)
-        range_ = 15, 17  # /usr/lib/pythonX/
-    else:
-        versions_str = set("%d.%d" % i for i in versions)
-        range_ = 15, 18  # /usr/lib/pythonX.Y
+    versions_str = set("%d.%d" % i for i in versions)
     for fn in files:
         if fn.startswith('/usr/lib/python') and \
-           fn[range_[0]:range_[1]] in versions_str:
+           fn[15:18] in versions_str:
             yield fn
 
 

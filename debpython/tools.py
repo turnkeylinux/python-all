@@ -37,15 +37,11 @@ def sitedir(version, package=None, gdb=False):
     '/usr/lib/python2.5/site-packages/'
     >>> sitedir((2, 7), 'python-foo', True)
     'debian/python-foo/usr/lib/debug/usr/lib/python2.7/dist-packages/'
-    >>> sitedir((3, 2))
-    '/usr/lib/python3/'
     """
     if isinstance(version, basestring):
         version = tuple(int(i) for i in version.split('.'))
 
-    if version >= (3, 2):
-        path = '/usr/lib/python3/'
-    elif version >= (2, 6):
+    if version >= (2, 6):
         path = "/usr/lib/python%d.%d/dist-packages/" % version
     else:
         path = "/usr/lib/python%d.%d/site-packages/" % version

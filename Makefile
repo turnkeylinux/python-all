@@ -12,8 +12,7 @@ install-dev:
 		$(DESTDIR)$(PREFIX)/share/debhelper/autoscripts/ $(DESTDIR)$(PREFIX)/bin
 	$(INSTALL) -m 644 runtime.d/* $(DESTDIR)$(PREFIX)/share/python/runtime.d/
 	$(INSTALL) -m 644 autoscripts/* $(DESTDIR)$(PREFIX)/share/debhelper/autoscripts/
-	#$(INSTALL) -m 755 dh_python $(DESTDIR)$(PREFIX)/bin/
-	$(INSTALL) -m 755 dh_python $(DESTDIR)$(PREFIX)/bin/dh_python2
+	$(INSTALL) -m 755 dh_python2 $(DESTDIR)$(PREFIX)/bin/
 
 install-runtime:
 	$(INSTALL) -m 755 -d $(DESTDIR)$(PREFIX)/share/python/debpython $(DESTDIR)$(PREFIX)/bin

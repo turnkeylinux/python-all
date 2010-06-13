@@ -23,8 +23,8 @@ import re
 from os.path import exists
 from types import GeneratorType
 
-SUPPORTED = [(2, 5), (2, 6), (3, 1)]
-DEFAULT = (2, 5)
+SUPPORTED = [(2, 5), (2, 6)]
+DEFAULT = (2, 6)
 RANGE_PATTERN = r'(-)?(\d\.\d+)(?:(-)(\d\.\d+)?)?'
 RANGE_RE = re.compile(RANGE_PATTERN)
 
@@ -158,7 +158,10 @@ def parse_pycentral_vrange(value):
         if not versions:
             raise ValueError("version range doesn't match installed Python versions: %s" % value)
         # not really what "current" means...
-        return versions[0], versions[0]
+        if DEFAULT in versions:
+            return DEFAULT, DEFAULT
+        else:
+            return versions[0], versions[0]
     return getver(minv) if minv else None, \
            getver(maxv) if maxv else None
 
