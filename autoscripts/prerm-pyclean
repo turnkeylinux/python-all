@@ -5,7 +5,7 @@ else
 	do
 		if [ -f "${file}c" ]
 		then
-			rm -f ${file}c
+			rm -f "${file}c"
 		fi
   	done
 fi
