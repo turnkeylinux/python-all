@@ -395,11 +395,7 @@ def dependencies(package, stats, options):
 
     # make sure pycompile binary is available
     if stats['compile']:
-        dep = "python2.6 (>= 2.6.5-1~)"  # python-minimal uses the same version
-        if depends == ['python2.6']:
-            depends = [dep]
-        else:
-            depends.append(dep)
+        depends.append("python (>= 2.6.5-1~)")
 
     for interpreter, version in stats['shebangs']:
         if interpreter not in depends:

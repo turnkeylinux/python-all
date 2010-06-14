@@ -46,7 +46,7 @@ PYDIST_RE = re.compile(r"""
     """, re.VERBOSE)
 
 
-def validate(fpath, exit=False):
+def validate(fpath, exit_on_error=False):
     """Check if pydist file looks good."""
     with open(fpath) as fp:
         for line in fp:
@@ -56,8 +56,8 @@ def validate(fpath, exit=False):
             if not PYDIST_RE.match(line):
                 log.error('invalid pydist data in file %s: %s', \
                           fpath.rsplit('/', 1)[-1], line)
-                if exit:
-                    sys.exit(3)
+                if exit_on_error:
+                    exit(3)
                 return False
     return True
 
@@ -134,7 +134,8 @@ def guess_dependency(req, version):
     process = Popen("/usr/bin/dpkg -S %s" % query,\
                     shell=True, stdout=PIPE, stderr=PIPE)
     if process.wait() != 0:
-        log.error('Cannot find package that provides %s.', name)
+        log.error('Cannot find package that provides %s. '
+                  'Please add it to debian/pydist-overrides', name)
         log.info("hint: `apt-file search -x '(packages|pyshared)/" +\
                   "%s' -l` might help", name)
         exit(8)

@@ -3,9 +3,5 @@
 if which python >/dev/null 2>&1 && which pyclean >/dev/null 2>&1; then
 	pyclean -V $2 /usr/lib/python$2/
 else
-	find /usr/lib/python$2/ -name '*\.py[co]' -delete
-	# PEP 3147 mode
-	#TAG=`python$2 -c "import imp; print(imp.magic_tags[imp.get_magic()])"` \
-	#find /usr/lib/python3/ -name "*\.$TAG\.py[co]" -delete
-	#find /usr/lib/python3/ -depth -empty -name '__pycache__' -delete
+	find /usr/lib/python$2/ -name '*.py[co]' -delete
 fi

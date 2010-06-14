@@ -4,7 +4,7 @@ PREFIX ?= /usr
 
 clean:
 	make -C tests clean
-	find . -name '*\.py[co]' -delete
+	find . -name '*.py[co]' -delete
 	rm -f .coverage
 
 install-dev:
