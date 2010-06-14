@@ -79,7 +79,6 @@ def load(dname='/usr/share/python/dist/', fname='debian/pydist-overrides'):
                 line = line.strip('\r\n')
                 if line.startswith('#') or not line:
                     continue
-                    line = line.strip()
                 dist = PYDIST_RE.search(line).groupdict()
                 name = dist['name'].lower()
                 dist['versions'] = get_requested_versions(dist['vrange'])
@@ -125,14 +124,11 @@ def guess_dependency(req, version):
     # try dpkg -S
 
     query = "'%s-?*\.egg-info'" % name  # TODO: .dist-info
-    if version and version[0] == 3:
-        query = "%s | grep '/python3" % query
+    if version:
+        query = "%s | grep '/python%s/\|/pyshared/'" %\
+                (query, vrepr(version))
     else:
-        if version:
-            query = "%s | grep '/python%s/\|/pyshared/'" %\
-                    (query, vrepr(version))
-        else:
-            query = "%s | grep '/python2\../\|/pyshared/'" % query
+        query = "%s | grep '/python2\../\|/pyshared/'" % query
 
     log.debug("invoking dpkg -S %s", query)
     process = Popen("/usr/bin/dpkg -S %s" % query,\

@@ -491,7 +491,7 @@ def main():
         dest='arch', help='Act on architecture dependent packages')
     parser.add_option('-q', '--quiet', action='store_false', dest='verbose',
         default=True, help='be quiet')
-    parser.add_option('-p', '--package',
+    parser.add_option('-p', '--package', dest='package',
         help='specify Debian package name to be processed')
     parser.add_option('-V', type='version_range', dest='vrange',
         help='specify list of supported Python versions. ' +\
@@ -533,7 +533,7 @@ def main():
         log.debug('options: %s', options)
         log.debug('args: %s', args)
 
-    dh = DebHelper()
+    dh = DebHelper(options.package)
     if not options.vrange and dh.python_version:
         options.vrange = parse_pycentral_vrange(dh.python_version)
 
@@ -569,19 +569,18 @@ def main():
 
         pyclean_added = False  # invoke pyclean only once in maintainer script
         if stats['compile']:
-            args = "-p %s" % package
-            dh.autoscript(package, 'postinst', 'postinst-pycompile', args)
+            dh.autoscript(package, 'postinst', 'postinst-pycompile', '')
             dh.autoscript(package, 'prerm', 'prerm-pyclean', '')
             pyclean_added = True
 
-        for private_dir, details in stats['private_dirs'].iteritems():
+        for pdir, details in stats['private_dirs'].iteritems():
             if not details.get('compile'):
                 continue
             if not pyclean_added:
                 dh.autoscript(package, 'prerm', 'prerm-pyclean', '')
                 pyclean_added = True
 
-            args = "-p %s %s" % (package, private_dir)
+            args = pdir
 
             ext_for = details.get('public_ext')
             if ext_for is None:  # no extension

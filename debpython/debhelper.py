@@ -30,10 +30,10 @@ log = logging.getLogger('dh_python')
 class DebHelper(object):
     """Reinvents the wheel / some dh functionality (Perl is ugly ;-P)"""
 
-    def __init__(self):
+    def __init__(self, package=None):
         self.packages = {}
         self.python_version = None
-        source_package = True
+        source_section = True
         binary_package = None
 
         try:
@@ -44,10 +44,14 @@ class DebHelper(object):
 
         for line in fp:
             if not line.strip():
-                source_package = False
+                source_section = False
+                binary_package = None
                 continue
-            if binary_package and binary_package.startswith('python3'):
-                continue
+            if binary_package:
+                if binary_package.startswith('python3'):
+                    continue
+                if package and binary_package != package:
+                    continue
             if line.startswith('Source:'):
                 self.source_name = line[7:].strip()
             elif line.startswith('Package:'):
@@ -55,12 +59,14 @@ class DebHelper(object):
                 if binary_package.startswith('python3'):
                     log.debug('skipping Python 3.X package: %s', binary_package)
                     continue
+                if package and binary_package != package:
+                    continue
                 self.packages[binary_package] = {'substvars': {},
                                                  'autoscripts': {},
                                                  'rtupdates': []}
-            elif source_package and line.startswith('XS-Python-Version:'):
+            elif source_section and line.startswith('XS-Python-Version:'):
                 self.python_version = line[18:]
-            elif not source_package and line.startswith('Architecture:'):
+            elif not source_section and line.startswith('Architecture:'):
                 arch = line[13:].strip()
                 # TODO: if arch doesn't match current architecture:
                 #del self.packages[binary_package]
