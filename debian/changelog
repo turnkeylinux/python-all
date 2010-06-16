@@ -4,8 +4,9 @@ python-defaults (2.6.5-2) UNRELEASED; urgency=low
   * dh_python2:
     - create extension symlinks in /usr/lib/pyshared/pythonX.Y
     - add support for debian/pydist-overrides
-    - add dh sequence file (use "--with dh_python2" in debian/rules)
+    - add dh sequence file (use "--with python2" in debian/rules)
     - some bugs fixed
+    - moved from python-dev to python package
   * Support for Python3 removed in dh_python2, pycompile and pyclean
     (moved to python3-defaults) 
   * debian/copyright: Add a note about dh_python2, pycompile, pyclean and

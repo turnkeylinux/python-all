@@ -142,7 +142,7 @@ stamp-dh_python:
 	dh_testdir
 	dh_testroot
 	dh_installdirs
-	DESTDIR=debian/python-dev make install-dev
+	DESTDIR=debian/python make install-dev
 	DESTDIR=debian/python-minimal make install-runtime
 	find debian/python-minimal
 	touch $@

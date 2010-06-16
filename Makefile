@@ -15,7 +15,7 @@ install-dev:
 	$(INSTALL) -m 644 runtime.d/* $(DESTDIR)$(PREFIX)/share/python/runtime.d/
 	$(INSTALL) -m 644 autoscripts/* $(DESTDIR)$(PREFIX)/share/debhelper/autoscripts/
 	$(INSTALL) -m 755 dh_python2 $(DESTDIR)$(PREFIX)/bin/
-	$(INSTALL) -m 644 dh_python2.pm $(DESTDIR)$(PREFIX)/share/perl5/Debian/Debhelper/Sequence/
+	$(INSTALL) -m 644 python2.pm $(DESTDIR)$(PREFIX)/share/perl5/Debian/Debhelper/Sequence/
 
 install-runtime:
 	$(INSTALL) -m 755 -d $(DESTDIR)$(PREFIX)/share/python/debpython $(DESTDIR)$(PREFIX)/bin
