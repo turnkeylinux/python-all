@@ -22,7 +22,6 @@
 import logging
 from os import makedirs
 from os.path import exists, join, dirname
-from sys import exit
 
 log = logging.getLogger('dh_python')
 
@@ -30,7 +29,7 @@ log = logging.getLogger('dh_python')
 class DebHelper(object):
     """Reinvents the wheel / some dh functionality (Perl is ugly ;-P)"""
 
-    def __init__(self, package=None):
+    def __init__(self, packages=None, no_packages=None):
         self.packages = {}
         self.python_version = None
         source_section = True
@@ -50,7 +49,9 @@ class DebHelper(object):
             if binary_package:
                 if binary_package.startswith('python3'):
                     continue
-                if package and binary_package != package:
+                if packages and binary_package not in packages:
+                    continue
+                if no_packages and binary_package in no_packages:
                     continue
             if line.startswith('Source:'):
                 self.source_name = line[7:].strip()
@@ -59,7 +60,9 @@ class DebHelper(object):
                 if binary_package.startswith('python3'):
                     log.debug('skipping Python 3.X package: %s', binary_package)
                     continue
-                if package and binary_package != package:
+                if packages and binary_package not in packages:
+                    continue
+                if no_packages and binary_package in no_packages:
                     continue
                 self.packages[binary_package] = {'substvars': {},
                                                  'autoscripts': {},
@@ -71,7 +74,7 @@ class DebHelper(object):
                 # TODO: if arch doesn't match current architecture:
                 #del self.packages[binary_package]
                 self.packages[binary_package]['arch'] = arch
-        log.debug('source=%s, binary packages=%s', self.source_name,\
+        log.debug('source=%s, binary packages=%s', self.source_name, \
                                                    self.packages.keys())
 
     def addsubstvar(self, package, name, value):

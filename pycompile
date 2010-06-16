@@ -39,7 +39,6 @@ from debpython.tools import memoize
 logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
                            '%(message)s')
 log = logging.getLogger('pycompile')
-# TODO: /usr/share/python3/foo/3.1-/bar/-3.5/baz.py
 STDINS = {}
 
 """TODO: move it to manpage
@@ -69,11 +68,11 @@ def get_directory_files(dname):
 
 def get_package_files(package_name):
     """Generate *.py file names available in given package."""
-    process = Popen("/usr/bin/dpkg -L %s" % package_name, shell=True,\
+    process = Popen("/usr/bin/dpkg -L %s" % package_name, shell=True, \
                     stdout=PIPE, stderr=PIPE)
     if process.wait() != 0:
         log.error('cannot get content of %s', package_name)
-        sys.exit(2)
+        exit(2)
     for line in process.stdout:
         line = line.strip('\n')
         if line.endswith('.py'):
@@ -163,55 +162,36 @@ def py_compile(version):
     if not isinstance(version, basestring):
         version = vrepr(version)
     cmd = "python%s -m py_compile -" % version
-    #if pyr_mode:
-    #    cmd += ' -R'
     stdin = Popen(cmd, bufsize=1, shell=True, stdin=PIPE).stdin
     while True:
         filename = (yield)
         stdin.write(filename + '\n')
 
 
-def compile(files, versions, pyr_mode=False, e_patterns=None):
+def compile(files, versions, e_patterns=None):
     global STDINS
     # start Python interpreters that will handle byte compilation
     for version in versions:
-        if (version, pyr_mode) not in STDINS:
+        if version not in STDINS:
             coroutine = py_compile(version)
             coroutine.next()
-            STDINS[(version, pyr_mode)] = coroutine
+            STDINS[version] = coroutine
 
-    skip_dirs = set()
     # byte compile files
     for fn, versions_to_compile in filter_files(files, e_patterns, versions):
-        if not pyr_mode and exists("%sc" % fn):
+        if exists("%sc" % fn):
             continue
-        elif pyr_mode:
-            pycache_dir = join(dirname(fn), '__pycache__')
-            if pycache_dir not in skip_dirs and not exists(pycache_dir):
-                try:
-                    mkdir(pycache_dir)
-                except Exception, e:
-                    log.error("cannot create directory %s: %r", pycache_dir, e)
-                    skip_dirs.add(pycache_dir)
-                    continue
         for version in versions_to_compile:
-            pipe = STDINS[(version, pyr_mode)]
+            pipe = STDINS[version]
             pipe.send(fn)
 
 
 ################################################################
-def doctest(*args, **kwargs):
-    import doctest
-    sys.exit(doctest.testmod())
-
-
 def main():
     usage = '%prog [-V [X.Y][-][A.B]] DIR_OR_FILE [-X REGEXPR]\n' + \
      '       %prog -p PACKAGE'
-    parser = optparse.OptionParser(usage, version='%prog 0.1',
+    parser = optparse.OptionParser(usage, version='%prog 0.9',
                                    option_class=Option)
-    parser.add_option('--doctest', action='callback', callback=doctest,
-        help=optparse.SUPPRESS_HELP)
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose',
         default=False, help='turn verbose more one')
     parser.add_option('-q', '--quiet', action='store_false', dest='verbose',
@@ -230,8 +210,6 @@ newer), '2.5-2.7' (version 2.5 or 2.6), '-3.0' (all supported 2.X versions)""")
         dest='regexpr', type='regexpr',
         help='exclude items that match given REGEXPR. You may use this option \
 multiple times to build up a list of things to exclude.')
-    parser.add_option('-R', action='store_true', default=False,
-        dest='pyr_mode', help='PEP 3147 mode')
 
     (options, args) = parser.parse_args()
 
@@ -251,19 +229,16 @@ multiple times to build up a list of things to exclude.')
     versions = get_requested_versions(options.vrange, available=True)
     if not versions:
         log.error('Requested versions are not installed')
-        sys.exit(3)
+        exit(3)
 
     if options.package and args:  # package's private directories
         # get requested Python version
-        if not options.pyr_mode:
-            compile_versions = debsorted(versions)[:1]
-        else:
-            compile_versions = versions
+        compile_versions = debsorted(versions)[:1]
         log.debug('compile versions: %s', versions)
 
         pkg_files = tuple(get_package_files(options.package))
         for item in args:
-            e_patterns = get_exclude_patterns(item, options.regexpr,\
+            e_patterns = get_exclude_patterns(item, options.regexpr, \
                                               compile_versions)
             if not exists(item):
                 log.warn('No such file or directory: %s', item)
@@ -271,25 +246,23 @@ multiple times to build up a list of things to exclude.')
                 log.debug('byte compiling %s using Python %s',
                           item, compile_versions)
                 files = get_private_files(pkg_files, item)
-                compile(files, compile_versions, options.pyr_mode, e_patterns)
+                compile(files, compile_versions, e_patterns)
     elif options.package:  # package's public modules
         # no need to limit versions here, it's either pyr mode or version is
         # hardcoded in path / via -V option
         e_patterns = get_exclude_patterns()
         files = get_package_files(options.package)
         files = get_public_files(files, versions)
-        compile(files, versions, options.pyr_mode, e_patterns)
+        compile(files, versions, e_patterns)
     elif args:  # other directories/files (public ones mostly)
-        if not options.pyr_mode:
-            versions = debsorted(versions)[:1]
+        versions = debsorted(versions)[:1]
         for item in args:
             e_patterns = get_exclude_patterns(item, options.regexpr, versions)
             files = get_directory_files(item)
-            compile(files, versions, options.pyr_mode, e_patterns)
+            compile(files, versions, e_patterns)
     else:
         parser.print_usage()
-        sys.exit(1)
-
+        exit(1)
 
 if __name__ == '__main__':
     main()

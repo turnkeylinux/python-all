@@ -24,8 +24,7 @@ import logging
 import re
 from cPickle import dumps
 from os import symlink
-from sys import exit
-from debpython.version import getver, vrepr
+from debpython.version import getver
 
 log = logging.getLogger('dh_python')
 SHEBANG_RE = re.compile(r'^#!\s*/usr/bin/(?:env\s+)?(python(\d+\.\d+)?(?:-dbg)?).*')

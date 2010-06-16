@@ -27,7 +27,7 @@ import os
 import re
 import sys
 from filecmp import dircmp, cmpfiles
-from optparse import OptionParser
+from optparse import OptionParser, SUPPRESS_HELP
 from os.path import isdir, islink, exists, join
 from shutil import rmtree, copy as fcopy
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
@@ -88,7 +88,7 @@ def fix_locations(package):
                     log.error('files for version %s '
                               'found in two locations:\n %s\n %s',
                               ver, location, found_versions[ver])
-                    sys.exit(2)
+                    exit(2)
                 if not isdir(dstdir):
                     os.makedirs(dstdir)
                 # TODO: what about relative symlinks?
@@ -116,27 +116,28 @@ def share(package, stats, options):
     if package.endswith('-dbg'):
         # nothing to share in debug packages
         return
-    pv_2x = debsorted(i for i in stats['public_vers'] if i[0] == 2)
-    if len(pv_2x) > 1:
-        for pos, version1 in enumerate(pv_2x):
+    pubvers = debsorted(i for i in stats['public_vers'] if i[0] == 2)
+    if len(pubvers) > 1:
+        for pos, version1 in enumerate(pubvers):
             dir1 = sitedir(version1, package)
-            for version2 in pv_2x[pos + 1:]:
+            for version2 in pubvers[pos + 1:]:
                 dir2 = sitedir(version2, package)
                 dc = dircmp(dir1, dir2)
                 share_2x(dir1, dir2, dc)
-    elif len(pv_2x) == 1:
+    elif len(pubvers) == 1:
         # TODO: remove this once file conflicts will not be needed anymore
-        move_to_pyshared(sitedir(pv_2x[0], package))
+        move_to_pyshared(sitedir(pubvers[0], package))
 
     for version in stats['public_ext']:
         create_ext_links(sitedir(version, package))
 
-    if options.guess_versions and pv_2x:
+    if options.guess_versions and pubvers:
         versions = get_requested_versions(options.vrange)
         for version in (i for i in versions if i[0] == 2):
-            if version not in pv_2x:
+            if version not in pubvers:
                 log.debug('guessing files for Python %s', vrepr(version))
-                versions_without_ext = debsorted(set(pv_2x) - stats['public_ext'])
+                versions_without_ext = debsorted(set(pubvers) -\
+                                                 stats['public_ext'])
                 if not versions_without_ext:
                     log.error('you most probably have to build extension '
                               'for python%s.', vrepr(version))
@@ -199,9 +200,9 @@ def create_ext_links(dir1):
 def share_2x(dir1, dir2, dc=None):
     """Move common files to pyshared and create symlinks in original
     locations."""
-    debian, package, path = dir1.split('/', 2)
+    debian, package, path = dir2.split('/', 3)
     # dir1 starts with debian/packagename/usr/lib/pythonX.Y/*-packages/
-    dstdir = join(debian, package, 'usr/share/pyshared/',\
+    dstdir = join(debian, package, 'usr/share/pyshared/', \
                   '/'.join(dir1.split('/')[6:]))
     if not exists(dstdir):
         os.makedirs(dstdir)
@@ -408,36 +409,29 @@ def dependencies(package, stats, options):
                       '(%s shebang versions: %s', private_dir, versions)
             exit(13)
         elif len(versions) == 1:  # one hardcoded version
-            interpreter = "python%d.%d" % versions[0]
-            if interpreter not in depends:
-                depends.append(interpreter)
+            depends.append("python%d.%d" % versions[0])
             # TODO: if versions[0] not in requested_versions: FTBFS
-        else:  # no hardcoded versions
-            dep = args = ''
+        elif details.get('compile', False):
+            # no hardcoded versions, but there's something to compile
+            args = ''
             vr = options.vrange
             if vr:
                 args += "-V %s" % vrange_str(vr)
                 if vr[0]:  # minumum version specified
-                    dep = "python (>= %s)" % vrepr(vr[0])
+                    depends.append("python (>= %s)" % vrepr(vr[0]))
                 if vr[1]:  # maximum version specified
-                    dep += ", python (<< %s)" % vrepr(vr[1])
-                    dep = dep.lstrip(', ')
+                    depends.append("python (<< %s)" % vrepr(vr[1]))
 
-            if details.get('compile', False):
-                for pattern in options.regexpr or []:
-                    args += " -X '%s'" % pattern.replace("'", r"\'")
-                rtscripts.append((private_dir, args))
-
-            dep = dep or 'python'
-            if dep not in depends:
-                depends.append(dep)
+            for pattern in options.regexpr or []:
+                args += " -X '%s'" % pattern.replace("'", r"\'")
+            rtscripts.append((private_dir, args))
 
     if options.guess_deps:
         for fn in stats['requires.txt']:
             for i in parse_pydep(fn):
                 depends.append(i)
 
-    log.debug('D=%s; R=%s; S=%s; E=%s, RT=%s', depends, recommends,\
+    log.debug('D=%s; R=%s; S=%s; E=%s, RT=%s', depends, recommends, \
               suggests, enhances, rtscripts)
     return depends, recommends, suggests, enhances, rtscripts
 
@@ -465,10 +459,8 @@ def parse_pydep(fname):
 
 ################################################################
 def main():
-    if exists('debian/pycompat'):
-        sys.exit(0)  # be compatible with old dh_python
     usage = '%prog -p PACKAGE [-V [X.Y][-][A.B]] DIR_OR_FILE [-X REGEXPR]\n'
-    parser = OptionParser(usage, version='%prog 2.0~alpha1',
+    parser = OptionParser(usage, version='%prog 2.0~beta1',
                                    option_class=Option)
     parser.add_option('--no-guessing-versions', action='store_false',
         dest='guess_versions', default=True,
@@ -482,20 +474,24 @@ def main():
         default=False, help='turn verbose mode one')
     # arch=False->arch:all only, arch=True->arch:any only, None->all of them
     parser.add_option('-i', '--indep', action='store_false',
-        dest='arch', default=None, help='Act on architecture independent packages')
+        dest='arch', default=None,
+        help='Act on architecture independent packages')
     parser.add_option('-a', '--arch', action='store_true',
         dest='arch', help='Act on architecture dependent packages')
     parser.add_option('-q', '--quiet', action='store_false', dest='verbose',
         default=True, help='be quiet')
-    parser.add_option('-p', '--package', dest='package',
-        help='specify Debian package name to be processed')
+    parser.add_option('-p', '--package', action='append', dest='package',
+        help='Act on the package named PACKAGE')
+    parser.add_option('-N', '--no-package', action='append', dest='no_package',
+        help='Do not act on the specified package')
     parser.add_option('-V', type='version_range', dest='vrange',
         help='specify list of supported Python versions. ' +\
              'See pycompile(1) for examples')
-    parser.add_option('-X', '--exclude', action='append',
-        dest='regexpr',
+    parser.add_option('-X', '--exclude', action='append', dest='regexpr',
         help='exclude items that match given REGEXPR. You may use this option'
              'multiple times to build up a list of things to exclude.')
+    # ignore some debhelper options:
+    parser.add_option('-O', help=SUPPRESS_HELP)
 
     (options, args) = parser.parse_args()
     # regexpr option type is not used so lets check patterns here
@@ -505,7 +501,7 @@ def main():
             pattern = re.compile(pattern)
         except:
             log.error('regular expression is not valid: %s', pattern)
-            sys.exit(1)
+            exit(1)
 
     if not options.vrange and exists('debian/pyversions'):
         log.debug('parsing version range from debian/pyversions')
@@ -529,7 +525,7 @@ def main():
         log.debug('options: %s', options)
         log.debug('args: %s', args)
 
-    dh = DebHelper(options.package)
+    dh = DebHelper(options.package, options.no_package)
     if not options.vrange and dh.python_version:
         options.vrange = parse_pycentral_vrange(dh.python_version)
 
@@ -555,11 +551,11 @@ def main():
             dh.add_rtupdate(package, i)
 
         if stats['public_vers']:
-            dh.addsubstvar(package, 'python:Versions',\
+            dh.addsubstvar(package, 'python:Versions', \
                            ', '.join(sorted(vrepr(stats['public_vers']))))
             ps = package.split('-', 1)
             if len(ps) > 1 and ps[0] == 'python':
-                dh.addsubstvar(package, 'python:Provides',\
+                dh.addsubstvar(package, 'python:Provides', \
                            ', '.join("python%s-%s" % (i, ps[1])\
                            for i in sorted(vrepr(stats['public_vers']))))
 
@@ -585,9 +581,9 @@ def main():
             elif ext_for is False:  # extension's version not detected
                 if options.vrange and '-' not in vrange_str(options.vrange):
                     ver = vrange_str(options.vrange)
-                else:  # try shebang ...
-                    ver = (list(v for i, v in details.get('shebangs', []) if v)\
-                           or [None])[0] or DEFAULT  # ... or use default one
+                else:  # try shebang or defaukt Python version
+                    ver = (list(v for i, v in details.get('shebangs', [])
+                           if v) or [None])[0] or DEFAULT
                 args += " -V %s" % vrepr(ver)
             else:
                 args += " -V %s" % vrepr(ext_for.pop())

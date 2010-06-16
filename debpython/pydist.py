@@ -125,13 +125,13 @@ def guess_dependency(req, version):
 
     query = "'%s-?*\.egg-info'" % name  # TODO: .dist-info
     if version:
-        query = "%s | grep '/python%s/\|/pyshared/'" %\
+        query = "%s | grep '/python%s/\|/pyshared/'" % \
                 (query, vrepr(version))
     else:
         query = "%s | grep '/python2\../\|/pyshared/'" % query
 
     log.debug("invoking dpkg -S %s", query)
-    process = Popen("/usr/bin/dpkg -S %s" % query,\
+    process = Popen("/usr/bin/dpkg -S %s" % query, \
                     shell=True, stdout=PIPE, stderr=PIPE)
     if process.wait() != 0:
         log.error('Cannot find package that provides %s. '
