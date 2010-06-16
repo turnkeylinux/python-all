@@ -20,7 +20,7 @@
 # THE SOFTWARE.
 
 import logging
-from os import makedirs
+from os import makedirs, chmod
 from os.path import exists, join, dirname
 
 log = logging.getLogger('dh_python')
@@ -170,7 +170,7 @@ class DebHelper(object):
             if exists(fn):
                 data = open(fn, 'r').read()
             else:
-                data = ''
+                data = '#! /bin/sh -e'
             for dname, args in values:
                 cmd = 'if [ "$1" = rtupdate ]; then' +\
                       "\n\tpyclean %s" % dname +\
@@ -181,6 +181,7 @@ class DebHelper(object):
                 fp = open(fn, 'w')
                 fp.write(data)
                 fp.close()
+                chmod(fn, 0755)
 
     def save(self):
         self.save_substvars()
