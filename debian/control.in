@@ -31,7 +31,7 @@ Depends: @PVER@-minimal (>= @PREVVER@), dpkg (>= 1.13.20)
 Conflicts: python (<= 2.4-1), python-central (<< 0.5.5)
 Replaces: python (<= 2.4-1)
 Recommends: python
-Breaks: python2.5-minimal (<< 2.5.5-3), python2.6-minimal (<< 2.6.5~rc2-2), python3.1-minimal (<< 3.1.2~rc1-2)
+Breaks: python-dev (<< 2.6), python-dbg (<< 2.6), python-all (<< 2.6), python-all-dev (<< 2.6), python-all-dbg (<< 2.6), python-examples (<< 2.6), idle (<< 2.6), python2.5-minimal (<< 2.5.5-3), python2.6-minimal (<< 2.6.5~rc2-2), python3.1-minimal (<< 3.1.2~rc1-2)
 Description: A minimal subset of the Python language (default version)
  This package contains the interpreter and some essential modules.  It's used
  in the boot process for some basic tasks.

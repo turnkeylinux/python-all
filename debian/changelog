@@ -26,6 +26,8 @@ python-defaults (2.6.5-2) UNRELEASED; urgency=low
 
   [ Matthias Klose ]
   * Depend on python2.6 version including the fix for issue #8223.
+  * Don't allow installation of a mix of defaults packages for different
+    python versions. Closes: #583683.
 
  -- Matthias Klose <doko@debian.org>  Wed, 16 Jun 2010 09:19:55 +0200
 
