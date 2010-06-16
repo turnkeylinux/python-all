@@ -20,7 +20,7 @@ export NVER=2.7
 export PVER=python2.6
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
-PREVVER := 2.6.5-2
+PREVVER := 2.6.5+20100616-1~
 
 PWD		:= $(shell pwd)
 

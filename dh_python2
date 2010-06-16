@@ -395,7 +395,7 @@ def dependencies(package, stats, options):
 
     # make sure pycompile binary is available
     if stats['compile']:
-        depends.append("python (>= 2.6.5-1~)")
+        depends.append("python (>= 2.6.5-2~)")
 
     for interpreter, version in stats['shebangs']:
         if interpreter not in depends:
