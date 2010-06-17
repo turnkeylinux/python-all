@@ -273,7 +273,7 @@ def scan(package, dname=None):
                                 ('usr/lib/%s', 'usr/lib/games/%s',
                                 'usr/share/%s', 'usr/share/games/%s')]
     else:
-        proot = "debian/%s/%s" % (package, dname)
+        proot = join('debian', package, dname.strip('/'))
         private_to_check = [dname[1:]]
 
     for root, dirs, file_names in os.walk(proot):
