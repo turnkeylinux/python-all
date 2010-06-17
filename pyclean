@@ -100,9 +100,9 @@ def main():
     usage = '%prog [-p PACKAGE | DIR_OR_FILE]'
     parser = optparse.OptionParser(usage, version='%prog 0.9')
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose',
-        default=False, help='turn verbose more one')
+        help='turn verbose more one')
     parser.add_option('-q', '--quiet', action='store_false', dest='verbose',
-        default=True, help='be quiet')
+        default=False, help='be quiet')
     parser.add_option('-p', '--package',
         help='specify Debian package name to clean')
 

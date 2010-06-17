@@ -193,9 +193,9 @@ def main():
     parser = optparse.OptionParser(usage, version='%prog 0.9',
                                    option_class=Option)
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose',
-        default=False, help='turn verbose more one')
+        help='turn verbose more one')
     parser.add_option('-q', '--quiet', action='store_false', dest='verbose',
-        default=True, help='be quiet')
+        default=False, help='be quiet')
     parser.add_option('-p', '--package',
         help='specify Debian package name whose files should be bytecompiled')
     parser.add_option('-V', type='version_range', dest='vrange',
@@ -215,6 +215,8 @@ multiple times to build up a list of things to exclude.')
 
     if options.verbose:
         log.setLevel(logging.INFO)
+    else:
+        log.setLevel(logging.WARN)
     if environ.get('PYCOMPILE_DEBUG') == '1':
         log.setLevel(logging.DEBUG)
         log.debug('argv: %s', sys.argv)
