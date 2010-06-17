@@ -1,7 +1,8 @@
 #! /bin/sh -e
 
+VERSION=${2#python}
 if which python >/dev/null 2>&1 && which pyclean >/dev/null 2>&1; then
-	pyclean -V $2 /usr/lib/python$2/
+	pyclean -V $VERSION /usr/lib/python$VERSION/
 else
-	find /usr/lib/python$2/ -name '*.py[co]' -delete
+	find /usr/lib/python$VERSION/ -name '*.py[co]' -delete
 fi

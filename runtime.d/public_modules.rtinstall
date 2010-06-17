@@ -1,7 +1,8 @@
 #! /bin/sh -e
 
+VERSION=${2#python}
 if which python >/dev/null 2>&1 && which pycompile >/dev/null 2>&1; then
-    pycompile -V $2 /usr/lib/python$2/
+    pycompile -V $VERSION /usr/lib/$VERSION/
 else
     echo >&2 "python or pycompile not found in $(basename $0) hook."
     exit 1
