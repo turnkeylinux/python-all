@@ -1,4 +1,4 @@
-python-defaults (2.6.5-2) UNRELEASED; urgency=low
+python-defaults (2.6.5-2) unstable; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2:
@@ -30,7 +30,7 @@ python-defaults (2.6.5-2) UNRELEASED; urgency=low
   * Don't allow installation of a mix of defaults packages for different
     python versions. Closes: #583683.
 
- -- Matthias Klose <doko@debian.org>  Wed, 16 Jun 2010 09:19:55 +0200
+ -- Matthias Klose <doko@debian.org>  Thu, 17 Jun 2010 23:47:08 +0200
 
 python-defaults (2.6.5-1) experimental; urgency=low
 
