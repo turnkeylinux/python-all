@@ -144,7 +144,6 @@ stamp-dh_python:
 	dh_installdirs
 	DESTDIR=debian/python make install-dev
 	DESTDIR=debian/python-minimal make install-runtime
-	find debian/python-minimal
 	touch $@
 
 # Build architecture-independent files here.

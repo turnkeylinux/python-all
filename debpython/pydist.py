@@ -25,7 +25,6 @@ import os
 import re
 from os.path import exists, isdir, join
 from subprocess import PIPE, Popen
-from sys import exit
 from debpython.version import vrepr, getver, get_requested_versions
 from debpython.tools import memoize
 

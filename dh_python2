@@ -200,7 +200,7 @@ def create_ext_links(dir1):
 def share_2x(dir1, dir2, dc=None):
     """Move common files to pyshared and create symlinks in original
     locations."""
-    debian, package, path = dir2.split('/', 3)
+    debian, package, path = dir2.split('/', 2)
     # dir1 starts with debian/packagename/usr/lib/pythonX.Y/*-packages/
     dstdir = join(debian, package, 'usr/share/pyshared/', \
                   '/'.join(dir1.split('/')[6:]))
@@ -581,7 +581,7 @@ def main():
             elif ext_for is False:  # extension's version not detected
                 if options.vrange and '-' not in vrange_str(options.vrange):
                     ver = vrange_str(options.vrange)
-                else:  # try shebang or defaukt Python version
+                else:  # try shebang or default Python version
                     ver = (list(v for i, v in details.get('shebangs', [])
                            if v) or [None])[0] or DEFAULT
                 args += " -V %s" % vrepr(ver)
