@@ -1,3 +1,9 @@
+python-defaults (2.6.5-3) UNRELEASED; urgency=low
+
+  * 
+
+ -- Matthias Klose <doko@debian.org>  Fri, 18 Jun 2010 00:07:51 +0200
+
 python-defaults (2.6.5-2) unstable; urgency=low
 
   [ Piotr Ożarowski ]
