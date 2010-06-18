@@ -4,6 +4,7 @@ python-defaults (2.6.5-3) unstable; urgency=low
   * Add ${misc:Depends} to Depends in all binary packages
   * Add Vcs-Browser field
   * Add some lintian overrides (for false positives)
+    - bump minimum required debhelper version to 6.0.7 (due to dh_lintian)
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 18 Jun 2010 10:25:59 +0200
 

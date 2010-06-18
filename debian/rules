@@ -255,6 +255,7 @@ endif
 	cp -p debian/idle.desktop debian/idle/usr/share/applications/
 
 #	dh_installdebconf -i $(NOPKGS)
+	dh_lintian -i
 	dh_installdocs -i $(NOPKGS) --all debian/README.Debian
 	dh_installmenu -i $(NOPKGS)
 	dh_installchangelogs -i $(NOPKGS)
