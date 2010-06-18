@@ -1,6 +1,7 @@
-python-defaults (2.6.5-3) UNRELEASED; urgency=low
+python-defaults (2.6.5-3) unstable; urgency=low
 
   * Remove '-V' option from pyclean call in runtime.d/public_modules.rtremove
+  * Add ${misc:Depends} to Depends in all binary packages
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 18 Jun 2010 10:25:59 +0200
 
