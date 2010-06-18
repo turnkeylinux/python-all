@@ -2,7 +2,7 @@
 
 VERSION=${2#python}
 if which python >/dev/null 2>&1 && which pyclean >/dev/null 2>&1; then
-	pyclean -V $VERSION /usr/lib/python$VERSION/
+	pyclean /usr/lib/python$VERSION/
 else
 	find /usr/lib/python$VERSION/ -name '*.py[co]' -delete
 fi

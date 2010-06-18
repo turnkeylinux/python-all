@@ -594,11 +594,14 @@ def main():
             dh.autoscript(package, 'postinst', 'postinst-pycompile', args)
 
         pydist_file = join('debian', "%s.pydist" % package)
-        if exists(pydist_file) and validate_pydist(pydist_file, True):
-            dstdir = join('debian', package, 'usr/share/python/dist/')
-            if not exists(dstdir):
-                os.makedirs(dstdir)
-            fcopy(pydist_file, join(dstdir, package))
+        if exists(pydist_file):
+            if not validate_pydist(pydist_file, True):
+                log.warning("%s.pydist file is invalid", package)
+            else:
+                dstdir = join('debian', package, 'usr/share/python/dist/')
+                if not exists(dstdir):
+                    os.makedirs(dstdir)
+                fcopy(pydist_file, join(dstdir, package))
 
     dh.save()
 
