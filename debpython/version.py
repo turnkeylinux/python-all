@@ -126,11 +126,14 @@ def parse_pycentral_vrange(value):
     (None, (3, 0))
     >>> parse_pycentral_vrange('2.6')
     ((2, 6), (2, 6))
+    >>> parse_pycentral_vrange('2.5, 2.6')
+    ((2, 5), None)
     """
     get = lambda x: get_requested_versions(parse_vrange(x))
 
     current = False
     minv = maxv = None
+    hardcoded = set()
 
     for item in value.split(','):
         item = item.strip()
@@ -151,8 +154,15 @@ def parse_pycentral_vrange(value):
             continue
         match = re.match('^[\d\.]+$', item)
         if match:
-            ver = "%.3s" % match.group(0)
-            return getver(ver), getver(ver)
+            hardcoded.add("%.3s" % match.group(0))
+
+    if len(hardcoded) == 1:
+        ver = hardcoded.pop()
+        return getver(ver), getver(ver)
+
+    if not minv and hardcoded:
+        # yeah, no maxv!
+        minv = sorted(hardcoded)[0]
 
     if current:
         versions = sorted(get("%s-%s" % (minv if minv else '', \
