@@ -124,6 +124,8 @@ def parse_pycentral_vrange(value):
     ((2, 4), None)
     >>> parse_pycentral_vrange('all, << 3.0')
     (None, (3, 0))
+    >>> parse_pycentral_vrange('2.6')
+    ((2, 6), (2, 6))
     """
     get = lambda x: get_requested_versions(parse_vrange(x))
 
@@ -149,7 +151,7 @@ def parse_pycentral_vrange(value):
             continue
         match = re.match('^[\d\.]+$', item)
         if match:
-            ver = "%.3s" % match.group(1)
+            ver = "%.3s" % match.group(0)
             return getver(ver), getver(ver)
 
     if current:
