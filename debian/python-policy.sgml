@@ -32,7 +32,7 @@
         <name>Scott Kitterman</name>
 	<email>scott@kitterman.com</email>
       </author>
-      <version>version 0.9.1.0</version>
+      <version>version 0.9.2.0</version>
 
       <abstract>
 	This document describes the packaging of Python within the
@@ -84,9 +84,13 @@
 	  binary package <package>python3</package> will represent the current
 	  Debian Python 3 version.  As far as is reasonable, python and python3
 	  should be treated as separate runtime systems with minimal
-	  interdependencies.  Except as noted, policy for Python 3 is the same
-	  as Python with the addition of the version number as needed to
-	  distinguish them.
+	  interdependencies.  In some cases, Python policy explicitly references
+	  Python helper programs such as python-support and python-central.  None of
+	  these references apply to Python 3.  It is a design goal to fully specify
+	  required interfaces and functions in policy for Python 3 and to avoid
+	  enshrining specific implmentation details in policy.  Except as noted,
+	  policy for Python 3 is the same as Python with the addition of the version
+	  number as needed to distinguish them.
 	</p>
 	<p>
 	  The default Debian Python version should always be the latest stable
