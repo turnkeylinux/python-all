@@ -20,6 +20,7 @@
 # THE SOFTWARE.
 
 import logging
+import re
 from os import makedirs, chmod
 from os.path import exists, join, dirname
 
@@ -68,7 +69,9 @@ class DebHelper(object):
                                                  'autoscripts': {},
                                                  'rtupdates': []}
             elif source_section and line.startswith('XS-Python-Version:'):
-                self.python_version = line[18:]
+                # ignore 3.X requirements
+                self.python_version = re.compile(\
+                    ',\s>=\s*3.*').sub('', line[18:])
             elif not source_section and line.startswith('Architecture:'):
                 arch = line[13:].strip()
                 # TODO: if arch doesn't match current architecture:

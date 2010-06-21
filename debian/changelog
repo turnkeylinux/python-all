@@ -1,7 +1,9 @@
 python-defaults (2.6.5-4) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
-  * dh_python2: fix parsing "XS-Python-Version: X.Y"
+  * dh_python2:
+    - fix parsing "XS-Python-Version: X.Y"
+    - ignore everything after ", >= 3" in XS-Python-Version
   * Add python-minimal.{postinst,prerm} files to handle .py files
     byte-compilation
 
