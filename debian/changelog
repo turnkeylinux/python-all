@@ -1,8 +1,15 @@
 python-defaults (2.6.5-4) UNRELEASED; urgency=low
 
+  [ Piotr Ożarowski ]
   * dh_python2: fix parsing "XS-Python-Version: X.Y"
 
- -- Piotr Ożarowski <piotr@debian.org>  Fri, 18 Jun 2010 16:52:21 +0200
+  [ Scott Kitterman ]
+  * Additonal Python 3 related policy changes:
+    - Clarify that helper specific policy does not apply to Python 3
+    - Define policy for expressing Python and Python 3 versions in
+      XS-Python-Version
+
+ -- Scott Kitterman <scott@kitterman.com>  Sun, 20 Jun 2010 16:13:24 -0400
 
 python-defaults (2.6.5-3) unstable; urgency=low
 
