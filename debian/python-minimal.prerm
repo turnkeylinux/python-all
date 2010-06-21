@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/sh -e
 pyclean -p python-minimal
 
 #DEBHELPER#
