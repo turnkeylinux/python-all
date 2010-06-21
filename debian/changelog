@@ -2,6 +2,8 @@ python-defaults (2.6.5-4) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2: fix parsing "XS-Python-Version: X.Y"
+  * Add python-minimal.{postinst,prerm} files to handle .py files
+    byte-compilation
 
   [ Scott Kitterman ]
   * Additonal Python 3 related policy changes:
@@ -9,7 +11,7 @@ python-defaults (2.6.5-4) UNRELEASED; urgency=low
     - Define policy for expressing Python and Python 3 versions in
       XS-Python-Version
 
- -- Scott Kitterman <scott@kitterman.com>  Sun, 20 Jun 2010 16:13:24 -0400
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 20 Jun 2010 16:13:24 -0400
 
 python-defaults (2.6.5-3) unstable; urgency=low
 
@@ -412,17 +414,17 @@ python-defaults (2.3.4-4) unstable; urgency=low
 
  -- Matthias Klose <doko@debian.org>  Mon,  6 Sep 2004 07:19:49 +0200
 
-python-defaults (2.3.4-3) testing-proposed-updates; urgency=low
-
-  * Unmodified 2.3.4-3sid, destination sarge, fixing build failure.
-
- -- Matthias Klose <doko@debian.org>  Fri, 20 Aug 2004 18:24:25 +0200
-
 python-defaults (2.3.4-3sid) unstable; urgency=low
 
   * Add build dependency on python-docutils (closes: #266550).
 
  -- Matthias Klose <doko@debian.org>  Wed, 18 Aug 2004 12:30:37 +0200
+
+python-defaults (2.3.4-3) testing-proposed-updates; urgency=low
+
+  * Unmodified 2.3.4-3sid, destination sarge, fixing build failure.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 20 Aug 2004 18:24:25 +0200
 
 python-defaults (2.3.4-2sid) unstable; urgency=low
 
