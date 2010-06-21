@@ -10,8 +10,6 @@ python-defaults (2.6.5-4) UNRELEASED; urgency=low
   [ Scott Kitterman ]
   * Additonal Python 3 related policy changes:
     - Clarify that helper specific policy does not apply to Python 3
-    - Define policy for expressing Python and Python 3 versions in
-      XS-Python-Version
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 20 Jun 2010 16:13:24 -0400
 

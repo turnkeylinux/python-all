@@ -438,35 +438,24 @@ import foo
 	  in the general paragraph (the first one, for the source package) of
 	  <file>debian/control</file> specifies the versions of Python
 	  supported by the source package.  When not specified, it defaults to
-	  all currently supported Python versions (Note: This does not include any
-	  Python 3 versions).
-	</p>
-	<p>
-	  It is used to express both Python and Python 3 versions.  Support for
-	  Python 3 versions cannot be implicitly defined, it must always be
-	  explicit.  It is not necessary to express <tt><< 3.0</tt> because this is
-	  always true when Python versions are specified.
-	</p>
-	<p>
+	  all currently supported Python versions.
+
 	  It is notably used to track packages during Python transitions,
 	  and is also used by some packaging scripts to automatically
 	  generate appropriate Depends and Provides lines. The format of the
 	  field may be one of the following:
 	  <example>
 XS-Python-Version: >= X.Y
-XS-Python-Version: >= 2.Y, >= 3.Y
 XS-Python-Version: >= A.B, << X.Y
 XS-Python-Version: A.B, X.Y
 XS-Python-Version: all
-XS-Python-Version: all, >= 3.1
 	  </example>
 	  The keyword "all" means that the package supports any Python
 	  version available but might be deprecated in the future since
 	  using version numbers is clearer than "all" and encodes more
 	  information.  The keyword "all" is limited to Python versions and
 	  must be ignored for Python 3 versions.
-	</p>
-	<p>
+
 	  The keyword "current" has been deprecated and used to mean that
 	  the package would only have to support a single version (even
 	  across default version changes).  It must be ignored for Python 3
