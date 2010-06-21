@@ -1,6 +1,8 @@
 python-defaults (2.6.5-4) UNRELEASED; urgency=low
 
   * dh_python2: fix parsing "XS-Python-Version: X.Y"
+  * Add python-minimal.{postinst,prerm} files to handle .py files
+    byte-compilation
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 18 Jun 2010 16:52:21 +0200
 

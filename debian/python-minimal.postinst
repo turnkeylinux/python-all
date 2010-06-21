@@ -1,0 +1,4 @@
+#! /bin/sh
+pycompile -p python-minimal
+
+#DEBHELPER#
