@@ -1,4 +1,4 @@
-python-defaults (2.6.5-4) UNRELEASED; urgency=low
+python-defaults (2.6.5-4) unstable; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2:
@@ -11,7 +11,7 @@ python-defaults (2.6.5-4) UNRELEASED; urgency=low
   * Additonal Python 3 related policy changes:
     - Clarify that helper specific policy does not apply to Python 3
 
- -- Piotr Ożarowski <piotr@debian.org>  Sun, 20 Jun 2010 16:13:24 -0400
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 21 Jun 2010 23:50:22 +0200
 
 python-defaults (2.6.5-3) unstable; urgency=low
 
