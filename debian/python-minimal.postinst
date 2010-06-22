@@ -1,4 +1,7 @@
 #! /bin/sh -e
-pycompile -p python-minimal
+
+# runpy.py is not available in pythonX.Y-minimal and thus "python -m compileall"
+# cannot be used, temporary workaround:
+python /usr/lib/python2.6/compileall.py /usr/share/python/ >/dev/null
 
 #DEBHELPER#

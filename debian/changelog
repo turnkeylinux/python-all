@@ -1,3 +1,11 @@
+python-defaults (2.6.5-5) unstable; urgency=medium
+
+  * Use Python's compileall module instead of pycompile to byte-compile
+    debpython module as logging module is not available in pythonX.Y-minimal
+    package (Closes: 586743)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 22 Jun 2010 10:46:48 +0200
+
 python-defaults (2.6.5-4) unstable; urgency=low
 
   [ Piotr Ożarowski ]

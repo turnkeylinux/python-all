@@ -1,4 +1,4 @@
 #! /bin/sh -e
-pyclean -p python-minimal
+find /usr/share/python/ -name '*.py[oc]' -delete
 
 #DEBHELPER#
