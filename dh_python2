@@ -52,9 +52,9 @@ PUBLIC_DIR_RE = re.compile(r'.*?/usr/lib/python(\d.\d+)/(site|dist)-packages')
 
 """TODO: move it to manpage
 Examples:
-    dh_python
-    dh_python -V 2.4- # public files only, Python >= 2.4
-    dh_python -p python-foo -X 'bar.*' /usr/lib/baz/ # private files in
+    dh_python2
+    dh_python2 -V 2.4- # public files only, Python >= 2.4
+    dh_python2 -p python-foo -X 'bar.*' /usr/lib/baz/ # private files in
                                                        python-foo package
 """
 
