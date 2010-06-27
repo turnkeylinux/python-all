@@ -1,10 +1,18 @@
 python-defaults (2.6.5-6) UNRELEASED; urgency=low
 
+  [ Piotr Ożarowski ]
   * dh_python2:
     - invoke `pycentral pkgremove foo` in preinst if upgrading from
       python-central based package
 
- -- Piotr Ożarowski <piotr@debian.org>  Sun, 27 Jun 2010 13:20:01 +0200
+  [ Scott Kitterman ]
+  * Merge changes back from Ubuntu package:
+    - Tighten ${binary:Version} depends relationships to "="
+    - python: Add an unversioned `2to3' binary (Change pending in Debian)
+    - python-minimal: Provide symlink to binary and manpage for
+      /usr/bin/python2 (Closes: #566266)
+
+ -- Scott Kitterman <scott@kitterman.com>  Sun, 27 Jun 2010 14:53:31 -0400
 
 python-defaults (2.6.5-5) unstable; urgency=medium
 
