@@ -1,3 +1,11 @@
+python-defaults (2.6.5-6) UNRELEASED; urgency=low
+
+  * dh_python2:
+    - invoke `pycentral pkgremove foo` in preinst if upgrading from
+      python-central based package
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 27 Jun 2010 13:20:01 +0200
+
 python-defaults (2.6.5-5) unstable; urgency=medium
 
   * Use Python's compileall module instead of pycompile to byte-compile

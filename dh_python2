@@ -564,6 +564,7 @@ def main():
 
         pyclean_added = False  # invoke pyclean only once in maintainer script
         if stats['compile']:
+            dh.autoscript(package, 'preinst', 'preinst-pycentral-clean', '')
             dh.autoscript(package, 'postinst', 'postinst-pycompile', '')
             dh.autoscript(package, 'prerm', 'prerm-pyclean', '')
             pyclean_added = True
