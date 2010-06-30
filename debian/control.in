@@ -12,11 +12,11 @@ Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-
 Package: python
 Architecture: all
 Priority: standard
-Depends: ${misc:Depends}, @PVER@ (>= @PREVVER@), python-minimal (>= ${binary:Version})
+Depends: ${misc:Depends}, @PVER@ (>= @PREVVER@), python-minimal (= ${binary:Version})
 Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.5)
 Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base, python-dev (<< 2.6.5-2)
 Provides: python-email, python-xmlbase, python-plistlib, python-ctypes, python-wsgiref
-Suggests: python-doc (>= ${binary:Version}), python-tk (>= ${binary:Version}), python-profiler (>= ${binary:Version})
+Suggests: python-doc (= ${binary:Version}), python-tk (= ${binary:Version}), python-profiler (= ${binary:Version})
 Description: An interactive high-level object-oriented language (default version)
  Python, the high-level, interactive object oriented language,
  includes an extensive class library with lots of goodies for
@@ -41,7 +41,7 @@ Description: A minimal subset of the Python language (default version)
 
 Package: python-examples
 Architecture: all
-Depends: ${misc:Depends}, python (>= ${binary:Version}), @PVER@-examples (>= @PREVVER@)
+Depends: ${misc:Depends}, python (= ${binary:Version}), @PVER@-examples (>= @PREVVER@)
 Description: Examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in
  the upstream Python distribution.
@@ -51,7 +51,7 @@ Description: Examples for the Python language (default version)
 
 Package: python-dev
 Architecture: all
-Depends: ${misc:Depends}, python (>= ${binary:Version}), @PVER@-dev (>= @PREVVER@)
+Depends: ${misc:Depends}, python (= ${binary:Version}), @PVER@-dev (>= @PREVVER@)
 Description: Header files and a static library for Python (default)
  Header files, a static library and development tools for building
  Python modules, extending the Python interpreter or embedding Python
@@ -65,7 +65,7 @@ Description: Header files and a static library for Python (default)
 
 Package: idle
 Architecture: all
-Depends: ${misc:Depends}, python (>= ${binary:Version}), python-tk (>= 2.4.3-3), idle-@PVER@
+Depends: ${misc:Depends}, python (= ${binary:Version}), python-tk (>= 2.4.3-3), idle-@PVER@
 Enhances: python
 Description: An IDE for Python using Tkinter (default version)
  IDLE is an Integrated Development Environment for Python.
@@ -78,7 +78,7 @@ Package: python-doc
 Section: doc
 Architecture: all
 Depends: ${misc:Depends}, python@VER@-doc (>= @PREVVER@)
-Suggests: python (>= ${binary:Version})
+Suggests: python (= ${binary:Version})
 Conflicts: python-doc-info, python (<< 2.3.5)
 Replaces: python-doc-info, python (<< 2.3.5)
 Description: Documentation for the high-level object-oriented language Python
@@ -103,7 +103,7 @@ Package: python-dbg
 Architecture: all
 Section: debug
 Priority: extra
-Depends: ${misc:Depends}, python (>= ${binary:Version}), python@VER@-dbg (>= @PREVVER@)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python@VER@-dbg (>= @PREVVER@)
 Provides: python-gdbm-dbg, python-tk-dbg
 Description: Debug Build of the Python Interpreter (version @VER@)
  Python interpreter configured with --pydebug. Dynamically loaded modules are
@@ -112,7 +112,7 @@ Description: Debug Build of the Python Interpreter (version @VER@)
 Package: python-all
 Architecture: all
 Priority: optional
-Depends: ${misc:Depends}, python (>= ${binary:Version}), python2.5 (>= 2.5.5-6), python2.6 (>= 2.6.5-2)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python2.5 (>= 2.5.5-6), python2.6 (>= 2.6.5-2)
 Description: Package depending on all supported Python runtime versions
  The package currently depends on python2.5 and python2.6, in the future,
  dependencies on jython (Python for a JVM) and ironpython (Python for Mono)
@@ -124,7 +124,7 @@ Description: Package depending on all supported Python runtime versions
 Package: python-all-dev
 Architecture: all
 Priority: optional
-Depends: ${misc:Depends}, python (>= ${binary:Version}), python-all (>= ${binary:Version}), python-dev (>= ${binary:Version}), python2.5-dev (>= 2.5.5-6), python2.6-dev (>= 2.6.5-2)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), python-dev (= ${binary:Version}), python2.5-dev (>= 2.5.5-6), python2.6-dev (>= 2.6.5-2)
 Description: Package depending on all supported Python development packages
  The package currently depends on python2.5-dev and python2.6-dev, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python
@@ -137,7 +137,7 @@ Package: python-all-dbg
 Architecture: all
 Section: debug
 Priority: extra
-Depends: ${misc:Depends}, python (>= ${binary:Version}), python-all (>= ${binary:Version}), python-dbg (>= ${binary:Version}), python2.5-dbg (>= 2.5.5-6), python2.6-dbg (>= 2.6.5-2)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), python-dbg (= ${binary:Version}), python2.5-dbg (>= 2.5.5-6), python2.6-dbg (>= 2.6.5-2)
 Description: Package depending on all supported Python debugging packages
  The package currently depends on python2.5-dbg and python2.6-dbg, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python
