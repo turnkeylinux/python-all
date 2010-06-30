@@ -133,7 +133,7 @@ def supported_versions(version_only=False):
             if not _supported_versions:
                 # last resort: python-minimal not installed, apt-cache
                 # not available, hard code the value, #394084
-                _supported_versions = ['python2.5',]
+                _supported_versions = ['python2.5', 'python2.6']
     if version_only:
         return [v[6:] for v in _supported_versions]
     else:
@@ -163,7 +163,7 @@ def default_version(version_only=False):
         try:
             debian_default = read_default('default-version')
         except ValueError:
-            debian_default = "python2.5"
+            debian_default = "python2.6"
         if not _default_version in (debian_default, os.path.join('/usr/bin', debian_default)):
             raise ValueError, "/usr/bin/python does not match the python default version. It must be reset to point to %s" % debian_default
         _default_version = debian_default
