@@ -43,6 +43,15 @@ PYDIST_RE = re.compile(r"""
         (?P<rules>s/.*)?                         # translator rules
     )?
     """, re.VERBOSE)
+REQUIRES_RE = re.compile(r'''
+    (?P<name>[A-Za-z][A-Za-z0-9_.]*)
+    \s*
+    (?: # optional version
+        (?P<symbol><=?|>=?|==|!=)
+        \s*
+        (?P<version>(\w|[-.])+)
+    )?
+    ''', re.VERBOSE)
 
 
 def validate(fpath, exit_on_error=False):
@@ -97,12 +106,14 @@ def guess_dependency(req, version):
         version = getver(version)
 
     data = load()
-    req = req.split(' ', 1)
-    name = req[0].lower()
-    if len(req) > 1:
-        req_version = req[1]  # r"\s*(<=?|>=?|==|!=)\s*((\w|[-.])+)"
-    else:
-        req_version = ''
+    req_dict = REQUIRES_RE.match(req)
+    if not req:
+        log.warning('requirement is not valid: %s', req)
+        log.debug('please ask dh_python2 author to fix REQUIRES_RE '
+                  'or your upstream author to fix requires.txt')
+        return set()  # should we sys.exit(1) here?
+    req_dict = req_dict.groupdict()
+    name = req_dict['name'].lower()
     details = data.get(name)
     if details:
         for item in details:
@@ -114,7 +125,7 @@ def guess_dependency(req, version):
                 # no need to translate versions if version is hardcoded in Debian
                 # dependency
                 return item['dependency']
-            if req_version:
+            if req_dict['version']:
                 # FIXME: translate it (rules, versions)
                 return item['dependency']
             else:

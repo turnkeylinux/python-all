@@ -4,6 +4,7 @@ python-defaults (2.6.5-6) UNRELEASED; urgency=low
   * dh_python2:
     - invoke `pycentral pkgremove foo` in preinst if upgrading from
       python-central based package
+    - recognize more requires.txt patterns in debpython.pydist
 
   [ Scott Kitterman ]
   * Merge changes back from Ubuntu package:
