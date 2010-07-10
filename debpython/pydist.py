@@ -30,6 +30,7 @@ from debpython.tools import memoize
 
 log = logging.getLogger('dh_python')
 
+PUBLIC_DIR_RE = re.compile(r'.*?/usr/lib/python(\d.\d+)/(site|dist)-packages')
 PYDIST_RE = re.compile(r"""
     (?P<name>[A-Za-z][A-Za-z0-9_.]*)             # Python distribution name
     \s+
@@ -99,7 +100,7 @@ def load(dname='/usr/share/python/dist/', fname='debian/pydist-overrides'):
     return result
 
 
-def guess_dependency(req, version):
+def guess_dependency(req, version=None):
     log.debug('trying to guess dependency for %s (python=%s)',
               req, vrepr(version) if version else None)
     if isinstance(version, basestring):
@@ -157,3 +158,24 @@ def guess_dependency(req, version):
         log.error('more than one package name found for %s dist', name)
         exit(9)
     return result.pop()
+
+
+def parse_pydep(fname):
+    public_dir = PUBLIC_DIR_RE.match(fname)
+    if public_dir:
+        ver = public_dir.group(1)
+    else:
+        ver = None
+
+    result = []
+    with open(fname, 'r') as fp:
+        for line in fp:
+            line = line.strip()
+            # ignore all optional sections
+            if line.startswith('['):
+                break
+            if line:
+                dependency = guess_dependency(line, ver)
+                if dependency:
+                    result.append(dependency)
+    return result

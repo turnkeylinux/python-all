@@ -2,8 +2,10 @@ python-defaults (2.6.5-6) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2:
-    - invoke `pycentral pkgremove foo` in preinst if upgrading from
-      python-central based package
+    - invoke `pycentral pkgremove PACKAGE` in preinst if upgrading from
+      python-central based packages
+    - block python package transitions via ${python:Breaks} or
+      ${python:Depends} (Breaks will be used if available)
     - recognize more requires.txt patterns in debpython.pydist
 
   [ Scott Kitterman ]

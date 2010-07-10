@@ -33,10 +33,12 @@ from shutil import rmtree, copy as fcopy
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 sys.path.insert(1, '/usr/share/python/')
 from debpython.debhelper import DebHelper
+from debpython.depends import Dependencies
 from debpython.version import SUPPORTED, DEFAULT, \
     debsorted, getver, vrepr, parse_pycentral_vrange, \
     get_requested_versions, parse_vrange, vrange_str
-from debpython.pydist import guess_dependency, validate as validate_pydist
+from debpython.pydist import validate as validate_pydist, \
+                             PUBLIC_DIR_RE
 from debpython.tools import sitedir, relative_symlink, \
                             shebang2pyver
 from debpython.option import Option
@@ -46,9 +48,7 @@ logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
                            '%(message)s')
 log = logging.getLogger('dh_python')
 os.umask(022)
-
 EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d+)?(.*?)(\.egg-info|\.pth)$')
-PUBLIC_DIR_RE = re.compile(r'.*?/usr/lib/python(\d.\d+)/(site|dist)-packages')
 
 """TODO: move it to manpage
 Examples:
@@ -384,82 +384,6 @@ def scan(package, dname=None):
     return r
 
 
-def dependencies(package, stats, options):
-    log.debug('generating dependencies for package %s', package)
-    depends = []
-    recommends = []
-    suggests = []
-    enhances = []
-    rtscripts = []
-
-    tpl = 'python%d.%d-dbg' if package.endswith('-dbg') else 'python%d.%d'
-    dep = ' | '.join(tpl % i for i in debsorted(stats['public_vers']))
-    if dep:
-        depends.append(dep)
-
-    # make sure pycompile binary is available
-    if stats['compile']:
-        depends.append("python (>= 2.6.5-2~)")
-
-    for interpreter, version in stats['shebangs']:
-        if interpreter not in depends:
-            depends.append(interpreter)
-
-    for private_dir, details in stats['private_dirs'].iteritems():
-        versions = list(v for i, v in details.get('shebangs', []) if v)
-        if len(versions) > 1:
-            log.error('more than one Python dependency from shebangs'
-                      '(%s shebang versions: %s', private_dir, versions)
-            exit(13)
-        elif len(versions) == 1:  # one hardcoded version
-            depends.append("python%d.%d" % versions[0])
-            # TODO: if versions[0] not in requested_versions: FTBFS
-        elif details.get('compile', False):
-            # no hardcoded versions, but there's something to compile
-            args = ''
-            vr = options.vrange
-            if vr:
-                args += "-V %s" % vrange_str(vr)
-                if vr[0]:  # minumum version specified
-                    depends.append("python (>= %s)" % vrepr(vr[0]))
-                if vr[1]:  # maximum version specified
-                    depends.append("python (<< %s)" % vrepr(vr[1]))
-
-            for pattern in options.regexpr or []:
-                args += " -X '%s'" % pattern.replace("'", r"\'")
-            rtscripts.append((private_dir, args))
-
-    if options.guess_deps:
-        for fn in stats['requires.txt']:
-            for i in parse_pydep(fn):
-                depends.append(i)
-
-    log.debug('D=%s; R=%s; S=%s; E=%s, RT=%s', depends, recommends, \
-              suggests, enhances, rtscripts)
-    return depends, recommends, suggests, enhances, rtscripts
-
-
-def parse_pydep(fname):
-    public_dir = PUBLIC_DIR_RE.match(fname)
-    if public_dir:
-        ver = public_dir.group(1)
-    else:
-        ver = None
-
-    result = []
-    with open(fname, 'r') as fp:
-        for line in fp:
-            line = line.strip()
-            # ignore all optional sections
-            if line.startswith('['):
-                break
-            if line:
-                dependency = guess_dependency(line, ver)
-                if dependency:
-                    result.append(dependency)
-    return result
-
-
 ################################################################
 def main():
     usage = '%prog -p PACKAGE [-V [X.Y][-][A.B]] DIR_OR_FILE [-X REGEXPR]\n'
@@ -541,17 +465,10 @@ def main():
         stats = scan(package, private_dir)
         share(package, stats, options)
 
-        dep, rec, sug, enh, rts = dependencies(package, stats, options)
-        for i in dep:
-            dh.addsubstvar(package, 'python:Depends', i)
-        for i in rec:
-            dh.addsubstvar(package, 'python:Recommends', i)
-        for i in sug:
-            dh.addsubstvar(package, 'python:Suggests', i)
-        for i in enh:
-            dh.addsubstvar(package, 'python:Enhances', i)
-        for i in rts:
-            dh.add_rtupdate(package, i)
+        dependencies = Dependencies(package,
+                                    dh.packages[package]['uses_breaks'])
+        dependencies.parse(stats, options)
+        dependencies.export_to(dh)
 
         if stats['public_vers']:
             dh.addsubstvar(package, 'python:Versions', \

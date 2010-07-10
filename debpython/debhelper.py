@@ -54,8 +54,15 @@ class DebHelper(object):
                     continue
                 if no_packages and binary_package in no_packages:
                     continue
-            if line.startswith('Source:'):
-                self.source_name = line[7:].strip()
+                if line.startswith('Architecture:'):
+                    arch = line[13:].strip()
+                    # TODO: if arch doesn't match current architecture:
+                    #del self.packages[binary_package]
+                    self.packages[binary_package]['arch'] = arch
+                    continue
+                elif line.startswith('Breaks:') and '${python:Breaks}' in line:
+                    self.packages[binary_package]['uses_breaks'] = True
+                    continue
             elif line.startswith('Package:'):
                 binary_package = line[8:].strip()
                 if binary_package.startswith('python3'):
@@ -67,16 +74,14 @@ class DebHelper(object):
                     continue
                 self.packages[binary_package] = {'substvars': {},
                                                  'autoscripts': {},
-                                                 'rtupdates': []}
+                                                 'rtupdates': [],
+                                                 'uses_breaks': False}
+            elif line.startswith('Source:'):
+                self.source_name = line[7:].strip()
             elif source_section and line.startswith('XS-Python-Version:'):
                 # ignore 3.X requirements
                 self.python_version = re.compile(\
                     ',\s>=\s*3.*').sub('', line[18:])
-            elif not source_section and line.startswith('Architecture:'):
-                arch = line[13:].strip()
-                # TODO: if arch doesn't match current architecture:
-                #del self.packages[binary_package]
-                self.packages[binary_package]['arch'] = arch
         log.debug('source=%s, binary packages=%s', self.source_name, \
                                                    self.packages.keys())
 
