@@ -142,8 +142,9 @@ stamp-dh_python:
 	dh_testdir
 	dh_testroot
 	dh_installdirs
-	DESTDIR=debian/python make install-dev
-	DESTDIR=debian/python-minimal make install-runtime
+	make check_versions
+	DESTDIR=debian/python PREFIX=/usr make install-dev
+	DESTDIR=debian/python-minimal PREFIX=/usr make install-runtime
 	touch $@
 
 # Build architecture-independent files here.

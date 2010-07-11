@@ -48,7 +48,7 @@ REQUIRES_RE = re.compile(r'''
     (?P<name>[A-Za-z][A-Za-z0-9_.]*)
     \s*
     (?: # optional version
-        (?P<symbol><=?|>=?|==|!=)
+        (?P<operator><=?|>=?|==|!=)
         \s*
         (?P<version>(\w|[-.])+)
     )?
@@ -110,8 +110,8 @@ def guess_dependency(req, version=None):
     req_dict = REQUIRES_RE.match(req)
     if not req:
         log.warning('requirement is not valid: %s', req)
-        log.debug('please ask dh_python2 author to fix REQUIRES_RE '
-                  'or your upstream author to fix requires.txt')
+        log.info('please ask dh_python2 author to fix REQUIRES_RE '
+                 'or your upstream author to fix requires.txt')
         return set()  # should we sys.exit(1) here?
     req_dict = req_dict.groupdict()
     name = req_dict['name'].lower()

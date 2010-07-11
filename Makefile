@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 INSTALL ?= install
-PREFIX ?= /usr
+PREFIX ?= /usr/local
 
 clean:
 	make -C tests clean
@@ -34,4 +34,15 @@ tests: nose
 test%:
 	make -C tests $@
 
-.PHONY: clean tests test%
+check_versions:
+	@PYTHONPATH=. set -e; \
+	DEFAULT=`python -c 'import debpython.version as v; print v.vrepr(v.DEFAULT)'`;\
+	SUPPORTED=`python -c 'import debpython.version as v; print " ".join(sorted(v.vrepr(v.SUPPORTED)))'`;\
+	DEB_DEFAULT=`sed -rn 's,^default-version = python([0.9.]*),\1,p' debian/debian_defaults`;\
+	DEB_SUPPORTED=`sed -rn 's|^supported-versions = (.*)|\1|p' debian/debian_defaults | sed 's/python//g;s/,//g'`;\
+	[ "$$DEFAULT" = "$$DEB_DEFAULT" ] || \
+	(echo 'Please update DEFAULT in debpython/version.py' >/dev/stderr; false);\
+	[ "$$SUPPORTED" = "$$DEB_SUPPORTED" ] || \
+	(echo 'Please update SUPPORTED in debpython/version.py' >/dev/stderr; false)
+
+.PHONY: clean tests test% check_versions

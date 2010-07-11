@@ -16,7 +16,7 @@ Depends: ${misc:Depends}, python2.6 (>= 2.6.5+20100616-1~), python-minimal (= ${
 Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.5)
 Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base, python-dev (<< 2.6.5-2)
 Provides: python-email, python-xmlbase, python-plistlib, python-ctypes, python-wsgiref
-Suggests: python-doc (>= ${binary:Version}), python-tk (>= ${binary:Version}), python-profiler (>= ${binary:Version})
+Suggests: python-doc (= ${binary:Version}), python-tk (= ${binary:Version}), python-profiler (= ${binary:Version})
 Description: An interactive high-level object-oriented language (default version)
  Python, the high-level, interactive object oriented language,
  includes an extensive class library with lots of goodies for

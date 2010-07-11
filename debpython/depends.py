@@ -19,7 +19,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from __future__ import with_statement
 import logging
 from debpython.pydist import parse_pydep
 from debpython.version import SUPPORTED, DEFAULT, debsorted, vrepr, vrange_str
@@ -102,7 +101,7 @@ class Dependencies(object):
                 tpl2 = 'python%d.%d'
             self.depend(' | '.join(tpl2 % i for i in debsorted(pub_vers)))
 
-            # add additional Breaks/Depends to block python package transitions
+            # additional Breaks/Depends to block python package transitions
             if self.use_breaks:
                 if minv <= min_supp:
                     self.break_("%s (<< %d.%d)" % \
@@ -129,7 +128,7 @@ class Dependencies(object):
             versions = list(v for i, v in details.get('shebangs', []) if v)
             if len(versions) > 1:
                 log.error('more than one Python dependency from shebangs'
-                          '(%s shebang versions: %s', private_dir, versions)
+                          '(%s shebang versions: %s)', private_dir, versions)
                 exit(13)
             elif len(versions) == 1:  # one hardcoded version
                 self.depend("python%d.%d" % versions[0])
