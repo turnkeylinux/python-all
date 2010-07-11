@@ -111,7 +111,6 @@ Description: Debug Build of the Python Interpreter (version 2.6)
 
 Package: python-all
 Architecture: all
-Priority: optional
 Depends: ${misc:Depends}, python (= ${binary:Version}), python2.5 (>= 2.5.5-6), python2.6 (>= 2.6.5-2)
 Description: Package depending on all supported Python runtime versions
  The package currently depends on python2.5 and python2.6, in the future,
@@ -123,7 +122,6 @@ Description: Package depending on all supported Python runtime versions
 
 Package: python-all-dev
 Architecture: all
-Priority: optional
 Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), python-dev (= ${binary:Version}), python2.5-dev (>= 2.5.5-6), python2.6-dev (>= 2.6.5-2)
 Description: Package depending on all supported Python development packages
  The package currently depends on python2.5-dev and python2.6-dev, in the
