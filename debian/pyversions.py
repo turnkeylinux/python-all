@@ -15,7 +15,11 @@ def read_default(name=None):
     if not _defaults:
         if os.path.exists('/usr/share/python/debian_defaults'):
             config = SafeConfigParser()
-            config.readfp(file('/usr/share/python/debian_defaults'))
+            try:
+                config.readfp(file('/usr/share/python/debian_defaults'))
+            except IOError, msg:
+                print msg
+                sys.exit(1)
             _defaults = config
     if _defaults and name:
         try:
@@ -206,9 +210,9 @@ def requested_versions(vstring, version_only=False):
         if 'vexact' in vinfo:
             versions.update(vinfo['vexact'])
     else:
-        raise ValueError, 'No python versions in version string'
+        raise ValueError, 'No Python versions in version string'
     if not versions:
-        raise PyCentralEmptyValueError, 'empty set of versions'
+        raise ValueError('computed set of supported versions is empty')
     if version_only:
         return versions
     else:
@@ -238,7 +242,12 @@ def extract_pyversion_attribute(fn, pkg):
     version = None
     sversion = None
     section = None
-    for line in file(fn):
+    try:
+        fp = file(fn, 'r')
+    except IOError, msg:
+        print "Cannot open %s: %s" % (fn, msg)
+        sys.exit(2)
+    for line in fp:
         line = line.strip()
         if line == '':
             if section == None:
@@ -305,7 +314,11 @@ def requested_versions_bis(vstring, version_only=False):
     return versions
 
 def extract_pyversion_attribute_bis(fn):
-    vstring = file(fn).readline().rstrip('\n')
+    try:
+        vstring = file(fn).readline().rstrip('\n')
+    except IOError, msg:
+        print msg
+        sys.exit(3)
     return vstring
 
 def main():
@@ -366,6 +379,9 @@ def main():
                         sys.stderr.write("%s: missing debian/pyversions file, fall back to supported versions\n" \
                                          % program)
                         vs = supported_versions(opts.version_only)
+                except ValueError, e:
+                    sys.stderr.write("%s: %s\n" % (program, e))
+                    sys.exit(4)
             else:
                 vs = requested_versions(versions, opts.version_only)
             print ' '.join(vs)

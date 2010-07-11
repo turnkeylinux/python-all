@@ -7,6 +7,11 @@ python-defaults (2.6.5-6) unstable; urgency=low
     - block python package transitions via ${python:Breaks} or
       ${python:Depends} (Breaks will be used if available)
     - recognize more requires.txt patterns in debpython.pydist
+  * pyversions.py:
+    - print error message if file cannot be opened (closes:
+      521508, thanks to Carl Chenet for the original patch)
+    - print nice error message if computed set of supported versions is empty
+      (closes: 583392)
 
   [ Scott Kitterman ]
   * Merge changes back from Ubuntu package:
