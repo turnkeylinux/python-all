@@ -42,7 +42,7 @@ Open an edit window.
 .PD
 Open a shell window.
 .PP
-The following options imply -i and will open a shell:
+The following options imply \-i and will open a shell:
 .TP
 .B \-c cmd
 .PD
@@ -65,9 +65,9 @@ Run $IDLESTARTUP or $PYTHONSTARTUP before anything else.
 .PD
 Set title of shell window.
 .PP
-A default edit window will be bypassed when -c, -r, or - are used.
+A default edit window will be bypassed when \-c, \-r, or \- are used.
 .PP
-[arg]* and [file]* are passed to the command (-c) or script (-r) in sys.argv[1:].
+[arg]* and [file]* are passed to the command (\-c) or script (\-r) in sys.argv[1:].
 .SH EXAMPLES
 .TP
 idle
@@ -78,17 +78,17 @@ idle foo.py foobar.py
 .PD
 Edit the files, also open a shell if configured to start with shell.
 .TP
-idle -est "Baz" foo.py
+idle \-est "Baz" foo.py
 .PD
 Run $IDLESTARTUP or $PYTHONSTARTUP, edit foo.py, and open a shell
 window with the title "Baz".
 .TP
-idle -c "import sys; print sys.argv" "foo"
+idle \-c "import sys; print sys.argv" "foo"
 .PD
-Open a shell window and run the command, passing "-c" in sys.argv[0]
+Open a shell window and run the command, passing "\-c" in sys.argv[0]
 and "foo" in sys.argv[1].
 .TP
-idle -d -s -r foo.py "Hello World"
+idle \-d \-s \-r foo.py "Hello World"
 .PD
 Open a shell window, run a startup script, enable the debugger, and
 run foo.py, passing "foo.py" in sys.argv[0] and "Hello World" in
