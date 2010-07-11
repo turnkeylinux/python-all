@@ -1,4 +1,5 @@
-#! /bin/sh -e
+#! /bin/sh
+set -e
 
 VERSION=${2#python}
 if which python >/dev/null 2>&1 && which pycompile >/dev/null 2>&1; then
