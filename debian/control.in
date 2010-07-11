@@ -13,8 +13,8 @@ Package: python
 Architecture: all
 Priority: standard
 Depends: ${misc:Depends}, @PVER@ (>= @PREVVER@), python-minimal (= ${binary:Version})
-Conflicts: python2.3 (<< 2.3.5-14), python2.1 (<= 2.1.2), python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.5)
-Replaces: python2.3 (<= 2.3.2-6), python-xmlbase, python-base, python-dev (<< 2.6.5-2)
+Conflicts: python-xmlbase, python-csv, python-bz2, python-base, python-central (<< 0.5.5)
+Replaces: python-xmlbase, python-base, python-dev (<< 2.6.5-2)
 Provides: python-email, python-xmlbase, python-plistlib, python-ctypes, python-wsgiref
 Suggests: python-doc (= ${binary:Version}), python-tk (= ${binary:Version}), python-profiler (= ${binary:Version})
 Description: An interactive high-level object-oriented language (default version)
@@ -41,7 +41,7 @@ Description: A minimal subset of the Python language (default version)
 
 Package: python-examples
 Architecture: all
-Depends: ${misc:Depends}, @PVER@-examples (>= @PREVVER@)
+Depends: ${misc:Depends}, python (= ${binary:Version}), @PVER@-examples (>= @PREVVER@)
 Description: Examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in
  the upstream Python distribution.
