@@ -15,6 +15,7 @@ python-defaults (2.6.5-6) unstable; urgency=low
   * debian/rules: do not ignore errors (two more `set -e`s added, closes:
     397499)
   * python-examples package no longer depends on python (closes: 585780)
+  * python-doc now suggests python-examples (closes: #585774)
 
   [ Scott Kitterman ]
   * Merge changes back from Ubuntu package:

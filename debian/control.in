@@ -78,7 +78,7 @@ Package: python-doc
 Section: doc
 Architecture: all
 Depends: ${misc:Depends}, python@VER@-doc (>= @PREVVER@)
-Suggests: python (= ${binary:Version})
+Suggests: python-examples, python (= ${binary:Version})
 Conflicts: python-doc-info, python (<< 2.3.5)
 Replaces: python-doc-info, python (<< 2.3.5)
 Description: Documentation for the high-level object-oriented language Python
