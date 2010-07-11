@@ -12,6 +12,8 @@ python-defaults (2.6.5-6) unstable; urgency=low
       521508, thanks to Carl Chenet for the original patch)
     - print nice error message if computed set of supported versions is empty
       (closes: 583392)
+  * debian/rules: do not ignore errors (two more `set -e`s added, closes:
+    397499)
 
   [ Scott Kitterman ]
   * Merge changes back from Ubuntu package:

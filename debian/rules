@@ -95,6 +95,7 @@ clean: control-file
 	rm -rf debian/python-policy.html
 	rm -f faq/*.h2 faq/*.html
 
+	set -e;\
 	for f in debian/*.in; do \
 	    f2=`echo $$f | sed "s,PVER,$(PVER),g;s/VER/$(VER)/g;s,\.in$$,,"`; \
 	    if [ $$f2 != debian/control ]; then \
@@ -107,6 +108,7 @@ clean: control-file
 stamp-control:
 	: # We have to prepare the various control files
 
+	set -e;\
 	for f in debian/*.in; do \
 	    f2=`echo $$f | sed "s,PVER,$(PVER),g;s/VER/$(VER)/g;s,\.in$$,,"`; \
 	    if [ $$f2 != debian/control ]; then \
