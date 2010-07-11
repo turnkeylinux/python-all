@@ -17,6 +17,9 @@ python-defaults (2.6.5-6) unstable; urgency=low
   * python-doc now suggests python-examples (closes: #585774)
   * python package doesn't conflict with python2.1 and python2.3 anymore (2.1
     and 2.3 are no longer in Debian)
+  * Standards-Version bumped to 3.9.0:
+    - some packages moved from Conflicts to versioned Breaks
+    - Homepage field added
 
   [ Scott Kitterman ]
   * Merge changes back from Ubuntu package:
@@ -27,7 +30,7 @@ python-defaults (2.6.5-6) unstable; urgency=low
   * Update hard coded fallbacks in debian/pyversions.py to add python2.6 to
     supported versions and to make it the default version
 
- -- Piotr Ożarowski <piotr@debian.org>  Sun, 11 Jul 2010 14:28:47 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 11 Jul 2010 17:08:19 +0200
 
 python-defaults (2.6.5-5) unstable; urgency=medium
 

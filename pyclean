@@ -135,7 +135,7 @@ def main():
         for filename in get_files(args):
             d.send(filename)
     else:
-        parser.print_help()
+        parser.print_usage()
         sys.exit(1)
 
 if __name__ == '__main__':
