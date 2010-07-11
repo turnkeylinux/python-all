@@ -41,7 +41,7 @@ Description: A minimal subset of the Python language (default version)
 
 Package: python-examples
 Architecture: all
-Depends: ${misc:Depends}, python (= ${binary:Version}), python2.6-examples (>= 2.6.5+20100616-1~)
+Depends: ${misc:Depends}, python2.6-examples (>= 2.6.5+20100616-1~)
 Description: Examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in
  the upstream Python distribution.
