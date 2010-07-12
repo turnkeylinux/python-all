@@ -314,11 +314,7 @@ def requested_versions_bis(vstring, version_only=False):
     return versions
 
 def extract_pyversion_attribute_bis(fn):
-    try:
-        vstring = file(fn).readline().rstrip('\n')
-    except IOError, msg:
-        print msg
-        sys.exit(3)
+    vstring = file(fn).readline().rstrip('\n')
     return vstring
 
 def main():

@@ -1,3 +1,11 @@
+python-defaults (2.6.5-7) unstable; urgency=low
+
+  * pyversions.py: fall back to the list of supported Python versions
+    if debian/pyversions doesn't exist (as in -5, closes: 588820, thanks to
+    Vincent Legout)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 12 Jul 2010 19:15:17 +0200
+
 python-defaults (2.6.5-6) unstable; urgency=low
 
   [ Piotr Ożarowski ]
