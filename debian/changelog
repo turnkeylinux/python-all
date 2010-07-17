@@ -1,7 +1,12 @@
 python-defaults (2.6.5-9) UNRELEASED; urgency=low
 
+  [ Piotr Ożarowski ]
   * pyclean, pycompile: use .communicate() instead of .wait() to avoid hanging
     `dpkg -L PACKAGE` in few situations
+
+  [ Matthias Klose ]
+  * Require python (>= 2.6.5-9~) in generated dependencies to use the fixed
+    pycompile.
 
  -- Piotr Ożarowski <piotr@debian.org>  Sat, 17 Jul 2010 18:58:23 +0200
 
