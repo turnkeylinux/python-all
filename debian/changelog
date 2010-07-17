@@ -1,3 +1,10 @@
+python-defaults (2.6.5-9) UNRELEASED; urgency=low
+
+  * pyclean, pycompile: use .communicate() instead of .wait() to avoid hanging
+    `dpkg -L PACKAGE` in few situations
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sat, 17 Jul 2010 18:58:23 +0200
+
 python-defaults (2.6.5-8) unstable; urgency=low
 
   * Revert:

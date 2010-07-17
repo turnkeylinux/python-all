@@ -85,12 +85,13 @@ def get_files(items):
 
 
 def get_package_files(package_name):
-    process = Popen("/usr/bin/dpkg -L %s" % package_name, shell=True, \
-                    stdout=PIPE, stderr=PIPE)
-    if process.wait() != 0:
+    process = Popen("/usr/bin/dpkg -L %s" % package_name,\
+                    shell=True, stdout=PIPE)
+    stdout, stderr = process.communicate()
+    if process.returncode != 0:
         log.error('cannot get content of %s', package_name)
         sys.exit(2)
-    for line in process.stdout:
+    for line in stdout:
         line = line.strip('\n')
         if line.endswith('.py'):
             yield line

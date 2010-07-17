@@ -68,12 +68,13 @@ def get_directory_files(dname):
 
 def get_package_files(package_name):
     """Generate *.py file names available in given package."""
-    process = Popen("/usr/bin/dpkg -L %s" % package_name, shell=True, \
-                    stdout=PIPE, stderr=PIPE)
-    if process.wait() != 0:
+    process = Popen("/usr/bin/dpkg -L %s" % package_name,\
+                    shell=True, stdout=PIPE)
+    stdout, stderr = process.communicate()
+    if process.returncode != 0:
         log.error('cannot get content of %s', package_name)
         exit(2)
-    for line in process.stdout:
+    for line in stdout:
         line = line.strip('\n')
         if line.endswith('.py'):
             yield line
