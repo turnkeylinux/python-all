@@ -1,3 +1,13 @@
+python-defaults (2.6.5-8) unstable; urgency=low
+
+  * Revert:
+    - python-minimal: Provide symlink to binary and manpage for
+      /usr/bin/python2.
+    This interpreter name is not created in the upstream sources.
+    python should be used instead.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 17 Jul 2010 13:10:06 +0200
+
 python-defaults (2.6.5-7) unstable; urgency=low
 
   * pyversions.py: fall back to the list of supported Python versions
