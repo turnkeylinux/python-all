@@ -89,7 +89,7 @@ def load(dname='/usr/share/python/dist/', fname='debian/pydist-overrides'):
                 if line.startswith('#') or not line:
                     continue
                 dist = PYDIST_RE.search(line).groupdict()
-                name = dist['name'].lower()
+                name = safe_name(dist['name'])
                 dist['versions'] = get_requested_versions(dist['vrange'])
                 dist['dependency'] = dist['dependency'].strip()
                 if dist['rules']:
@@ -105,6 +105,10 @@ def guess_dependency(req, version=None):
               req, vrepr(version) if version else None)
     if isinstance(version, basestring):
         version = getver(version)
+
+    # some upstreams have weird ideas for distribution name...
+    name, rest = re.compile('([^><= ]+)(.*)').match(req).groups()
+    req = safe_name(name) + rest
 
     data = load()
     req_dict = REQUIRES_RE.match(req)
@@ -143,8 +147,9 @@ def guess_dependency(req, version=None):
 
     log.debug("invoking dpkg -S %s", query)
     process = Popen("/usr/bin/dpkg -S %s" % query, \
-                    shell=True, stdout=PIPE, stderr=PIPE)
-    if process.wait() != 0:
+                    shell=True, stdout=PIPE)
+    stdout, stderr = process.communicate()
+    if process.returncode != 0:
         log.error('Cannot find package that provides %s. '
                   'Please add it to debian/pydist-overrides', name)
         log.info("hint: `apt-file search -x '(packages|pyshared)/" +\
@@ -152,7 +157,7 @@ def guess_dependency(req, version=None):
         exit(8)
 
     result = set()
-    for line in process.stdout:
+    for line in stdout:
         result.add(line.split(':')[0])
     if len(result) > 1:
         log.error('more than one package name found for %s dist', name)
@@ -179,3 +184,8 @@ def parse_pydep(fname):
                 if dependency:
                     result.append(dependency)
     return result
+
+
+def safe_name(name):
+    """Emulate distribute's safe_name."""
+    return re.compile('[^A-Za-z0-9.]+').sub('_', name).lower()

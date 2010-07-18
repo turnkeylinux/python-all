@@ -3,6 +3,8 @@ python-defaults (2.6.5-9) UNRELEASED; urgency=low
   [ Piotr Ożarowski ]
   * pyclean, pycompile: use .communicate() instead of .wait() to avoid hanging
     `dpkg -L PACKAGE` in few situations
+  * dh_python2: follow Distribute and replace all non-alphanumeric
+    characters with underscore in distribution name
 
   [ Matthias Klose ]
   * Require python (>= 2.6.5-9~) in generated dependencies to use the fixed
