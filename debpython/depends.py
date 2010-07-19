@@ -139,7 +139,7 @@ class Dependencies(object):
                 vr = options.vrange
                 if vr:
                     args += "-V %s" % vrange_str(vr)
-                    if vr[0]:  # minumum version specified
+                    if vr[0]:  # minimum version specified
                         self.depend("python (>= %s)" % vrepr(vr[0]))
                     if vr[1]:  # maximum version specified
                         self.depend("python (<< %s)" % vrepr(vr[1]))

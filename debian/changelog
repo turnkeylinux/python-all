@@ -1,4 +1,4 @@
-python-defaults (2.6.5-9) UNRELEASED; urgency=low
+python-defaults (2.6.5-9) unstable; urgency=low
 
   [ Piotr Ożarowski ]
   * pyclean, pycompile: use .communicate() instead of .wait() to avoid hanging
@@ -10,7 +10,7 @@ python-defaults (2.6.5-9) UNRELEASED; urgency=low
   * Require python (>= 2.6.5-9~) in generated dependencies to use the fixed
     pycompile.
 
- -- Piotr Ożarowski <piotr@debian.org>  Sat, 17 Jul 2010 18:58:23 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 19 Jul 2010 20:27:50 +0200
 
 python-defaults (2.6.5-8) unstable; urgency=low
 

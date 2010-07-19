@@ -444,9 +444,7 @@ def main():
     if options.skip_private:
         private_dir = False
 
-    if options.verbose:
-        log.setLevel(logging.INFO)
-    if os.environ.get('DH_VERBOSE') == '1':
+    if options.verbose or os.environ.get('DH_VERBOSE') == '1':
         log.setLevel(logging.DEBUG)
         log.debug('argv: %s', sys.argv)
         log.debug('options: %s', options)

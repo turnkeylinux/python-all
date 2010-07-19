@@ -112,7 +112,7 @@ def guess_dependency(req, version=None):
 
     data = load()
     req_dict = REQUIRES_RE.match(req)
-    if not req:
+    if not req_dict:
         log.warning('requirement is not valid: %s', req)
         log.info('please ask dh_python2 author to fix REQUIRES_RE '
                  'or your upstream author to fix requires.txt')

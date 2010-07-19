@@ -59,9 +59,6 @@ Description: header files and a static library for Python (default)
  Python modules, extending the Python interpreter or embedding Python
  in applications.
  .
- Includes the Python distutils, which were in a separate package up to
- version 1.5.2.
- .
  This package is a dependency package, which depends on Debian's default
  Python version (currently v@VER@).
 

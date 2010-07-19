@@ -103,6 +103,7 @@ clean: control-file
 	    fi; \
 	done
 	rm -f debian/*.py[co]
+	make clean
 	dh_clean
 
 stamp-control:

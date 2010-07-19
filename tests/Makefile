@@ -7,7 +7,7 @@ test%:
 
 clean:
 	rm -f *\.dsc *\.tar\.gz *\.build *\.changes *\.deb
-	(cd t1; fakeroot ./debian/rules clean)
+	(cd t1; ./debian/rules clean)
 	@find . -name '*\.egg-info' -exec rm -rf "{}" \; || true
 
 .PHONY: clean

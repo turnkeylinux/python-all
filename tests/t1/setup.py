@@ -1,6 +1,9 @@
 #! /usr/bin/python
 # -*- coding: UTF-8 -*-
-from setuptools import setup, find_packages
+try:
+    from setuptools import setup, find_packages
+except ImportError:
+    exit()
 
 setup(name='Foo',
       version=0.1,

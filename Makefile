@@ -19,7 +19,7 @@ install-dev:
 
 install-runtime:
 	$(INSTALL) -m 755 -d $(DESTDIR)$(PREFIX)/share/python/debpython $(DESTDIR)$(PREFIX)/bin
-	$(INSTALL) -m 644 debpython/*py $(DESTDIR)$(PREFIX)/share/python/debpython/
+	$(INSTALL) -m 644 debpython/*.py $(DESTDIR)$(PREFIX)/share/python/debpython/
 	$(INSTALL) -m 755 pycompile $(DESTDIR)$(PREFIX)/bin/
 	$(INSTALL) -m 755 pyclean $(DESTDIR)$(PREFIX)/bin/
 
