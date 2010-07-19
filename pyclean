@@ -61,11 +61,11 @@ def destroyer():  # ;-)
             pyfile = (yield)
             for filename in find_files_to_remove(pyfile):
                 try:
-                    log.debug('removing %s', filename)
                     remove(filename)
                     counter += 1
-                except IOError:
+                except (IOError, OSError), e:
                     log.error('cannot remove %s', filename)
+                    log.debug(e)
     except GeneratorExit:
         if counter:
             log.info("removed files: %s", counter)
