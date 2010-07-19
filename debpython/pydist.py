@@ -118,8 +118,7 @@ def guess_dependency(req, version=None):
                  'or your upstream author to fix requires.txt')
         return set()  # should we sys.exit(1) here?
     req_dict = req_dict.groupdict()
-    name = req_dict['name'].lower()
-    details = data.get(name)
+    details = data.get(req_dict['name'].lower())
     if details:
         for item in details:
             if version not in item.get('versions', version):
@@ -157,7 +156,9 @@ def guess_dependency(req, version=None):
         exit(8)
 
     result = set()
-    for line in stdout:
+    for line in stdout.split('\n'):
+        if not line.strip():
+            continue
         result.add(line.split(':')[0])
     if len(result) > 1:
         log.error('more than one package name found for %s dist', name)
