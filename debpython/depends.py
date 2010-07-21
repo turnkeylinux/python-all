@@ -20,7 +20,7 @@
 # THE SOFTWARE.
 
 import logging
-from debpython.pydist import parse_pydep
+from debpython.pydist import parse_pydep, guess_dependency
 from debpython.version import SUPPORTED, DEFAULT, debsorted, vrepr, vrange_str
 
 log = logging.getLogger('dh_python')
@@ -152,4 +152,9 @@ class Dependencies(object):
             for fn in stats['requires.txt']:
                 for i in parse_pydep(fn):
                     self.depend(i)
+
+        # add dependencies from --depend
+        for item in options.depends:
+            self.depend(guess_dependency(item))
+
         log.debug(self)

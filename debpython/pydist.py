@@ -121,7 +121,7 @@ def guess_dependency(req, version=None):
     details = data.get(req_dict['name'].lower())
     if details:
         for item in details:
-            if version not in item.get('versions', version):
+            if version and version not in item.get('versions', version):
                 # rule doesn't match version, try next one
                 continue
 

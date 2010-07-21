@@ -5,4 +5,4 @@
 override_dh_pysupport:
 	find debian/ -name jquery.js -exec \
 	ln -fs /usr/share/javascript/jquery/jquery.js '{}' \;
-	DH_VERBOSE=1 ../../dh_python2
+	DH_VERBOSE=1 ../../dh_python2 --depend 'SQLAlchemy >= 0.6.1'

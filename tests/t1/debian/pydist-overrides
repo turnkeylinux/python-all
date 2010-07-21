@@ -1,2 +1,2 @@
 Mako python-mako (>= 0.2)
-SQLAlchemy python-sqlalchemy (<< 0.6)
+SQLAlchemy python-sqlalchemy (>= 0.6)
