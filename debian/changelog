@@ -1,7 +1,9 @@
 python-defaults (2.6.5-10) UNRELEASED; urgency=low
 
-  * dh_python2: add --depend command line option (use it if requires.txt
-    doesn't contain dependency that package needs)
+  * dh_python2:
+    - add --depend command line option (use it if requires.txt
+      doesn't contain dependency that package needs)
+    - add {/usr,}/sbin to the list of directories with checked shebangs
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 21 Jul 2010 21:10:19 +0200
 

@@ -304,7 +304,8 @@ def scan(package, dname=None):
                     break
             else:  # i.e. not public_dir and not private_dir
                 if len(root.split('/', 6)) < 6 and (\
-                   root.endswith('/bin') or root.endswith('/usr/games')):
+                   root.endswith('/sbin') or root.endswith('/bin') or\
+                   root.endswith('/usr/games')):
                    # /bin or /usr/bin or /usr/games
                     bin_dir = root
 
