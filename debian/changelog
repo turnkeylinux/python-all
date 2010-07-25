@@ -1,13 +1,13 @@
-python-defaults (2.6.5-10) UNRELEASED; urgency=low
+python-defaults (2.6.5-10) unstable; urgency=low
 
   * dh_python2:
-    - add --depend command line option (use it if requires.txt
-      doesn't contain dependency that package needs)
+    - add --depend, --recommend and --suggest command line options
+     (use it if requires.txt doesn't contain dependency that package needs)
     - add {/usr,}/sbin to the list of directories with checked shebangs
   * pycompile: do not exit before all background byte compilation is finished
     (closes: 590224)
 
- -- Piotr Ożarowski <piotr@debian.org>  Wed, 21 Jul 2010 21:10:19 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 25 Jul 2010 12:34:56 +0200
 
 python-defaults (2.6.5-9) unstable; urgency=low
 

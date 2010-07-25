@@ -150,11 +150,19 @@ class Dependencies(object):
 
         if options.guess_deps:
             for fn in stats['requires.txt']:
+                # TODO: should options.recommends and options.suggests be
+                # removed from requires.txt?
                 for i in parse_pydep(fn):
                     self.depend(i)
 
         # add dependencies from --depend
         for item in options.depends:
             self.depend(guess_dependency(item))
+        # add dependencies from --recommend
+        for item in options.recommends:
+            self.recommend(guess_dependency(item))
+        # add dependencies from --suggest
+        for item in options.suggests:
+            self.suggest(guess_dependency(item))
 
         log.debug(self)
