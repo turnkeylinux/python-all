@@ -156,13 +156,13 @@ class Dependencies(object):
                     self.depend(i)
 
         # add dependencies from --depend
-        for item in options.depends:
+        for item in options.depends or []:
             self.depend(guess_dependency(item))
         # add dependencies from --recommend
-        for item in options.recommends:
+        for item in options.recommends or []:
             self.recommend(guess_dependency(item))
         # add dependencies from --suggest
-        for item in options.suggests:
+        for item in options.suggests or []:
             self.suggest(guess_dependency(item))
 
         log.debug(self)
