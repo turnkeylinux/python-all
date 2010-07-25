@@ -1,4 +1,4 @@
-python-defaults (2.6.5-10) unstable; urgency=low
+python-defaults (2.6.5-10) unstable; urgency=medium
 
   * dh_python2:
     - add --depend, --recommend and --suggest command line options
