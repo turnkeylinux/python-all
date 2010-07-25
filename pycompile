@@ -38,8 +38,9 @@ from debpython.tools import memoize
 # initialize script
 logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
                            '%(message)s')
-log = logging.getLogger('pycompile')
+log = logging.getLogger(__name__)
 STDINS = {}
+WORKERS = {}
 
 """TODO: move it to manpage
 Examples:
@@ -158,22 +159,24 @@ def filter_files(files, e_patterns, compile_versions):
 
 
 ### COMPILE ####################################################
-def py_compile(version):
+def py_compile(version, workers):
     if not isinstance(version, basestring):
         version = vrepr(version)
     cmd = "python%s -m py_compile -" % version
-    stdin = Popen(cmd, bufsize=1, shell=True, stdin=PIPE).stdin
+    process = Popen(cmd, bufsize=1, shell=True, stdin=PIPE)
+    workers[version] = process  # keep the reference for .communicate()
+    stdin = process.stdin
     while True:
         filename = (yield)
         stdin.write(filename + '\n')
 
 
 def compile(files, versions, e_patterns=None):
-    global STDINS
+    global STDINS, WORKERS
     # start Python interpreters that will handle byte compilation
     for version in versions:
         if version not in STDINS:
-            coroutine = py_compile(version)
+            coroutine = py_compile(version, WORKERS)
             coroutine.next()
             STDINS[version] = coroutine
 
@@ -213,15 +216,13 @@ multiple times to build up a list of things to exclude.')
 
     (options, args) = parser.parse_args()
 
-    if options.verbose:
-        log.setLevel(logging.INFO)
-    else:
-        log.setLevel(logging.WARN)
-    if environ.get('PYCOMPILE_DEBUG') == '1':
+    if options.verbose or environ.get('PYCOMPILE_DEBUG') == '1':
         log.setLevel(logging.DEBUG)
         log.debug('argv: %s', sys.argv)
         log.debug('options: %s', options)
         log.debug('args: %s', args)
+    else:
+        log.setLevel(logging.WARN)
 
     if options.regexpr and not args:
         parser.error('--exclude option works with private directories '
@@ -265,6 +266,10 @@ multiple times to build up a list of things to exclude.')
     else:
         parser.print_usage()
         exit(1)
+
+    # wait for all processes to finish
+    for process in WORKERS.itervalues():
+        process.communicate()
 
 if __name__ == '__main__':
     main()

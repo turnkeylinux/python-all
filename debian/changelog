@@ -4,6 +4,8 @@ python-defaults (2.6.5-10) UNRELEASED; urgency=low
     - add --depend command line option (use it if requires.txt
       doesn't contain dependency that package needs)
     - add {/usr,}/sbin to the list of directories with checked shebangs
+  * pycompile: do not exit before all background byte compilation is finished
+    (closes: 590224)
 
  -- Piotr Ożarowski <piotr@debian.org>  Wed, 21 Jul 2010 21:10:19 +0200
 

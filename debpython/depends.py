@@ -119,7 +119,7 @@ class Dependencies(object):
 
         # make sure pycompile binary is available
         if stats['compile']:
-            self.depend("python (>= 2.6.5-9~)")
+            self.depend("python (>= 2.6.5-10~)")
 
         for interpreter, version in stats['shebangs']:
             self.depend(interpreter)

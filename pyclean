@@ -33,7 +33,7 @@ from subprocess import Popen, PIPE
 # initialize script
 logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
                            '%(message)s')
-log = logging.getLogger('pyclean')
+log = logging.getLogger(__name__)
 
 """TODO: move it to manpage
 Examples:
@@ -43,12 +43,7 @@ Examples:
 
 
 def destroyer():  # ;-)
-    """Removes every .py[co] file associated to received .py file.
-
-    :param magic_tags: if True, removes __pycache__ directories,
-        if None, removes .py[co] files (PEP 3147 mode turned off),
-        otherwise removes set of magic tags from __pycache__ directory
-    """
+    """Removes every .py[co] file associated to received .py file."""
 
     def find_files_to_remove(pyfile):
         for filename in ("%sc" % pyfile, "%so" % pyfile):
@@ -61,14 +56,14 @@ def destroyer():  # ;-)
             pyfile = (yield)
             for filename in find_files_to_remove(pyfile):
                 try:
+                    log.debug('removing %s', filename)
                     remove(filename)
                     counter += 1
                 except (IOError, OSError), e:
                     log.error('cannot remove %s', filename)
                     log.debug(e)
     except GeneratorExit:
-        if counter:
-            log.info("removed files: %s", counter)
+        log.info("removed files: %s", counter)
 
 
 def get_files(items):
@@ -108,16 +103,13 @@ def main():
 
     (options, args) = parser.parse_args()
 
-    if options.verbose:
-        log.setLevel(logging.INFO)
-    else:
-        log.setLevel(logging.WARNING)
-
-    if environ.get('PYCLEAN_DEBUG') == '1':
+    if options.verbose or environ.get('PYCLEAN_DEBUG') == '1':
         log.setLevel(logging.DEBUG)
         log.debug('argv: %s', sys.argv)
         log.debug('options: %s', options)
         log.debug('args: %s', args)
+    else:
+        log.setLevel(logging.WARNING)
 
     d = destroyer()
     d.next()  # initialize coroutine
