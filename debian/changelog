@@ -3,6 +3,8 @@ python-defaults (2.6.5-11) unstable; urgency=medium
   * Add README.PyDist to python-doc package
   * pycompile: compile public module for the right Python version (really
     closes: 590224)
+  * dh_python2: rename --depend to --depends, --recommend to --recommends and
+    --suggest to --suggests
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 27 Jul 2010 21:25:54 +0200
 

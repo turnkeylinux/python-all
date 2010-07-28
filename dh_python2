@@ -418,14 +418,14 @@ def main():
     parser.add_option('-X', '--exclude', action='append', dest='regexpr',
         help='exclude items that match given REGEXPR. You may use this option'
              'multiple times to build up a list of things to exclude.')
-    parser.add_option('--depend', action='append', dest='depends',
+    parser.add_option('--depends', action='append', dest='depends',
         help='translate given requirements into Debian dependencies '
              'and add them to ${python:Depends}. '
              'Use it for missing items in requires.txt.')
-    parser.add_option('--recommend', action='append', dest='recommends',
+    parser.add_option('--recommends', action='append', dest='recommends',
         help='translate given requirements into Debian '
              'dependencies and add them to ${python:Recommends}')
-    parser.add_option('--suggest', action='append', dest='suggests',
+    parser.add_option('--suggests', action='append', dest='suggests',
         help='translate given requirements into Debian '
              'dependencies and add them to ${python:Suggests}')
     # ignore some debhelper options:

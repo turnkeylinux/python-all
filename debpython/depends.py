@@ -119,7 +119,7 @@ class Dependencies(object):
 
         # make sure pycompile binary is available
         if stats['compile']:
-            self.depend("python (>= 2.6.5-10~)")
+            self.depend("python (>= 2.6.5-11~)")
 
         for interpreter, version in stats['shebangs']:
             self.depend(interpreter)
@@ -155,13 +155,13 @@ class Dependencies(object):
                 for i in parse_pydep(fn):
                     self.depend(i)
 
-        # add dependencies from --depend
+        # add dependencies from --depends
         for item in options.depends or []:
             self.depend(guess_dependency(item))
-        # add dependencies from --recommend
+        # add dependencies from --recommends
         for item in options.recommends or []:
             self.recommend(guess_dependency(item))
-        # add dependencies from --suggest
+        # add dependencies from --suggests
         for item in options.suggests or []:
             self.suggest(guess_dependency(item))
 
