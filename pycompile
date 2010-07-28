@@ -31,8 +31,9 @@ from os.path import abspath, exists, isdir, isfile, join
 from subprocess import PIPE, Popen
 sys.path.insert(1, '/usr/share/python/')
 from debpython.version import SUPPORTED, debsorted, vrepr, \
-        get_requested_versions, parse_vrange
+        get_requested_versions, parse_vrange, getver
 from debpython.option import Option, compile_regexpr
+from debpython.pydist import PUBLIC_DIR_RE
 from debpython.tools import memoize
 
 # initialize script
@@ -155,7 +156,11 @@ def filter_files(files, e_patterns, compile_versions):
             if not valid_versions:
                 break
         if valid_versions:
-            yield fn, valid_versions
+            public_dir = PUBLIC_DIR_RE.match(fn)
+            if public_dir:
+                yield fn, set([getver(public_dir.group(1))])
+            else:
+                yield fn, valid_versions
 
 
 ### COMPILE ####################################################
