@@ -1,0 +1,41 @@
+.TH PYCOMPILE "1" "August 2010" "pycompile 0.9" "User Commands"
+.SH NAME
+pycompile \- byte compiles Python source files
+.SH SYNOPSIS
+.B pycompile
+[\fI-V \fR[\fIX.Y\fR][\fI-\fR][\fIA.B\fR]] \fIDIR_OR_FILE \fR[\fI-X REGEXPR\fR]
+.SH DESCRIPTION
+.IP
+pycompile \fB\-p\fR PACKAGE
+.SH OPTIONS
+.TP
+\fB\-\-version\fR
+show program's version number and exit
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+show this help message and exit
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+turn verbose more one
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+be quiet
+.TP
+\fB\-p\fR PACKAGE, \fB\-\-package\fR=\fIPACKAGE\fR
+specify Debian package name whose files should be
+bytecompiled
+.TP
+\fB\-V\fR VRANGE
+force private modules to be bytecompiled with Python
+version from given range, regardless of the default
+Python version in the system. If there are no other
+options, bytecompile all public modules for installed
+Python versions that match given range.  VERSION_RANGE
+examples: '2.5' (version 2.5 only), '2.5\-' (version
+2.5 or newer), '2.5\-2.7' (version 2.5 or 2.6), '\-3.0'
+(all supported 2.X versions)
+.TP
+\fB\-X\fR REGEXPR, \fB\-\-exclude\fR=\fIREGEXPR\fR
+exclude items that match given REGEXPR. You may use
+this option multiple times to build up a list of
+things to exclude.

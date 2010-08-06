@@ -392,9 +392,9 @@ def main():
                                    option_class=Option)
     parser.add_option('--no-guessing-versions', action='store_false',
         dest='guess_versions', default=True,
-        help='disables guessing other supported Python versions')
+        help='disable guessing other supported Python versions')
     parser.add_option('--no-guessing-deps', action='store_false',
-        dest='guess_deps', default=True, help='disables guessing dependencies')
+        dest='guess_deps', default=True, help='disable guessing dependencies')
     parser.add_option('--skip-private', action='store_true',
         dest='skip_private', default=False,
         help='don\'t check private directories')
@@ -403,15 +403,15 @@ def main():
     # arch=False->arch:all only, arch=True->arch:any only, None->all of them
     parser.add_option('-i', '--indep', action='store_false',
         dest='arch', default=None,
-        help='Act on architecture independent packages')
+        help='act on architecture independent packages')
     parser.add_option('-a', '--arch', action='store_true',
-        dest='arch', help='Act on architecture dependent packages')
+        dest='arch', help='act on architecture dependent packages')
     parser.add_option('-q', '--quiet', action='store_false', dest='verbose',
         default=True, help='be quiet')
     parser.add_option('-p', '--package', action='append', dest='package',
-        help='Act on the package named PACKAGE')
+        help='act on the package named PACKAGE')
     parser.add_option('-N', '--no-package', action='append', dest='no_package',
-        help='Do not act on the specified package')
+        help='do not act on the specified package')
     parser.add_option('-V', type='version_range', dest='vrange',
         help='specify list of supported Python versions. ' +\
              'See pycompile(1) for examples')

@@ -155,6 +155,7 @@ stamp-dh_python:
 binary-indep: build install stamp-doc
 	dh_testdir -i
 	dh_testroot -i
+	dh_installman -i
 
 	: # provide the python and python.1 defaults
 	mkdir -p debian/python-minimal/usr/bin
