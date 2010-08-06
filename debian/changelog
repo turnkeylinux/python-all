@@ -1,3 +1,10 @@
+python-defaults (2.6.5-12) unstable; urgency=low
+
+  * pycompile: do not hang if interpreters are not started in the same order
+    as they're used (LP: #613675)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 05 Aug 2010 19:15:52 -0400
+
 python-defaults (2.6.5-11) unstable; urgency=medium
 
   * Add README.PyDist to python-doc package

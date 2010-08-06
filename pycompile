@@ -168,7 +168,8 @@ def py_compile(version, workers):
     if not isinstance(version, basestring):
         version = vrepr(version)
     cmd = "python%s -m py_compile -" % version
-    process = Popen(cmd, bufsize=1, shell=True, stdin=PIPE)
+    process = Popen(cmd, bufsize=1, shell=True,
+                    stdin=PIPE, close_fds=True)
     workers[version] = process  # keep the reference for .communicate()
     stdin = process.stdin
     while True:
