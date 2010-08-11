@@ -237,8 +237,9 @@ class MissingVersionValueError(ValueError):
     pass
 
 def extract_pyversion_attribute(fn, pkg):
-    """read the debian/control file, extract the XS-Python-Version
-    field; check that XB-Python-Version exists for the package."""
+    """read the debian/control file, extract the XS-Python-Version or
+    XS-Python-Version field; check that XB-Python-Version exists for the
+    package."""
 
     version = None
     sversion = None
@@ -260,10 +261,10 @@ def extract_pyversion_attribute(fn, pkg):
             section = 'Source'
         elif line.startswith('Package: ' + pkg):
             section = pkg
-        elif line.startswith('XS-Python-Version:'):
+        elif line.startswith('XS-Python-Version:') or line.startswith('X-Python-Version:'):
             if section != 'Source':
                 raise ValueError, \
-                      'attribute XS-Python-Version not in Source section'
+                      'attribute X(S)-Python-Version not in Source section'
             sversion = line.split(':', 1)[1].strip()
         elif line.startswith('XB-Python-Version:'):
             if section == pkg:
@@ -273,7 +274,7 @@ def extract_pyversion_attribute(fn, pkg):
     if pkg == 'Source':
         if sversion == None:
             raise MissingVersionValueError, \
-                  'missing XS-Python-Version in control file'
+                  'missing X(S)-Python-Version in control file'
         return sversion
     if version == None:
         raise MissingVersionValueError, \
@@ -329,7 +330,7 @@ def main():
                       help='print the supported python versions',
                       action='store_true', dest='supported')
     parser.add_option('-r', '--requested',
-                      help='print the python versions requested by a build; the argument is either the name of a control file or the value of the XS-Python-Version attribute',
+                      help='print the python versions requested by a build; the argument is either the name of a control file or the value of the X-Python-Version/XS-Python-Version attribute',
                       action='store_true', dest='requested')
     parser.add_option('-i', '--installed',
                       help='print the installed supported python versions',
@@ -367,7 +368,7 @@ def main():
                     sys.exit(1)
                 except MissingVersionValueError:
                     fn = os.path.join(os.path.dirname(fn), 'pyversions')
-                    sys.stderr.write("%s: missing XS-Python-Version in control file, fall back to %s\n" \
+                    sys.stderr.write("%s: missing X(S)-Python-Version in control file, fall back to %s\n" \
                                      % (program, fn))
                     try:
                         vstring = extract_pyversion_attribute_bis(fn)
