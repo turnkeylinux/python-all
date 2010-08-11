@@ -56,8 +56,9 @@ def parse_versions(vstring, add_exact=False):
                 raise ValueError('error parsing Python-Version attribute')
             op, v = m.group(1), m.group(2)
             vmaj, vmin = v.split('.')
-            if int(vmaj) > 2:
-                continue
+            # Don't silently ignore Python 3 versions for Squeeze.
+            #if int(vmaj) > 2:
+            #    continue
             if op in (None, '='):
                 exact_versions.add(v)
             else:
