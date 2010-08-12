@@ -446,7 +446,7 @@ def main():
         with open('debian/pyversions') as fp:
             for line in fp:
                 line = line.strip()
-                if line:
+                if line and not line.startswith('#'):
                     options.vrange = parse_vrange(line)
                     break
 

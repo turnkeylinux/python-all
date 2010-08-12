@@ -78,10 +78,11 @@ class DebHelper(object):
                                                  'uses_breaks': False}
             elif line.startswith('Source:'):
                 self.source_name = line[7:].strip()
-            elif source_section and line.startswith('XS-Python-Version:'):
-                # ignore 3.X requirements
-                self.python_version = re.compile(\
-                    ',\s>=\s*3.*').sub('', line[18:])
+            elif source_section:
+                if line.startswith('XS-Python-Version:') and not self.python_version:
+                    self.python_version = line[18:].strip()
+                if line.startswith('X-Python-Version:'):
+                    self.python_version = line[17:].strip()
         log.debug('source=%s, binary packages=%s', self.source_name, \
                                                    self.packages.keys())
 
