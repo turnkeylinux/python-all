@@ -330,7 +330,7 @@ def main():
                       help='print the supported python versions',
                       action='store_true', dest='supported')
     parser.add_option('-r', '--requested',
-                      help='print the python versions requested by a build; the argument is either the name of a control file or the value of the X-Python-Version/XS-Python-Version attribute',
+                      help='print the python versions requested by a build; the argument is either the name of a control file or the value of the X(S)-Python-Version attribute',
                       action='store_true', dest='requested')
     parser.add_option('-i', '--installed',
                       help='print the installed supported python versions',
