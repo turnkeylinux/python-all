@@ -407,7 +407,7 @@ def main():
     parser.add_option('-a', '--arch', action='store_true',
         dest='arch', help='act on architecture dependent packages')
     parser.add_option('-q', '--quiet', action='store_false', dest='verbose',
-        default=True, help='be quiet')
+        help='be quiet')
     parser.add_option('-p', '--package', action='append', dest='package',
         help='act on the package named PACKAGE')
     parser.add_option('-N', '--no-package', action='append', dest='no_package',
