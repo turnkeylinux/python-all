@@ -8,6 +8,7 @@ python-defaults (2.6.5-13) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
   * Fix documentation typo in pycompile/pycompile.1
+  * dh_python2: Add support for X-Python-Version
 
  -- Scott Kitterman <scott@kitterman.com>  Tue, 10 Aug 2010 22:27:20 -0400
 
