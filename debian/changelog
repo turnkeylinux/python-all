@@ -1,4 +1,4 @@
-python-defaults (2.6.5-13) UNRELEASED; urgency=low
+python-defaults (2.6.5-13) unstable; urgency=low
 
   [ Scott Kitterman ]
   * Python policy changes for X-Python-Version and X-Python3-Version
@@ -8,9 +8,12 @@ python-defaults (2.6.5-13) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
   * Fix documentation typo in pycompile/pycompile.1
-  * dh_python2: Add support for X-Python-Version
+  * dh_python2:
+    - pass shallow=False to cmpfiles to make sure only exactly the same files
+      are moved to pyshared
+    - add support for X-Python-Version
 
- -- Scott Kitterman <scott@kitterman.com>  Tue, 10 Aug 2010 22:27:20 -0400
+ -- Piotr Ożarowski <piotr@debian.org>  Fri, 13 Aug 2010 22:39:37 +0200
 
 python-defaults (2.6.5-12) unstable; urgency=low
 

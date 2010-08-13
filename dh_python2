@@ -224,7 +224,7 @@ def share_2x(dir1, dir2, dc=None):
         common_dirs = dc.subdirs.iteritems()
         common_files = dc.common_files
         # dircmp returns common names only, lets check files more carefully...
-        common_files = cmpfiles(dir1, dir2, common_files)[0]
+        common_files = cmpfiles(dir1, dir2, common_files, shallow=False)[0]
 
     for fn in common_files:
         fpath1 = join(dir1, fn)
