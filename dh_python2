@@ -399,7 +399,7 @@ def main():
         dest='skip_private', default=False,
         help='don\'t check private directories')
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose',
-        default=False, help='turn verbose mode one')
+        default=False, help='turn verbose mode on')
     # arch=False->arch:all only, arch=True->arch:any only, None->all of them
     parser.add_option('-i', '--indep', action='store_false',
         dest='arch', default=None,
@@ -416,7 +416,7 @@ def main():
         help='specify list of supported Python versions. ' +\
              'See pycompile(1) for examples')
     parser.add_option('-X', '--exclude', action='append', dest='regexpr',
-        help='exclude items that match given REGEXPR. You may use this option'
+        help='exclude items that match given REGEXPR. You may use this option '
              'multiple times to build up a list of things to exclude.')
     parser.add_option('--depends', action='append', dest='depends',
         help='translate given requirements into Debian dependencies '
