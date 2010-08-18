@@ -440,7 +440,7 @@ import foo
 	  versions of Python (not versions of Python 3) supported by the
 	  source package. Similarly, <tt>X-Python3-Version</tt> is used to
 	  specify the versions of Python 3 supported by the package.  When not
-	  specified, they defaults to all currently supported Python (or Python 3)
+	  specified, they default to all currently supported Python (or Python 3)
 	  versions.
 
 	  They are used by some packaging scripts to automatically generate

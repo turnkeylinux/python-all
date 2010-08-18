@@ -237,7 +237,7 @@ class MissingVersionValueError(ValueError):
     pass
 
 def extract_pyversion_attribute(fn, pkg):
-    """read the debian/control file, extract the XS-Python-Version or
+    """read the debian/control file, extract the X-Python-Version or
     XS-Python-Version field; check that XB-Python-Version exists for the
     package."""
 
