@@ -2,10 +2,13 @@ python-defaults (2.6.5-14) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2: typo in --help output fixed (thanks to Adam D. Barratt)
+  * Bump python-minimal's Breaks of python2.5-minimal to << 2.5.5-7 (due to
+    missing runpy module)
 
   [ Scott Kitterman ]
   * debian/python-policy.sgml and debian/pyversions.py fix typos (thanks to
     Adam D. Barratt)
+
 
  -- Scott Kitterman <scott@kitterman.com>  Wed, 18 Aug 2010 16:56:12 -0400
 
