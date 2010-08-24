@@ -1,4 +1,4 @@
-python-defaults (2.6.5-14) UNRELEASED; urgency=low
+python-defaults (2.6.6-1) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2: typo in --help output fixed (thanks to Adam D. Barratt)
@@ -9,8 +9,10 @@ python-defaults (2.6.5-14) UNRELEASED; urgency=low
   * debian/python-policy.sgml and debian/pyversions.py fix typos (thanks to
     Adam D. Barratt)
 
+  [ Matthias Klose ]
+  * Bump version to 2.6.6.
 
- -- Scott Kitterman <scott@kitterman.com>  Wed, 18 Aug 2010 16:56:12 -0400
+ -- Matthias Klose <doko@debian.org>  Tue, 24 Aug 2010 20:03:26 +0200
 
 python-defaults (2.6.5-13) unstable; urgency=low
 
