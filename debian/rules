@@ -60,7 +60,7 @@ control-file:
 		<debian/control.in >debian/control.tmp
 ifeq ($(distribution),Ubuntu)
   ifneq (,$(findstring ubuntu, $(PKGVERSION)))
-	m='Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>'; \
+	m='Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>'; \
 	sed -i "/^Maintainer:/s/\(.*\)/Maintainer: $$m\nXSBC-Original-\1/" \
 	  debian/control.tmp
   endif
