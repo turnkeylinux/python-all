@@ -23,6 +23,7 @@ import logging
 from debpython.pydist import parse_pydep, guess_dependency
 from debpython.version import SUPPORTED, DEFAULT, debsorted, vrepr, vrange_str
 
+MINPYCDEP = 'python (>= 2.6.5-11~)'  # minumum version required for pycompile
 log = logging.getLogger('dh_python')
 
 
@@ -119,7 +120,7 @@ class Dependencies(object):
 
         # make sure pycompile binary is available
         if stats['compile']:
-            self.depend("python (>= 2.6.5-11~)")
+            self.depend(MINPYCDEP)
 
         for interpreter, version in stats['shebangs']:
             self.depend(interpreter)
@@ -135,6 +136,7 @@ class Dependencies(object):
                 # TODO: if versions[0] not in requested_versions: FTBFS
             elif details.get('compile', False):
                 # no hardcoded versions, but there's something to compile
+                self.depend(MINPYCDEP)
                 args = ''
                 vr = options.vrange
                 if vr:

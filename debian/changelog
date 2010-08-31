@@ -1,9 +1,11 @@
-python-defaults (2.6.6-1) UNRELEASED; urgency=low
+python-defaults (2.6.6-1) unstable; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2: typo in --help output fixed (thanks to Adam D. Barratt)
   * Bump python-minimal's Breaks of python2.5-minimal to << 2.5.5-7 (due to
     missing runpy module)
+  * Set the right minimum required python package version in packages with
+    private modules
 
   [ Scott Kitterman ]
   * debian/python-policy.sgml and debian/pyversions.py fix typos (thanks to
@@ -12,7 +14,7 @@ python-defaults (2.6.6-1) UNRELEASED; urgency=low
   [ Matthias Klose ]
   * Bump version to 2.6.6.
 
- -- Matthias Klose <doko@debian.org>  Tue, 24 Aug 2010 20:03:26 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 31 Aug 2010 19:09:30 +0200
 
 python-defaults (2.6.5-13) unstable; urgency=low
 
