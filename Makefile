@@ -4,6 +4,7 @@ PREFIX ?= /usr/local
 
 clean:
 	make -C tests clean
+	make -C pydist clean
 	find . -name '*.py[co]' -delete
 	rm -f .coverage
 
@@ -24,6 +25,9 @@ install-runtime:
 	$(INSTALL) -m 755 pyclean $(DESTDIR)$(PREFIX)/bin/
 
 install: install-dev install-runtime
+
+dist_fallback:
+	make -C pydist $@
 
 nose:
 	nosetests --with-doctest --with-coverage

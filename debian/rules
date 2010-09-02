@@ -46,7 +46,7 @@ stamp-doc-policy:
 	debiandoc2html debian/python-policy.sgml
 	rm -rf debian/python-policy.html
 	mv -f python-policy.html debian/
-	rst2html README.PyDist README.PyDist.html
+	make -C pydist README.PyDist.html
 	touch stamp-doc-policy
 
 stamp-doc: stamp-doc-policy
@@ -105,7 +105,7 @@ clean: control-file
 	done
 	rm -f debian/*.py[co]
 	make clean
-	dh_clean README.PyDist.html
+	dh_clean
 
 stamp-control:
 	: # We have to prepare the various control files
@@ -126,6 +126,7 @@ stamp-install: stamp-build control-file stamp-control
 	dh_testdir
 	dh_testroot
 	dh_installdirs usr/share/doc/python/faq
+	dh_install
 
 	set -e; \
 	cd faq && \
@@ -149,6 +150,9 @@ stamp-dh_python:
 	make check_versions
 	DESTDIR=debian/python PREFIX=/usr make install-dev
 	DESTDIR=debian/python-minimal PREFIX=/usr make install-runtime
+	# disabled by default, run manually if you want to update it
+	# (requires apt-file and network connection)
+	#make -C pydist dist_fallback
 	touch $@
 
 # Build architecture-independent files here.

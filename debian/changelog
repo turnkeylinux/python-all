@@ -1,3 +1,14 @@
+python-defaults (2.6.6-2) UNRELEASED; urgency=low
+
+  * Add README.derivatives (source package)
+  * dh_python2:
+    - add dist_fallback file with a list of Python distribution name and
+      Debian package name pairs (to be used as a fall back source for
+      PyDist feature)
+    - TODO: disable PyDist feature if dh_pydeb is in debian/rules
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 02 Sep 2010 19:18:26 +0200
+
 python-defaults (2.6.6-1) unstable; urgency=low
 
   [ Piotr Ożarowski ]

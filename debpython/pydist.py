@@ -72,7 +72,8 @@ def validate(fpath, exit_on_error=False):
 
 
 @memoize
-def load(dname='/usr/share/python/dist/', fname='debian/pydist-overrides'):
+def load(dname='/usr/share/python/dist/', fname='debian/pydist-overrides',
+         fbname='/usr/share/python/dist_fallback'):
     """Load iformation about installed Python distributions."""
     if exists(fname):
         to_check = [fname]  # first one!
@@ -80,6 +81,8 @@ def load(dname='/usr/share/python/dist/', fname='debian/pydist-overrides'):
         to_check = []
     if isdir(dname):
         to_check.extend(join(dname, i) for i in os.listdir(dname))
+    if exists(fbname):  # fall back generated at python-defaults build time
+        to_check.append(fbname)  # last one!
 
     result = {}
     for fpath in to_check:
