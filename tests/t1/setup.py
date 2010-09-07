@@ -18,5 +18,5 @@ setup(name='Foo',
       packages=find_packages('lib/'),
       package_data = {'foo': ['jquery.js']},
       zip_safe=False,
-      install_requires = ['Mako', 'SQLAlchemy >=0.5'],
+      install_requires = ['Mako', 'SQLAlchemy >=0.5', 'Baz [extras]'],
 )

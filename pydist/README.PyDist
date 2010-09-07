@@ -25,6 +25,7 @@ Examples:
 DEPENDENCY
 ``````````
 Debian dependency, multiple packages or versions are allowed.
+If not set, given Python distribution name will be ignored.
 
 Examples:
  * python-mako
@@ -77,5 +78,6 @@ Complete examples:
  * Mako python-mako; PEP386
  * foo -2.5 python-oldfoo; s/^/3:/
  * foo 2.5- python-foo; PEP386
+ * Bar 2.6-
 
 .. vim: ft=rst

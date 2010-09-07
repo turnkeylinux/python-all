@@ -24,6 +24,15 @@ import os
 import sys
 from subprocess import Popen, PIPE
 
+skip_sensible_names = True if '--skip-sensible-names' in sys.argv else False
+os.chdir(os.path.dirname(__file__))
+if os.path.isdir('../debpython'):
+    sys.path.append('..')
+else:
+    sys.path.append('/usr/share/python/debpython/')
+from debpython.pydist import sensible_pname
+
+
 if not os.path.isdir('cache'):
     process = Popen('apt-file -s sources.list -c cache update', shell=True)
     process.communicate()
@@ -50,6 +59,8 @@ for line in stdout.splitlines():
                 if i.endswith('.egg-info')][0]
     if egg_name.endswith('.egg'):
         egg_name = egg_name[:-4]
+    if skip_sensible_names and sensible_pname(egg_name) == pname:
+        continue
     if egg_name not in processed:
         processed.add(egg_name)
         result.append("%s %s\n" % (egg_name, pname))

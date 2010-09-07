@@ -5,6 +5,9 @@ python-defaults (2.6.6-2) UNRELEASED; urgency=low
     - add dist_fallback file with a list of Python distribution name and
       Debian package name pairs (to be used as a fall back source for
       PyDist feature)
+    - if dist_fallback and `dpkg -S` fails to find the right package name,
+      fall back to package name recommended by Debian Python Policy (use
+      debian/pydist-override file to override)
     - TODO: disable PyDist feature if dh_pydeb is in debian/rules
   * use /usr/bin/python rather than python in python-minimal.postinst
     (closes: 595826)

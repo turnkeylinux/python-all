@@ -33,11 +33,11 @@ log = logging.getLogger('dh_python')
 PUBLIC_DIR_RE = re.compile(r'.*?/usr/lib/python(\d.\d+)/(site|dist)-packages')
 PYDIST_RE = re.compile(r"""
     (?P<name>[A-Za-z][A-Za-z0-9_.]*)             # Python distribution name
-    \s+
+    \s*
     (?P<vrange>(?:-?\d\.\d+(?:-(?:\d\.\d+)?)?)?) # version range
     \s*
-    (?P<dependency>[a-z][^;]*)                   # Debian dependency
-    (?: # optional upstream version -> Debian version translator
+    (?P<dependency>(?:[a-z][^;]*)?)              # Debian dependency
+    (?:  # optional upstream version -> Debian version translator
         ;\s*
         (?P<standard>PEP386)?                    # PEP-386 mode
         \s*
@@ -45,9 +45,11 @@ PYDIST_RE = re.compile(r"""
     )?
     """, re.VERBOSE)
 REQUIRES_RE = re.compile(r'''
-    (?P<name>[A-Za-z][A-Za-z0-9_.]*)
+    (?P<name>[A-Za-z][A-Za-z0-9_.]*)     # Python distribution name
     \s*
-    (?: # optional version
+    (?P<enabled_extras>(?:\[[^\]]*\])?)  # ignored for now
+    \s*
+    (?:  # optional minimum/maximum version
         (?P<operator><=?|>=?|==|!=)
         \s*
         (?P<version>(\w|[-.])+)
@@ -91,7 +93,11 @@ def load(dname='/usr/share/python/dist/', fname='debian/pydist-overrides',
                 line = line.strip('\r\n')
                 if line.startswith('#') or not line:
                     continue
-                dist = PYDIST_RE.search(line).groupdict()
+                dist = PYDIST_RE.search(line)
+                if not dist:
+                    log.error('%s file has a broken line: %s', fpath, line)
+                    exit(9)
+                dist = dist.groupdict()
                 name = safe_name(dist['name'])
                 dist['versions'] = get_requested_versions(dist['vrange'])
                 dist['dependency'] = dist['dependency'].strip()
@@ -116,10 +122,10 @@ def guess_dependency(req, version=None):
     data = load()
     req_dict = REQUIRES_RE.match(req)
     if not req_dict:
-        log.warning('requirement is not valid: %s', req)
+        log.error('requirement is not valid: %s', req)
         log.info('please ask dh_python2 author to fix REQUIRES_RE '
                  'or your upstream author to fix requires.txt')
-        return set()  # should we sys.exit(1) here?
+        exit(8)
     req_dict = req_dict.groupdict()
     details = data.get(req_dict['name'].lower())
     if details:
@@ -128,6 +134,8 @@ def guess_dependency(req, version=None):
                 # rule doesn't match version, try next one
                 continue
 
+            if not item['dependency']:
+                return  # this requirement should be ignored
             if item['dependency'].endswith(')'):
                 # no need to translate versions if version is hardcoded in Debian
                 # dependency
@@ -139,8 +147,7 @@ def guess_dependency(req, version=None):
                 return item['dependency']
 
     # try dpkg -S
-
-    query = "'%s-?*\.egg-info'" % name  # TODO: .dist-info
+    query = "'%s-?*\.egg-info'" % safe_name(name)  # TODO: .dist-info
     if version:
         query = "%s | grep '/python%s/\|/pyshared/'" % \
                 (query, vrepr(version))
@@ -151,22 +158,24 @@ def guess_dependency(req, version=None):
     process = Popen("/usr/bin/dpkg -S %s" % query, \
                     shell=True, stdout=PIPE)
     stdout, stderr = process.communicate()
-    if process.returncode != 0:
-        log.error('Cannot find package that provides %s. '
-                  'Please add it to debian/pydist-overrides', name)
-        log.info("hint: `apt-file search -x '(packages|pyshared)/" +\
-                  "%s' -l` might help", name)
-        exit(8)
+    if process.returncode == 0:
+        result = set()
+        for line in stdout.split('\n'):
+            if not line.strip():
+                continue
+            result.add(line.split(':')[0])
+        if len(result) > 1:
+            log.error('more than one package name found for %s dist', name)
+        else:
+            return result.pop()
 
-    result = set()
-    for line in stdout.split('\n'):
-        if not line.strip():
-            continue
-        result.add(line.split(':')[0])
-    if len(result) > 1:
-        log.error('more than one package name found for %s dist', name)
-        exit(9)
-    return result.pop()
+    # fall back to python-distname
+    pname = sensible_pname(name)
+    log.warn('Cannot find package that provides %s. '
+             'Using %s as package name. Please add "%s correct_package_name" '
+             'line to debian/pydist-overrides to override it.',
+             name, pname, name)
+    return pname
 
 
 def parse_pydep(fname):
@@ -193,3 +202,11 @@ def parse_pydep(fname):
 def safe_name(name):
     """Emulate distribute's safe_name."""
     return re.compile('[^A-Za-z0-9.]+').sub('_', name).lower()
+
+
+def sensible_pname(egg_name):
+    """Guess Debian package name from Egg name."""
+    egg_name = safe_name(egg_name).replace('_', '-')
+    if egg_name.startswith('python-'):
+        egg_name = egg_name[7:]
+    return "python-%s" % egg_name.lower()
