@@ -1,6 +1,0 @@
-#! /bin/sh
-set -e
-
-/usr/bin/python -m compileall /usr/share/python/ >/dev/null
-
-#DEBHELPER#

@@ -10,8 +10,8 @@ python-defaults (2.6.6-2) UNRELEASED; urgency=low
       fall back to package name recommended by Debian Python Policy (use
       debian/pydist-override file to override)
     - TODO: disable PyDist feature if dh_pydeb is in debian/rules
-  * use /usr/bin/python rather than python in python-minimal.postinst
-    (closes: 595826)
+  * Use versioned interpreter name rather than "python" only in
+    python-minimal.postinst (closes: 595826)
 
   [ Matthias Klose ]
   * python.mk (py_libdir): Return /usr/lib/python3/dist-packages for 3.x

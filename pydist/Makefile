@@ -5,10 +5,10 @@ clean:
 	#rm -f dist_fallback
 	rm -f README.PyDist.html
 
-dist_fallback:
+dist_fallback: sources.list
 	python ./generate_fallback_list.py --skip-sensible-names
 
 README.PyDist.html: README.PyDist
-	rst2html README.PyDist $@
+	rst2html $< $@
 
 .PHONY: clean
