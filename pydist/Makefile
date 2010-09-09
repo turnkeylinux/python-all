@@ -8,7 +8,7 @@ clean:
 dist_fallback:
 	python ./generate_fallback_list.py --skip-sensible-names
 
-README.PyDist.html:
-	rst2html README.PyDist README.PyDist.html
+README.PyDist.html: README.PyDist
+	rst2html README.PyDist $@
 
 .PHONY: clean
