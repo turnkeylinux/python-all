@@ -23,7 +23,7 @@ py_sitename = $(if $(filter $(subst python,,$(1)), 2.3 2.4 2.5),site,dist)-packa
 # stuff. Call as: $(call py_libdir, <python version>).
 # Don't use this in shell snippets inside loops.
 
-py_libdir = /usr/lib/python$(subst python,,$(1))/$(py_sitename)
+py_libdir = /usr/lib/python$(strip $(if $(findstring 3.,$(subst python,,$(1))),3,$(subst python,,$(1))))/$(py_sitename)
 
 
 # The same macros for use inside loops in shell snippets

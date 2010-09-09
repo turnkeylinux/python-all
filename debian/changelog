@@ -1,5 +1,6 @@
 python-defaults (2.6.6-2) UNRELEASED; urgency=low
 
+  [ Piotr Ożarowski ]
   * Add README.derivatives (source package)
   * dh_python2:
     - add dist_fallback file with a list of Python distribution name and
@@ -11,6 +12,10 @@ python-defaults (2.6.6-2) UNRELEASED; urgency=low
     - TODO: disable PyDist feature if dh_pydeb is in debian/rules
   * use /usr/bin/python rather than python in python-minimal.postinst
     (closes: 595826)
+
+  [ Matthias Klose ]
+  * python.mk (py_libdir): Return /usr/lib/python3/dist-packages for 3.x
+    versions.
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 02 Sep 2010 19:18:26 +0200
 
