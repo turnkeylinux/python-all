@@ -24,7 +24,7 @@ from debpython.pydist import parse_pydep, guess_dependency
 from debpython.version import SUPPORTED, DEFAULT, debsorted, vrepr, vrange_str
 
 MINPYCDEP = 'python (>= 2.6.5-11~)'  # minumum version required for pycompile
-log = logging.getLogger('dh_python')
+log = logging.getLogger(__name__)
 
 
 class Dependencies(object):

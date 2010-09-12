@@ -28,7 +28,7 @@ from subprocess import PIPE, Popen
 from debpython.version import vrepr, getver, get_requested_versions
 from debpython.tools import memoize
 
-log = logging.getLogger('dh_python')
+log = logging.getLogger(__name__)
 
 PUBLIC_DIR_RE = re.compile(r'.*?/usr/lib/python(\d.\d+)/(site|dist)-packages')
 PYDIST_RE = re.compile(r"""

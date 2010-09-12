@@ -21,7 +21,7 @@ How to change default Python version?
 * Open debpython/versions.py file and edit `DEFAULT` variable around line 27
 
 
-How to bump minimum required python version by dh_python2?
+How to bump minimum required Python version by dh_python2?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Open debpython/depends.py file and edit `MINPYCDEP` variable around line 26

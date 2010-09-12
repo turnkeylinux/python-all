@@ -46,7 +46,7 @@ from debpython.option import Option
 # initialize script
 logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
                            '%(message)s')
-log = logging.getLogger('dh_python')
+log = logging.getLogger(__name__)
 os.umask(022)
 EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d+)?(.*?)(\.egg-info|\.pth)$')
 
@@ -449,6 +449,17 @@ def main():
                 if line and not line.startswith('#'):
                     options.vrange = parse_vrange(line)
                     break
+
+    # disable PyDist if dh_pydeb is used
+    if options.guess_deps:
+        try:
+            fp = open('debian/rules', 'r')
+        except IOError:
+            log.warning('cannot open debian/rules file')
+        else:
+            if re.compile('\n\s*dh_pydeb').search(fp.read()):
+                log.warning('dh_pydeb detected, PyDist feature disabled')
+                options.guess_deps = False
 
     private_dir = None if not args else args[0]
     # TODO: support more than one private dir at the same time (see :meth:scan)

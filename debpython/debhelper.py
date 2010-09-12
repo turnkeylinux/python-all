@@ -24,7 +24,7 @@ import re
 from os import makedirs, chmod
 from os.path import exists, join, dirname
 
-log = logging.getLogger('dh_python')
+log = logging.getLogger(__name__)
 
 
 class DebHelper(object):

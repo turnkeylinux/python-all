@@ -1,4 +1,4 @@
-python-defaults (2.6.6-2) UNRELEASED; urgency=low
+python-defaults (2.6.6-2) experimental; urgency=low
 
   [ Piotr Ożarowski ]
   * Add README.derivatives (source package)
@@ -8,8 +8,8 @@ python-defaults (2.6.6-2) UNRELEASED; urgency=low
       PyDist feature)
     - if dist_fallback and `dpkg -S` fails to find the right package name,
       fall back to package name recommended by Debian Python Policy (use
-      debian/pydist-override file to override)
-    - TODO: disable PyDist feature if dh_pydeb is in debian/rules
+      debian/pydist-overrides file to override)
+    - disable PyDist feature if dh_pydeb is in debian/rules
   * Use versioned interpreter name rather than "python" only in
     python-minimal.postinst (closes: 595826)
 
@@ -19,7 +19,7 @@ python-defaults (2.6.6-2) UNRELEASED; urgency=low
   * python.mk (py_pkgname): New macro to refer the package name depending
     on the python version.
 
- -- Piotr Ożarowski <piotr@debian.org>  Thu, 02 Sep 2010 19:18:26 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 12 Sep 2010 18:41:04 +0200
 
 python-defaults (2.6.6-1) unstable; urgency=low
 
