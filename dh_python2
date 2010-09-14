@@ -40,7 +40,7 @@ from debpython.version import SUPPORTED, DEFAULT, \
 from debpython.pydist import validate as validate_pydist, \
                              PUBLIC_DIR_RE
 from debpython.tools import sitedir, relative_symlink, \
-                            shebang2pyver
+                            shebang2pyver, clean_egg_name
 from debpython.option import Option
 
 # initialize script
@@ -306,21 +306,20 @@ def scan(package, dname=None):
                 if len(root.split('/', 6)) < 6 and (\
                    root.endswith('/sbin') or root.endswith('/bin') or\
                    root.endswith('/usr/games')):
-                   # /bin or /usr/bin or /usr/games
+                   # /(s)bin or /usr/(s)bin or /usr/games
                     bin_dir = root
 
         # handle some EGG related data (.egg-info dirs)
         for name in dirs:
-            match = EGGnPTH_RE.match(name)
-            if match:
+            if name.endswith('.egg-info'):
                 if dbg_package:
                     rmtree(join(root, name))
                     dirs.pop(dirs.index(name))
                     continue
-                if match.group(2) is not None:
-                    new_name = ''.join(match.group(1, 3, 4))
-                    log.debug('renaming %s to %s', name, new_name)
-                    os.rename(join(root, name), join(root, new_name))
+                clean_name = clean_egg_name(name)
+                if clean_name != name:
+                    log.info('renaming %s to %s', name, clean_name)
+                    os.rename(join(root, name), join(root, clean_name))
         if root.endswith('.egg-info') and 'requires.txt' in file_names:
             r['requires.txt'].add(join(root, 'requires.txt'))
             continue
@@ -357,12 +356,11 @@ def scan(package, dname=None):
                     continue
 
             # .egg-info files
-            match = EGGnPTH_RE.match(fn)
-            if match:
-                if match.group(2) is not None:
-                    new_name = ''.join(match.group(1, 3, 4))
-                    log.debug('renaming %s to %s', fn, new_name)
-                    os.rename(join(root, fn), join(root, new_name))
+            if fn.endswith('.egg-info'):
+                clean_name = clean_egg_name(fn)
+                if clean_name != fn:
+                    log.info('renaming %s to %s', fn, clean_name)
+                    os.rename(join(root, fn), join(root, clean_name))
                 continue
             # search for scripts in bin dirs
             if bin_dir:

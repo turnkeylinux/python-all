@@ -27,6 +27,7 @@ from os import symlink
 from debpython.version import getver
 
 log = logging.getLogger(__name__)
+EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d(?:-[^.]*)?)?(\.egg-info|\.pth)$')
 SHEBANG_RE = re.compile(r'^#!\s*/usr/bin/(?:env\s+)?(python(\d+\.\d+)?(?:-dbg)?).*')
 
 
@@ -91,6 +92,20 @@ def shebang2pyver(fname):
                 return res
     except IOError:
         log.error('cannot open %s', fname)
+
+
+def clean_egg_name(name):
+    """Remove Python version and platform name from Egg files/dirs.
+
+    >>> clean_egg_name('python_pipeline-0.1.3_py3k-py3.1.egg-info')
+    'python_pipeline-0.1.3_py3k.egg-info'
+    >>> clean_egg_name('Foo-1.2-py2.7-linux-x86_64.egg-info')
+    'Foo-1.2.egg-info'
+    """
+    match = EGGnPTH_RE.match(name)
+    if match and match.group(2) is not None:
+        return ''.join(match.group(1, 3))
+    return name
 
 
 class memoize(object):
