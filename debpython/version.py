@@ -23,7 +23,7 @@ import re
 from os.path import exists
 from types import GeneratorType
 
-SUPPORTED = [(2, 5), (2, 6)]
+SUPPORTED = [(2, 5), (2, 6), (2, 7)]
 DEFAULT = (2, 6)
 RANGE_PATTERN = r'(-)?(\d\.\d+)(?:(-)(\d\.\d+)?)?'
 RANGE_RE = re.compile(RANGE_PATTERN)
