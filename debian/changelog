@@ -1,3 +1,10 @@
+python-defaults (2.6.6-5) experimental; urgency=low
+
+  * pycompile: if installed Python is requested via -V option, use it even if
+    it's not in a list of supported Python versions (closes: 600529)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 17 Oct 2010 23:22:22 +0200
+
 python-defaults (2.6.6-4) experimental; urgency=low
 
   * Add python2.7 as a supported Python version.

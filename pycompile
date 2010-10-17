@@ -235,7 +235,12 @@ multiple times to build up a list of things to exclude.')
             'only, please use /usr/share/python/bcep to specify '
             'public modules to skip')
 
-    versions = get_requested_versions(options.vrange, available=True)
+    if options.vrange and options.vrange[0] == options.vrange[1] and\
+       exists("/usr/bin/python%d.%d" % options.vrange[0]):
+        # specific version requested, use it even if it's not in SUPPORTED
+        versions = set(options.vrange[:1])
+    else:
+        versions = get_requested_versions(options.vrange, available=True)
     if not versions:
         log.error('Requested versions are not installed')
         exit(3)
