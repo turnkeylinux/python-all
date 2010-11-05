@@ -1,3 +1,10 @@
+python-defaults (2.6.6-6) UNRELEASED; urgency=low
+
+  * Make the error message about missing extension more clear
+    (and more verbose in --verbose mode)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sat, 06 Nov 2010 00:19:39 +0100
+
 python-defaults (2.6.6-5) experimental; urgency=low
 
   * pycompile: if installed Python is requested via -V option, use it even if
