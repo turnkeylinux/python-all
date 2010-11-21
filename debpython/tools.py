@@ -150,7 +150,6 @@ def pyinstall(package, vrange):
         details = details.groupdict()
         if details['module']:
             details['module'] = details['module'].replace('.', '/')
-        #line = line.strip()
         myvers = versions & get_requested_versions(details['vrange'])
         files = glob(details['pattern'])
         if not files:
@@ -178,5 +177,6 @@ def pyinstall(package, vrange):
                 try:
                     link(fpath, dstfpath)
                 except:
-                    log.error('cannot copy %f file to %s', fpath, dstdir)
+                    status = False
+                    log.error('cannot copy %s file to %s', fpath, dstdir)
     return status
