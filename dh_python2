@@ -40,7 +40,8 @@ from debpython.version import SUPPORTED, DEFAULT, \
 from debpython.pydist import validate as validate_pydist, \
                              PUBLIC_DIR_RE
 from debpython.tools import sitedir, relative_symlink, \
-                            shebang2pyver, clean_egg_name
+                            shebang2pyver, clean_egg_name,\
+                            pyinstall
 from debpython.option import Option
 
 # initialize script
@@ -135,8 +136,7 @@ def share(package, stats, options):
         create_ext_links(sitedir(version, package))
 
     if options.guess_versions and pubvers:
-        versions = get_requested_versions(options.vrange)
-        for version in (i for i in versions if i[0] == 2):
+        for version in get_requested_versions(options.vrange):
             if version not in pubvers:
                 log.debug('guessing files for Python %s', vrepr(version))
                 versions_without_ext = debsorted(set(pubvers) -\
@@ -149,7 +149,7 @@ def share(package, stats, options):
                              '(`pyversions -vr`); '
                              'adjusting X-Python-Version field; '
                              'passing --no-guessing-versions to dh_python2')
-                    exit(12)
+                    exit(3)
                 srcver = versions_without_ext[0]
                 if srcver in stats['public_vers']:
                     stats['public_vers'].add(version)
@@ -484,6 +484,8 @@ def main():
            options.arch is True and pdetails['arch'] == 'all':
             continue
         log.debug('processing package %s...', package)
+        if not pyinstall(package, options.vrange):
+            exit(4)
         fix_locations(package)
         stats = scan(package, private_dir)
         share(package, stats, options)

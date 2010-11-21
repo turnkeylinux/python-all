@@ -20,15 +20,25 @@
 # THE SOFTWARE.
 
 from __future__ import with_statement
+import codecs
 import logging
 import re
 from cPickle import dumps
-from os import symlink
-from debpython.version import getver
+from glob import glob
+from os import link, makedirs, symlink
+from os.path import exists, join, split
+from debpython.version import RANGE_PATTERN, getver, get_requested_versions
 
 log = logging.getLogger(__name__)
 EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d(?:-[^.]*)?)?(\.egg-info|\.pth)$')
 SHEBANG_RE = re.compile(r'^#!\s*/usr/bin/(?:env\s+)?(python(\d+\.\d+)?(?:-dbg)?).*')
+INSTALL_RE = re.compile(r"""
+    (?P<pattern>.+?)  # file pattern
+    \s*  # optional Python module name:
+    (?P<module>[A-Za-z][A-Za-z0-9_.]*)?
+    \s*  # optional version range:
+    (?P<vrange>%s)?$
+""" % RANGE_PATTERN, re.VERBOSE)
 
 
 def sitedir(version, package=None, gdb=False):
@@ -118,3 +128,55 @@ class memoize(object):
         if key not in self.cache:
             self.cache[key] = self.func(*args, **kwargs)
         return self.cache[key]
+
+
+def pyinstall(package, vrange):
+    """Install local files listed in .pyinstall files as public modules."""
+    status = True
+    srcfpath = "./debian/%s.pyinstall" % package
+    if not exists(srcfpath):
+        return status
+    versions = get_requested_versions(vrange)
+
+    for line in codecs.open(srcfpath, encoding='utf-8'):
+        if not line or line.startswith('#'):
+            continue
+        details = INSTALL_RE.match(line)
+        if not details:
+            status = False
+            log.warn('%s.pyinstall: unrecognized line: %s',
+                     package, line)
+            continue
+        details = details.groupdict()
+        if details['module']:
+            details['module'] = details['module'].replace('.', '/')
+        #line = line.strip()
+        myvers = versions & get_requested_versions(details['vrange'])
+        files = glob(details['pattern'])
+        if not files:
+            status = False
+            log.error('%s.pyinstall: file not found: %s',
+                      package, details['pattern'])
+            continue
+        for fpath in files:
+            fpath = fpath.lstrip('/.')
+            if details['module']:
+                dstname = join(details['module'], split(fpath)[1])
+            elif fpath.startswith('debian/'):
+                dstname = fpath[7:]
+            else:
+                dstname = fpath
+            for version in myvers:
+                dstfpath = join(sitedir(version, package), dstname)
+                dstdir = split(dstfpath)[0]
+                if not exists(dstdir):
+                    try:
+                        makedirs(dstdir)
+                    except:
+                        log.error('cannot create %s directory', dstdir)
+                        return False
+                try:
+                    link(fpath, dstfpath)
+                except:
+                    log.error('cannot copy %f file to %s', fpath, dstdir)
+    return status
