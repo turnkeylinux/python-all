@@ -191,7 +191,13 @@ def compile(files, versions, e_patterns=None):
         if exists("%sc" % fn):
             continue
         for version in versions_to_compile:
-            pipe = STDINS[version]
+            try:
+                pipe = STDINS[version]
+            except KeyError:
+                # `pycompile /usr/lib/` invoked, add missing worker
+                pipe = py_compile(version, WORKERS)
+                pipe.next()
+                STDINS[version] = pipe
             pipe.send(fn)
 
 

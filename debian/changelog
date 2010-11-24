@@ -5,6 +5,9 @@ python-defaults (2.6.6-6) UNRELEASED; urgency=low
   * dh_python2: install files listed in debian/package.pyinstall file
     as public modules for all requested Python versions (use dh_install's
     package.install files for private modules)
+  * pycompile: `pycompile $DESTDIR/usr/lib/python*` will recognize public
+    site-packages directories and use the right interpreter instead of raising
+    KeyError
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 21 Nov 2010 23:49:32 +0100
 
