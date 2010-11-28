@@ -2,9 +2,11 @@ python-defaults (2.6.6-6) UNRELEASED; urgency=low
 
   * Make the error message about missing extension more clear
     (and more verbose in --verbose mode)
-  * dh_python2: install files listed in debian/package.pyinstall file
+  * dh_python2: install files listed in debian/pkg.pyinstall file
     as public modules for all requested Python versions (use dh_install's
-    package.install files for private modules)
+    package.install files for private modules); remove public modules listed
+    in debian/pkg.pyremove (glob.glob pattern and version range can be used in
+    both files)
   * pycompile: `pycompile $DESTDIR/usr/lib/python*` will recognize public
     site-packages directories and use the right interpreter instead of raising
     KeyError

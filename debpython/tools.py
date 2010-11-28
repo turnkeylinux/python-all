@@ -22,11 +22,12 @@
 from __future__ import with_statement
 import codecs
 import logging
+import os
 import re
 from cPickle import dumps
 from glob import glob
-from os import link, makedirs, symlink
-from os.path import exists, join, split
+from os.path import exists, isdir, join, split
+from shutil import rmtree
 from debpython.version import RANGE_PATTERN, getver, get_requested_versions
 
 log = logging.getLogger(__name__)
@@ -36,6 +37,11 @@ INSTALL_RE = re.compile(r"""
     (?P<pattern>.+?)  # file pattern
     \s*  # optional Python module name:
     (?P<module>[A-Za-z][A-Za-z0-9_.]*)?
+    \s*  # optional version range:
+    (?P<vrange>%s)?$
+""" % RANGE_PATTERN, re.VERBOSE)
+REMOVE_RE = re.compile(r"""
+    (?P<pattern>.+?)  # file pattern
     \s*  # optional version range:
     (?P<vrange>%s)?$
 """ % RANGE_PATTERN, re.VERBOSE)
@@ -80,7 +86,7 @@ def relpath(target, link):
 
 def relative_symlink(target, link):
     """Create relative symlink."""
-    return symlink(relpath(target, link), link)
+    return os.symlink(relpath(target, link), link)
 
 
 def shebang2pyver(fname):
@@ -131,7 +137,7 @@ class memoize(object):
 
 
 def pyinstall(package, vrange):
-    """Install local files listed in .pyinstall files as public modules."""
+    """Install local files listed in pkg.pyinstall files as public modules."""
     status = True
     srcfpath = "./debian/%s.pyinstall" % package
     if not exists(srcfpath):
@@ -151,6 +157,10 @@ def pyinstall(package, vrange):
         if details['module']:
             details['module'] = details['module'].replace('.', '/')
         myvers = versions & get_requested_versions(details['vrange'])
+        if not myvers:
+            log.debug('%s.pyinstall: no matching versions for line %s',
+                      package, line)
+            continue
         files = glob(details['pattern'])
         if not files:
             status = False
@@ -170,13 +180,65 @@ def pyinstall(package, vrange):
                 dstdir = split(dstfpath)[0]
                 if not exists(dstdir):
                     try:
-                        makedirs(dstdir)
+                        os.makedirs(dstdir)
                     except:
                         log.error('cannot create %s directory', dstdir)
                         return False
+                if exists(dstfpath):
+                    try:
+                        os.remove(dstfpath)
+                    except:
+                        status = False
+                        log.error('cannot replace %s file', dstfpath)
+                        continue
                 try:
-                    link(fpath, dstfpath)
+                    os.link(fpath, dstfpath)
                 except:
                     status = False
                     log.error('cannot copy %s file to %s', fpath, dstdir)
+    return status
+
+
+def pyremove(package, vrange):
+    """Remove public modules listed in pkg.pyremove file."""
+    status = True
+    srcfpath = "./debian/%s.pyremove" % package
+    if not exists(srcfpath):
+        return status
+    versions = get_requested_versions(vrange)
+
+    for line in codecs.open(srcfpath, encoding='utf-8'):
+        if not line or line.startswith('#'):
+            continue
+        details = REMOVE_RE.match(line)
+        if not details:
+            status = False
+            log.warn('%s.pyremove: unrecognized line: %s',
+                     package, line)
+            continue
+        details = details.groupdict()
+        myvers = versions & get_requested_versions(details['vrange'])
+        if not myvers:
+            log.debug('%s.pyremove: no matching versions for line %s',
+                      package, line)
+            continue
+        for version in myvers:
+            files = glob(sitedir(version, package) + details['pattern'])
+            if not files:
+                log.debug('%s.pyremove: nothing to remove: python%d.%d, %s',
+                          package, version, details['pattern'])
+                continue
+            for fpath in files:
+                if isdir(fpath):
+                    try:
+                        rmtree(fpath)
+                    except Exception, e:
+                        status = False
+                        log.error(e)
+                else:
+                    try:
+                        os.remove(fpath)
+                    except (IOError, OSError), e:
+                        status = False
+                        log.error(e)
     return status

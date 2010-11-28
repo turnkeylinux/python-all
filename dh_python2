@@ -41,7 +41,7 @@ from debpython.pydist import validate as validate_pydist, \
                              PUBLIC_DIR_RE
 from debpython.tools import sitedir, relative_symlink, \
                             shebang2pyver, clean_egg_name,\
-                            pyinstall
+                            pyinstall, pyremove
 from debpython.option import Option
 
 # initialize script
@@ -486,6 +486,8 @@ def main():
         log.debug('processing package %s...', package)
         if not pyinstall(package, options.vrange):
             exit(4)
+        if not pyremove(package, options.vrange):
+            exit(5)
         fix_locations(package)
         stats = scan(package, private_dir)
         share(package, stats, options)
