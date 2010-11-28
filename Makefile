@@ -40,6 +40,9 @@ check_versions:
 	[ "$$SUPPORTED" = "$$DEB_SUPPORTED" ] || \
 	(echo 'Please update SUPPORTED in debpython/version.py' >/dev/stderr; false)
 
+pdebuild:
+	pdebuild --debbuildopts -I
+
 # TESTS
 nose:
 	nosetests --with-doctest --with-coverage
