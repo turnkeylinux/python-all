@@ -29,15 +29,6 @@ install: install-dev install-runtime
 dist_fallback:
 	make -C pydist $@
 
-nose:
-	nosetests --with-doctest --with-coverage
-
-tests: nose
-	make -C tests
-
-test%:
-	make -C tests $@
-
 check_versions:
 	@PYTHONPATH=. set -e; \
 	DEFAULT=`python -c 'import debpython.version as v; print v.vrepr(v.DEFAULT)'`;\
@@ -48,5 +39,18 @@ check_versions:
 	(echo 'Please update DEFAULT in debpython/version.py' >/dev/stderr; false);\
 	[ "$$SUPPORTED" = "$$DEB_SUPPORTED" ] || \
 	(echo 'Please update SUPPORTED in debpython/version.py' >/dev/stderr; false)
+
+# TESTS
+nose:
+	nosetests --with-doctest --with-coverage
+
+unittests:
+	python2.7 -m unittest discover -v
+
+tests: nose
+	make -C tests
+
+test%:
+	make -C tests $@
 
 .PHONY: clean tests test% check_versions
