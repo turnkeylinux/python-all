@@ -7,9 +7,12 @@ python-defaults (2.6.6-6) UNRELEASED; urgency=low
     package.install files for private modules); remove public modules listed
     in debian/pkg.pyremove (glob.glob pattern and version range can be used in
     both files)
-  * pycompile: `pycompile $DESTDIR/usr/lib/python*` will recognize public
-    site-packages directories and use the right interpreter instead of raising
-    KeyError
+  * pycompile:
+    - `pycompile $DESTDIR/usr/lib/python*` will recognize public
+      site-packages directories and use the right interpreter instead of
+      raising KeyError
+    - do not try to check if interpreter is present when version range is
+      empty (closes: 605356)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 21 Nov 2010 23:49:32 +0100
 
