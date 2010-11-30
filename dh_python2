@@ -205,6 +205,24 @@ def create_ext_links(dir1):
             relative_symlink(fpath1, join(dstdir, i))
 
 
+def create_public_links(dir1, vrange, root=''):
+    """Create public module symlinks for given directory."""
+
+    debian, package, path = dir1.split('/', 2)
+    versions = get_requested_versions(vrange)
+
+    for fn in os.listdir(dir1):
+        fpath1 = join(dir1, fn)
+        if isdir(fpath1):
+            create_public_links(fpath1, vrange, join(root, fn))
+        else:
+            for version in versions:
+                dstdir = join(sitedir(version, package), root)
+                if not exists(dstdir):
+                    os.makedirs(dstdir)
+                relative_symlink(fpath1, join(dstdir, fn))
+
+
 def share_2x(dir1, dir2, dc=None):
     """Move common files to pyshared and create symlinks in original
     locations."""
@@ -281,6 +299,7 @@ def scan(package, dname=None):
                                 ('usr/lib/%s', 'usr/lib/games/%s',
                                 'usr/share/%s', 'usr/share/games/%s')]
     else:
+        # scan private directory *only*
         proot = join('debian', package, dname.strip('/'))
         private_to_check = [dname[1:]]
 
@@ -484,13 +503,18 @@ def main():
            options.arch is True and pdetails['arch'] == 'all':
             continue
         log.debug('processing package %s...', package)
-        if not pyinstall(package, options.vrange):
-            exit(4)
-        if not pyremove(package, options.vrange):
-            exit(5)
-        fix_locations(package)
+        if not private_dir:
+            if not pyinstall(package, options.vrange):
+                exit(4)
+            if not pyremove(package, options.vrange):
+                exit(5)
+            fix_locations(package)
         stats = scan(package, private_dir)
-        share(package, stats, options)
+        if not private_dir:
+            share(package, stats, options)
+            pyshared_dir = "debian/%s/usr/share/pyshared/" % package
+            if not stats['public_vers'] and exists(pyshared_dir):
+                create_public_links(pyshared_dir, options.vrange)
 
         dependencies = Dependencies(package,
                                     dh.packages[package]['uses_breaks'])
@@ -524,7 +548,7 @@ def main():
 
             ext_for = details.get('public_ext')
             if ext_for is None:  # no extension
-                if options.vrange:
+                if options.vrange and options.vrange != (None, None):
                     args += " -V %s" % vrange_str(options.vrange)
             elif ext_for is False:  # extension's version not detected
                 if options.vrange and '-' not in vrange_str(options.vrange):
