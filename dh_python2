@@ -28,7 +28,7 @@ import re
 import sys
 from filecmp import dircmp, cmpfiles
 from optparse import OptionParser, SUPPRESS_HELP
-from os.path import isdir, islink, exists, join
+from os.path import isdir, islink, exists, join, realpath
 from shutil import rmtree, copy as fcopy
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 sys.path.insert(1, '/usr/share/python/')
@@ -154,6 +154,8 @@ def share(package, stats, options):
                 if srcver in stats['public_vers']:
                     stats['public_vers'].add(version)
                 share_2x(sitedir(srcver, package), sitedir(version, package))
+    # remove duplicates
+    stats['requires.txt'] = set(realpath(i) for i in stats['requires.txt'])
 
 
 def move_to_pyshared(dir1):
@@ -515,6 +517,7 @@ def main():
             pyshared_dir = "debian/%s/usr/share/pyshared/" % package
             if not stats['public_vers'] and exists(pyshared_dir):
                 create_public_links(pyshared_dir, options.vrange)
+                stats['public_vers'] = get_requested_versions(options.vrange)
 
         dependencies = Dependencies(package,
                                     dh.packages[package]['uses_breaks'])

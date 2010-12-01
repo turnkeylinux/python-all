@@ -1,4 +1,4 @@
-python-defaults (2.6.6-6) UNRELEASED; urgency=low
+python-defaults (2.6.6-6) experimental; urgency=low
 
   * dh_python2:
     - make the error message about missing extension more clear
@@ -17,7 +17,7 @@ python-defaults (2.6.6-6) UNRELEASED; urgency=low
     - do not try to check if interpreter is present when version range is
       empty
 
- -- Piotr Ożarowski <piotr@debian.org>  Sun, 21 Nov 2010 23:49:32 +0100
+ -- Piotr Ożarowski <piotr@debian.org>  Wed, 01 Dec 2010 19:43:50 +0100
 
 python-defaults (2.6.6-5) experimental; urgency=low
 
