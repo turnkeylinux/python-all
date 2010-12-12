@@ -170,7 +170,7 @@ def py_compile(version, optimize, workers):
     if not isinstance(version, basestring):
         version = vrepr(version)
     cmd = "python%s%s -m py_compile -" \
-        % (version, (__debug__ or optimize) and '' or ' -O')
+        % (version, '' if (__debug__ or not optimize) else ' -O')
     process = Popen(cmd, bufsize=1, shell=True,
                     stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
     workers[version] = process  # keep the reference for .communicate()
@@ -180,7 +180,7 @@ def py_compile(version, optimize, workers):
         stdin.write(filename + '\n')
 
 
-def compile(files, versions, force, lazy, optimize, e_patterns=None):
+def compile(files, versions, force, optimize, e_patterns=None):
     global STDINS, WORKERS
     # start Python interpreters that will handle byte compilation
     for version in versions:
@@ -191,10 +191,8 @@ def compile(files, versions, force, lazy, optimize, e_patterns=None):
 
     # byte compile files
     for fn, versions_to_compile in filter_files(files, e_patterns, versions):
-        cfn = fn + ((__debug__ or optimize) and 'c' or 'o')
-        if lazy and exists(cfn):
-            continue
-        if not force:
+        cfn = fn + 'c' if (__debug__ or not optimize) else 'o'
+        if exists(cfn) and not force:
             ftime = os.stat(fn).st_mtime
             try:
                 ctime = os.stat(cfn).st_mtime
@@ -225,8 +223,6 @@ def main():
         default=False, help='be quiet')
     parser.add_option('-f', '--force', action='store_true', dest='force',
         default=False, help='force rebuild even if timestamps are up-to-date')
-    parser.add_option('-l', '--lazy', action='store_true', dest='lazy',
-        default=False, help="don' t check if byte-code files are up-to-date")
     parser.add_option('-O', action='store_true', dest='optimize',
         default=False, help="byte-compile to .pyo files")
     parser.add_option('-p', '--package',
@@ -253,10 +249,6 @@ multiple times to build up a list of things to exclude.')
         log.debug('args: %s', args)
     else:
         log.setLevel(logging.WARN)
-
-    if options.force and options.lazy:
-        options.lazy = False
-        log.warn('--force is in effect, ignore --lazy')
 
     if options.regexpr and not args:
         parser.error('--exclude option works with private directories '
@@ -289,7 +281,7 @@ multiple times to build up a list of things to exclude.')
                 log.debug('byte compiling %s using Python %s',
                           item, compile_versions)
                 files = get_private_files(pkg_files, item)
-                compile(files, compile_versions, options.force, options.lazy,
+                compile(files, compile_versions, options.force,
                         options.optimize, e_patterns)
     elif options.package:  # package's public modules
         # no need to limit versions here, it's either pyr mode or version is
@@ -298,14 +290,14 @@ multiple times to build up a list of things to exclude.')
         files = get_package_files(options.package)
         files = get_public_files(files, versions)
         compile(files, versions,
-                options.force, options.lazy, options.optimize, e_patterns)
+                options.force, options.optimize, e_patterns)
     elif args:  # other directories/files (public ones mostly)
         versions = debsorted(versions)[:1]
         for item in args:
             e_patterns = get_exclude_patterns(item, options.regexpr, versions)
             files = get_directory_files(item)
             compile(files, versions,
-                    options.force, options.lazy, options.optimize, e_patterns)
+                    options.force, options.optimize, e_patterns)
     else:
         parser.print_usage()
         exit(1)
