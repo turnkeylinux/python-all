@@ -1,3 +1,18 @@
+python-defaults (2.6.6-7) experimental; urgency=high
+
+  * pycompile:
+    - Don't over-optimize, check the timestamps of byte-code files.
+    - Use the correct name for byte-code files.
+    - Add an option -f/--force.
+    - Copy stdout/stderr of py_compile processes in case of error.
+    - Propagate the exit value of the py_compile processes.
+    - Update manual page.
+  * Bump depends to require the fixed pycompile for dh_python2 based package
+    builds.
+  * Don't touch the standard python library in rtupdate scripts.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 12 Dec 2010 17:46:13 +0100
+
 python-defaults (2.6.6-6) experimental; urgency=low
 
   * dh_python2:

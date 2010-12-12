@@ -24,7 +24,7 @@ from debpython.pydist import parse_pydep, guess_dependency
 from debpython.version import SUPPORTED, DEFAULT, debsorted, vrepr, vrange_str
 
 # minimum version required for pycompile/pyclean
-MINPYCDEP = 'python (>= 2.6.5-11~)'
+MINPYCDEP = 'python (>= 2.6.6.7~)'
 
 log = logging.getLogger(__name__)
 

@@ -1,5 +1,5 @@
 #! /usr/bin/python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 # vim: et ts=4 sw=4
 
 # Copyright © 2010 Piotr Ożarowski <piotr@debian.org>
@@ -25,10 +25,11 @@
 from __future__ import with_statement
 import logging
 import optparse
+import os
 import sys
 from os import environ, listdir, walk
 from os.path import abspath, exists, isdir, isfile, join
-from subprocess import PIPE, Popen
+from subprocess import PIPE, STDOUT, Popen
 sys.path.insert(1, '/usr/share/python/')
 from debpython.version import SUPPORTED, debsorted, vrepr, \
         get_requested_versions, parse_vrange, getver
@@ -169,7 +170,7 @@ def py_compile(version, workers):
         version = vrepr(version)
     cmd = "python%s -m py_compile -" % version
     process = Popen(cmd, bufsize=1, shell=True,
-                    stdin=PIPE, close_fds=True)
+                    stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
     workers[version] = process  # keep the reference for .communicate()
     stdin = process.stdin
     while True:
@@ -177,7 +178,7 @@ def py_compile(version, workers):
         stdin.write(filename + '\n')
 
 
-def compile(files, versions, e_patterns=None):
+def compile(files, versions, force, e_patterns=None):
     global STDINS, WORKERS
     # start Python interpreters that will handle byte compilation
     for version in versions:
@@ -188,8 +189,15 @@ def compile(files, versions, e_patterns=None):
 
     # byte compile files
     for fn, versions_to_compile in filter_files(files, e_patterns, versions):
-        if exists("%sc" % fn):
-            continue
+        if not force:
+            cfn = fn + (__debug__ and 'c' or 'o')
+            ftime = os.stat(fn).st_mtime
+            try:
+                ctime = os.stat(cfn).st_mtime
+            except os.error:
+                ctime = 0
+            if (ctime > ftime):
+                continue
         for version in versions_to_compile:
             try:
                 pipe = STDINS[version]
@@ -211,6 +219,8 @@ def main():
         help='turn verbose mode on')
     parser.add_option('-q', '--quiet', action='store_false', dest='verbose',
         default=False, help='be quiet')
+    parser.add_option('-f', '--force', action='store_true', dest='force',
+        default=False, help='force rebuild even if timestamps are up-to-date')
     parser.add_option('-p', '--package',
         help='specify Debian package name whose files should be bytecompiled')
     parser.add_option('-V', type='version_range', dest='vrange',
@@ -267,27 +277,33 @@ multiple times to build up a list of things to exclude.')
                 log.debug('byte compiling %s using Python %s',
                           item, compile_versions)
                 files = get_private_files(pkg_files, item)
-                compile(files, compile_versions, e_patterns)
+                compile(files, compile_versions, options.force, e_patterns)
     elif options.package:  # package's public modules
         # no need to limit versions here, it's either pyr mode or version is
         # hardcoded in path / via -V option
         e_patterns = get_exclude_patterns()
         files = get_package_files(options.package)
         files = get_public_files(files, versions)
-        compile(files, versions, e_patterns)
+        compile(files, versions, options.force, e_patterns)
     elif args:  # other directories/files (public ones mostly)
         versions = debsorted(versions)[:1]
         for item in args:
             e_patterns = get_exclude_patterns(item, options.regexpr, versions)
             files = get_directory_files(item)
-            compile(files, versions, e_patterns)
+            compile(files, versions, options.force, e_patterns)
     else:
         parser.print_usage()
         exit(1)
 
     # wait for all processes to finish
+    rv = 0
     for process in WORKERS.itervalues():
-        process.communicate()
+        (child_output, child_unused) = process.communicate()
+        if process.returncode not in (None, 0):
+            # FIXME: find out the package the file belongs to
+            sys.stderr.write(child_output)
+            rv = process.returncode
+    sys.exit(rv)
 
 if __name__ == '__main__':
     main()
