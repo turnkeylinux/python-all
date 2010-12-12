@@ -2,8 +2,6 @@ python-defaults (2.6.6-7) experimental; urgency=high
 
   * pycompile:
     - Don't over-optimize, check the timestamps of byte-code files.
-    - Use the correct name for byte-code files.
-    - Use the correct python interpreter when called with -O.
     - Add options -f/--force, -O.
     - Copy stdout/stderr of py_compile processes in case of error.
     - Propagate the exit value of the py_compile processes.
