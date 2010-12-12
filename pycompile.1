@@ -22,6 +22,13 @@ Show this help message and exit
 \fB\-f\fR, \fB\-\-force\fR
 Force rebuild of byte-code files even if timestamps are up-to-date.
 .TP
+\fB\-l\fR, \fB\-\-lazy\fR
+Do not rebuild byte-code files even if timestamps are out-of-date (ignored when
+\fB\-\-force\fR is in effect).
+.TP
+\fB\-O\fR
+Byte-compile to .pyo files.
+.TP
 \fB\-q\fR, \fB\-\-quiet\fR
 Be quiet.
 .TP
