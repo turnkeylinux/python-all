@@ -207,7 +207,7 @@ def compile(files, versions, force, lazy, optimize, e_patterns=None):
                 pipe = STDINS[version]
             except KeyError:
                 # `pycompile /usr/lib/` invoked, add missing worker
-                pipe = py_compile(version, WORKERS)
+                pipe = py_compile(version, optimize, WORKERS)
                 pipe.next()
                 STDINS[version] = pipe
             pipe.send(fn)
