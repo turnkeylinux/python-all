@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+%:
+	dh $@ --buildsystem=python_distutils
+
+override_dh_pysupport:
+	# install also as private extension
+	dh_install debian/python-foo/usr/lib/`pyversions -d`/dist-packages/foo/bar.so \
+		/usr/lib/python-foo/
+	DH_VERBOSE=1 ../../dh_python2

@@ -252,6 +252,9 @@ def share_2x(dir1, dir2, dc=None):
         common_files = cmpfiles(dir1, dir2, common_files, shallow=False)[0]
 
     for fn in common_files:
+        if fn.endswith('.so'):
+            # in unlikely case where extensions are exactly the same
+            continue
         fpath1 = join(dir1, fn)
         fpath2 = join(dir2, fn)
         fpath3 = join(dstdir, fn)
@@ -323,6 +326,8 @@ def scan(package, dname=None):
             if root.endswith('-packages'):
                 r['public_vers'].add(version)
         else:
+            # TODO: find a way to specify Python version private
+            # extension was build for
             version = False
             for i in private_to_check:
                 if root.startswith(join('debian', package, i)):
@@ -373,7 +378,7 @@ def scan(package, dname=None):
                 if fext == 'so':
                     (r if public_dir else
                      r['private_dirs'].setdefault(private_dir, {}))\
-                    ['public_ext'].add(version)
+                    .setdefault('public_ext', set()).add(version)
                     continue
                 elif fext == 'py':
                     (r if public_dir else
@@ -553,7 +558,8 @@ def main():
             if ext_for is None:  # no extension
                 if options.vrange and options.vrange != (None, None):
                     args += " -V %s" % vrange_str(options.vrange)
-            elif ext_for is False:  # extension's version not detected
+            elif False in ext_for:
+                # at least one extension's version not detected
                 if options.vrange and '-' not in vrange_str(options.vrange):
                     ver = vrange_str(options.vrange)
                 else:  # try shebang or default Python version

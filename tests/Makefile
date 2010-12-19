@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 # enable or disable tests here:
-TESTS := test1 test2
+TESTS := test1 test2 test3
 
 all: $(TESTS)
 
