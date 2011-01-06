@@ -105,7 +105,7 @@ def fix_locations(package):
         dbg_to_check.append("usr/lib/debug/usr/lib/pyshared/python%s" % ver)
         dstdir = sitedir(version, package, gdb=True)
 
-        for location in to_check:
+        for location in dbg_to_check:
             srcdir = "debian/%s/%s" % (package, location)
             if isdir(srcdir):
                 if not isdir(dstdir):
