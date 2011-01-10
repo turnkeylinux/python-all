@@ -29,7 +29,7 @@ import optparse
 import os
 import sys
 from os import environ, listdir, walk
-from os.path import abspath, exists, isdir, isfile, join
+from os.path import abspath, exists, isdir, isfile, islink, join
 from subprocess import PIPE, STDOUT, Popen
 sys.path.insert(1, '/usr/share/python/')
 from debpython.version import SUPPORTED, debsorted, vrepr, \
@@ -192,13 +192,19 @@ def compile(files, versions, force, optimize, e_patterns=None):
     # byte compile files
     for fn, versions_to_compile in filter_files(files, e_patterns, versions):
         cfn = fn + 'c' if (__debug__ or not optimize) else 'o'
+        if not exists(fn):
+            # pycentral's hook should clean it later
+            if islink(fn):
+                log.warn('dangling symlink skipped: %s (%s)', fn,
+                          os.readlink(fn))
+            continue
         if exists(cfn) and not force:
             ftime = os.stat(fn).st_mtime
             try:
                 ctime = os.stat(cfn).st_mtime
             except os.error:
                 ctime = 0
-            if (ctime > ftime):
+            if ctime > ftime:
                 continue
         for version in versions_to_compile:
             try:

@@ -1,10 +1,11 @@
-python-defaults (2.6.6-10) UNRELEASED; urgency=low
+python-defaults (2.6.6-10) experimental; urgency=low
 
   * dh_python2: fix moving files from old debug locations (due to typo)
   * python-minimal now Breaks python-support << 1.0.12 (Python 2.7 support was
     added in 1.0.12)
+  * pycompile: skip dangling symlinks
 
- -- Piotr Ożarowski <piotr@debian.org>  Thu, 06 Jan 2011 16:12:25 +0100
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 10 Jan 2011 23:05:47 +0100
 
 python-defaults (2.6.6-9) experimental; urgency=low
 
