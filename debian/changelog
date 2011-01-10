@@ -1,6 +1,8 @@
 python-defaults (2.6.6-10) UNRELEASED; urgency=low
 
   * dh_python2: fix moving files from old debug locations (due to typo)
+  * python-minimal now Breaks python-support << 1.0.12 (Python 2.7 support was
+    added in 1.0.12)
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 06 Jan 2011 16:12:25 +0100
 
