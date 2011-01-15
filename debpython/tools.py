@@ -35,8 +35,9 @@ EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d(?:-[^.]*)?)?(\.egg-info|\.pth)$')
 SHEBANG_RE = re.compile(r'^#!\s*/usr/bin/(?:env\s+)?(python(\d+\.\d+)?(?:-dbg)?).*')
 INSTALL_RE = re.compile(r"""
     (?P<pattern>.+?)  # file pattern
-    \s+  # optional Python module name:
+    (?:\s+  # optional Python module name:
     (?P<module>[A-Za-z][A-Za-z0-9_.]*)?
+    )?
     \s*  # optional version range:
     (?P<vrange>%s)?$
 """ % RANGE_PATTERN, re.VERBOSE)
