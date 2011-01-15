@@ -26,7 +26,7 @@ import logging
 import os
 import re
 import sys
-from filecmp import dircmp, cmpfiles
+from filecmp import dircmp, cmpfiles, cmp as fcmp
 from optparse import OptionParser, SUPPRESS_HELP
 from os.path import isdir, islink, exists, join, realpath
 from shutil import rmtree, copy as fcopy
@@ -261,8 +261,12 @@ def share_2x(dir1, dir2, dc=None):
         # do not touch symlinks created by previous loop or other tools
         if dc and not islink(fpath1):
             # replace with a link to pyshared
-            os.rename(fpath1, fpath3)
-            relative_symlink(fpath3, fpath1)
+            if not exists(fpath3):
+                os.rename(fpath1, fpath3)
+                relative_symlink(fpath3, fpath1)
+            elif fcmp(fpath3, fpath1, shallow=False):
+                os.remove(fpath1)
+                relative_symlink(fpath3, fpath1)
         if dc is None:  # guess/copy mode
             if islink(fpath1):
                 # ralative links will work as well, it's always the same level
