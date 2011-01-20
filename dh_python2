@@ -280,7 +280,8 @@ def share_2x(dir1, dir2, dc=None):
                     os.rename(fpath1, fpath3)
                     relative_symlink(fpath3, fpath1)
                     relative_symlink(fpath3, fpath2)
-        elif fcmp(fpath2, fpath3, shallow=False):
+        elif exists(fpath2) and exists(fpath3) and \
+             fcmp(fpath2, fpath3, shallow=False):
             os.remove(fpath2)
             relative_symlink(fpath3, fpath2)
     for dn, dc in common_dirs:
