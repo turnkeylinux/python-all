@@ -128,6 +128,8 @@ def get_exclude_patterns(directory='/', patterns=None, versions=None):
     if patterns:
         if versions is None:
             versions = set(SUPPORTED)
+        else:
+            versions = set(versions)
         patterns = [('re', versions, directory, i) for i in patterns]
     else:
         patterns = []
