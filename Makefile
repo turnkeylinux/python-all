@@ -1,12 +1,13 @@
 #!/usr/bin/make -f
 INSTALL ?= install
 PREFIX ?= /usr/local
+MANPAGES ?= dh_python2.1 pycompile.1 pyclean.1
 
 clean:
 	make -C tests clean
 	make -C pydist clean
 	find . -name '*.py[co]' -delete
-	rm -f .coverage
+	rm -f .coverage $(MANPAGES)
 
 install-dev:
 	$(INSTALL) -m 755 -d $(DESTDIR)$(PREFIX)/bin \
@@ -25,6 +26,11 @@ install-runtime:
 	$(INSTALL) -m 755 pyclean $(DESTDIR)$(PREFIX)/bin/
 
 install: install-dev install-runtime
+
+%.1: %.rst
+	rst2man $< > $@
+
+manpages: $(MANPAGES)
 
 dist_fallback:
 	make -C pydist $@

@@ -1,0 +1,98 @@
+============
+ dh_python2
+============
+
+-----------------------------------------------------------------------------------
+calculates Python dependencies, adds maintainer scripts to byte compile files, etc.
+-----------------------------------------------------------------------------------
+
+SYNOPSIS
+========
+  dh_python2 -p PACKAGE [-V [X.Y][-][A.B]] DIR_OR_FILE [-X REGEXPR]
+
+DESCRIPTION
+===========
+
+QUICK GUIDE FOR MAINTAINERS
+---------------------------
+
+ * if necessary, describe supported Python versions via X-Python-Version field
+   in debian/control,
+ * build-depend on python or python-all or python-all-dev (>= 2.6.6-3~),
+ * build module/application using its standard build system,
+   remember to build extensions for all supported Python versions (loop over
+   ``pyversions -vr``),
+ * install files to the *standard* locations, add ``--install-layout=deb`` to
+   setup.py's install command if your package is using distutils,
+ * add ``python2`` to dh's ``--with`` option, or:
+ * include /usr/share/cdbs/1/class/python-distutils.mk in debian/rules and
+   depend on cdbs (>= 0.4.90-1~), or:
+ * call dh_python2 in the binary-* target,
+ * add ${python:Depends} to Depends,
+ * add ${python:Breaks} to Breaks if your package provides public Python module
+   or extension
+
+NOTES
+-----
+
+In order to support more than one Python version in the same binary package,
+dh_python2 (unlike dh_pycentral and dh_pysupport) creates symlinks to all
+supported Python versions at build time. It means binNMU (or sourceful upload
+in case of architecture independent packages) are required once a list of
+supported Python version is changed. It's faster and more robust than its
+competitors, though.
+
+dh_python2 tries to translate Python dependencies from requires.txt file to
+Debian dependencies, use debian/pydist-overrides or --no-guessing-deps option
+to override it. If you want dh_python2 to generate more strict dependencies
+(f.e. to avoid ABI problems) create debian/python-foo.pydist file. See
+/usr/share/doc/python-doc/README.PyDist (provided by python-doc package) for
+more information.
+
+OPTIONS
+=======
+--version	show program's version number and exit
+
+-h, --help	show help message and exit
+
+--no-guessing-versions	disable guessing other supported Python versions
+
+--no-guessing-deps	disable guessing dependencies
+
+--skip-private	don't check private directories
+
+-v, --verbose	turn verbose mode on
+
+-i, --indep	act on architecture independent packages
+
+-a, --arch	act on architecture dependent packages
+
+-q, --quiet	be quiet
+
+-p PACKAGE, --package=PACKAGE	act on the package named PACKAGE
+
+-N NO_PACKAGE, --no-package=NO_PACKAGE	do not act on the specified package
+
+-V VRANGE	specify list of supported Python versions. See
+  pycompile(1) for examples
+
+-X REGEXPR, --exclude=REGEXPR	exclude items that match given REGEXPR. You may
+  use this option multiple times to build up a list of things to exclude.
+
+--depends=DEPENDS	translate given requirements into Debian dependencies
+  and add them to ${python:Depends}. Use it for missing items in requires.txt
+
+--recommends=RECOMMENDS		translate given requirements into Debian dependencies
+  and add them to ${python:Recommends}
+
+--suggests=SUGGESTS	translate given requirements into Debian dependencies
+  and add them to ${python:Suggests}
+
+SEE ALSO
+========
+* /usr/share/doc/python/python-policy.txt.gz
+* /usr/share/doc/python-doc/README.PyDist (python-doc package)
+* pycompile(1), pyclean(1)
+* dh_python3(1), py3compile(1), py3clean(1)
+* Wiki page about converting python-support based package to dh_python2:
+  http://wiki.debian.org/Python/support2dhp2

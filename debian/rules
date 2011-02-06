@@ -149,7 +149,7 @@ stamp-dh_python:
 	dh_installdirs
 	make check_versions
 	DESTDIR=debian/python PREFIX=/usr make install-dev
-	DESTDIR=debian/python-minimal PREFIX=/usr make install-runtime
+	DESTDIR=debian/python-minimal PREFIX=/usr make install-runtime manpages
 	# disabled by default, run manually if you want to update it
 	# (requires apt-file and network connection)
 	#make -C pydist dist_fallback
