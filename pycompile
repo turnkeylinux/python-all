@@ -125,11 +125,12 @@ def get_exclude_patterns_from_dir(name='/usr/share/python/bcep/'):
 
 def get_exclude_patterns(directory='/', patterns=None, versions=None):
     """Return patterns for files that shouldn't be compiled in given dir."""
+    if versions is not None:
+        # make sure it's a set (debsorted returns a list)
+        versions = set(versions)
     if patterns:
         if versions is None:
             versions = set(SUPPORTED)
-        else:
-            versions = set(versions)
         patterns = [('re', versions, directory, i) for i in patterns]
     else:
         patterns = []
@@ -171,7 +172,7 @@ def filter_files(files, e_patterns, compile_versions):
 def py_compile(version, optimize, workers):
     if not isinstance(version, basestring):
         version = vrepr(version)
-    cmd = "python%s%s -m py_compile -" \
+    cmd = "/usr/bin/python%s%s -m py_compile -" \
         % (version, '' if (__debug__ or not optimize) else ' -O')
     process = Popen(cmd, bufsize=1, shell=True,
                     stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
