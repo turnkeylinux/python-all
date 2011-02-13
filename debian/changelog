@@ -1,5 +1,7 @@
 python-defaults (2.6.6-11) UNRELEASED; urgency=low
 
+  * dh_python2 and pycompile: read /usr/share/python/debian_defaults to get
+    default Python version and a List of supported Python versions
   * dh_python2:
     - fix parsing .pyinstall files (a space between file name and
       module name is now required)

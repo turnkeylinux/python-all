@@ -38,7 +38,7 @@ NOTES
 In order to support more than one Python version in the same binary package,
 dh_python2 (unlike dh_pycentral and dh_pysupport) creates symlinks to all
 supported Python versions at build time. It means binNMU (or sourceful upload
-in case of architecture independent packages) are required once a list of
+in case of architecture independent packages) is required once a list of
 supported Python version is changed. It's faster and more robust than its
 competitors, though.
 

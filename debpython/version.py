@@ -19,14 +19,37 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import logging
 import re
-from os.path import exists
+from ConfigParser import SafeConfigParser
+from os.path import exists, dirname, join
 from types import GeneratorType
 
+# will be overriden via debian_defaults file few lines later
 SUPPORTED = [(2, 5), (2, 6), (2, 7)]
 DEFAULT = (2, 6)
+
 RANGE_PATTERN = r'(-)?(\d\.\d+)(?:(-)(\d\.\d+)?)?'
 RANGE_RE = re.compile(RANGE_PATTERN)
+
+log = logging.getLogger(__name__)
+
+# try to read debian_defaults and get a list of supported Python versions and
+# the default one from there
+_config = SafeConfigParser()
+_config.read(['/usr/share/python/debian_defaults',
+             join(dirname(__file__), '..', 'debian', 'debian_defaults')])
+try:
+    DEFAULT = tuple(int(i) for i in _config.get('DEFAULT',
+                    'default-version')[6:].split('.'))
+except:
+    log.exception('cannot read debian_defaults')
+try:
+    SUPPORTED = tuple(tuple(int(j) for j in i.strip()[6:].split('.'))\
+                            for i in _config.get('DEFAULT',
+                                'supported-versions').split(','))
+except:
+    log.exception('cannot read debian_defaults')
 
 
 def get_requested_versions(vrange=None, available=None):
