@@ -10,6 +10,7 @@ python-defaults (2.6.6-11) UNRELEASED; urgency=low
     - add support for DH_OPTIONS env. variable
     - fix checking shebangs in private directories (executable bit wasn't
       checked correctly)
+    - add test4 to test handling private directories
   * pycompile:
     - --exclude now works with private dirs
     - use /usr/bin/pythonX.Y rather than pythonX.Y (to avoid /usr/local

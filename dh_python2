@@ -421,7 +421,7 @@ def scan(package, dname=None):
 
 ################################################################
 def main():
-    usage = '%prog -p PACKAGE [-V [X.Y][-][A.B]] DIR_OR_FILE [-X REGEXPR]\n'
+    usage = '%prog -p PACKAGE [-V [X.Y][-][A.B]] DIR [-X REGEXPR]\n'
     parser = OptionParser(usage, version='%prog 2.0~beta1',
                                    option_class=Option)
     parser.add_option('--no-guessing-versions', action='store_false',
