@@ -438,7 +438,7 @@ def main():
     parser.add_option('-i', '--indep', action='store_false',
         dest='arch', default=None,
         help='act on architecture independent packages')
-    parser.add_option('-a', '--arch', action='store_true',
+    parser.add_option('-a', '-s', '--arch', action='store_true',
         dest='arch', help='act on architecture dependent packages')
     parser.add_option('-q', '--quiet', action='store_false', dest='verbose',
         help='be quiet')
