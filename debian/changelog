@@ -8,6 +8,8 @@ python-defaults (2.6.6-11) UNRELEASED; urgency=low
     - replace a file with a symlink also if there's a matching one in
       pyshared directory already
     - add support for DH_OPTIONS env. variable
+    - fix checking shebangs in private directories (executable bit wasn't
+      checked correctly)
   * pycompile:
     - --exclude now works with private dirs
     - use /usr/bin/pythonX.Y rather than pythonX.Y (to avoid /usr/local

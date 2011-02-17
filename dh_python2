@@ -373,7 +373,7 @@ def scan(package, dname=None):
 
             elif private_dir:
                 mode = os.stat(join(root, fn))[ST_MODE]
-                if mode is S_IXUSR or mode is S_IXGRP or mode is S_IXOTH:
+                if mode & S_IXUSR or mode & S_IXGRP or mode & S_IXOTH:
                     res = shebang2pyver(join(root, fn))
                     if res:
                         r['private_dirs'].setdefault(private_dir, {})\
