@@ -147,12 +147,13 @@ def guess_dependency(req, version=None):
                 return item['dependency']
 
     # try dpkg -S
-    query = "'%s-?*\.egg-info'" % safe_name(name)  # TODO: .dist-info
+    query = "'*/%s-?*\.egg-info'" % ci_regexp(safe_name(name))  # TODO: .dist-info
     if version:
         query = "%s | grep '/python%s/\|/pyshared/'" % \
                 (query, vrepr(version))
     else:
         query = "%s | grep '/python2\../\|/pyshared/'" % query
+    print query
 
     log.debug("invoking dpkg -S %s", query)
     process = Popen("/usr/bin/dpkg -S %s" % query, \
@@ -210,3 +211,8 @@ def sensible_pname(egg_name):
     if egg_name.startswith('python-'):
         egg_name = egg_name[7:]
     return "python-%s" % egg_name.lower()
+
+
+def ci_regexp(name):
+    """Return case insensitive dpkg -S regexp."""
+    return ''.join("[%s%s]" % (i.upper(), i) if i.isalpha() else i for i in name.lower())

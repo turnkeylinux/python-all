@@ -13,7 +13,7 @@ check:
 	grep -q Depends:.*python2.5 debian/foo/DEBIAN/control
 	grep -q python2.4 debian/foo/usr/share/foo/baz.py
 	test ! -x debian/foo/usr/share/foo/baz.py
-	grep -q Depends:.*python2.5 debian/foo/DEBIAN/control && false || true
+	grep -q Depends:.*python2.4 debian/foo/DEBIAN/control && false || true
 
 clean:
 	./debian/rules clean
