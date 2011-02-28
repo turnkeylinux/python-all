@@ -153,7 +153,6 @@ def guess_dependency(req, version=None):
                 (query, vrepr(version))
     else:
         query = "%s | grep '/python2\../\|/pyshared/'" % query
-    print query
 
     log.debug("invoking dpkg -S %s", query)
     process = Popen("/usr/bin/dpkg -S %s" % query, \
