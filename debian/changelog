@@ -1,3 +1,9 @@
+python-defaults (2.6.6-12) UNRELEASED; urgency=low
+
+  * dh_python2: works with Breaks spanning across multiple physical lines
+
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 08 Mar 2011 23:55:37 +0100
+
 python-defaults (2.6.6-11) experimental; urgency=low
 
   * dh_python2 and pycompile: read /usr/share/python/debian_defaults to get
