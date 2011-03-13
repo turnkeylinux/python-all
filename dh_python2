@@ -530,8 +530,7 @@ def main():
                 create_public_links(pyshared_dir, options.vrange)
                 stats['public_vers'] = get_requested_versions(options.vrange)
 
-        dependencies = Dependencies(package,
-                                    dh.packages[package]['uses_breaks'])
+        dependencies = Dependencies(package)
         dependencies.parse(stats, options)
         dependencies.export_to(dh)
 

@@ -21,7 +21,7 @@
 
 import logging
 from debpython.pydist import parse_pydep, guess_dependency
-from debpython.version import SUPPORTED, DEFAULT, debsorted, vrepr, vrange_str
+from debpython.version import DEFAULT, debsorted, vrepr, vrange_str
 
 # minimum version required for pycompile/pyclean
 MINPYCDEP = 'python (>= 2.6.6-7~)'
@@ -32,9 +32,8 @@ log = logging.getLogger(__name__)
 class Dependencies(object):
     """Store relations (dependencies, etc.) between packages."""
 
-    def __init__(self, package, use_breaks=False):
+    def __init__(self, package):
         self.package = package
-        self.use_breaks = use_breaks
         self.depends = []
         self.recommends = []
         self.suggests = []
@@ -93,9 +92,6 @@ class Dependencies(object):
         if pub_vers:
             dbgpkg = self.package.endswith('-dbg')
             tpl = 'python-dbg' if dbgpkg else 'python'
-            supported = sorted(SUPPORTED)
-            min_supp = supported[0]
-            max_supp = supported[-1]
             minv = pub_vers[0]
             maxv = pub_vers[-1]
             if dbgpkg:
@@ -104,21 +100,13 @@ class Dependencies(object):
                 tpl2 = 'python%d.%d'
             self.depend(' | '.join(tpl2 % i for i in debsorted(pub_vers)))
 
-            # additional Breaks/Depends to block python package transitions
-            if self.use_breaks:
-                if minv <= min_supp:
-                    self.break_("%s (<< %d.%d)" % \
-                                (tpl, minv[0], minv[1]))
-                if maxv >= max_supp:
-                    self.break_("%s (>= %d.%d)" % \
-                                (tpl, maxv[0], maxv[1] + 1))
-            else:
-                if minv <= DEFAULT:
-                    self.depend("%s (>= %d.%d)" % \
-                                (tpl, minv[0], minv[1]))
-                if maxv >= DEFAULT:
-                    self.depend("%s (<< %d.%d)" % \
-                                (tpl, maxv[0], maxv[1] + 1))
+            # additional Depends to block python package transitions
+            if minv <= DEFAULT:
+                self.depend("%s (>= %d.%d)" % \
+                            (tpl, minv[0], minv[1]))
+            if maxv >= DEFAULT:
+                self.depend("%s (<< %d.%d)" % \
+                            (tpl, maxv[0], maxv[1] + 1))
 
         # make sure pycompile binary is available
         if stats['compile']:

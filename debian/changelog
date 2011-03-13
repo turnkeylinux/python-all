@@ -1,6 +1,9 @@
 python-defaults (2.6.6-12) UNRELEASED; urgency=low
 
-  * dh_python2: works with Breaks spanning across multiple physical lines
+  * dh_python2:
+    - use Depends: python (<< 2.X), python (>= 2.Y) rather than Breaks
+      in packages with public modules (after a discussion on debian-devel
+      mailing list)
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 08 Mar 2011 23:55:37 +0100
 

@@ -20,7 +20,6 @@
 # THE SOFTWARE.
 
 import logging
-import re
 from os import makedirs, chmod
 from os.path import exists, join, dirname
 
@@ -35,7 +34,6 @@ class DebHelper(object):
         self.python_version = None
         source_section = True
         binary_package = None
-        header = None
 
         try:
             fp = open('debian/control', 'r')
@@ -48,8 +46,6 @@ class DebHelper(object):
                 source_section = False
                 binary_package = None
                 continue
-            if not line.startswith(' ') and ':' in line:
-                header = line.split(':', 1)[0]
             if binary_package:
                 if binary_package.startswith('python3'):
                     continue
@@ -63,9 +59,6 @@ class DebHelper(object):
                     #del self.packages[binary_package]
                     self.packages[binary_package]['arch'] = arch
                     continue
-                elif header == 'Breaks' and '${python:Breaks}' in line:
-                    self.packages[binary_package]['uses_breaks'] = True
-                    continue
             elif line.startswith('Package:'):
                 binary_package = line[8:].strip()
                 if binary_package.startswith('python3'):
@@ -77,8 +70,7 @@ class DebHelper(object):
                     continue
                 self.packages[binary_package] = {'substvars': {},
                                                  'autoscripts': {},
-                                                 'rtupdates': [],
-                                                 'uses_breaks': False}
+                                                 'rtupdates': []}
             elif line.startswith('Source:'):
                 self.source_name = line[7:].strip()
             elif source_section:

@@ -10,7 +10,7 @@ check:
 	grep -q "Depends: .*python-mako" debian/python-foo/DEBIAN/control
 	test -f debian/python-foo/usr/lib/python2.6/dist-packages/foo/__init__.py
 	test ! -f debian/python-foo/usr/lib/python2.6/dist-packages/foo/spam.py
-	grep -q "Breaks: .*python" debian/python-foo/DEBIAN/control
+	grep -q "Depends: .*python (<<" debian/python-foo/DEBIAN/control
 
 clean:
 	./debian/rules clean
