@@ -174,7 +174,7 @@ class DebHelper(object):
             if exists(fn):
                 data = open(fn, 'r').read()
             else:
-                data = '#! /bin/sh -e'
+                data = "#! /bin/sh\nset -e"
             for dname, args in values:
                 cmd = 'if [ "$1" = rtupdate ]; then' +\
                       "\n\tpyclean %s" % dname +\

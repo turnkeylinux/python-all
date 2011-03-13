@@ -142,13 +142,12 @@ def share(package, stats, options):
                 versions_without_ext = debsorted(set(pubvers) -\
                                                  stats['public_ext'])
                 if not versions_without_ext:
-                    log.error('extension for python%s is missing',
+                    log.error('extension for python%s is missing. ',
+                             'Build extensions for all supported Python '
+                             'versions (`pyversions -vr`) or adjust '
+                             'X-Python-Version field or pass '
+                             '--no-guessing-versions to dh_python2',
                               vrepr(version))
-                    log.info('possible solutions are: building extensions '
-                             'for all supported Python versions '
-                             '(`pyversions -vr`); '
-                             'adjusting X-Python-Version field; '
-                             'passing --no-guessing-versions to dh_python2')
                     exit(3)
                 srcver = versions_without_ext[0]
                 if srcver in stats['public_vers']:
@@ -529,6 +528,7 @@ def main():
             if not stats['public_vers'] and exists(pyshared_dir):
                 create_public_links(pyshared_dir, options.vrange)
                 stats['public_vers'] = get_requested_versions(options.vrange)
+                stats['compile'] = True
 
         dependencies = Dependencies(package)
         dependencies.parse(stats, options)
