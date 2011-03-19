@@ -32,7 +32,7 @@
         <name>Scott Kitterman</name>
 	<email>scott@kitterman.com</email>
       </author>
-      <version>version 0.9.2.0</version>
+      <version>version 0.9.3.0</version>
 
       <abstract>
 	This document describes the packaging of Python within the
@@ -42,7 +42,7 @@
 
       <copyright>
 	<copyrightsummary>
-	  Copyright &copy; 1999, 2001, 2003, 2006, 2009, 2010 Software in the
+	  Copyright &copy; 1999, 2001, 2003, 2006, 2009, 2010, 2011 Software in the
 	  Public Interest
 	</copyrightsummary>
 	<p>
@@ -183,6 +183,13 @@
 	  be greater than or equal to <var>X</var>.<var>Y</var> and smaller
 	  than <var>X</var>.<var>Y+1</var>.
 	</p>
+	<p>
+	  There is no symlink for <file>/usr/bin/python2</file>.  This is
+	  consistent with current upstream practice. This is being discussed
+	  in <url id="http://www.python.org/dev/peps/pep-0394/"
+          name="PEP-0394">. If this PEP is approved, then the policy for
+	  Debian should be reconsidered.
+	</p>
       </sect>
 
       <sect id="minimal">
@@ -221,13 +228,11 @@
 	    and all dependencies on additional python modules are met.
           </p>
           <p>
-	    If a maintainer would like to provide the user with the
-	    possibility to override the Debian Python interpreter, he
-	    may want to use <file>/usr/bin/env python</file> or
-	    <file>/usr/bin/env python<var>X</var>.<var>Y</var></file>.
-	    However this is not advisable as it bypasses Debian's dependency
-	    checking and makes the package vulnerable to incomplete local
-	    installations of python.
+	    Maintainers should notoverride the Debian Python interpreter using
+	    <file>/usr/bin/env python</file> or
+	    <file>/usr/bin/env python<var>X</var>.<var>Y</var></file>. This is
+	    not advisable as it bypasses Debian's dependency checking and makes
+	    the package vulnerable to incomplete local installations of python.
 	  </p>
         </sect1>
       </sect>
@@ -238,8 +243,9 @@
 	  By default, Python modules are searched in the directories listed
 	  in the PYTHONPATH environment variable and in the sys.path Python
 	  variable.  Since python2.4 version 2.4.5-3, python2.5 version
-	  2.5.2-7, and python2.6 version 2.6.2-1 sys.path does not include
-	  a /usr/lib/python<var>X</var><var>Y</var>.zip entry anymore.
+	  2.5.2-7, python2.6 version 2.6.2-1, and in all python2.7 versions,
+          sys.path does not include a
+	  /usr/lib/python<var>X</var><var>Y</var>.zip entry anymore.
 
 	  Directories with private Python modules must be absent from the
 	  sys.path.
@@ -249,24 +255,26 @@
 	  directory, /usr/lib/python<var>X</var>.<var>Y</var>/dist-packages
 	  for python2.6 and later, and
 	  /usr/lib/python<var>X</var>.<var>Y</var>/site-packages for
-	  python2.5 and earlier.
+	  python2.5 and earlier. Public Python 3 modules must be installed in
+	  /usr/lib/python3/dist-packages.
 
-	  As an exception to the above, modules managed by python-support
-	  are installed in another directory which is added to the sys.path
-	  using the .pth mechanism.  The .pth mechanism is documented in the
-	  Python documentation of the <tt>site</tt> module.
+	  Modules managed by python-support are installed in another
+	  directory which is added to the sys.path using the .pth mechanism.
+	  The .pth mechanism is documented in the Python documentation of the
+	  <tt>site</tt> module.
 
 	  A special directory is dedicated to public Python modules
 	  installed by the local administrator,
-	  /usr/local/lib/python<var>X</var>.<var>Y</var>/dist-packages for
-	  python2.6 and later, and
-	  /usr/local/lib/python<var>X</var>.<var>Y</var>/site-packages for
+	  /usr/lib/python3/dist-packages for all python3 versions, 
+	  /usr/local/lib/python2.<var>Y</var>/dist-packages for python2.6 and
+	  later, and /usr/local/lib/python2.<var>Y</var>/site-packages for
 	  python2.5 and earlier.
 
 	  For a local installation by the administrator of python2.6 and
 	  later, a special directory is reserved to Python modules which
 	  should only be available to this Python,
-	  /usr/local/lib/python<var>X</var>.<var>Y</var>/site-packages.
+	  /usr/local/lib/python2.<var>Y</var>/site-packages (and
+	  /usr/local/lib/python3/site-packages for all python3 versions).
 	  Unfortunately, for python2.5 and earlier this directory is also
 	  visible to the system Python.
 
@@ -280,11 +288,14 @@
 	  Python versions, for instance
 	  /usr/lib/python2.6/dist-packages/foo.py and
 	  /usr/lib/python2.5/site-packages/foo.py, these should point to a
-	  common file.
+	  common file. Version specific directories for identical source code
+          are not required for python3 and must not be used for this.
 
 	  A common location to share, across Python versions,
 	  arch-independent files which would otherwise go to the directory
-	  of system public modules is /usr/share/pyshared.
+	  of system public modules is /usr/share/pyshared. For python3,
+	  a special location is not required, use
+	  /usr/lib/python3/dist-packages
 	</p>
       </sect>
 
@@ -465,24 +476,15 @@ XS-Python-Version: all
 	  The keyword "current" has been deprecated and used to mean that
 	  the package would only have to support a single version (even
 	  across default version changes).  It must be ignored for Python 3
-	  versions. Python 3 versions should never have been used in
-	  <tt>XS-Python-Version</tt> and should be considered deprecated at best.
-	  <tt>X-Python3-Version</tt> should be used instead.
+	  versions. 
 	</p>
 	<p>
-	  The binary package paragraphs of your debian/control file should
-	  also have a line:
-	  <example>
-XB-Python-Version: ${python:Versions}
-	  </example>
-	  The python:Versions is substituted by the supported Python
-	  versions of the binary package, based on
-	  <tt>XS-Python-Version</tt>. (If you are not using python-central
-	  or python-support, you will need to handle this substitution
-	  yourself.) The format of the field <tt>XB-Python-Version</tt> is
-	  the same as the <tt>XS-Python-Version</tt> field for packages not
-	  containing extensions. Packages with extensions must list the
-	  versions explicitly.
+	  The use of XB-Python-Version in the binary package paragraphs of
+	  debian/control file has been deprecated and should be removed in the
+	  normal course of package updates. It never achieved sufficient
+	  deployment to support it's intended purpose of managing Python
+          transitions.  This can be adequately accomplished by examining
+	  package dependencies.
 	</p>
 	<p>
 	  If your package is used by another module or application
@@ -521,7 +523,8 @@ XB-Python-Version: ${python:Versions}
           <package>python-<var>foo</var></package> must be specified,
           if the package contains an extension for more than one
           python version. Provides should also be added on request of
-          maintainers who depend on a non-default python version.
+          maintainers who depend on a non-default python version. Provides
+	  are only for extensions, not modules.
 	</p>
       </sect>
 
@@ -568,7 +571,7 @@ XB-Python-Version: ${python:Versions}
 	<p>
 	  Programs that can run with any version of Python must
 	  begin with <tt>#!/usr/bin/python</tt> or <tt>#!/usr/bin/env
-	  python</tt> (the former is preferred). They must also
+	  python</tt> (the former is strongly preferred). They must also
 	  specify a dependency on <package>python</package>, with a
 	  versioned dependency if necessary.
 	</p>
@@ -684,7 +687,7 @@ XB-Python-Version: ${python:Versions}
 	Build dependencies for Python dependent packages must be
 	declared for every Python version that the package is built
 	for. The <package>python-all-dev</package> should be used when
-	building modules for any or all Python versions. To build for
+	building extensions for any or all Python versions. To build for
 	a specific version or versions, Build-Depend on
 	<package>python<var>X</var>.<var>Y</var>-dev</package>.
       </p>
@@ -692,7 +695,8 @@ XB-Python-Version: ${python:Versions}
 	Some applications and pure Python modules may be able to
 	build-depend only on <package>python</package>
 	or <package>python-all</package> and not require the -dev
-	packages.
+	packages. Packages that do not require the -dev packages must not
+	build-depend on them.
       </p>
 
       <p>

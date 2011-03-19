@@ -1,11 +1,22 @@
 python-defaults (2.6.6-12) UNRELEASED; urgency=low
 
+  [ Piotr Ożarowski ]
   * dh_python2:
     - use Depends: python (<< 2.X), python (>= 2.Y) rather than Breaks
       in packages with public modules (after a discussion on debian-devel
       mailing list)
 
- -- Piotr Ożarowski <piotr@debian.org>  Tue, 08 Mar 2011 23:55:37 +0100
+  [ Scott Kitterman ]
+  * Start Python Policy updates for Wheezy
+    - Document current practice to not provide /usr/bin/python2
+    - Strengthen warning aginst using /usr/bin/env python     
+    - Update paths section for python2.7 and python3
+    - Deprecate XB-Python-Version
+    - Clarify use of {python:Provides}
+    - Clarify that build-dependencies on -dev packages should not be used
+      except when required
+
+ -- Piotr Ożarowski <piotr@debian.org>  Fri, 18 Mar 2011 22:48:06 -0400
 
 python-defaults (2.6.6-11) experimental; urgency=low
 
