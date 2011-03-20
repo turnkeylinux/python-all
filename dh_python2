@@ -371,12 +371,13 @@ def scan(package, dname=None):
                     continue
 
             elif private_dir:
-                mode = os.stat(join(root, fn))[ST_MODE]
-                if mode & S_IXUSR or mode & S_IXGRP or mode & S_IXOTH:
-                    res = shebang2pyver(join(root, fn))
-                    if res:
-                        r['private_dirs'].setdefault(private_dir, {})\
-                            .setdefault('shebangs', set()).add(res)
+                if exists(join(root, fn)):
+                    mode = os.stat(join(root, fn))[ST_MODE]
+                    if mode & S_IXUSR or mode & S_IXGRP or mode & S_IXOTH:
+                        res = shebang2pyver(join(root, fn))
+                        if res:
+                            r['private_dirs'].setdefault(private_dir, {})\
+                                .setdefault('shebangs', set()).add(res)
 
             if public_dir or private_dir:
                 if fext == 'so':

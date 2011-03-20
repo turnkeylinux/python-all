@@ -5,6 +5,7 @@ python-defaults (2.6.6-12) UNRELEASED; urgency=low
     - use Depends: python (<< 2.X), python (>= 2.Y) rather than Breaks
       in packages with public modules (after a discussion on debian-devel
       mailing list)
+    - do not try to check dangling symlinks's shebang (closes: 619005)
 
   [ Scott Kitterman ]
   * Start Python Policy updates for Wheezy
