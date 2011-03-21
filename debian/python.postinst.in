@@ -39,18 +39,6 @@ case "$1" in
             done
 	fi
 
-	# run the rtinstall script, when 2.7 became a supported version
-        if [ -x /usr/bin/python2.7 ] && [ -n "$2" ] && dpkg --compare-versions $2 lt 2.6.6-4; then
-            if [ "$DEBIAN_FRONTEND" != noninteractive ]; then
-		echo "Linking and byte-compiling packages for runtime python2.7..."
-            fi
-            version=$(dpkg -s python2.7-minimal | awk '/^Version:/ {print $2}')
-            for hook in /usr/share/python/runtime.d/*.rtinstall; do
-		[ -x $hook ] || continue
-		$hook rtinstall python2.7 "$2" "$version"
-            done
-	fi
-
         if [ -n "$2" ] && dpkg --compare-versions $2 lt 2.6.4-1~; then
 	    oldv=$(echo $2 | sed 's/^\(...\).*/\1/')
 	    if [ "$DEBIAN_FRONTEND" != noninteractive ]; then
@@ -108,22 +96,7 @@ case "$1" in
 		$hook rtinstall python2.6 "$oldversion" "$newversion"
 	    done
 	fi
-	rm -f /var/lib/python/python2.6_already_installed
-
-	if [ -f /var/lib/python/python2.7_already_installed ] \
-	   && [ ! -f /var/lib/python/python2.7_installed ]
-	then
-	    if [ "$DEBIAN_FRONTEND" != noninteractive ]; then
-		echo "Linking and byte-compiling packages for runtime python2.7..."
-	    fi
-	    oldversion=$(cat /var/lib/python/python2.7_already_installed)
-	    newversion=$(dpkg -s python2.7-minimal | awk '/^Version:/ {print $2}')
-	    for hook in /usr/share/python/runtime.d/*.rtinstall; do
-		[ -x $hook ] || continue
-		$hook rtinstall python2.7 "$oldversion" "$newversion"
-	    done
-	fi
-	rm -f /var/lib/python/python2.7_already_installed
+	rm -f /var/lib/python/python2.5_already_installed
 
 	rmdir --ignore-fail-on-non-empty /var/lib/python 2>/dev/null || true
 esac

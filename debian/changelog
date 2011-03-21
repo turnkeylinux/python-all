@@ -1,4 +1,4 @@
-python-defaults (2.6.6-12) UNRELEASED; urgency=low
+python-defaults (2.6.6-12) unstable; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2:
@@ -8,7 +8,7 @@ python-defaults (2.6.6-12) UNRELEASED; urgency=low
     - do not try to check dangling symlinks's shebang (closes: 619005)
 
   [ Scott Kitterman ]
-  * Start Python Policy updates for Wheezy
+  * Start Python Policy updates for Wheezy:
     - Document current practice to not provide /usr/bin/python2
     - Strengthen warning aginst using /usr/bin/env python     
     - Update paths section for python2.7 and python3
@@ -16,8 +16,11 @@ python-defaults (2.6.6-12) UNRELEASED; urgency=low
     - Clarify use of {python:Provides}
     - Clarify that build-dependencies on -dev packages should not be used
       except when required
+  * Upload to unstable:
+    - Drop python2.7 from supported versions, not ready for Python transition
+      yet
 
- -- Piotr Ożarowski <piotr@debian.org>  Fri, 18 Mar 2011 22:48:06 -0400
+ -- Scott Kitterman <scott@kitterman.com>  Mon, 21 Mar 2011 10:22:06 -0400
 
 python-defaults (2.6.6-11) experimental; urgency=low
 
@@ -115,6 +118,51 @@ python-defaults (2.6.6-4) experimental; urgency=low
     and python2.7 is installed.
 
  -- Matthias Klose <doko@debian.org>  Sat, 16 Oct 2010 11:58:31 +0200
+
+python-defaults (2.6.6-3+squeeze5) unstable; urgency=low
+
+  * dh_python2: fix moving files from old debug locations
+  * pycompile: skip dangling symlinks to fix upgrade problem introduced in
+    -3+squeeze3 (closes: 607988)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 11 Jan 2011 22:14:56 +0100
+
+python-defaults (2.6.6-3+squeeze4) unstable; urgency=medium
+
+  * dh_python2: fix a crash in packages with private extension (closes: 607555)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 19 Dec 2010 21:12:38 +0100
+
+python-defaults (2.6.6-3+squeeze3) unstable; urgency=medium
+
+  * pycompile:
+    - Don't over-optimize, check the timestamps of byte-code files.
+    - Add options -f/--force, -O.
+    - Propagate the exit value of the py_compile processes.
+    - Update manual page.
+  * Bump depends to require the fixed pycompile for dh_python2 based package
+    builds.
+  * Don't touch the standard python library in rtupdate scripts.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 12 Dec 2010 22:23:03 +0100
+
+python-defaults (2.6.6-3+squeeze2) unstable; urgency=low
+
+  * pycompile:
+    - `pycompile $DESTDIR/usr/lib/python*` will recognize public
+      site-packages directories and use the right interpreter instead of
+      raising KeyError
+    - do not try to check if interpreter is present when version range is
+      empty (closes: 605356)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 30 Nov 2010 19:57:51 +0100
+
+python-defaults (2.6.6-3+squeeze1) unstable; urgency=medium
+
+  * pycompile: if installed Python is requested via -V option, use it even if
+    it's not in a list of supported Python versions
+
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 18 Oct 2010 19:04:55 +0200
 
 python-defaults (2.6.6-3) unstable; urgency=low
 
