@@ -1,3 +1,13 @@
+python-defaults (2.6.6-13) experimental; urgency=low
+
+  * Add python2.7 as a supported Python version.
+  * python-all{,-dev,-dbg}: Depend on the 2.7 packages.
+  * Run the rtinstall script, when 2.7 became a supported version (2.6.6-13)
+    and python2.7 is installed.
+  * Python-minimal Breaks python-support (<< 1.0.12)
+
+ -- Scott Kitterman <scott@kitterman.com>  Mon, 21 Mar 2011 10:53:42 -0400
+
 python-defaults (2.6.6-12) unstable; urgency=low
 
   [ Piotr Ożarowski ]
