@@ -39,3 +39,6 @@ py_libdir_sh = $$(_py_=$(strip $(1)); python$${_py_\#python*} -c 'from distutils
 
 # Arguments to pass to setup.py install
 py_setup_install_args = --install-layout=deb
+
+# distutils' build directory
+py_builddir = $(shell python$(strip $(1)) -c "from distutils.command.build import build; from distutils.core import Distribution; b = build(Distribution()); b.finalize_options(); print(b.build_platlib)")
