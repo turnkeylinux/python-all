@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: UTF-8 -*- vim: et ts=4 sw=4
 
-# Copyright © 2010 Piotr Ożarowski <piotr@debian.org>
+# Copyright © 2010-2011 Piotr Ożarowski <piotr@debian.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,7 @@ from debpython.depends import Dependencies
 from debpython.version import SUPPORTED, DEFAULT, \
     debsorted, getver, vrepr, parse_pycentral_vrange, \
     get_requested_versions, parse_vrange, vrange_str
+from debpython.namespace import parse as parse_nsp
 from debpython.pydist import validate as validate_pydist, \
                              PUBLIC_DIR_RE
 from debpython.tools import sitedir, relative_symlink, \
@@ -155,6 +156,7 @@ def share(package, stats, options):
                 share_2x(sitedir(srcver, package), sitedir(version, package))
     # remove duplicates
     stats['requires.txt'] = set(realpath(i) for i in stats['requires.txt'])
+    stats['nsp.txt'] = set(realpath(i) for i in stats['nsp.txt'])
 
 
 def move_to_pyshared(dir1):
@@ -291,6 +293,7 @@ def share_2x(dir1, dir2, dc=None):
 def scan(package, dname=None):
     """Gather statistics about Python files in given package."""
     r = {'requires.txt': set(),
+         'nsp.txt': set(),
          'shebangs': set(),
          'public_vers': set(),
          'private_dirs': {},
@@ -355,8 +358,11 @@ def scan(package, dname=None):
                 if clean_name != name:
                     log.info('renaming %s to %s', name, clean_name)
                     os.rename(join(root, name), join(root, clean_name))
-        if root.endswith('.egg-info') and 'requires.txt' in file_names:
-            r['requires.txt'].add(join(root, 'requires.txt'))
+        if root.endswith('.egg-info'):
+            if 'requires.txt' in file_names:
+                r['requires.txt'].add(join(root, 'requires.txt'))
+            if 'namespace_packages.txt' in file_names:
+                r['nsp.txt'].add(join(root, 'namespace_packages.txt'))
             continue
 
         # check files
@@ -462,6 +468,8 @@ def main():
     parser.add_option('--suggests', action='append', dest='suggests',
         help='translate given requirements into Debian '
              'dependencies and add them to ${python:Suggests}')
+    parser.add_option('--namespace', action='append', dest='namespaces',
+        help='recreate __init__.py files for given namespaces at install time')
     # ignore some debhelper options:
     parser.add_option('-O', help=SUPPRESS_HELP)
 
@@ -589,6 +597,16 @@ def main():
                 if not exists(dstdir):
                     os.makedirs(dstdir)
                 fcopy(pydist_file, join(dstdir, package))
+
+        # namespace feature - recreate __init__.py files at install time
+        nsp = parse_nsp(pdetails['nsp.txt'], options.namespaces)
+        # TODO: skip non-empty __init__.py files, remove empty ones
+        if nsp:
+            dstdir = join('debian', package, 'usr/share/python/ns/')
+            if not exists(dstdir):
+                os.makedirs(dstdir)
+            with open(join(dstdir, package), 'w') as fp:
+                fp.writelines("%s\n" % i for i in nsp)
 
     dh.save()
 
