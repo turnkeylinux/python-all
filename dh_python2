@@ -143,7 +143,7 @@ def share(package, stats, options):
                 versions_without_ext = debsorted(set(pubvers) -\
                                                  stats['public_ext'])
                 if not versions_without_ext:
-                    log.error('extension for python%s is missing. ',
+                    log.error('extension for python%s is missing. '
                              'Build extensions for all supported Python '
                              'versions (`pyversions -vr`) or adjust '
                              'X-Python-Version field or pass '
