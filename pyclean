@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 # vim: et ts=4 sw=4
 
-# Copyright © 2010 Piotr Ożarowski <piotr@debian.org>
+# Copyright © 2010-2011 Piotr Ożarowski <piotr@debian.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,12 @@
 
 import logging
 import optparse
-import sys
-from os import environ, remove, walk
-from os.path import exists, isdir, isfile, join
-from subprocess import Popen, PIPE
+from os import environ, remove
+from os.path import exists
+from sys import argv
 
+from debpython import files as dpf
+from debpython.namespace import add_namespace_files
 
 # initialize script
 logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
@@ -66,34 +67,9 @@ def destroyer():  # ;-)
         log.info("removed files: %s", counter)
 
 
-def get_files(items):
-    for item in items:
-        if isfile(item) and item.endswith('.py'):
-            yield item
-        elif isdir(item):
-            for root, dirs, files in walk(item):
-                #for fn in glob1(root, '*.py'):
-                #    yield join(root, fn)
-                for fn in files:
-                    if fn.endswith('.py'):
-                        yield join(root, fn)
-
-
-def get_package_files(package_name):
-    process = Popen("/usr/bin/dpkg -L %s" % package_name,\
-                    shell=True, stdout=PIPE)
-    stdout, stderr = process.communicate()
-    if process.returncode != 0:
-        log.error('cannot get content of %s', package_name)
-        sys.exit(2)
-    for line in stdout.split('\n'):
-        if line.endswith('.py'):
-            yield line
-
-
 def main():
     usage = '%prog [-p PACKAGE | DIR_OR_FILE]'
-    parser = optparse.OptionParser(usage, version='%prog 0.9')
+    parser = optparse.OptionParser(usage, version='%prog 1.0')
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose',
         help='turn verbose more one')
     parser.add_option('-q', '--quiet', action='store_false', dest='verbose',
@@ -101,11 +77,11 @@ def main():
     parser.add_option('-p', '--package',
         help='specify Debian package name to clean')
 
-    (options, args) = parser.parse_args()
+    options, args = parser.parse_args()
 
     if options.verbose or environ.get('PYCLEAN_DEBUG') == '1':
         log.setLevel(logging.DEBUG)
-        log.debug('argv: %s', sys.argv)
+        log.debug('argv: %s', argv)
         log.debug('options: %s', options)
         log.debug('args: %s', args)
     else:
@@ -120,15 +96,21 @@ def main():
 
     if options.package:
         log.info('cleaning package %s', options.package)
-        for filename in get_package_files(options.package):
+        files = dpf.from_package(options.package, extensions=('.py', '.so'))
+        files = add_namespace_files(files, options.package, action=False)
+        files = dpf.filter_out_ext(files, ('.so',))
+        for filename in files:
             d.send(filename)
     elif args:
         log.info('cleaning directories: %s', args)
-        for filename in get_files(args):
+        files = dpf.from_directory(args, extensions=('.py', '.so'))
+        files = add_namespace_files(files, action=False)
+        files = dpf.filter_out_ext(files, ('.so',))
+        for filename in files:
             d.send(filename)
     else:
         parser.print_usage()
-        sys.exit(1)
+        exit(1)
 
 if __name__ == '__main__':
     main()

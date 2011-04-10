@@ -37,7 +37,7 @@ from debpython.depends import Dependencies
 from debpython.version import SUPPORTED, DEFAULT, \
     debsorted, getver, vrepr, parse_pycentral_vrange, \
     get_requested_versions, parse_vrange, vrange_str
-from debpython.namespace import parse as parse_nsp
+import debpython.namespace as ns
 from debpython.pydist import validate as validate_pydist, \
                              PUBLIC_DIR_RE
 from debpython.tools import sitedir, relative_symlink, \
@@ -144,10 +144,10 @@ def share(package, stats, options):
                                                  stats['public_ext'])
                 if not versions_without_ext:
                     log.error('extension for python%s is missing. '
-                             'Build extensions for all supported Python '
-                             'versions (`pyversions -vr`) or adjust '
-                             'X-Python-Version field or pass '
-                             '--no-guessing-versions to dh_python2',
+                              'Build extensions for all supported Python '
+                              'versions (`pyversions -vr`) or adjust '
+                              'X-Python-Version field or pass '
+                              '--no-guessing-versions to dh_python2',
                               vrepr(version))
                     exit(3)
                 srcver = versions_without_ext[0]
@@ -599,13 +599,19 @@ def main():
                 fcopy(pydist_file, join(dstdir, package))
 
         # namespace feature - recreate __init__.py files at install time
-        nsp = parse_nsp(pdetails['nsp.txt'], options.namespaces)
-        # TODO: skip non-empty __init__.py files, remove empty ones
+        nsp = ns.parse(stats['nsp.txt'], options.namespaces)
+        # note that pycompile/pyclean is already added to maintainer scripts
+        # and it should remain there even if __init__.py was the only .py file
+        try:
+            nsp = ns.remove_from_package(package, nsp, stats['public_vers'])
+        except (IOError, OSError), e:
+            log.error('cannot remove __init__.py from package: %s', e)
+            exit(6)
         if nsp:
             dstdir = join('debian', package, 'usr/share/python/ns/')
             if not exists(dstdir):
                 os.makedirs(dstdir)
-            with open(join(dstdir, package), 'w') as fp:
+            with open(join(dstdir, package), 'a') as fp:
                 fp.writelines("%s\n" % i for i in nsp)
 
     dh.save()

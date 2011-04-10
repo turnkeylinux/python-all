@@ -49,6 +49,12 @@ to override it. If you want dh_python2 to generate more strict dependencies
 /usr/share/doc/python-doc/README.PyDist (provided by python-doc package) for
 more information.
 
+dh_python2 parses Egg's namespace_packages.txt files (in addition to
+--namespace command line argument(s)) and drops empty __init__.py files from
+binary package. pycompile will regenerates them at install time and pyclean
+will remove them at uninstall time (if they're no longer used in installed
+packages.
+
 OPTIONS
 =======
 --version	show program's version number and exit
@@ -87,6 +93,9 @@ OPTIONS
 
 --suggests=SUGGESTS	translate given requirements into Debian dependencies
   and add them to ${python:Suggests}
+
+--namespace	use this option (multiple time if necessary) if
+  namespace_packages.txt is not complete
 
 SEE ALSO
 ========

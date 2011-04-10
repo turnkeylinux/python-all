@@ -2,6 +2,12 @@ python-defaults (2.6.6-14) UNRELEASED; urgency=low
 
   * python.mk: add py_builddir macro.
     $(call py_builddir, 2.6) returns "build/lib.linux-x86_64-2.6" on amd64
+  * dh_python2, pycompile, pyclean: add "namespace" feature:
+    dh_python2 parses Egg's namespace_packages.txt files (in addition to
+    --namespace command line argument(s)) and drops empty __init__.py files
+    from binary package. pycompile will regenerates them at install time and
+    pyclean will remove them at uninstall time (if they're no longer used in
+    installed packages
   * Remove myself from Uploaders
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 27 Mar 2011 16:29:05 +0200
