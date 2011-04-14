@@ -24,9 +24,10 @@
 
 import logging
 import optparse
+import sys
 from os import environ, remove
 from os.path import exists
-from sys import argv
+sys.path.insert(1, '/usr/share/python/')
 
 from debpython import files as dpf
 from debpython.namespace import add_namespace_files
@@ -81,7 +82,7 @@ def main():
 
     if options.verbose or environ.get('PYCLEAN_DEBUG') == '1':
         log.setLevel(logging.DEBUG)
-        log.debug('argv: %s', argv)
+        log.debug('argv: %s', sys.argv)
         log.debug('options: %s', options)
         log.debug('args: %s', args)
     else:

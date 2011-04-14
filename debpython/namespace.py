@@ -22,7 +22,7 @@
 from __future__ import with_statement
 import logging
 from os import environ, listdir, remove, rmdir
-from os.path import dirname, exists, join, getsize
+from os.path import dirname, exists, join, getsize, split
 from subprocess import Popen, PIPE
 
 from debpython.pydist import PUBLIC_DIR_RE
@@ -82,19 +82,22 @@ def add_namespace_files(files, package=None, action=None):
         if dpath not in already_processed:
             already_processed.add(dpath)
             if PUBLIC_DIR_RE.match(dpath):
-                for ns in namespaces:
-                    fpath = join(dpath, '__init__.py')
-                    if dpath.endswith(ns):
-                        if action is True:
-                            try:
-                                open(fpath, 'a').close()
-                            except:
-                                log.error('cannot create %s', fpath)
-                            else:
-                                yield fpath
-                        else:  # action is False
-                            # postpone it due to dpkg -S call
-                            removal_candidates.add(fpath)
+                while not dpath.endswith(('site-packages', 'dist-packages')):
+                    for ns in namespaces:
+                        fpath = join(dpath, '__init__.py')
+                        if dpath.endswith(ns):
+                            if action is True:
+                                try:
+                                    open(fpath, 'a').close()
+                                except:
+                                    log.error('cannot create %s', fpath)
+                                else:
+                                    yield fpath
+                            else:  # action is False
+                                # postpone it due to dpkg -S call
+                                removal_candidates.add(fpath)
+                    already_processed.add(dpath)
+                    dpath = split(dpath)[0]
 
     # now deal with to-be-removed namespace candidates (dpkg -S is expensive)
     # dpgk -S is used just to be safe (in case some other package is providing

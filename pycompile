@@ -266,9 +266,7 @@ multiple times to build up a list of things to exclude.')
         for item in args:
             e_patterns = get_exclude_patterns(item, options.regexpr, versions)
             files = dpf.from_directory(item, extensions=('.py', '.so'))
-            files = list(files); print files
             files = add_namespace_files(files, action=True)
-            files = list(files); print files
             files = dpf.filter_out_ext(files, ('.so',))
             compile(files, versions,
                     options.force, options.optimize, e_patterns)
