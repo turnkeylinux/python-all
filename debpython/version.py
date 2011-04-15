@@ -26,7 +26,7 @@ from os.path import exists, dirname, join
 from types import GeneratorType
 
 # will be overriden via debian_defaults file few lines later
-SUPPORTED = [(2, 5), (2, 6), (2, 7)]
+SUPPORTED = [(2, 6), (2, 7)]
 DEFAULT = (2, 6)
 
 RANGE_PATTERN = r'(-)?(\d\.\d+)(?:(-)(\d\.\d+)?)?'
@@ -61,7 +61,7 @@ def get_requested_versions(vrange=None, available=None):
     :type available: bool
 
     >>> sorted(get_requested_versions([(2, 5), (3, 0)]))
-    [(2, 5), (2, 6), (2, 7)]
+    [(2, 6), (2, 7)]
     >>> sorted(get_requested_versions('')) == sorted(SUPPORTED)
     True
     >>> sorted(get_requested_versions([None, None])) == sorted(SUPPORTED)

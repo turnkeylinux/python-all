@@ -1,5 +1,6 @@
 python-defaults (2.6.6-14) UNRELEASED; urgency=low
 
+  [ Piotr Ożarowski ]
   * python.mk: add py_builddir macro.
     $(call py_builddir, 2.6) returns "build/lib.linux-x86_64-2.6" on amd64
   * dh_python2, pycompile, pyclean: add "namespace" feature:
@@ -10,7 +11,13 @@ python-defaults (2.6.6-14) UNRELEASED; urgency=low
     installed packages
   * Remove myself from Uploaders
 
- -- Piotr Ożarowski <piotr@debian.org>  Sun, 27 Mar 2011 16:29:05 +0200
+  [ Scott Kitterman ]
+  * Drop python2.5 as a supported Python version
+    - Update debian/debian_defaults
+    - Update debpython/version.py
+    - Update debian/control.in
+
+ -- Scott Kitterman <scott@kitterman.com>  Fri, 15 Apr 2011 00:04:07 -0400
 
 python-defaults (2.6.6-13) experimental; urgency=low
 
