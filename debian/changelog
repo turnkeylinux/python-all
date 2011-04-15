@@ -16,6 +16,8 @@ python-defaults (2.6.6-14) UNRELEASED; urgency=low
     - Update debian/debian_defaults
     - Update debpython/version.py
     - Update debian/control.in
+  * Update copyright years for dh_python2, pycompile, pyclean and debpython in
+    debian/copyright
 
  -- Scott Kitterman <scott@kitterman.com>  Fri, 15 Apr 2011 00:04:07 -0400
 
