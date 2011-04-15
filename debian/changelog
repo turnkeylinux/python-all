@@ -1,4 +1,4 @@
-python-defaults (2.6.6-14) UNRELEASED; urgency=low
+python-defaults (2.6.6-14) unstable; urgency=low
 
   [ Piotr Ożarowski ]
   * python.mk: add py_builddir macro.
@@ -12,6 +12,7 @@ python-defaults (2.6.6-14) UNRELEASED; urgency=low
   * Remove myself from Uploaders
 
   [ Scott Kitterman ]
+  * Upload to Unstable (adds Python 2.7 as a supported Python in Unstable)
   * Drop python2.5 as a supported Python version
     - Update debian/debian_defaults
     - Update debpython/version.py
