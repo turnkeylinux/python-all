@@ -541,7 +541,6 @@ def main():
 
         dependencies = Dependencies(package)
         dependencies.parse(stats, options)
-        dependencies.export_to(dh)
 
         if stats['public_vers']:
             dh.addsubstvar(package, 'python:Versions', \
@@ -579,14 +578,19 @@ def main():
                 else:  # try shebang or default Python version
                     ver = (list(v for i, v in details.get('shebangs', [])
                            if v) or [None])[0] or DEFAULT
+                    dependencies.depend("python%d.%d" % ver)
                 args += " -V %s" % vrepr(ver)
             else:
-                args += " -V %s" % vrepr(ext_for.pop())
+                version = ext_for.pop()
+                args += " -V %s" % vrepr(version)
+                dependencies.depend("python%d.%d" % version)
 
             for pattern in options.regexpr or []:
                 args += " -X '%s'" % pattern.replace("'", r"\'")
 
             dh.autoscript(package, 'postinst', 'postinst-pycompile', args)
+
+        dependencies.export_to(dh)
 
         pydist_file = join('debian', "%s.pydist" % package)
         if exists(pydist_file):
