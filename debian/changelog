@@ -1,3 +1,10 @@
+python-defaults (2.6.6-15) UNRELEASED; urgency=low
+
+  * dh_pythno2: generate more strict dependencies for packages with private
+    extensions (closes: #625760)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 05 May 2011 23:17:15 +0200
+
 python-defaults (2.6.6-14) unstable; urgency=low
 
   [ Piotr Ożarowski ]
