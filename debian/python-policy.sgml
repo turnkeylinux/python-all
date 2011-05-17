@@ -228,7 +228,7 @@
 	    and all dependencies on additional python modules are met.
           </p>
           <p>
-	    Maintainers should notoverride the Debian Python interpreter using
+	    Maintainers should not override the Debian Python interpreter using
 	    <file>/usr/bin/env python</file> or
 	    <file>/usr/bin/env python<var>X</var>.<var>Y</var></file>. This is
 	    not advisable as it bypasses Debian's dependency checking and makes
