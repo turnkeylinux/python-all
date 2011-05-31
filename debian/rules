@@ -15,12 +15,12 @@ PKGVERSION := $(word 2, $(changelog_values))
 
 distribution := $(shell lsb_release -is)
 
-export VER=2.6
-export NVER=2.7
-export PVER=python2.6
+export VER=2.7
+export NVER=2.8
+export PVER=python2.7
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
-PREVVER := 2.6.6-1~
+PREVVER := 2.7.1-1~
 
 PWD		:= $(shell pwd)
 
