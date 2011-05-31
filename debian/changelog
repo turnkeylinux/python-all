@@ -1,4 +1,4 @@
-python-defaults (2.7.2-1) UNRELEASED; urgency=low
+python-defaults (2.7.2-1) experimental; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_pythno2: generate more strict dependencies for packages with private
