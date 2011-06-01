@@ -12,7 +12,7 @@ Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-
 
 Package: python
 Architecture: all
-Priority: important
+Priority: standard
 Depends: ${misc:Depends}, python2.7 (>= 2.7.1-1~), python-minimal (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (= ${binary:Version}), python-profiler (= ${binary:Version})
 Conflicts: python-central (<< 0.5.5)
@@ -29,8 +29,7 @@ Description: interactive high-level object-oriented language (default version)
 
 Package: python-minimal
 Architecture: all
-Essential: yes
-Priority: required
+Priority: standard
 Depends: ${misc:Depends}, python2.7-minimal (>= 2.7.1-1~), dpkg (>= 1.13.20)
 Recommends: python
 Conflicts: python-central (<< 0.5.5)
