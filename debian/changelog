@@ -1,7 +1,7 @@
 python-defaults (2.7.2-1) experimental; urgency=low
 
   [ Piotr Ożarowski ]
-  * dh_pythno2: generate more strict dependencies for packages with private
+  * dh_python2: generate more strict dependencies for packages with private
     extensions (closes: #625760)
 
   [ Scott Kitterman ]
