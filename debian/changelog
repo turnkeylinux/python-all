@@ -10,6 +10,8 @@ python-defaults (2.7.2-2) UNRELEASED; urgency=low
       maintainer script's -X arguments (thanks to Jakub Wilk for the patch)
     - deal with original symlinks more carefully (closes: 627969, thanks to
       Leonid Borisenko for the original patch)
+    - add --ignore-shebangs option that will disable translating shebangs into
+      Debian dependencies
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 12 Jun 2011 13:28:48 +0200
 

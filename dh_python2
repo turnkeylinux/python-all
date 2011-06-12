@@ -486,6 +486,8 @@ def main():
         help='recreate __init__.py files for given namespaces at install time')
     parser.add_option('--clean-pycentral', action='store_true', default=False,
         help='generate maintainer script that will remove pycentral files')
+    parser.add_option('--ignore-shebangs', action='store_true', default=False,
+        help='do not translate shebangs into Debian dependencies')
     # ignore some debhelper options:
     parser.add_option('-O', help=SUPPRESS_HELP)
 

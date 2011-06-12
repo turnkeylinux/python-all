@@ -112,15 +112,20 @@ class Dependencies(object):
         if stats['compile']:
             self.depend(MINPYCDEP)
 
-        for interpreter, version in stats['shebangs']:
-            self.depend(interpreter)
+        if not options.ignore_shebangs:
+            for interpreter, version in stats['shebangs']:
+                self.depend(interpreter)
 
         for private_dir, details in stats['private_dirs'].iteritems():
-            versions = list(v for i, v in details.get('shebangs', []) if v)
+            if options.ignore_shebangs:
+                versions = []
+            else:
+                versions = list(v for i, v in details.get('shebangs', []) if v)
+
             if len(versions) > 1:
                 log.error('more than one Python dependency from shebangs'
                           '(%s shebang versions: %s)', private_dir, versions)
-                exit(13)
+                exit(13)  # TODO: move this to dh_python2 (and raise exception here)
             elif len(versions) == 1:  # one hardcoded version
                 self.depend("python%d.%d" % versions[0])
                 # TODO: if versions[0] not in requested_versions: FTBFS
