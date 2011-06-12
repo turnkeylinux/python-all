@@ -28,7 +28,7 @@ import re
 import sys
 from filecmp import dircmp, cmpfiles, cmp as fcmp
 from optparse import OptionParser, SUPPRESS_HELP
-from os.path import isdir, islink, exists, join, realpath
+from os.path import isabs, isdir, islink, exists, join, normpath, realpath
 from shutil import rmtree, copy as fcopy
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 sys.path.insert(1, '/usr/share/python/')
@@ -169,7 +169,7 @@ def move_to_pyshared(dir1):
 
     for i in os.listdir(dir1):
         fpath1 = join(dir1, i)
-        if isdir(fpath1):
+        if isdir(fpath1) and not islink(fpath1):
             if any(fn for fn in os.listdir(fpath1) if fext(fn) != 'so'):
                 # at least one file that is not an extension
                 move_to_pyshared(join(dir1, i))
@@ -180,7 +180,16 @@ def move_to_pyshared(dir1):
             if not exists(fpath2):
                 if not exists(dstdir):
                     os.makedirs(dstdir)
-                os.rename(fpath1, fpath2)
+                if islink(fpath1):
+                    fpath1_target = os.readlink(fpath1)
+                    if isabs(fpath1_target):
+                        os.symlink(fpath1_target, fpath2)
+                    else:
+                        fpath1_target = normpath(join(dir1, fpath1_target))
+                        relative_symlink(fpath1_target, fpath2)
+                    os.remove(fpath1)
+                else:
+                    os.rename(fpath1, fpath2)
                 relative_symlink(fpath2, fpath1)
 
 
@@ -233,7 +242,7 @@ def share_2x(dir1, dir2, dc=None):
     # dir1 starts with debian/packagename/usr/lib/pythonX.Y/*-packages/
     dstdir = join(debian, package, 'usr/share/pyshared/', \
                   '/'.join(dir1.split('/')[6:]))
-    if not exists(dstdir):
+    if not exists(dstdir) and not islink(dir1):
         os.makedirs(dstdir)
     if dc is None:  # guess/copy mode
         if not exists(dir2):
@@ -241,11 +250,16 @@ def share_2x(dir1, dir2, dc=None):
         common_dirs = []
         common_files = []
         for i in os.listdir(dir1):
-            if isdir(join(dir1, i)):
+            subdir1 = join(dir1, i)
+            if isdir(subdir1) and not islink(subdir1):
                 common_dirs.append([i, None])
             else:
                 # directories with .so files will be blocked earlier
                 common_files.append(i)
+    elif islink(dir1):
+        # skip this symlink in pyshared (dpkg has problems with symlinks anyway)
+        common_dirs = []
+        common_files = []
     else:
         common_dirs = dc.subdirs.iteritems()
         common_files = dc.common_files
