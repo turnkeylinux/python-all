@@ -358,6 +358,7 @@ def scan(package, dname=None):
                 if clean_name != name:
                     log.info('renaming %s to %s', name, clean_name)
                     os.rename(join(root, name), join(root, clean_name))
+                    dirs[dirs.index(name)] = clean_name
         if root.endswith('.egg-info'):
             if 'requires.txt' in file_names:
                 r['requires.txt'].add(join(root, 'requires.txt'))
@@ -585,7 +586,7 @@ def main():
             else:
                 version = ext_for.pop()
                 args += " -V %s" % vrepr(version)
-            dependencies.depend("python%d.%d" % version)
+                dependencies.depend("python%d.%d" % version)
 
             for pattern in options.regexpr or []:
                 args += " -X '%s'" % pattern.replace("'", r"\'")
