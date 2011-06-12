@@ -2,15 +2,15 @@
 
 all: run check
 
-DPY=$(shell pyversions -d)
+DPY=$(shell PYTHONPATH=../../ python -c 'import debpython.version as v; print(v.vrepr(v.DEFAULT))')
 
 run: clean
 	dpkg-buildpackage -b -us -uc
 
 check:
-	grep -q "pycompile -p python-foo /usr/lib/python-foo -V $(shell pyversions -vd)"\
+	grep -q "pycompile -p python-foo /usr/lib/python-foo -V $(DPY)"\
 		debian/python-foo/DEBIAN/postinst
-	test -f debian/python-foo/usr/lib/${DPY}/dist-packages/foo/bar.so
+	test -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/bar.so
 	test ! -f debian/python-foo/usr/share/pyshared/foo/bar.so
 
 clean:
