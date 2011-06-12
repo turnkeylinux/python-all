@@ -88,7 +88,7 @@ class Dependencies(object):
     def parse(self, stats, options):
         log.debug('generating dependencies for package %s', self.package)
 
-        pub_vers = sorted(stats['public_vers'].union(stats['public_ext']))
+        pub_vers = sorted(stats['public_vers'].union(stats['ext']))
         if pub_vers:
             dbgpkg = self.package.endswith('-dbg')
             tpl = 'python-dbg' if dbgpkg else 'python'

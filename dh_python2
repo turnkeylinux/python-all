@@ -133,7 +133,7 @@ def share(package, stats, options):
         # TODO: remove this once file conflicts will not be needed anymore
         move_to_pyshared(sitedir(pubvers[0], package))
 
-    for version in stats['public_ext']:
+    for version in stats['ext']:
         create_ext_links(sitedir(version, package))
 
     if options.guess_versions and pubvers:
@@ -141,7 +141,7 @@ def share(package, stats, options):
             if version not in pubvers:
                 log.debug('guessing files for Python %s', vrepr(version))
                 versions_without_ext = debsorted(set(pubvers) -\
-                                                 stats['public_ext'])
+                                                 stats['ext'])
                 if not versions_without_ext:
                     log.error('extension for python%s is missing. '
                               'Build extensions for all supported Python '
@@ -313,7 +313,7 @@ def scan(package, dname=None):
          'public_vers': set(),
          'private_dirs': {},
          'compile': False,
-         'public_ext': set()}
+         'ext': set()}
 
     dbg_package = package.endswith('-dbg')
 
@@ -405,7 +405,7 @@ def scan(package, dname=None):
                 if fext == 'so':
                     (r if public_dir else
                      r['private_dirs'].setdefault(private_dir, {}))\
-                    .setdefault('public_ext', set()).add(version)
+                    .setdefault('ext', set()).add(version)
                     continue
                 elif fext == 'py':
                     (r if public_dir else
@@ -590,7 +590,7 @@ def main():
 
             args = pdir
 
-            ext_for = details.get('public_ext')
+            ext_for = details.get('ext')
             if ext_for is None:  # no extension
                 if options.vrange and options.vrange != (None, None):
                     args += " -V %s" % vrange_str(options.vrange)
