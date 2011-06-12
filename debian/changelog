@@ -1,3 +1,11 @@
+python-defaults (2.7.2-2) UNRELEASED; urgency=low
+
+  [ Piotr Ożarowski ]
+  * dh_python2: no longer generates maintainer scripts that invoke pycentral's
+    pkgremove script, use --clean-pycentral if you want the old behaviour
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 12 Jun 2011 13:28:48 +0200
+
 python-defaults (2.7.2-1) experimental; urgency=low
 
   [ Piotr Ożarowski ]

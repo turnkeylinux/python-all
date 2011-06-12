@@ -435,11 +435,10 @@ def main():
         help='disable guessing other supported Python versions')
     parser.add_option('--no-guessing-deps', action='store_false',
         dest='guess_deps', default=True, help='disable guessing dependencies')
-    parser.add_option('--skip-private', action='store_true',
-        dest='skip_private', default=False,
+    parser.add_option('--skip-private', action='store_true', default=False,
         help='don\'t check private directories')
-    parser.add_option('-v', '--verbose', action='store_true', dest='verbose',
-        default=False, help='turn verbose mode on')
+    parser.add_option('-v', '--verbose', action='store_true', default=False,
+        help='turn verbose mode on')
     # arch=False->arch:all only, arch=True->arch:any only, None->all of them
     parser.add_option('-i', '--indep', action='store_false',
         dest='arch', default=None,
@@ -448,9 +447,9 @@ def main():
         dest='arch', help='act on architecture dependent packages')
     parser.add_option('-q', '--quiet', action='store_false', dest='verbose',
         help='be quiet')
-    parser.add_option('-p', '--package', action='append', dest='package',
+    parser.add_option('-p', '--package', action='append',
         help='act on the package named PACKAGE')
-    parser.add_option('-N', '--no-package', action='append', dest='no_package',
+    parser.add_option('-N', '--no-package', action='append',
         help='do not act on the specified package')
     parser.add_option('-V', type='version_range', dest='vrange',
         help='specify list of supported Python versions. ' +\
@@ -458,23 +457,25 @@ def main():
     parser.add_option('-X', '--exclude', action='append', dest='regexpr',
         help='exclude items that match given REGEXPR. You may use this option '
              'multiple times to build up a list of things to exclude.')
-    parser.add_option('--depends', action='append', dest='depends',
+    parser.add_option('--depends', action='append',
         help='translate given requirements into Debian dependencies '
              'and add them to ${python:Depends}. '
              'Use it for missing items in requires.txt.')
-    parser.add_option('--recommends', action='append', dest='recommends',
+    parser.add_option('--recommends', action='append',
         help='translate given requirements into Debian '
              'dependencies and add them to ${python:Recommends}')
-    parser.add_option('--suggests', action='append', dest='suggests',
+    parser.add_option('--suggests', action='append',
         help='translate given requirements into Debian '
              'dependencies and add them to ${python:Suggests}')
     parser.add_option('--namespace', action='append', dest='namespaces',
         help='recreate __init__.py files for given namespaces at install time')
+    parser.add_option('--clean-pycentral', action='store_true', default=False,
+        help='generate maintainer script that will remove pycentral files')
     # ignore some debhelper options:
     parser.add_option('-O', help=SUPPRESS_HELP)
 
-    (options, args) = parser.parse_args(sys.argv[1:] + \
-                      os.environ.get('DH_OPTIONS', '').split())
+    options, args = parser.parse_args(sys.argv[1:] + \
+                    os.environ.get('DH_OPTIONS', '').split())
     # regexpr option type is not used so lets check patterns here
     for pattern in options.regexpr or []:
         # fail now rather than at runtime
@@ -553,7 +554,8 @@ def main():
 
         pyclean_added = False  # invoke pyclean only once in maintainer script
         if stats['compile']:
-            dh.autoscript(package, 'preinst', 'preinst-pycentral-clean', '')
+            if options.clean_pycentral:
+                dh.autoscript(package, 'preinst', 'preinst-pycentral-clean', '')
             dh.autoscript(package, 'postinst', 'postinst-pycompile', '')
             dh.autoscript(package, 'prerm', 'prerm-pyclean', '')
             pyclean_added = True
