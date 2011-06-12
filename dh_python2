@@ -589,7 +589,7 @@ def main():
                 dependencies.depend("python%d.%d" % version)
 
             for pattern in options.regexpr or []:
-                args += " -X '%s'" % pattern.replace("'", r"\'")
+                args += " -X '%s'" % pattern.replace("'", r"'\''")
 
             dh.autoscript(package, 'postinst', 'postinst-pycompile', args)
 
