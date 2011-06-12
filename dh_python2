@@ -257,7 +257,8 @@ def share_2x(dir1, dir2, dc=None):
                 # directories with .so files will be blocked earlier
                 common_files.append(i)
     elif islink(dir1):
-        # skip this symlink in pyshared (dpkg has problems with symlinks anyway)
+        # skip this symlink in pyshared
+        # (dpkg has problems with symlinks anyway)
         common_dirs = []
         common_files = []
     else:
@@ -488,6 +489,8 @@ def main():
         help='generate maintainer script that will remove pycentral files')
     parser.add_option('--ignore-shebangs', action='store_true', default=False,
         help='do not translate shebangs into Debian dependencies')
+    parser.add_option('--ignore-namespace', action='store_true', default=False,
+        help="ignore Egg's namespace_packages.txt file and --namespace option")
     # ignore some debhelper options:
     parser.add_option('-O', help=SUPPRESS_HELP)
 
@@ -572,7 +575,8 @@ def main():
         pyclean_added = False  # invoke pyclean only once in maintainer script
         if stats['compile']:
             if options.clean_pycentral:
-                dh.autoscript(package, 'preinst', 'preinst-pycentral-clean', '')
+                dh.autoscript(package, 'preinst',
+                              'preinst-pycentral-clean', '')
             dh.autoscript(package, 'postinst', 'postinst-pycompile', '')
             dh.autoscript(package, 'prerm', 'prerm-pyclean', '')
             pyclean_added = True
@@ -622,14 +626,19 @@ def main():
                 fcopy(pydist_file, join(dstdir, package))
 
         # namespace feature - recreate __init__.py files at install time
-        nsp = ns.parse(stats['nsp.txt'], options.namespaces)
+        if options.ignore_namespace:
+            nsp = None
+        else:
+            nsp = ns.parse(stats['nsp.txt'], options.namespaces)
         # note that pycompile/pyclean is already added to maintainer scripts
         # and it should remain there even if __init__.py was the only .py file
-        try:
-            nsp = ns.remove_from_package(package, nsp, stats['public_vers'])
-        except (IOError, OSError), e:
-            log.error('cannot remove __init__.py from package: %s', e)
-            exit(6)
+        if nsp:
+            try:
+                nsp = ns.remove_from_package(package, nsp,
+                                             stats['public_vers'])
+            except (IOError, OSError), e:
+                log.error('cannot remove __init__.py from package: %s', e)
+                exit(6)
         if nsp:
             dstdir = join('debian', package, 'usr/share/python/ns/')
             if not exists(dstdir):

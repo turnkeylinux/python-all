@@ -12,6 +12,8 @@ python-defaults (2.7.2-2) UNRELEASED; urgency=low
       Leonid Borisenko for the original patch)
     - add --ignore-shebangs option that will disable translating shebangs into
       Debian dependencies
+    - add --ignore-namespace option that will disable handling
+      Egg-info's namespace_packages.txt (AKA namespace feature)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 12 Jun 2011 13:28:48 +0200
 
