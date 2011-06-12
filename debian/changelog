@@ -1,8 +1,15 @@
 python-defaults (2.7.2-2) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
-  * dh_python2: no longer generates maintainer scripts that invoke pycentral's
-    pkgremove script, use --clean-pycentral if you want the old behaviour
+  * dh_python2:
+    - no longer generates maintainer scripts that invoke pycentral's
+      pkgremove script, use --clean-pycentral if you want the old behaviour
+    - egg-info directories are parsed even if cleaning the name was necessary
+      (thanks to Arnaud Fontaine for the patch)
+    - private directory names with apostrophes are escaped properly in
+      maintainer script's -X arguments (thanks to Jakub Wilk for the patch)
+    - deal with original symlinks more carefully (closes: 627969, thanks to
+      Leonid Borisenko for the original patch)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 12 Jun 2011 13:28:48 +0200
 
