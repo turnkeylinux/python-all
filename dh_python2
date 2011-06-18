@@ -517,13 +517,12 @@ def main():
     # disable PyDist if dh_pydeb is used
     if options.guess_deps:
         try:
-            fp = open('debian/rules', 'r')
+            rules = open('debian/rules', 'r').read()
         except IOError:
             log.warning('cannot open debian/rules file')
         else:
-            rules = fp.read()
             if re.search('\n\s*dh_pydeb', rules) or \
-               re.search('\n\s*dh\s+[^#]*--with\s+pydeb', rules):
+               re.search('\n\s*dh\s+[^#]*--with[^#]+pydeb', rules):
                 log.warning('dh_pydeb detected, PyDist feature disabled')
                 options.guess_deps = False
 
@@ -603,7 +602,7 @@ def main():
                 else:  # try shebang or default Python version
                     ver = (list(v for i, v in details.get('shebangs', [])
                            if v) or [None])[0] or DEFAULT
-                    dependencies.depend("python%d.%d" % ver)
+                dependencies.depend("python%d.%d" % ver)
                 args += " -V %s" % vrepr(ver)
             else:
                 version = ext_for.pop()
@@ -649,7 +648,7 @@ def main():
                 fp.writelines("%s\n" % i for i in nsp)
 
         pyshared = join('debian', package, 'usr/share/pyshared/')
-        if not os.listdir(pyshared):
+        if isdir(pyshared) and not os.listdir(pyshared):
             # remove empty pyshared directory
             os.rmdir(pyshared)
 
