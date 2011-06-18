@@ -602,7 +602,8 @@ def main():
                 else:  # try shebang or default Python version
                     ver = (list(v for i, v in details.get('shebangs', [])
                            if v) or [None])[0] or DEFAULT
-                dependencies.depend("python%d.%d" % ver)
+                    ver = vrepr(ver)
+                dependencies.depend("python%s" % ver)
                 args += " -V %s" % vrepr(ver)
             else:
                 version = ext_for.pop()
