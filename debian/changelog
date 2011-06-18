@@ -15,6 +15,8 @@ python-defaults (2.7.2-2) UNRELEASED; urgency=low
     - add --ignore-namespace option that will disable handling
       Egg-info's namespace_packages.txt (AKA namespace feature)
     - PyDist: update dist_fallback file (with atypical Debian package names)
+    - disable PyDist feature if dh sequencer is invoked --with pydeb
+      (closes: 630502, thanks to Gediminas Paulauskas for the original patch)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 12 Jun 2011 13:28:48 +0200
 

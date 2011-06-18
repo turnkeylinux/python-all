@@ -521,7 +521,9 @@ def main():
         except IOError:
             log.warning('cannot open debian/rules file')
         else:
-            if re.compile('\n\s*dh_pydeb').search(fp.read()):
+            rules = fp.read()
+            if re.search('\n\s*dh_pydeb', rules) or \
+               re.search('\n\s*dh\s+[^#]*--with\s+pydeb', rules):
                 log.warning('dh_pydeb detected, PyDist feature disabled')
                 options.guess_deps = False
 
@@ -645,6 +647,11 @@ def main():
                 os.makedirs(dstdir)
             with open(join(dstdir, package), 'a') as fp:
                 fp.writelines("%s\n" % i for i in nsp)
+
+        pyshared = join('debian', package, 'usr/share/pyshared/')
+        if not os.listdir(pyshared):
+            # remove empty pyshared directory
+            os.rmdir(pyshared)
 
     dh.save()
 
