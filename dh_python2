@@ -41,7 +41,8 @@ import debpython.namespace as ns
 from debpython.pydist import validate as validate_pydist, \
                              PUBLIC_DIR_RE
 from debpython.tools import sitedir, relative_symlink, \
-                            shebang2pyver, clean_egg_name,\
+                            shebang2pyver, so2pyver, \
+                            clean_egg_name, \
                             pyinstall, pyremove
 from debpython.option import Option
 
@@ -403,6 +404,20 @@ def scan(package, dname=None):
 
             if public_dir or private_dir:
                 if fext == 'so':
+                    so_version = so2pyver(join(root, fn))
+                    if so_version:
+                        if public_dir:
+                            if version != so_version:
+                                log.error('extension linked to libpython%s '
+                                          'and shipped in python%s\'s dist-'
+                                          'packages: %s', vrepr(so_version),
+                                          vrepr(version), fn)
+                                exit(7)
+                            log.warn('public extension linked with '
+                                     'libpython%s: %s', vrepr(so_version), fn)
+                        elif not version:
+                            version = so_version
+
                     (r if public_dir else
                      r['private_dirs'].setdefault(private_dir, {}))\
                     .setdefault('ext', set()).add(version)

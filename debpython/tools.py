@@ -28,11 +28,13 @@ from cPickle import dumps
 from glob import glob
 from os.path import exists, isdir, join, split
 from shutil import rmtree
+from subprocess import PIPE, Popen
 from debpython.version import RANGE_PATTERN, getver, get_requested_versions
 
 log = logging.getLogger(__name__)
 EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d(?:-[^.]*)?)?(\.egg-info|\.pth)$')
 SHEBANG_RE = re.compile(r'^#!\s*/usr/bin/(?:env\s+)?(python(\d+\.\d+)?(?:-dbg)?).*')
+SHAREDLIB_RE = re.compile(r'NEEDED.*libpython(\d\.\d)')
 INSTALL_RE = re.compile(r"""
     (?P<pattern>.+?)  # file pattern
     (?:\s+  # optional Python module name:
@@ -90,14 +92,14 @@ def relative_symlink(target, link):
     return os.symlink(relpath(target, link), link)
 
 
-def shebang2pyver(fname):
+def shebang2pyver(fpath):
     """Check file's shebang.
 
     :rtype: tuple
     :returns: pair of Python interpreter string and Python version
     """
     try:
-        with open(fname) as fp:
+        with open(fpath) as fp:
             data = fp.read(32)
             match = SHEBANG_RE.match(data)
             if not match:
@@ -108,7 +110,21 @@ def shebang2pyver(fname):
                     res = res[0], getver(res[1])
                 return res
     except IOError:
-        log.error('cannot open %s', fname)
+        log.error('cannot open %s', fpath)
+
+
+def so2pyver(fpath):
+    """Return libpython version file is linked to or None.
+
+    :rtype: tuple
+    :returns: Python version
+    """
+
+    cmd = "readelf -Wd '%s'" % fpath
+    process = Popen(cmd, stdout=PIPE, shell=True)
+    match = SHAREDLIB_RE.search(process.stdout.read())
+    if match:
+        return getver(match.groups()[0])
 
 
 def clean_egg_name(name):
