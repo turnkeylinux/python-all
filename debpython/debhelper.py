@@ -41,6 +41,7 @@ class DebHelper(object):
             log.error('cannot find debian/control file')
             exit(15)
 
+        xspv = xpv = False
         for line in fp:
             if not line.strip():
                 source_section = False
@@ -74,10 +75,17 @@ class DebHelper(object):
             elif line.startswith('Source:'):
                 self.source_name = line[7:].strip()
             elif source_section:
-                if line.startswith('XS-Python-Version:') and not self.python_version:
-                    self.python_version = line[18:].strip()
+                if line.startswith('XS-Python-Version:'):
+                    xspv = True
+                    if not self.python_version:
+                        self.python_version = line[18:].strip()
                 if line.startswith('X-Python-Version:'):
+                    xpv = True
                     self.python_version = line[17:].strip()
+
+        if xspv and xpv:
+            log.error('Please remove XS-Python-Version from debian/control')
+
         log.debug('source=%s, binary packages=%s', self.source_name, \
                                                    self.packages.keys())
 
