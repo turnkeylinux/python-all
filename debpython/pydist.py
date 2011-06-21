@@ -174,7 +174,7 @@ def guess_dependency(req, version=None):
     log.warn('Cannot find package that provides %s. '
              'Using %s as package name. Please add "%s correct_package_name" '
              'line to debian/pydist-overrides to override it.',
-             name, pname, name)
+             name, pname, safe_name(name))
     return pname
 
 
