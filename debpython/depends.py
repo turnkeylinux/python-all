@@ -21,7 +21,7 @@
 
 import logging
 from debpython.pydist import parse_pydep, guess_dependency
-from debpython.version import DEFAULT, debsorted, vrepr, vrange_str
+from debpython.version import DEFAULT, SUPPORTED, debsorted, vrepr, vrange_str
 
 # minimum version required for pycompile/pyclean
 MINPYCDEP = 'python (>= 2.6.6-7~)'
@@ -122,19 +122,23 @@ class Dependencies(object):
             else:
                 versions = list(v for i, v in details.get('shebangs', []) if v)
 
-            if len(versions) > 1:
-                log.error('more than one Python dependency from shebangs'
-                          '(%s shebang versions: %s)', private_dir, versions)
-                exit(13)  # TODO: move this to dh_python2 (and raise exception here)
-            elif len(versions) == 1:  # one hardcoded version
-                self.depend("python%d.%d" % versions[0])
-                # TODO: if versions[0] not in requested_versions: FTBFS
-            elif details.get('compile', False):
-                # no hardcoded versions, but there's something to compile
+            for v in versions:
+                if v in SUPPORTED:
+                    self.depend("python%d.%d" % v)
+                else:
+                    log.warn('dependency on python%s (from shebang) ignored'
+                             ' - it\'s not supported anymore', vrepr(v))
+
+            if details.get('compile', False):
                 self.depend(MINPYCDEP)
                 args = ''
                 vr = options.vrange
-                if vr:
+                if len(versions) == 1:  # only one version from shebang
+                    args += "-V %s" % vrepr(versions[0])
+                elif vr:
+                    # if there are no hardcoded versions in shebang or there
+                    # are scripts for different Python versions: compile with
+                    # default Python version (or the one requested via X-P-V)
                     args += "-V %s" % vrange_str(vr)
                     if vr[0]:  # minimum version specified
                         self.depend("python (>= %s)" % vrepr(vr[0]))
@@ -142,7 +146,7 @@ class Dependencies(object):
                         self.depend("python (<< %s)" % vrepr(vr[1]))
 
                 for pattern in options.regexpr or []:
-                    args += " -X '%s'" % pattern.replace("'", r"\'")
+                    args += " -X '%s'" % pattern.replace("'", r"'\''")
                 self.rtscript((private_dir, args))
 
         if options.guess_deps:

@@ -20,6 +20,10 @@ python-defaults (2.7.2-2) UNRELEASED; urgency=low
     - warn if public Python extension is linked to libpython2.X, fail if it's
       linked to a wrong version
     - warn if both XS-Python-Version and X-Python-Version are defined
+    - private dirs: if there is more than one Python version parsed from
+      shebangs, byte-compile the dir with default Python version (or the one
+      requested via X-Python-Version) instead od failing. Add dependency for
+      each (supported) interpreter detected in shebangs
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 12 Jun 2011 13:28:48 +0200
 
