@@ -42,7 +42,6 @@ competitors, though.
 
 dependencies
 ------------
-
 dh_python2 tries to translate Python dependencies from requires.txt file to
 Debian dependencies, use debian/pydist-overrides or --no-guessing-deps option
 to override it. If you want dh_python2 to generate more strict dependencies
@@ -52,7 +51,6 @@ more information.
 
 namespace feature
 -----------------
-
 dh_python2 parses Egg's namespace_packages.txt files (in addition to
 --namespace command line argument(s)) and drops empty __init__.py files from
 binary package. pycompile will regenerates them at install time and pyclean
@@ -62,15 +60,44 @@ binary packages (even if all other packages use this feature).
 
 private dirs
 ------------
+`/usr/share/foo`, `/usr/share/games/foo`, `/usr/lib/foo` and
+`/usr/lib/games/foo` private directories are scanned for Python files
+by default (where `foo` is binary package name). If your package is shipping
+Python files in some other directory, add another dh_python2 call in
+debian/rules with directory name as an argument - you can use different set of
+options in this call. If you need to change options (f.e. a list of supported
+Python versions) for a private directory that is checked by default, invoke
+dh_python2 with --skip-private option and add another call with a path to this
+directory and new options.
 
-dh_python2 is scanning /usr/share/foo, /usr/share/games/foo, /usr/lib/foo and
-/usr/lib/games/foo private directories for Python files. If your package is
-shipping them in some other directory, add another dh_python2 call in
-debian/rules with directory name as an argument - you can use different set
-of options in this call. If you need to change options (f.e. a list of
-supported Python versions) for a private directory that is checked by default,
-invoke dh_python2 with --skip-private option and add another call with a path
-to this directory and new options.
+pyinstall files
+---------------
+Files listed in debian/pkg.pyinstall file will be installed as public modules
+for all requested Python versions (dh_install doesn't know about python's site-
+vs. dist-packages issue).
+
+Syntax: "path/to/file [VERSION_RANGE] [NAMESPACE]". debian directory is
+automatically removed from the path, so you can place your files in debian/
+directory and install them from this location (if you want to install them in
+"debian" namespace, set NAMESPACE to debian). If NAMESPACE is set, all listed
+files will be installed in .../dist-packages/NAMESPACE/ directory.
+
+Examples:
+ * `foo.py` (installs .../dist-packages/foo.py for all supported Python versions)
+ * `foo/bar.py 2.6-` (installs .../dist-packages/foo/bar.py for versions >= 2.6)
+ * `foo/bar.py spam` (installs .../dist-packages/spam/bar.py)
+ * `debian/*.py spam.egg 2.5` (installs .../python2.5/site-packages/spam/egg/\*.py
+   files)
+
+pyremove files
+--------------
+If you want to remove some files installed by build system (from all supported
+Python versions or only from a subset of these versions), add them to
+debian/pkg.pyremove file.
+
+Examples:
+ * `*.pth` (removes .pth files from .../dist-packages/)
+ * `bar/baz.py 2.5` (removes .../python2.5/site-packages/bar/baz.py)
 
 
 OPTIONS
