@@ -29,8 +29,6 @@ QUICK GUIDE FOR MAINTAINERS
    depend on cdbs (>= 0.4.90-1~), or:
  * call dh_python2 in the binary-* target,
  * add ${python:Depends} to Depends,
- * add ${python:Breaks} to Breaks if your package provides public Python module
-   or extension
 
 NOTES
 -----

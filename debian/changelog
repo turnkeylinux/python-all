@@ -24,6 +24,7 @@ python-defaults (2.7.2-2) UNRELEASED; urgency=low
       shebangs, byte-compile the dir with default Python version (or the one
       requested via X-Python-Version) instead od failing. Add dependency for
       each (supported) interpreter detected in shebangs
+    - /usr/share/pyshared is not added to the package if empty (closes: 623909)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 12 Jun 2011 13:28:48 +0200
 
