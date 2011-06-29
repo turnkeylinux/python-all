@@ -40,6 +40,9 @@ in case of architecture independent packages) is required once a list of
 supported Python version is changed. It's faster and more robust than its
 competitors, though.
 
+dependencies
+------------
+
 dh_python2 tries to translate Python dependencies from requires.txt file to
 Debian dependencies, use debian/pydist-overrides or --no-guessing-deps option
 to override it. If you want dh_python2 to generate more strict dependencies
@@ -47,11 +50,28 @@ to override it. If you want dh_python2 to generate more strict dependencies
 /usr/share/doc/python-doc/README.PyDist (provided by python-doc package) for
 more information.
 
+namespace feature
+-----------------
+
 dh_python2 parses Egg's namespace_packages.txt files (in addition to
 --namespace command line argument(s)) and drops empty __init__.py files from
 binary package. pycompile will regenerates them at install time and pyclean
 will remove them at uninstall time (if they're no longer used in installed
-packages.
+packages). It's still a good idea to provide __init__.py file in one of
+binary packages (even if all other packages use this feature).
+
+private dirs
+------------
+
+dh_python2 is scanning /usr/share/foo, /usr/share/games/foo, /usr/lib/foo and
+/usr/lib/games/foo private directories for Python files. If your package is
+shipping them in some other directory, add another dh_python2 call in
+debian/rules with directory name as an argument - you can use different set
+of options in this call. If you need to change options (f.e. a list of
+supported Python versions) for a private directory that is checked by default,
+invoke dh_python2 with --skip-private option and add another call with a path
+to this directory and new options.
+
 
 OPTIONS
 =======
