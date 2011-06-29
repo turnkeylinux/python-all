@@ -41,7 +41,7 @@ supported Python version is changed. It's faster and more robust than its
 competitors, though.
 
 dependencies
-------------
+~~~~~~~~~~~~
 dh_python2 tries to translate Python dependencies from requires.txt file to
 Debian dependencies, use debian/pydist-overrides or --no-guessing-deps option
 to override it. If you want dh_python2 to generate more strict dependencies
@@ -50,7 +50,7 @@ to override it. If you want dh_python2 to generate more strict dependencies
 more information.
 
 namespace feature
------------------
+~~~~~~~~~~~~~~~~~
 dh_python2 parses Egg's namespace_packages.txt files (in addition to
 --namespace command line argument(s)) and drops empty __init__.py files from
 binary package. pycompile will regenerates them at install time and pyclean
@@ -59,7 +59,7 @@ packages). It's still a good idea to provide __init__.py file in one of
 binary packages (even if all other packages use this feature).
 
 private dirs
-------------
+~~~~~~~~~~~~
 `/usr/share/foo`, `/usr/share/games/foo`, `/usr/lib/foo` and
 `/usr/lib/games/foo` private directories are scanned for Python files
 by default (where `foo` is binary package name). If your package is shipping
@@ -71,7 +71,7 @@ dh_python2 with --skip-private option and add another call with a path to this
 directory and new options.
 
 pyinstall files
----------------
+~~~~~~~~~~~~~~~
 Files listed in debian/pkg.pyinstall file will be installed as public modules
 for all requested Python versions (dh_install doesn't know about python's site-
 vs. dist-packages issue).
@@ -90,7 +90,7 @@ Examples:
    files)
 
 pyremove files
---------------
+~~~~~~~~~~~~~~
 If you want to remove some files installed by build system (from all supported
 Python versions or only from a subset of these versions), add them to
 debian/pkg.pyremove file.
