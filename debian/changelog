@@ -27,6 +27,8 @@ python-defaults (2.7.2-2) UNRELEASED; urgency=low
     - /usr/share/pyshared is not added to the package if empty (closes: 623909)
     - dh_python2's manpage updated (among other changes, no longer advertises
       python:Breaks - closes: 631397, describes .pyinstall and .pyremove files)
+    - remove setuptools from requires.txt (it is replaced with
+      python-pkg-resources Debian dependency)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 12 Jun 2011 13:28:48 +0200
 
