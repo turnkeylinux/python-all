@@ -71,7 +71,7 @@ def load(package=None):
 def add_namespace_files(files, package=None, action=None):
     """Add __init__.py files to given generator."""
     if action is not None:
-        namespaces = set("/%s" % i for i in load(package))
+        namespaces = load(package)
         already_processed = set()
         removal_candidates = set()
     for fn in files:
@@ -81,21 +81,23 @@ def add_namespace_files(files, package=None, action=None):
         dpath = dirname(fn)
         if dpath not in already_processed:
             already_processed.add(dpath)
-            if PUBLIC_DIR_RE.match(dpath):
-                while not dpath.endswith(('site-packages', 'dist-packages')):
-                    for ns in namespaces:
+            m = PUBLIC_DIR_RE.match(dpath)
+            if m:
+                public_dir = m.group()
+                while dpath != public_dir:
+                    ns_dir = dpath[len(public_dir) + 1:]
+                    if ns_dir in namespaces:
                         fpath = join(dpath, '__init__.py')
-                        if dpath.endswith(ns):
-                            if action is True:
-                                try:
-                                    open(fpath, 'a').close()
-                                except:
-                                    log.error('cannot create %s', fpath)
-                                else:
-                                    yield fpath
-                            else:  # action is False
-                                # postpone it due to dpkg -S call
-                                removal_candidates.add(fpath)
+                        if action is True:
+                            try:
+                                open(fpath, 'a').close()
+                            except:
+                                log.error('cannot create %s', fpath)
+                            else:
+                                yield fpath
+                        else:  # action is False
+                            # postpone it due to dpkg -S call
+                            removal_candidates.add(fpath)
                     already_processed.add(dpath)
                     dpath = split(dpath)[0]
 
