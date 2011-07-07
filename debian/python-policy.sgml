@@ -32,7 +32,7 @@
         <name>Scott Kitterman</name>
 	<email>scott@kitterman.com</email>
       </author>
-      <version>version 0.9.3.0</version>
+      <version>version 0.9.4.0</version>
 
       <abstract>
 	This document describes the packaging of Python within the
@@ -371,18 +371,15 @@
       <p>
 	The goal of these policies is to reduce the work necessary for
 	Python transitions. Python modules are internally very
-	dependent on a specific Python version. However, we want to
-	automate recompiling modules when possible, either during the
-	upgrade itself (re-byte-compiling pyc and pyo files) or shortly
-	thereafter with automated rebuilds (to handle C
-	extensions). These policies encourage automated dependency
-	generation and loose version bounds whenever possible.
+	dependent on a specific Python version.  These policies encourage
+	automated dependency generation and loose version bounds whenever
+	possible.
       <sect>
 	<heading>Types of Python Modules</heading>
 	<p>
 	  There are two kinds of Python modules, "pure" Python
 	  modules, and extension modules. Pure Python modules are
-	  Python source code that works across many versions of
+	  Python source code that generally works across many versions of
 	  Python. Extensions are C code compiled and linked against a
 	  specific version of the python runtime, and so can only
 	  be used by one version of Python.
@@ -393,8 +390,8 @@
 	  linked to libpython.
 	</p>
 	<p>
-          Python packages are directories containing at least a
-          <file>__init__.py</file>, other modules, extensions and
+          Python packages are either files or directories containing at least
+	  a <file>__init__.py</file>, other modules, extensions and
           packages (A package in the Python sense is unrelated to a
           Debian package). Python packages must be packaged into the
           same directory (as done by upstream). Splitting components
@@ -731,6 +728,17 @@ Build-Depends: python3-all-dev (>= 3.1)
 	versa). This appendix is just an overview. If you use these
 	tools, you should read their full documentation.
       </p>
+      <sect id="dh_python2_3">
+	<heading>dh_python2 and dh_python3</heading>
+	<p>
+	 dh_python2 and dh_python3 are <package>debhelper</package> extensions
+	 provided as part of Python and Python3 to make it easier to package
+	 Python modules and extensions. They calculate Python dependencies, add
+	 maintainer scripts to byte compile files, etc. Their use is not
+	 mandatory, but they are recommended by the Python maintainers.
+
+	 See man dh_python2 or man dh_python3 for details.
+	</p>
       <sect id="distutils">
 	<heading>distutils</heading>
 	<p>
@@ -773,9 +781,9 @@ Build-Depends: python3-all-dev (>= 3.1)
       <sect id="pysupport">
 	<heading>python-support</heading>
 	<p>
-	  The python-support system provides a simple way to
-	  byte-compile pure Python modules and manage dependencies. It
-	  integrates with <package>debhelper</package>, manages
+	  python-support is deprecated. It was system intended to provide
+	  a simple way to byte-compile pure Python modules and manage dependencies.
+	  It integrates with <package>debhelper</package>, manages
 	  byte-compilation, private modules, will properly use the
 	  /usr/share/pyshared directory, integrates with runtime update
 	  hooks, and will fill-in the <tt>${python:Depends}</tt>,
@@ -790,9 +798,9 @@ Build-Depends: python3-all-dev (>= 3.1)
       <sect id="pycentral">
 	<heading>python-central</heading>
 	<p>
-	  python-central provides another way to manage Python modules. It
-	  integrates with <package>debhelper</package>, manages
-	  byte-compilation, private modules, will properly use the
+	  python-central is deprecated. It provided another way to manage
+	  Python modules. It integrates with <package>debhelper</package>,
+	  manages byte-compilation, private modules, will properly use the
 	  /usr/share/pyshared directory, integrates with runtime update
 	  hooks, and will fill-in the <tt>${python:Depends}</tt>,
 	  <tt>${python:Versions}</tt>, and <tt>${python:Provides}</tt>
