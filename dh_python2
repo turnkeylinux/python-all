@@ -28,7 +28,8 @@ import re
 import sys
 from filecmp import dircmp, cmpfiles, cmp as fcmp
 from optparse import OptionParser, SUPPRESS_HELP
-from os.path import isabs, isdir, islink, exists, join, normpath, realpath
+from os.path import isabs, isdir, islink, exists, join, normpath, realpath,\
+ split
 from shutil import rmtree, copy as fcopy
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
 sys.path.insert(1, '/usr/share/python/')
@@ -52,14 +53,6 @@ logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '
 log = logging.getLogger(__name__)
 os.umask(022)
 EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d+)?(.*?)(\.egg-info|\.pth)$')
-
-"""TODO: move it to manpage
-Examples:
-    dh_python2
-    dh_python2 -V 2.4- # public files only, Python >= 2.4
-    dh_python2 -p python-foo -X 'bar.*' /usr/lib/baz/ # private files in
-                                                       python-foo package
-"""
 
 # naming conventions used in the file:
 # * version - tuple of integers
@@ -269,7 +262,7 @@ def share_2x(dir1, dir2, dc=None):
         common_files = cmpfiles(dir1, dir2, common_files, shallow=False)[0]
 
     for fn in common_files:
-        if fn.endswith('.so'):
+        if 'so' in fn.split('.'):  # foo.so, bar.so.0.1.2, etc.
             # in unlikely case where extensions are exactly the same
             continue
         fpath1 = join(dir1, fn)
@@ -368,7 +361,7 @@ def scan(package, dname=None):
             if name.endswith('.egg-info'):
                 if dbg_package:
                     rmtree(join(root, name))
-                    dirs.pop(dirs.index(name))
+                    dirs.remove(name)
                     continue
                 clean_name = clean_egg_name(name)
                 if clean_name != name:
@@ -389,6 +382,20 @@ def scan(package, dname=None):
                 os.remove(join(root, fn))
                 continue
             if public_dir:
+                fpath = join(root, fn)
+                if fext == 'so' and islink(fpath):
+                    dstfpath = fpath
+                    links = set()
+                    while islink(dstfpath):
+                        links.add(dstfpath)
+                        dstfpath = join(root, os.readlink(dstfpath))
+                    if exists(dstfpath) and '.so.' in split(dstfpath)[-1]:
+                        # rename .so.$FOO symlinks, remove other ones
+                        for lpath in links:
+                            log.info('removing symlink: %s', lpath)
+                            os.remove(lpath)
+                        log.info('renaming %s to %s', dstfpath, fn)
+                        os.rename(dstfpath, fpath)
                 if dbg_package and fext not in ('so', 'h'):
                     os.remove(join(root, fn))
                     continue

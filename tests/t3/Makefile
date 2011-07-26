@@ -12,6 +12,11 @@ check:
 		debian/python-foo/DEBIAN/postinst
 	test -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/bar.so
 	test ! -f debian/python-foo/usr/share/pyshared/foo/bar.so
+	test -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/spam.so
+	test ! -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/spam.so.0.1
+	test -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/baz.so
+	test ! -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/baz.so.0.1
+	test ! -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/baz.so.0.1.2
 
 clean:
 	./debian/rules clean

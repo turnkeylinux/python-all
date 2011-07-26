@@ -1,3 +1,12 @@
+python-defaults (2.7.2-3) UNRELEASED; urgency=low
+
+  [ Piotr Ożarowski ]
+  * dh_python2:
+    - no longer moves .so.foo files to pyshared dir (closes: 635316)
+    - replaces .so symlinks with .so.foo files in dist-packages
+
+ -- Piotr Ożarowski <piotr@debian.org>  Tue, 26 Jul 2011 19:58:48 +0200
+
 python-defaults (2.7.2-2) experimental; urgency=low
 
   [ Piotr Ożarowski ]
