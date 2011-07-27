@@ -5,7 +5,11 @@ python-defaults (2.7.2-4) UNRELEASED; urgency=low
     - no longer moves .so.foo files to pyshared dir (closes: 635316)
     - replaces .so symlinks with .so.foo files in dist-packages
 
- -- Piotr Ożarowski <piotr@debian.org>  Tue, 26 Jul 2011 19:58:48 +0200
+  [ Scott Kitterman ]
+  * Drop python2 symlink pending further discussion
+  * Update recent Python policy changes based on feedback from Debian Python
+
+ -- Scott Kitterman <scott@kitterman.com>  Wed, 27 Jul 2011 10:15:38 -0400
 
 python-defaults (2.7.2-3) experimental; urgency=low
 
