@@ -6,7 +6,7 @@ python-defaults (2.7.2-4) UNRELEASED; urgency=low
     - replaces .so symlinks with .so.foo files in dist-packages
 
   [ Scott Kitterman ]
-  * Drop python2 symlink pending further discussion
+  * Drop python2 symlink pending further discussion (closes: 634967)
   * Update recent Python policy changes based on feedback from Debian Python
 
  -- Scott Kitterman <scott@kitterman.com>  Wed, 27 Jul 2011 10:15:38 -0400
