@@ -1,4 +1,4 @@
-python-defaults (2.7.2-4) UNRELEASED; urgency=low
+python-defaults (2.7.2-4) experimental; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2:
