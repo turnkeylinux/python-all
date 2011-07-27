@@ -772,8 +772,8 @@ Build-Depends: python3-all-dev (>= 3.1)
 	</p>
       </sect>
 
-      <sect id="pysupport (deprecated)">
-	<heading>python-support</heading>
+      <sect id="pysupport">
+	<heading>python-support (deprecated)</heading>
 	<p>
 	  python-support is deprecated. It is a system intended to provide
 	  a simple way to byte-compile pure Python modules and manage dependencies.
@@ -789,8 +789,8 @@ Build-Depends: python3-all-dev (>= 3.1)
 	</p>
       </sect>
 
-      <sect id="pycentral (deprecated)">
-	<heading>python-central</heading>
+      <sect id="pycentral">
+	<heading>python-central (deprecated)</heading>
 	<p>
 	  python-central is deprecated. It provides another way to manage
 	  Python modules. It integrates with <package>debhelper</package>,
