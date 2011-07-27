@@ -1,4 +1,4 @@
-python-defaults (2.7.2-3) UNRELEASED; urgency=low
+python-defaults (2.7.2-4) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2:
@@ -6,6 +6,16 @@ python-defaults (2.7.2-3) UNRELEASED; urgency=low
     - replaces .so symlinks with .so.foo files in dist-packages
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 26 Jul 2011 19:58:48 +0200
+
+python-defaults (2.7.2-3) experimental; urgency=low
+
+  * python: Provide python profiler.
+  * Provide a python2 symlink according to PEP 394.
+  * Bump standards version.
+  * Fix some lintian warnings.
+  * Add 2to3.1 manual page symlink.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 10 Jul 2011 20:57:27 +0200
 
 python-defaults (2.7.2-2) experimental; urgency=low
 

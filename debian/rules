@@ -20,7 +20,7 @@ export NVER=2.8
 export PVER=python2.7
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
-PREVVER := 2.7.1-1~
+PREVVER := 2.7.2-3~
 
 PWD		:= $(shell pwd)
 
@@ -37,6 +37,8 @@ ifneq ($(with_doc),yes)
 endif
 
 build: stamp-build
+build-arch: stamp-build
+build-indep: stamp-build
 stamp-build:
 	touch stamp-build
 
@@ -164,9 +166,12 @@ binary-indep: build install stamp-doc
 	: # provide the python and python.1 defaults
 	mkdir -p debian/python-minimal/usr/bin
 	ln -sf python$(VER) debian/python-minimal/usr/bin/python
+	ln -sf python$(VER) debian/python-minimal/usr/bin/python2
 	mkdir -p debian/python-minimal/usr/share/man/man1
 	ln -sf python$(VER).1.gz \
 		debian/python-minimal/usr/share/man/man1/python.1.gz
+	ln -sf python$(VER).1.gz \
+		debian/python-minimal/usr/share/man/man1/python2.1.gz
 
 	: # 
 	mkdir -p debian/python-minimal/usr/share/python
@@ -204,6 +209,8 @@ binary-indep: build install stamp-doc
 		debian/python/usr/share/man/man1/pygettext.1.gz
 	ln -sf pdb$(VER).1.gz \
 		debian/python/usr/share/man/man1/pdb.1.gz
+	ln -sf 2to3-$(VER).1.gz \
+		debian/python/usr/share/man/man1/2to3.1.gz
 
 	mkdir -p debian/python/usr/share/doc/python
 	cp -a debian/python-policy.{html,sgml,txt} \
