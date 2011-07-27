@@ -29,11 +29,15 @@ log = logging.getLogger(__name__)
 class DebHelper(object):
     """Reinvents the wheel / some dh functionality (Perl is ugly ;-P)"""
 
-    def __init__(self, packages=None, no_packages=None):
+    def __init__(self, options):
+        self.options = options
         self.packages = {}
         self.python_version = None
         source_section = True
         binary_package = None
+
+        pkgs = options.package
+        skip_pkgs = options.no_package
 
         try:
             fp = open('debian/control', 'r')
@@ -50,9 +54,9 @@ class DebHelper(object):
             if binary_package:
                 if binary_package.startswith('python3'):
                     continue
-                if packages and binary_package not in packages:
+                if pkgs and binary_package not in pkgs:
                     continue
-                if no_packages and binary_package in no_packages:
+                if skip_pkgs and binary_package in skip_pkgs:
                     continue
                 if line.startswith('Architecture:'):
                     arch = line[13:].strip()
@@ -65,9 +69,9 @@ class DebHelper(object):
                 if binary_package.startswith('python3'):
                     log.debug('skipping Python 3.X package: %s', binary_package)
                     continue
-                if packages and binary_package not in packages:
+                if pkgs and binary_package not in pkgs:
                     continue
-                if no_packages and binary_package in no_packages:
+                if skip_pkgs and binary_package in skip_pkgs:
                     continue
                 self.packages[binary_package] = {'substvars': {},
                                                  'autoscripts': {},
@@ -123,7 +127,11 @@ class DebHelper(object):
                         if not exists(fpath):
                             fpath = "/usr/share/debhelper/autoscripts/%s" % tpl_name
                         tpl = open(fpath, 'r').read()
-                        tpl = tpl.replace('#PACKAGE#', package)
+                        if self.options.compile_all and args:
+                            # TODO: should args be checked to contain dir name?
+                            tpl = tpl.replace('#PACKAGE#', '')
+                        else:
+                            tpl = tpl.replace('#PACKAGE#', package)
                         tpl = tpl.replace('#ARGS#', i)
                         if tpl not in data and tpl not in new_data:
                             new_data += "\n%s" % tpl
@@ -172,6 +180,7 @@ class DebHelper(object):
 
     def save_rtupdate(self):
         for package, settings in self.packages.iteritems():
+            pkg_arg = '' if self.options.compile_all else "-p %s" % package
             values = settings.get('rtupdates')
             if not values:
                 continue
@@ -185,8 +194,8 @@ class DebHelper(object):
                 data = "#! /bin/sh\nset -e"
             for dname, args in values:
                 cmd = 'if [ "$1" = rtupdate ]; then' +\
-                      "\n\tpyclean %s" % dname +\
-                      "\n\tpycompile %s %s\nfi" % (args, dname)
+                      "\n\tpyclean %s %s" % (pkg_arg, dname) +\
+                      "\n\tpycompile %s %s %s\nfi" % (pkg_arg, args, dname)
                 if cmd not in data:
                     data += "\n%s" % cmd
             if data:

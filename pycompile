@@ -261,7 +261,7 @@ multiple times to build up a list of things to exclude.')
         files = dpf.filter_out_ext(files, ('.so',))
         compile(files, versions,
                 options.force, options.optimize, e_patterns)
-    elif args:  # other directories/files (public ones mostly)
+    elif args:  # other directories/files
         versions = debsorted(versions)[:1]
         for item in args:
             e_patterns = get_exclude_patterns(item, options.regexpr, versions)

@@ -69,7 +69,7 @@ def destroyer():  # ;-)
 
 
 def main():
-    usage = '%prog [-p PACKAGE | DIR_OR_FILE]'
+    usage = '%prog [-p PACKAGE] [DIR_OR_FILE]'
     parser = optparse.OptionParser(usage, version='%prog 1.0')
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose',
         help='turn verbose more one')
@@ -91,27 +91,28 @@ def main():
     d = destroyer()
     d.next()  # initialize coroutine
 
-    if options.package and args:
-        parser.error('only one action is allowed at the same time ('
-                     'cleaning directory or a package)')
+    if not options.package and not args:
+        parser.print_usage()
+        exit(1)
 
     if options.package:
         log.info('cleaning package %s', options.package)
-        files = dpf.from_package(options.package, extensions=('.py', '.so'))
-        files = add_namespace_files(files, options.package, action=False)
-        files = dpf.filter_out_ext(files, ('.so',))
-        for filename in files:
-            d.send(filename)
-    elif args:
+        pfiles = dpf.from_package(options.package, extensions=('.py', '.so'))
+        pfiles = add_namespace_files(pfiles, options.package, action=False)
+        pfiles = set(dpf.filter_out_ext(pfiles, ('.so',)))
+
+    if args:
         log.info('cleaning directories: %s', args)
         files = dpf.from_directory(args, extensions=('.py', '.so'))
         files = add_namespace_files(files, action=False)
-        files = dpf.filter_out_ext(files, ('.so',))
-        for filename in files:
-            d.send(filename)
+        files = set(dpf.filter_out_ext(files, ('.so',)))
+        if options.package:
+            files = files & pfiles
     else:
-        parser.print_usage()
-        exit(1)
+        files = pfiles
+
+    for filename in files:
+        d.send(filename)
 
 if __name__ == '__main__':
     main()

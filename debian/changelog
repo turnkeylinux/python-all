@@ -1,3 +1,15 @@
+python-defaults (2.7.2-5) UNRELEASED; urgency=low
+
+  [ Piotr Ożarowski ]
+  * dh_python2:
+    - generates rtupdate scripts for private directories that compile files
+      from given package only, add --compile-all to dh_python2's call if you
+      want the old behaviour (i.e. compile also files (plugins?) provided by
+      other packages, which do not use a helper/bytecompile them)
+  * pyclean now accepts --package and private dir argument at the same time
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 28 Jul 2011 00:23:50 +0200
+
 python-defaults (2.7.2-4) experimental; urgency=low
 
   [ Piotr Ożarowski ]

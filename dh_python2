@@ -489,6 +489,9 @@ def main():
         help='act on the package named PACKAGE')
     parser.add_option('-N', '--no-package', action='append',
         help='do not act on the specified package')
+    parser.add_option('--compile-all', action='store_true', default=False,
+        help='compile all files from given private directory in postinst, '
+             'not just the ones provided by the package')
     parser.add_option('-V', type='version_range', dest='vrange',
         help='specify list of supported Python versions. ' +\
              'See pycompile(1) for examples')
@@ -559,7 +562,7 @@ def main():
         log.debug('options: %s', options)
         log.debug('args: %s', args)
 
-    dh = DebHelper(options.package, options.no_package)
+    dh = DebHelper(options)
     if not options.vrange and dh.python_version:
         options.vrange = parse_pycentral_vrange(dh.python_version)
 

@@ -130,6 +130,10 @@ OPTIONS
 -X REGEXPR, --exclude=REGEXPR	exclude items that match given REGEXPR. You may
   use this option multiple times to build up a list of things to exclude.
 
+--compile-all	compile all files from given private directory in postinst/rtupdate
+  not just the ones provided by the package (i.e. do not pass the --package
+  parameter to pycompile/pyclean)
+
 --depends=DEPENDS	translate given requirements into Debian dependencies
   and add them to ${python:Depends}. Use it for missing items in requires.txt
 
