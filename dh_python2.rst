@@ -110,6 +110,8 @@ OPTIONS
 
 --no-guessing-deps	disable guessing dependencies
 
+--no-dbg-cleaning	do not remove any files from debug packages
+
 --skip-private	don't check private directories
 
 -v, --verbose	turn verbose mode on

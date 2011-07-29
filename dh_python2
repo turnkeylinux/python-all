@@ -299,7 +299,7 @@ def share_2x(dir1, dir2, dc=None):
 
 
 ### PACKAGE DETAILS ############################################
-def scan(package, dname=None):
+def scan(package, dname=None, clean_dbg_pkg=True):
     """Gather statistics about Python files in given package."""
     r = {'requires.txt': set(),
          'nsp.txt': set(),
@@ -359,7 +359,7 @@ def scan(package, dname=None):
         # handle some EGG related data (.egg-info dirs)
         for name in dirs:
             if name.endswith('.egg-info'):
-                if dbg_package:
+                if dbg_package and clean_dbg_pkg:
                     rmtree(join(root, name))
                     dirs.remove(name)
                     continue
@@ -396,7 +396,7 @@ def scan(package, dname=None):
                             os.remove(lpath)
                         log.info('renaming %s to %s', dstfpath, fn)
                         os.rename(dstfpath, fpath)
-                if dbg_package and fext not in ('so', 'h'):
+                if dbg_package and clean_dbg_pkg and fext not in ('so', 'h'):
                     os.remove(join(root, fn))
                     continue
 
@@ -449,7 +449,7 @@ def scan(package, dname=None):
                 if res:
                     r['shebangs'].add(res)
 
-    if dbg_package:
+    if dbg_package and clean_dbg_pkg:
         # remove empty directories in -dbg packages
         proot = proot + '/usr/lib'
         for root, dirs, file_names in os.walk(proot, topdown=False):
@@ -516,6 +516,9 @@ def main():
         help='do not translate shebangs into Debian dependencies')
     parser.add_option('--ignore-namespace', action='store_true', default=False,
         help="ignore Egg's namespace_packages.txt file and --namespace option")
+    parser.add_option('--no-dbg-cleaning', action='store_false',
+            dest='clean_dbg_pkg', default=True,
+        help='do not remove files from debug packages')
     # ignore some debhelper options:
     parser.add_option('-O', help=SUPPRESS_HELP)
 
@@ -577,7 +580,7 @@ def main():
             if not pyremove(package, options.vrange):
                 exit(5)
             fix_locations(package)
-        stats = scan(package, private_dir)
+        stats = scan(package, private_dir, options.clean_dbg_pkg)
         if not private_dir:
             share(package, stats, options)
             pyshared_dir = "debian/%s/usr/share/pyshared/" % package
