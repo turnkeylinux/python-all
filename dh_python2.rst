@@ -26,7 +26,7 @@ QUICK GUIDE FOR MAINTAINERS
    setup.py's install command if your package is using distutils,
  * add ``python2`` to dh's ``--with`` option, or:
  * include /usr/share/cdbs/1/class/python-distutils.mk in debian/rules and
-   depend on cdbs (>= 0.4.90-1~), or:
+   depend on cdbs (>= 0.4.90), or:
  * call dh_python2 in the binary-* target,
  * add ${python:Depends} to Depends,
 
