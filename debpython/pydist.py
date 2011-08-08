@@ -116,7 +116,7 @@ def guess_dependency(req, version=None):
         version = getver(version)
 
     # some upstreams have weird ideas for distribution name...
-    name, rest = re.compile('([^><= ]+)(.*)').match(req).groups()
+    name, rest = re.compile('([^><= \[]+)(.*)').match(req).groups()
     req = safe_name(name) + rest
 
     data = load()
@@ -127,7 +127,7 @@ def guess_dependency(req, version=None):
                  'or your upstream author to fix requires.txt')
         exit(8)
     req_dict = req_dict.groupdict()
-    name = req_dict['name']  # drop "[features]"
+    name = req_dict['name']
     details = data.get(name.lower())
     if details:
         for item in details:
