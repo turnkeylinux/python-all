@@ -168,12 +168,14 @@ def guess_dependency(req, version=None):
             log.error('more than one package name found for %s dist', name)
         else:
             return result.pop()
+    else:
+        log.debug('dpkg -S did not find package for %s: %s', name, stderr)
 
     # fall back to python-distname
     pname = sensible_pname(name)
     log.warn('Cannot find package that provides %s. '
              'Using %s as package name. Please add "%s correct_package_name" '
-             'line to debian/pydist-overrides to override it.',
+             'line to debian/pydist-overrides to override it if needed.',
              name, pname, safe_name(name))
     return pname
 
