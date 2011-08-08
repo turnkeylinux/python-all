@@ -8,6 +8,8 @@ python-defaults (2.7.2-5) UNRELEASED; urgency=low
       other packages, which do not use a helper/bytecompile them)
     - add --no-dbg-cleaning option (to disable removing files from debug
       packages)
+    - fix handling "distname[features]" in debpython.pydist.guess_dependency
+      (closes: 636255)
   * pyclean now accepts --package and private dir argument at the same time
 
   [ Scott Kitterman ]

@@ -127,7 +127,8 @@ def guess_dependency(req, version=None):
                  'or your upstream author to fix requires.txt')
         exit(8)
     req_dict = req_dict.groupdict()
-    details = data.get(req_dict['name'].lower())
+    name = req_dict['name']  # drop "[features]"
+    details = data.get(name.lower())
     if details:
         for item in details:
             if version and version not in item.get('versions', version):
