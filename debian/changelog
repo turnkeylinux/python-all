@@ -15,6 +15,7 @@ python-defaults (2.7.2-5) UNRELEASED; urgency=low
   [ Scott Kitterman ]
   * debpyhton/pydist: Incorporate patch from Jonathan Lange to stop printing
     to stderr (LP: #812960)
+  * Add Piotr Ożarowski <piotr@debian.org> back to Uploaders
 
  -- Scott Kitterman <scott@kitterman.com>  Mon, 08 Aug 2011 10:28:50 -0400
 
