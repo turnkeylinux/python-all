@@ -10,7 +10,11 @@ python-defaults (2.7.2-5) UNRELEASED; urgency=low
       packages)
   * pyclean now accepts --package and private dir argument at the same time
 
- -- Piotr Ożarowski <piotr@debian.org>  Thu, 28 Jul 2011 00:23:50 +0200
+  [ Scott Kitterman ]
+  * debpyhton/pydist: Incorporate patch from Jonathan Lange to stop printing
+    to stderr (LP: #812960)
+
+ -- Scott Kitterman <scott@kitterman.com>  Mon, 08 Aug 2011 10:28:50 -0400
 
 python-defaults (2.7.2-4) experimental; urgency=low
 

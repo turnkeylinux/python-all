@@ -156,7 +156,7 @@ def guess_dependency(req, version=None):
 
     log.debug("invoking dpkg -S %s", query)
     process = Popen("/usr/bin/dpkg -S %s" % query, \
-                    shell=True, stdout=PIPE)
+                    shell=True, stdout=PIPE, stderr=PIPE)
     stdout, stderr = process.communicate()
     if process.returncode == 0:
         result = set()
