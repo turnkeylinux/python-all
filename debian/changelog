@@ -1,3 +1,9 @@
+python-defaults (2.7.2-6) UNRELEASED; urgency=low
+
+  * Fixed typo in python-policy (thanks to Jakub Wilk)
+
+ -- Scott Kitterman <scott@kitterman.com>  Sat, 03 Sep 2011 11:21:35 -0400
+
 python-defaults (2.7.2-5) experimental; urgency=low
 
   [ Piotr Ożarowski ]

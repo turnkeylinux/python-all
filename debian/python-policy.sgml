@@ -338,7 +338,7 @@
 	  </item>
 	  <item>
 	    <p>
-	      /usr/share/python/runtime.d/*.rtupate: these are called when
+	      /usr/share/python/runtime.d/*.rtupdate: these are called when
 	      the default runtime changes.  The first argument is either
 	      "pre-rtupdate", called before changing the default runtime, or
 	      "rtupdate", called when changing the default runtime, or
