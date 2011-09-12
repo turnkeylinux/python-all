@@ -75,7 +75,8 @@ class DebHelper(object):
                     continue
                 self.packages[binary_package] = {'substvars': {},
                                                  'autoscripts': {},
-                                                 'rtupdates': []}
+                                                 'rtupdates': [],
+                                                 'arch': 'any'}
             elif line.startswith('Source:'):
                 self.source_name = line[7:].strip()
             elif source_section:
