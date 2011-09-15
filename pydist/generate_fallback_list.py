@@ -68,5 +68,7 @@ for line in stdout.splitlines():
 
 result.sort()
 fp = open('dist_fallback', 'w')
+fp.write('python python\n')
 fp.write('setuptools python-pkg-resources\n')
+fp.write('wsgiref python (>= 2.5) | python-wsgiref\n')
 fp.writelines(result)

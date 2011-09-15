@@ -1,4 +1,6 @@
+python python
 setuptools python-pkg-resources
+wsgiref python (>= 2.5) | python-wsgiref
 AddOns python-peak.util
 BitTornado bittornado
 BitTorrent bittorrent
