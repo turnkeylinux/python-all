@@ -1,6 +1,11 @@
 python-defaults (2.7.2-6) UNRELEASED; urgency=low
 
+  [ Scott Kitterman ]
   * Fixed typo in python-policy (thanks to Jakub Wilk)
+
+  [ Piotr Ożarowski ]
+  * dh_python2:
+    - handle private dirs without leading slash
 
  -- Scott Kitterman <scott@kitterman.com>  Sat, 03 Sep 2011 11:21:35 -0400
 

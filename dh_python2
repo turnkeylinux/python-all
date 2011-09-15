@@ -554,7 +554,13 @@ def main():
                 log.warning('dh_pydeb detected, PyDist feature disabled')
                 options.guess_deps = False
 
-    private_dir = None if not args else args[0]
+    if not args:
+        private_dir = None
+    else:
+        private_dir = args[0]
+        if not private_dir.startswith('/'):
+            # handle usr/share/foo dirs (without leading slash)
+            private_dir = '/' + private_dir
     # TODO: support more than one private dir at the same time (see :meth:scan)
     if options.skip_private:
         private_dir = False
