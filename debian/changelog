@@ -5,7 +5,9 @@ python-defaults (2.7.2-6) UNRELEASED; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2:
-    - handle private dirs without leading slash
+    - handle private dir paths without leading slash
+    - add python to Depends if unversioned python shebang is detected in
+      private directory
 
  -- Scott Kitterman <scott@kitterman.com>  Sat, 03 Sep 2011 11:21:35 -0400
 

@@ -128,6 +128,9 @@ class Dependencies(object):
                 else:
                     log.warn('dependency on python%s (from shebang) ignored'
                              ' - it\'s not supported anymore', vrepr(v))
+            # /usr/bin/python shebang → add python to Depends
+            if any(True for i, v in details.get('shebangs', []) if v is None):
+                self.depend('python')
 
             if details.get('compile', False):
                 self.depend(MINPYCDEP)
