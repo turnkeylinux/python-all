@@ -329,8 +329,7 @@ def scan(package, dname=None, clean_dbg_pkg=True):
         if '/usr/lib/python3' in root or\
            '/usr/local/lib/python3' in root:
             # warn only once
-            warn = root[root.find('/lib/python'):].count('/') == 2
-            if warn:
+            if root[root.find('/lib/python'):].count('/') == 2:
                 log.warning('Python 3.x location detected, '
                             'please use dh_python3: %s', root)
             continue
