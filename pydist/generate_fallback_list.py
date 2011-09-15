@@ -42,7 +42,7 @@ if not os.path.isdir('cache'):
 
 # find .egg-info files/directories
 process = Popen('apt-file -s sources.list -c cache find -x '
-                '"/usr/((share/pyshared)|(lib/python2\.[0-9]/((site)|(dist))-packages))/[^/]*\.egg-info"',
+                '"/usr/((share/pyshared)|(lib/python2\.[0-9]/((site)|(dist))-packages)|(share/python-support/[^/]+))/[^/]*\.egg-info"',
                 shell=True, stdout=PIPE)
 stdout, stderr = process.communicate()
 if process.returncode != 0:

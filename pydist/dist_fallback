@@ -37,6 +37,7 @@ GGZMod python-ggz
 Gally gally
 GaussSum gausssum
 GeoIP_Python python-geoip
+GitPython python-git
 Gufw gufw
 HarvestMan harvestman
 ISO8583_Module python-iso8583
@@ -68,9 +69,11 @@ PyOpenGL python-opengl
 PyProtocols python-protocols
 PyRoom pyroom
 PySFML python-sfml
+PyStemmer python-stemmer
 PyWavelets python-pywt
 PyWebDAV python-webdav
 PyYAML python-yaml
+Pygmy pygmy
 Pyjamas pyjamas-pyjs
 Pymacs pymacs
 Pyro pyro
@@ -107,6 +110,7 @@ TracWikiRename trac-wikirename
 TracWysiwyg trac-wysiwyg
 TracXMLRPC trac-xmlrpc
 Turtle_Art turtleart
+UNKNOWN python-pdfrw
 WikiTableMacro trac-wikitablemacro
 Wikkid wikkid
 ZODB3 python-zodb
@@ -118,6 +122,7 @@ apache_libcloud python-libcloud
 apt_clone apt-clone
 apt_p2p apt-p2p
 apt_xapian_index apt-xapian-index
+aptfs aptfs
 aptoncd aptoncd
 arandr arandr
 archivemail archivemail
@@ -156,6 +161,7 @@ bzr_xmloutput bzr-xmloutput
 cappuccino cappuccino
 cardstories cardstories
 cfget cfget
+chm2pdf chm2pdf
 cm config-manager
 cvs2svn cvs2svn
 cwm python-swap
@@ -173,6 +179,7 @@ django_openid_auth python-django-auth-openid
 django_tables django-tables
 djextdirect python-django-extdirect
 dot2tex dot2tex
+driconf driconf
 dtrx dtrx
 duplicity duplicity
 dvcs_autosync dvcs-autosync
@@ -227,24 +234,25 @@ gEcrit gecrit
 galternatives galternatives
 gaphor gaphor
 gastablesgui gastables
-gazpacho gazpacho
 gdevilspie gdevilspie
 gdmodule python-gd
+genbackupdata genbackupdata
 getmail getmail4
 geximon geximon
 git_build_package git-buildpackage
 github_cli github-cli
-gitosis gitosis
 giws giws
 gjots2 gjots2
 globs globs
 gmobilemedia gmobilemedia
 gnome_activity_journal gnome-activity-journal
 gnome_app_install gnome-codec-install
+gnomecatalog gnomecatalog
 gnuplot_py python-gnuplot
 go2 go2
 googlecl googlecl
 gozerbot gozerbot
+gozerplugs gozerbot-plugins
 gpodder gpodder
 gquilt gquilt
 gracie gracie
@@ -308,8 +316,10 @@ nfoview nfoview
 nglister nglister
 nsscache nsscache
 obMenu obmenu
+obnam obnam
 offlineimap offlineimap
 oidua oidua
+ooo2dbk ooo2dbk
 ooolib_python python-ooolib
 openbmap_logger openbmap-logger
 openoffice_python python-openoffice
@@ -334,6 +344,7 @@ prioritized_methods python-peak.rules
 proteus tryton-proteus
 prover9_mace4 prover9-mace4
 pssh pssh
+puddletag puddletag
 purity_ng purity-ng
 pyExcelerator python-excelerator
 pyOpenSSL python-openssl
@@ -358,6 +369,7 @@ pydkim python-dkim
 pydns python-dns
 pyelemental python-elemental
 pyenchant python-enchant
+pyepr python-epr
 pyfacebook python-facebook
 pyflakes pyflakes
 pygdchart python-gdchart2
@@ -380,6 +392,7 @@ pynifti python-nifti
 pyogg python-ogg
 pyparallel python-parallel
 pyppd pyppd
+pyprompter pyprompter
 pyqonsole pyqonsole
 pyremctl python-remctl
 pyrit pyrit
@@ -388,6 +401,8 @@ pysane python-imaging-sane
 pysatellites python-satellites
 pyserial python-serial
 pysnmp python-pysnmp2
+pysnmp_apps python-pysnmp4-apps
+pysnmp_mibs python-pysnmp4-mibs
 pysparse python-sparse
 pyspi python-at-spi
 pysqlite python-pysqlite1.1
@@ -417,6 +432,7 @@ pyxdg python-xdg
 pyzmq python-zmq
 pyzor pyzor
 qbzr qbzr
+qct qct
 qmtest qmtest
 quodlibet exfalso
 qweborf qweborf
@@ -442,6 +458,7 @@ repoze.who.plugins.sa python-repoze.who-plugins
 repoze.who_friendlyform python-repoze.who-plugins
 repoze.who_testutil python-repoze.who-plugins
 roundup roundup
+rpl rpl
 rst2pdf rst2pdf
 scikits.learn python-scikits-learn
 screenlets screenlets
@@ -454,6 +471,7 @@ snimpy snimpy
 spambayes spambayes
 spectacle spectacle
 specto specto
+sphinxcontrib_issuetracker python-sphinxcontrib.issuetracker
 spyder python-spyderlib
 sqlalchemy_migrate python-migrate
 startupmanager startupmanager
@@ -474,6 +492,7 @@ tinyeartrainer tinyeartrainer
 tortoisehg tortoisehg
 transifex_client transifex-client
 translate_toolkit translate-toolkit
+trash trash-cli
 trimage trimage
 tritium tritium
 tryton tryton-client
@@ -532,6 +551,7 @@ ubuntu_dev_tools ubuntu-dev-tools
 ubuntu_sso_client ubuntu-sso-client
 ufw ufw
 unattended_upgrades unattended-upgrades
+undertaker undertaker
 unittest_xml_reporting python-xmlrunner
 urlscan urlscan
 vboxapi virtualbox
