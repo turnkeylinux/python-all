@@ -10,6 +10,8 @@ python-defaults (2.7.2-6) UNRELEASED; urgency=low
       private directory
     - dist_fallback: add /usr/share/python-support/package/ to paths searched
       for Egg metadata; add "wsgiref" and "python" fallbacks
+    - do not try to remove .so.foo symlinks twice (if files were listed in an
+      unfortunate order)
 
  -- Scott Kitterman <scott@kitterman.com>  Sat, 03 Sep 2011 11:21:35 -0400
 
