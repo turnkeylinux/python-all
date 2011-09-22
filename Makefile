@@ -36,7 +36,7 @@ dist_fallback:
 	make -C pydist $@
 
 check_versions:
-	@PYTHONPATH=. set -e; \
+	@PYTHONPATH=. set -e; test ! -x /usr/bin/python || \
 	DEFAULT=`python -c 'import debpython.version as v; print v.vrepr(v.DEFAULT)'`;\
 	SUPPORTED=`python -c 'import debpython.version as v; print " ".join(sorted(v.vrepr(v.SUPPORTED)))'`;\
 	DEB_DEFAULT=`sed -rn 's,^default-version = python([0.9.]*),\1,p' debian/debian_defaults`;\
