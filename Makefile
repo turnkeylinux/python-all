@@ -36,15 +36,15 @@ dist_fallback:
 	make -C pydist $@
 
 check_versions:
-	@PYTHONPATH=. set -e; test ! -x /usr/bin/python || \
-	DEFAULT=`python -c 'import debpython.version as v; print v.vrepr(v.DEFAULT)'`;\
-	SUPPORTED=`python -c 'import debpython.version as v; print " ".join(sorted(v.vrepr(v.SUPPORTED)))'`;\
-	DEB_DEFAULT=`sed -rn 's,^default-version = python([0.9.]*),\1,p' debian/debian_defaults`;\
+	@set -e;\
+	DEFAULT=`sed -rn 's,^DEFAULT = \(([0-9]+)\, ([0-9]+)\),\1.\2,p' debpython/version.py`;\
+	SUPPORTED=`sed -rn 's,^SUPPORTED = \[\(([0-9]+)\, ([0-9]+)\)\, \(([0-9]+)\, ([0-9]+)\)\],\1.\2 \3.\4,p' debpython/version.py`;\
+	DEB_DEFAULT=`sed -rn 's,^default-version = python([0-9.]*),\1,p' debian/debian_defaults`;\
 	DEB_SUPPORTED=`sed -rn 's|^supported-versions = (.*)|\1|p' debian/debian_defaults | sed 's/python//g;s/,//g'`;\
 	[ "$$DEFAULT" = "$$DEB_DEFAULT" ] || \
-	(echo 'Please update DEFAULT in debpython/version.py' >/dev/stderr; false);\
+	(echo "Please update DEFAULT in debpython/version.py ($$DEFAULT vs. $$DEB_DEFAULT)" >/dev/stderr; false);\
 	[ "$$SUPPORTED" = "$$DEB_SUPPORTED" ] || \
-	(echo 'Please update SUPPORTED in debpython/version.py' >/dev/stderr; false)
+	(echo "Please update SUPPORTED in debpython/version.py ($$SUPPORTED vs. $$DEB_SUPPORTED)" >/dev/stderr; false)
 
 pdebuild:
 	pdebuild --debbuildopts -I

@@ -27,7 +27,7 @@ from types import GeneratorType
 
 # will be overriden via debian_defaults file few lines later
 SUPPORTED = [(2, 6), (2, 7)]
-DEFAULT = (2, 6)
+DEFAULT = (2, 7)
 
 RANGE_PATTERN = r'(-)?(\d\.\d+)(?:(-)(\d\.\d+)?)?'
 RANGE_RE = re.compile(RANGE_PATTERN)
