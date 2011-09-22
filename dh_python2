@@ -393,7 +393,8 @@ def scan(package, dname=None, clean_dbg_pkg=True):
                         for lpath in links:
                             log.info('removing symlink: %s', lpath)
                             os.remove(lpath)
-                            file_names.remove(split(lpath)[-1])
+                            if split(lpath)[-1] != fn:
+                                file_names.remove(split(lpath)[-1])
                         log.info('renaming %s to %s', dstfpath, fn)
                         os.rename(dstfpath, fpath)
                 if dbg_package and clean_dbg_pkg and fext not in ('so', 'h'):
