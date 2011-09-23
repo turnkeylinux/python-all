@@ -91,7 +91,7 @@ def add_namespace_files(files, package=None, action=None):
                         if action is True:
                             try:
                                 open(fpath, 'a').close()
-                            except:
+                            except Exception:
                                 log.error('cannot create %s', fpath)
                             else:
                                 yield fpath

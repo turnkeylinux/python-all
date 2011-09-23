@@ -458,7 +458,7 @@ def scan(package, dname=None, clean_dbg_pkg=True):
             if '-packages/' in root and not file_names:
                 try:
                     os.rmdir(root)
-                except:
+                except Exception:
                     pass
 
     log.debug("package %s details = %s", package, r)
@@ -531,7 +531,7 @@ def main():
         # fail now rather than at runtime
         try:
             pattern = re.compile(pattern)
-        except:
+        except Exception:
             log.error('regular expression is not valid: %s', pattern)
             exit(1)
 

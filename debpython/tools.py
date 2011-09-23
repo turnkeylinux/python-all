@@ -198,19 +198,19 @@ def pyinstall(package, vrange):
                 if not exists(dstdir):
                     try:
                         os.makedirs(dstdir)
-                    except:
+                    except Exception:
                         log.error('cannot create %s directory', dstdir)
                         return False
                 if exists(dstfpath):
                     try:
                         os.remove(dstfpath)
-                    except:
+                    except Exception:
                         status = False
                         log.error('cannot replace %s file', dstfpath)
                         continue
                 try:
                     os.link(fpath, dstfpath)
-                except:
+                except Exception:
                     status = False
                     log.error('cannot copy %s file to %s', fpath, dstdir)
     return status

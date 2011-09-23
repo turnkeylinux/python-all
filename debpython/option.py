@@ -35,7 +35,7 @@ def parse_version_range(option, opt, value):
 def compile_regexpr(option, opt, value):
     try:
         pattern = re.compile(value)
-    except:
+    except Exception:
         raise optparse.OptionValueError('regular expression is not valid')
     return pattern
 

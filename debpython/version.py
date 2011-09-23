@@ -42,13 +42,13 @@ _config.read(['/usr/share/python/debian_defaults',
 try:
     DEFAULT = tuple(int(i) for i in _config.get('DEFAULT',
                     'default-version')[6:].split('.'))
-except:
+except Exception:
     log.exception('cannot read debian_defaults')
 try:
     SUPPORTED = tuple(tuple(int(j) for j in i.strip()[6:].split('.'))\
                             for i in _config.get('DEFAULT',
                                 'supported-versions').split(','))
-except:
+except Exception:
     log.exception('cannot read debian_defaults')
 
 
