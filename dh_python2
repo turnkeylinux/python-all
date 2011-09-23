@@ -375,13 +375,17 @@ def scan(package, dname=None, clean_dbg_pkg=True):
             continue
 
         # check files
-        for fn in file_names:
+        for fn in sorted(file_names):
+            # sorted() to make sure .so files are handled before .so.foo
+            fpath = join(root, fn)
+            if not exists(fpath):
+                # could be removed while handling .so symlinks
+                continue
             fext = fn.rsplit('.', 1)[-1]
             if fext in ('pyc', 'pyo'):
-                os.remove(join(root, fn))
+                os.remove(fpath)
                 continue
             if public_dir:
-                fpath = join(root, fn)
                 if fext == 'so' and islink(fpath):
                     dstfpath = fpath
                     links = set()
@@ -393,8 +397,6 @@ def scan(package, dname=None, clean_dbg_pkg=True):
                         for lpath in links:
                             log.info('removing symlink: %s', lpath)
                             os.remove(lpath)
-                            if split(lpath)[-1] != fn:
-                                file_names.remove(split(lpath)[-1])
                         log.info('renaming %s to %s', dstfpath, fn)
                         os.rename(dstfpath, fpath)
                 if dbg_package and clean_dbg_pkg and fext not in ('so', 'h'):
@@ -445,7 +447,6 @@ def scan(package, dname=None, clean_dbg_pkg=True):
                 continue
             # search for scripts in bin dirs
             if bin_dir:
-                fpath = join(root, fn)
                 res = shebang2pyver(fpath)
                 if res:
                     r['shebangs'].add(res)
