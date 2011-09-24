@@ -57,7 +57,7 @@ REQUIRES_RE = re.compile(r'''
     ''', re.VERBOSE)
 
 
-def validate(fpath, exit_on_error=False):
+def validate(fpath):
     """Check if pydist file looks good."""
     with open(fpath) as fp:
         for line in fp:
@@ -67,8 +67,6 @@ def validate(fpath, exit_on_error=False):
             if not PYDIST_RE.match(line):
                 log.error('invalid pydist data in file %s: %s', \
                           fpath.rsplit('/', 1)[-1], line)
-                if exit_on_error:
-                    exit(3)
                 return False
     return True
 
@@ -95,8 +93,7 @@ def load(dname='/usr/share/python/dist/', fname='debian/pydist-overrides',
                     continue
                 dist = PYDIST_RE.search(line)
                 if not dist:
-                    log.error('%s file has a broken line: %s', fpath, line)
-                    exit(9)
+                    raise Exception('invalid pydist line: %s (in %s)' % (line, fpath))
                 dist = dist.groupdict()
                 name = safe_name(dist['name'])
                 dist['versions'] = get_requested_versions(dist['vrange'])
@@ -122,10 +119,9 @@ def guess_dependency(req, version=None):
     data = load()
     req_dict = REQUIRES_RE.match(req)
     if not req_dict:
-        log.error('requirement is not valid: %s', req)
         log.info('please ask dh_python2 author to fix REQUIRES_RE '
                  'or your upstream author to fix requires.txt')
-        exit(8)
+        raise Exception('requirement is not valid: %s' % req)
     req_dict = req_dict.groupdict()
     name = req_dict['name']
     details = data.get(name.lower())

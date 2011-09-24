@@ -42,8 +42,7 @@ class DebHelper(object):
         try:
             fp = open('debian/control', 'r')
         except IOError:
-            log.error('cannot find debian/control file')
-            exit(15)
+            raise Exception('cannot find debian/control file')
 
         xspv = xpv = False
         for line in fp:

@@ -655,7 +655,7 @@ def main():
 
         pydist_file = join('debian', "%s.pydist" % package)
         if exists(pydist_file):
-            if not validate_pydist(pydist_file, True):
+            if not validate_pydist(pydist_file):
                 log.warning("%s.pydist file is invalid", package)
             else:
                 dstdir = join('debian', package, 'usr/share/python/dist/')
