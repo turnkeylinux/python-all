@@ -64,6 +64,7 @@ PsychoPy psychopy
 Pwman3 pwman3
 PyAIML python-aiml
 PyBluez python-bluez
+PyCAPTCHA python-captcha
 PyCoCuMa pycocuma
 PyMca pymca
 PyMetrics pymetrics
@@ -86,6 +87,7 @@ Quixote python-quixote1
 RSVGSDL python-ggz
 SSSDConfig python-sss
 ScientificPython python-scientific
+Shinken shinken-core
 Sonata sonata
 South python-django-south
 SpreadModule python-spread
@@ -319,6 +321,7 @@ nglister nglister
 nsscache nsscache
 obMenu obmenu
 obnam obnam
+oboinus oboinus
 offlineimap offlineimap
 oidua oidua
 ooo2dbk ooo2dbk
@@ -474,6 +477,7 @@ spambayes spambayes
 spectacle spectacle
 specto specto
 sphinxcontrib_issuetracker python-sphinxcontrib.issuetracker
+sphinxcontrib_spelling python-sphinxcontrib.spelling
 spyder python-spyderlib
 sqlalchemy_migrate python-migrate
 startupmanager startupmanager
