@@ -1,4 +1,4 @@
-python-defaults (2.7.2-6) UNRELEASED; urgency=low
+python-defaults (2.7.2-6) experimental; urgency=low
 
   [ Scott Kitterman ]
   * Fixed typo in python-policy (thanks to Jakub Wilk)
@@ -13,7 +13,7 @@ python-defaults (2.7.2-6) UNRELEASED; urgency=low
     - do not try to remove .so.foo symlinks twice (if files were listed in an
       unfortunate order)
 
- -- Scott Kitterman <scott@kitterman.com>  Sat, 03 Sep 2011 11:21:35 -0400
+ -- Piotr Ożarowski <piotr@debian.org>  Sat, 24 Sep 2011 16:36:29 +0200
 
 python-defaults (2.7.2-5) experimental; urgency=low
 
