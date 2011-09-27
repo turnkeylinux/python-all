@@ -1,3 +1,9 @@
+python-defaults (2.7.2-7) unstable; urgency=low
+
+  * Adjust version numbers for upload to unstable.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 27 Sep 2011 18:21:42 +0200
+
 python-defaults (2.7.2-6) experimental; urgency=low
 
   [ Scott Kitterman ]
