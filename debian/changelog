@@ -1,6 +1,7 @@
 python-defaults (2.7.2-7) unstable; urgency=low
 
   * Adjust version numbers for upload to unstable.
+  * python: Break update-manager (<= 0.200.5-1).
 
  -- Matthias Klose <doko@debian.org>  Tue, 27 Sep 2011 18:21:42 +0200
 

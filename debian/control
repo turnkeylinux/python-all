@@ -16,7 +16,7 @@ Priority: standard
 Depends: ${misc:Depends}, python2.7 (>= 2.7.2-3~), python-minimal (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (= ${binary:Version})
 Conflicts: python-central (<< 0.5.5)
-Breaks: python-csv (<< 1.0-4), python-bz2 (<< 1.1-8), python-email (<< 2.5.5-3)
+Breaks: python-csv (<< 1.0-4), python-bz2 (<< 1.1-8), python-email (<< 2.5.5-3), update-manager (<= 0.200.5-1)
 Replaces: python-dev (<< 2.6.5-2)
 Provides: python-email, python-ctypes, python-wsgiref, python-importlib, python-profiler
 Description: interactive high-level object-oriented language (default version)
