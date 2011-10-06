@@ -1,3 +1,9 @@
+python-defaults (2.7.2-8) unstable; urgency=high
+
+  * Fix update-manager Breaks (Closes: #644491)
+
+ -- Scott Kitterman <scott@kitterman.com>  Thu, 06 Oct 2011 15:48:06 -0500
+
 python-defaults (2.7.2-7) unstable; urgency=low
 
   * Adjust version numbers for upload to unstable.
