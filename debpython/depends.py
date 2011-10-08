@@ -149,7 +149,7 @@ class Dependencies(object):
                         if vr[0]:  # minimum version specified
                             self.depend("python (>= %s)" % vrepr(vr[0]))
                         if vr[1]:  # maximum version specified
-                            self.depend("python (<< %s)" % vrepr(vr[1]))
+                            self.depend("python (<< %s)" % vrepr(vr[1] + 1))
 
                 for pattern in options.regexpr or []:
                     args += " -X '%s'" % pattern.replace("'", r"'\''")
