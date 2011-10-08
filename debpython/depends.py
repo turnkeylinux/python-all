@@ -143,10 +143,13 @@ class Dependencies(object):
                     # are scripts for different Python versions: compile with
                     # default Python version (or the one requested via X-P-V)
                     args += "-V %s" % vrange_str(vr)
-                    if vr[0]:  # minimum version specified
-                        self.depend("python (>= %s)" % vrepr(vr[0]))
-                    if vr[1]:  # maximum version specified
-                        self.depend("python (<< %s)" % vrepr(vr[1]))
+                    if vr[0] == vr[1]:
+                        self.depend("python%s" % vrepr(vr[0]))
+                    else:
+                        if vr[0]:  # minimum version specified
+                            self.depend("python (>= %s)" % vrepr(vr[0]))
+                        if vr[1]:  # maximum version specified
+                            self.depend("python (<< %s)" % vrepr(vr[1]))
 
                 for pattern in options.regexpr or []:
                     args += " -X '%s'" % pattern.replace("'", r"'\''")
