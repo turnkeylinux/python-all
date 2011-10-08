@@ -1,9 +1,9 @@
-python-defaults (2.7.2-9) UNRELEASED; urgency=low
+python-defaults (2.7.2-9) unstable; urgency=low
 
   * Generate correct dependencies if private directory supports one Python
     version only (closes: #644573)
 
- -- Piotr Ożarowski <piotr@debian.org>  Sat, 08 Oct 2011 14:18:31 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Sat, 08 Oct 2011 17:16:46 +0200
 
 python-defaults (2.7.2-8) unstable; urgency=high
 
