@@ -629,7 +629,11 @@ def main():
 
             ext_for = details.get('ext')
             if ext_for is None:  # no extension
-                if options.vrange and options.vrange != (None, None):
+                shebangs = list(v for i, v in details.get('shebangs', []) if v)
+                if not options.ignore_shebangs and len(shebangs) == 1:
+                    # only one version from shebang
+                    args += "-V %s" % vrepr(shebangs[0])
+                elif options.vrange and options.vrange != (None, None):
                     args += " -V %s" % vrange_str(options.vrange)
             elif False in ext_for:
                 # at least one extension's version not detected
