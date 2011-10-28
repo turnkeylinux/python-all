@@ -151,6 +151,8 @@ def parse_pycentral_vrange(value):
     ((2, 6), (2, 6))
     >>> parse_pycentral_vrange('2.5, 2.6')
     ((2, 5), None)
+    >>> parse_pycentral_vrange('>= 2.6.3')
+    ((2, 6), None)
     """
     get = lambda x: get_requested_versions(parse_vrange(x))
 
