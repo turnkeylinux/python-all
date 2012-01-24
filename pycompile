@@ -153,7 +153,7 @@ def compile(files, versions, force, optimize, e_patterns=None):
 
     # byte compile files
     for fn, versions_to_compile in filter_files(files, e_patterns, versions):
-        cfn = fn + 'c' if (__debug__ or not optimize) else 'o'
+        cfn = fn + 'o' if optimize else 'c'
         if not exists(fn):
             # pycentral's hook should clean it later
             if islink(fn):
