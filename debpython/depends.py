@@ -143,7 +143,9 @@ class Dependencies(object):
                     # are scripts for different Python versions: compile with
                     # default Python version (or the one requested via X-P-V)
                     args += "-V %s" % vrange_str(vr)
-                    if vr[0] == vr[1]:
+                    if vr == (None, None):
+                        pass
+                    elif vr[0] == vr[1]:
                         self.depend("python%s" % vrepr(vr[0]))
                     else:
                         if vr[0]:  # minimum version specified
