@@ -1,7 +1,7 @@
 python-defaults (2.7.2-10) unstable; urgency=low
 
   * For argparse eggs, generate dependencies of the form
-    "python (>= 2.7) | python-argparse". Closes: #657119.
+    "python (>= 2.7) | python-argparse". Closes: #653644, #657119.
 
  -- Matthias Klose <doko@debian.org>  Tue, 24 Jan 2012 11:49:24 +0100
 
