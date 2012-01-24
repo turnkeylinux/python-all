@@ -132,7 +132,7 @@ def py_compile(version, optimize, workers):
     if not isinstance(version, basestring):
         version = vrepr(version)
     cmd = "/usr/bin/python%s%s -m py_compile -" \
-        % (version, '' if (__debug__ or not optimize) else ' -O')
+        % (version, ' -O' if optimize else '')
     process = Popen(cmd, bufsize=1, shell=True,
                     stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
     workers[version] = process  # keep the reference for .communicate()
