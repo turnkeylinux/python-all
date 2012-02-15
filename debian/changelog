@@ -1,3 +1,10 @@
+python-defaults (2.7.2-11) UNRELEASED; urgency=low
+
+  * Bump minimum debhelper version to 8 so all tests will run
+    - dh_python2 tests 1 - 5 require dh 7 and test 6 needs dh 8
+
+ -- Scott Kitterman <scott@kitterman.com>  Tue, 14 Feb 2012 23:03:44 -0500
+
 python-defaults (2.7.2-10) unstable; urgency=low
 
   [ Matthias Klose ]
