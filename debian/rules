@@ -264,7 +264,7 @@ endif
 	install -m 644 debian/idle.1 debian/idle/usr/share/man/man1/idle.1
 
 	mkdir -p debian/idle/usr/share/pixmaps
-	ln -sf python.xpm debian/python/usr/share/pixmaps/idle.xpm
+	ln -sf python.xpm debian/idle/usr/share/pixmaps/idle.xpm
 
 	mkdir -p debian/idle/usr/share/applications
 	cp -p debian/idle.desktop debian/idle/usr/share/applications/
