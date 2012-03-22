@@ -67,6 +67,7 @@ Architecture: all
 Depends: ${misc:Depends}, python (= ${binary:Version}), python-tk (>= 2.4.3-3), idle-@PVER@
 Enhances: python
 Replaces: python (<< 2.7.2-11~)
+Breaks: python (<< 2.7.2-11~)
 Description: IDE for Python using Tkinter (default version)
  IDLE is an Integrated Development Environment for Python.
  IDLE is written using Tkinter and therefore quite platform-independent.
