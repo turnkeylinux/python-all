@@ -179,7 +179,7 @@ binary-indep: build install stamp-doc
 		debian/python-minimal/usr/share/python/
 	install -m 644 debian/pyversions.1 \
 		debian/python-minimal/usr/share/man/man1/
-	dh_link -ppython /usr/share/python/pyversions.py /usr/bin/pyversions
+	dh_link -ppython-minimal /usr/share/python/pyversions.py /usr/bin/pyversions
 
 #	install -m 755 debian/pycompile \
 #		debian/python-minimal/usr/bin/
