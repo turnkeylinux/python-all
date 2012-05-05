@@ -32,7 +32,7 @@ log = logging.getLogger(__name__)
 
 PUBLIC_DIR_RE = re.compile(r'.*?/usr/lib/python(\d.\d+)/(site|dist)-packages')
 PYDIST_RE = re.compile(r"""
-    (?P<name>[A-Za-z][A-Za-z0-9_.]*)             # Python distribution name
+    (?P<name>[A-Za-z][A-Za-z0-9_.\-]*)             # Python distribution name
     \s*
     (?P<vrange>(?:-?\d\.\d+(?:-(?:\d\.\d+)?)?)?) # version range
     \s*
