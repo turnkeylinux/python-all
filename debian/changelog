@@ -8,8 +8,10 @@ python-defaults (2.7.2-11) UNRELEASED; urgency=low
   * Bump standards version to 3.9.3 without further change
   * Correct Python package names with hyphens in them being ignored
     (Closes: #657665)
+  * Drop -n from /usr/bin/idle invocations in debian/idle.desktop and
+    debian/idle.menu (Closes: #482156)
 
- -- Scott Kitterman <scott@kitterman.com>  Fri, 04 May 2012 23:34:46 -0400
+ -- Scott Kitterman <scott@kitterman.com>  Sun, 06 May 2012 00:52:22 -0400
 
 python-defaults (2.7.2-10) unstable; urgency=low
 
