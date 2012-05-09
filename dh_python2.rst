@@ -53,7 +53,7 @@ namespace feature
 ~~~~~~~~~~~~~~~~~
 dh_python2 parses Egg's namespace_packages.txt files (in addition to
 --namespace command line argument(s)) and drops empty __init__.py files from
-binary package. pycompile will regenerates them at install time and pyclean
+binary package. pycompile will regenerate them at install time and pyclean
 will remove them at uninstall time (if they're no longer used in installed
 packages). It's still a good idea to provide __init__.py file in one of
 binary packages (even if all other packages use this feature).
