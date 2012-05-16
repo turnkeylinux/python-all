@@ -166,10 +166,13 @@ binary-indep: build install stamp-doc
 	: # provide the python and python.1 defaults
 	mkdir -p debian/python-minimal/usr/bin
 	ln -sf python$(VER) debian/python-minimal/usr/bin/python
+	ln -sf debian/python-minimal/usr/bin/python \
+		 debian/python-minimal/usr/bin/python2
 	mkdir -p debian/python-minimal/usr/share/man/man1
 	ln -sf python$(VER).1.gz \
 		debian/python-minimal/usr/share/man/man1/python.1.gz
-
+	ln -sf debian/python-minimal/usr/share/man/man1/python.1.gz \
+		debian/python-minimal/usr/share/man/man1/python2.1.gz
 	: # 
 	mkdir -p debian/python-minimal/usr/share/python
 	cp -p debian/debian_defaults \

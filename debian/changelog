@@ -17,8 +17,11 @@ python-defaults (2.7.2-11) UNRELEASED; urgency=low
     - Update description of functionality related to X-Python-Version for
       Wheezy
     - Update X/XS-Python-Versions to also include X-Python-Version examples
+  * Provide /usr/bin/python2 symlink from python-minimal instead of
+    python2.7-minimal
+    - Add appropriage Breaks/Replaces
 
- -- Scott Kitterman <scott@kitterman.com>  Wed, 16 May 2012 14:19:29 -0400
+ -- Scott Kitterman <scott@kitterman.com>  Wed, 16 May 2012 14:58:09 -0400
 
 python-defaults (2.7.2-10) unstable; urgency=low
 
