@@ -10,8 +10,15 @@ python-defaults (2.7.2-11) UNRELEASED; urgency=low
     (Closes: #657665)
   * Drop -n from /usr/bin/idle invocations in debian/idle.desktop and
     debian/idle.menu (Closes: #482156)
+  * Update Python policy
+    - Describe addition of /usr/bin/python2 due to upstream changes
+    - Remove redundant text on Python provides and clarify when they should be
+      used
+    - Update description of functionality related to X-Python-Version for
+      Wheezy
+    - Update X/XS-Python-Versions to also include X-Python-Version examples
 
- -- Scott Kitterman <scott@kitterman.com>  Sun, 06 May 2012 00:52:22 -0400
+ -- Scott Kitterman <scott@kitterman.com>  Wed, 16 May 2012 14:19:29 -0400
 
 python-defaults (2.7.2-10) unstable; urgency=low
 

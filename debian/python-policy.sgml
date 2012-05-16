@@ -32,7 +32,7 @@
         <name>Scott Kitterman</name>
 	<email>scott@kitterman.com</email>
       </author>
-      <version>version 0.9.4.1</version>
+      <version>version 0.9.4.2</version>
 
       <abstract>
 	This document describes the packaging of Python within the
@@ -42,8 +42,8 @@
 
       <copyright>
 	<copyrightsummary>
-	  Copyright &copy; 1999, 2001, 2003, 2006, 2009, 2010, 2011 Software in the
-	  Public Interest
+	  Copyright &copy; 1999, 2001, 2003, 2006, 2009, 2010, 2011, 2012
+	  Software in the Public Interest
 	</copyrightsummary>
 	<p>
 	  This manual is free software; you can redistribute it and/or
@@ -106,8 +106,8 @@
 	  are needed by other packages, or as long as it seems
 	  reasonable to provide them.  (Note: For the scope of this
 	  document, Python versions are synonymous to feature
-	  releases, i.e. Python 2.5 and 2.5.1 are sub-minor versions of
-	  the same Python version 2.5, but Python 2.4 and 2.5 are
+	  releases, i.e. Python 2.7 and 2.7.1 are sub-minor versions of
+	  the same Python version 2.7, but Python 2.6 and 2.7 are
 	  indeed different versions.)
 	</p>
 	<p>
@@ -184,11 +184,11 @@
 	  than <var>X</var>.<var>Y+1</var>.
 	</p>
 	<p>
-	  There is no symlink for <file>/usr/bin/python2</file>.  This is
-	  consistent with current upstream practice. This is being discussed
-	  in <url id="http://www.python.org/dev/peps/pep-0394/"
-          name="PEP-0394">. If this PEP is approved, then the policy for
-	  Debian should be reconsidered.
+	  Because upstream has started providing it, there will be a symlink
+	  for <file>/usr/bin/python2</file> for Wheezy and later releases.  See
+	  <url id="http://www.python.org/dev/peps/pep-0394/" name="PEP-0394">
+	  for details. Packages must be careful to depend on a sufficient
+	  version of <package>python</pacakge> if they make use of this symlink.
 	</p>
       </sect>
 
@@ -432,14 +432,14 @@
 
 	  Such a package should support the current Debian Python version,
 	  and more if possible (there are several tools to help implement
-	  this, see <ref id="packaging_tools">). For example, if Python 2.3,
-	  2.4, and 2.5 are supported, the Python statement
+	  this, see <ref id="packaging_tools">). For example, if Python 2.5,
+	  2.6, and 2.7 are supported, the Python statement
 	  <example>
 import foo
 	  </example>
 	  should import the module when the user is running any
-	  of <prgn>/usr/bin/python2.3</prgn>, <prgn>/usr/bin/python2.4</prgn>,
-	  and <prgn>/usr/bin/python2.5</prgn>. This requirement also
+	  of <prgn>/usr/bin/python2.5</prgn>, <prgn>/usr/bin/python2.6</prgn>,
+	  and <prgn>/usr/bin/python2.7</prgn>. This requirement also
 	  applies to extension modules; binaries for all the supported
 	  Python versions should be included in a single package.
 	</p>
@@ -460,8 +460,8 @@ import foo
 	  appropriate Depends and Provides lines. The format of the
 	  field may be one of the following:
 	  <example>
-XS-Python-Version: >= X.Y
-XS-Python-Version: >= A.B, << X.Y
+X-Python-Version: >= X.Y
+X-Python-Version: >= A.B, << X.Y
 XS-Python-Version: A.B, X.Y
 XS-Python-Version: all
 	  </example>
@@ -471,9 +471,9 @@ XS-Python-Version: all
 	  information.  The keyword "all" is limited to Python versions and
 	  must be ignored for Python 3 versions. Lists of multiple individual
 	  versions (e.g. 2.4, 2.5, 2.6) work for <tt>XS-Python-Version</tt> and
-	  will continue to be supported, but are not recommended and will not
-	  be supported by <tt>X-Python-Version</tt> or <tt>X-Python3-Version</tt>
-	  after the Squeeze release.
+	  will continue to be supported, but are not recommended and are not
+	  supported by <tt>X-Python-Version</tt> or <tt>X-Python3-Version</tt>
+	  for Wheezy and later releases.
 
 	  The keyword "current" has been deprecated and used to mean that
 	  the package would only have to support a single version (even
@@ -487,12 +487,6 @@ XS-Python-Version: all
 	  deployment to support it's intended purpose of managing Python
           transitions.  This can be adequately accomplished by examining
 	  package dependencies.
-	</p>
-	<p>
-	  If your package is used by another module or application
-	  that requires a specific Python version, it should also
-	  <tt>Provide: python<var>X</var>.<var>Y</var>-foo</tt> for
-	  each version it supports.
 	</p>
       </sect>
 
@@ -522,11 +516,11 @@ XS-Python-Version: all
 	<heading>Provides</heading>
 	<p>
           Provides in binary packages of the form
-          <package>python-<var>foo</var></package> must be specified,
-          if the package contains an extension for more than one
-          python version. Provides should also be added on request of
-          maintainers who depend on a non-default python version. Provides
-	  are only for extensions, not modules.
+          <package>python-<var>X</var>.<var>Y</var><var>>foo</var></package>
+	  must be specified if the package contains an extension for more
+	  than one python version and other package with version specific
+	  dependencies on the package require it.  Provides are only for
+	  extensions, not modules.
 	</p>
       </sect>
 
@@ -606,7 +600,7 @@ XS-Python-Version: all
 	    Programs that have private compiled extensions must either
 	    handle multiple version support themselves, or declare a
 	    tight dependency on the current Python version
-	    (e.g. <tt>Depends: python (>= 2.4), python (<= 2.5)</tt>. No 
+	    (e.g. <tt>Depends: python (>= 2.6), python (<< 2.7)</tt>. No 
 	    tools currently exist to alleviate this situation.
 	  </p>
 	</sect1>
@@ -627,7 +621,7 @@ XS-Python-Version: all
 	  requires a specific version of the package (since virtual
 	  packages cannot be versioned). If this is the case, it
 	  should depend on both the virtual package and the main
-	  package (e.g. <tt>Depends: python2.4-foo, python-foo (>=
+	  package (e.g. <tt>Depends: python2.7-foo, python-foo (>=
 	  1.0)</tt>).
 	</p>
 	<p>
@@ -704,16 +698,16 @@ XS-Python-Version: all
       <p>
 	Build-Depend on at least:
 	<example>
-Build-Depends: python2.3 (>= 2.3-1)
-Build-Depends: python2.4 (>= 2.4-1)
-Build-Depends: python (>= 2.3.5-7)
+Build-Depends: python2.7
+Build-Depends: python2.6 (>= 2.6-1)
+Build-Depends: python (>= 2.6.6-9)
 Build-Depends: python-all
 
-Build-Depends: python2.3-dev (>= 2.3-1)
-Build-Depends: python2.4-dev (>= 2.4-1)
-Build-Depends: python-dev (>= 2.3.5-7)
+Build-Depends: python2.7-dev
+Build-Depends: python2.6-dev (>= 2.6-1)
+Build-Depends: python-dev (>= 2.6.6-9)
 Build-Depends: python-all-dev
-Build-Depends: python3-all-dev (>= 3.1)
+Build-Depends: python3-all-dev (>= 3.2)
 	</example>
       </p>
       <p>
