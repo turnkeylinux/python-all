@@ -23,7 +23,7 @@ python-defaults (2.7.2-11) UNRELEASED; urgency=low
     - Add appropriage Breaks/Replaces
 
   [ Piotr Ożarowski ]
-  * dh_python2: make comparison of X(S)-Python-Version field names
+  * dh_python2, pyversions: make comparison of X(S)-Python-Version field names
     case-insensitive (Closes: #676224)
 
  -- Scott Kitterman <scott@kitterman.com>  Wed, 16 May 2012 14:58:09 -0400

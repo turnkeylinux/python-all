@@ -261,12 +261,12 @@ def extract_pyversion_attribute(fn, pkg):
             section = 'Source'
         elif line.startswith('Package: ' + pkg):
             section = pkg
-        elif line.startswith('XS-Python-Version:') or line.startswith('X-Python-Version:'):
+        elif line.lower().startswith(('xs-python-version:', 'x-python-version:')):
             if section != 'Source':
                 raise ValueError, \
                       'attribute X(S)-Python-Version not in Source section'
             sversion = line.split(':', 1)[1].strip()
-        elif line.startswith('XB-Python-Version:'):
+        elif line.lower().startswith('xb-python-version:'):
             if section == pkg:
                 version = line.split(':', 1)[1].strip()
     if section == None:
