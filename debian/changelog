@@ -1,5 +1,6 @@
 python-defaults (2.7.2-11) UNRELEASED; urgency=low
 
+  [ Scott Kitterman ]
   * Bump minimum debhelper version to 8 so all tests will run
     - dh_python2 tests 1 - 5 require dh 7 and test 6 needs dh 8
   * Move idle.xpm symlink from python to idle and add Breaks/Replaces
@@ -20,6 +21,10 @@ python-defaults (2.7.2-11) UNRELEASED; urgency=low
   * Provide /usr/bin/python2 symlink from python-minimal instead of
     python2.7-minimal
     - Add appropriage Breaks/Replaces
+
+  [ Piotr Ożarowski ]
+  * dh_python2: make comparison of X(S)-Python-Version field names
+    case-insensitive (Closes: #676224)
 
  -- Scott Kitterman <scott@kitterman.com>  Wed, 16 May 2012 14:58:09 -0400
 

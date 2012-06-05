@@ -79,11 +79,11 @@ class DebHelper(object):
             elif line.startswith('Source:'):
                 self.source_name = line[7:].strip()
             elif source_section:
-                if line.startswith('XS-Python-Version:'):
+                if line.lower().startswith('xs-python-version:'):
                     xspv = True
                     if not self.python_version:
                         self.python_version = line[18:].strip()
-                if line.startswith('X-Python-Version:'):
+                if line.lower().startswith('x-python-version:'):
                     xpv = True
                     self.python_version = line[17:].strip()
 
