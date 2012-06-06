@@ -1,4 +1,4 @@
-python-defaults (2.7.2-11) UNRELEASED; urgency=low
+python-defaults (2.7.3~rc2-1) unstable; urgency=low
 
   [ Scott Kitterman ]
   * Bump minimum debhelper version to 8 so all tests will run
@@ -19,12 +19,13 @@ python-defaults (2.7.2-11) UNRELEASED; urgency=low
       Wheezy
     - Update X/XS-Python-Versions to also include X-Python-Version examples
     - Add appropriage Breaks/Replaces
+  * Bump upstream version to match current unstable/wheezy python2.7 version
 
   [ Piotr Ożarowski ]
   * dh_python2, pyversions: make comparison of X(S)-Python-Version field names
     case-insensitive (Closes: #676224)
 
- -- Scott Kitterman <scott@kitterman.com>  Wed, 16 May 2012 14:58:09 -0400
+ -- Scott Kitterman <scott@kitterman.com>  Tue, 05 Jun 2012 22:43:11 -0400
 
 python-defaults (2.7.2-10) unstable; urgency=low
 
