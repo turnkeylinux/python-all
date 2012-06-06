@@ -188,7 +188,7 @@
 	  for <file>/usr/bin/python2</file> for Wheezy and later releases.  See
 	  <url id="http://www.python.org/dev/peps/pep-0394/" name="PEP-0394">
 	  for details. Packages must be careful to depend on a sufficient
-	  version of <package>python</pacakge> if they make use of this symlink.
+	  version of <package>python</package> if they make use of this symlink.
 	</p>
       </sect>
 
