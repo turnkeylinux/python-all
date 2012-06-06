@@ -13,7 +13,7 @@ Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-
 Package: python
 Architecture: all
 Priority: standard
-Depends: ${misc:Depends}, python2.7 (>= 2.7.2-3~), python-minimal (= ${binary:Version})
+Depends: ${misc:Depends}, python2.7 (>= 2.7.3~rc2-1~), python-minimal (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (= ${binary:Version})
 Conflicts: python-central (<< 0.5.5)
 Breaks: python-csv (<< 1.0-4), python-bz2 (<< 1.1-8), python-email (<< 2.5.5-3), update-manager-core (<< 0.200.5-2)
@@ -30,11 +30,11 @@ Description: interactive high-level object-oriented language (default version)
 Package: python-minimal
 Architecture: all
 Priority: standard
-Depends: ${misc:Depends}, python2.7-minimal (>= 2.7.2-3~), dpkg (>= 1.13.20)
+Depends: ${misc:Depends}, python2.7-minimal (>= 2.7.3~rc2-1~), dpkg (>= 1.13.20)
 Recommends: python
 Conflicts: python-central (<< 0.5.5)
-Breaks: python (<< 2.7.2-11~), python-dev (<< 2.6), python-dbg (<< 2.6), python-all (<< 2.6), python-all-dev (<< 2.6), python-all-dbg (<< 2.6), python-examples (<< 2.6), idle (<< 2.6), python2.5-minimal (<< 2.5.5-7), python2.6-minimal (<< 2.6.5~rc2-2), python3.1-minimal (<< 3.1.2~rc1-2), python-support (<< 1.0.10ubuntu2)
-Replaces: python (<< 2.7.2-11~
+Breaks: python (<= 2.7.3~rc2-1~), python-dev (<< 2.6), python-dbg (<< 2.6), python-all (<< 2.6), python-all-dev (<< 2.6), python-all-dbg (<< 2.6), python-examples (<< 2.6), idle (<< 2.6), python2.5-minimal (<< 2.5.5-7), python2.6-minimal (<< 2.6.5~rc2-2), python3.1-minimal (<< 3.1.2~rc1-2), python-support (<< 1.0.10ubuntu2)
+Replaces: python (<= 2.7.3~rc2-1~)
 Description: minimal subset of the Python language (default version)
  This package contains the interpreter and some essential modules.  It's used
  in the boot process for some basic tasks.
@@ -43,7 +43,7 @@ Description: minimal subset of the Python language (default version)
 
 Package: python-examples
 Architecture: all
-Depends: ${misc:Depends}, python (= ${binary:Version}), python2.7-examples (>= 2.7.2-3~)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python2.7-examples (>= 2.7.3~rc2-1~)
 Description: examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in
  the upstream Python distribution.
@@ -53,7 +53,7 @@ Description: examples for the Python language (default version)
 
 Package: python-dev
 Architecture: all
-Depends: ${misc:Depends}, python (= ${binary:Version}), python2.7-dev (>= 2.7.2-3~)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python2.7-dev (>= 2.7.3~rc2-1~)
 Description: header files and a static library for Python (default)
  Header files, a static library and development tools for building
  Python modules, extending the Python interpreter or embedding Python
@@ -66,6 +66,8 @@ Package: idle
 Architecture: all
 Depends: ${misc:Depends}, python (= ${binary:Version}), python-tk (>= 2.4.3-3), idle-python2.7
 Enhances: python
+Replaces: python (<< 2.7.3~rc2-1~)
+Breaks: python (<< 2.7.3~rc2-1~)
 Description: IDE for Python using Tkinter (default version)
  IDLE is an Integrated Development Environment for Python.
  IDLE is written using Tkinter and therefore quite platform-independent.
@@ -76,7 +78,7 @@ Description: IDE for Python using Tkinter (default version)
 Package: python-doc
 Section: doc
 Architecture: all
-Depends: ${misc:Depends}, python2.7-doc (>= 2.7.2-3~)
+Depends: ${misc:Depends}, python2.7-doc (>= 2.7.3~rc2-1~)
 Suggests: python-examples, python (= ${binary:Version})
 Breaks: python (<< 2.3.5)
 Replaces: python (<< 2.3.5)
@@ -102,7 +104,7 @@ Package: python-dbg
 Architecture: all
 Section: debug
 Priority: extra
-Depends: ${misc:Depends}, python (= ${binary:Version}), python2.7-dbg (>= 2.7.2-3~)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python2.7-dbg (>= 2.7.3~rc2-1~)
 Provides: python-gdbm-dbg, python-tk-dbg
 Description: debug build of the Python Interpreter (version 2.7)
  Python interpreter configured with --pydebug. Dynamically loaded modules are
