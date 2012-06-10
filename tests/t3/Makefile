@@ -17,6 +17,10 @@ check:
 	test -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/baz.so
 	test ! -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/baz.so.0.1
 	test ! -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/baz.so.0.1.2
+	test -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/quux.so
+	test ! -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/quux.so.0
+	test ! -L debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/quux.so.0
+	test ! -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/quux.so.0.0.0
 
 clean:
 	./debian/rules clean

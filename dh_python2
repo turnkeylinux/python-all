@@ -380,6 +380,11 @@ def scan(package, dname=None, clean_dbg_pkg=True):
             fpath = join(root, fn)
             if not exists(fpath):
                 # could be removed while handling .so symlinks
+                if islink(fpath) and '.so.' in split(fpath)[-1]:
+                    # dangling symlink to (now removed/renamed) .so file
+                    # which wasn't removed yet (see test3's quux.so.0)
+                    log.info('removing symlink: %s', fpath)
+                    os.remove(fpath)
                 continue
             fext = fn.rsplit('.', 1)[-1]
             if fext in ('pyc', 'pyo'):

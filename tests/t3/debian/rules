@@ -19,4 +19,12 @@ override_dh_pysupport:
 		/usr/lib/python${DPY}/dist-packages/foo/baz.so.0.1
 	dh_link /usr/lib/python${DPY}/dist-packages/foo/baz.so.0.1 \
 		/usr/lib/python${DPY}/dist-packages/foo/baz.so
+	# ... second style of multiple symlinks
+	cp debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/bar.so \
+	   debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/quux.so.0.0.0
+	dh_link /usr/lib/python${DPY}/dist-packages/foo/quux.so.0.0.0 \
+		/usr/lib/python${DPY}/dist-packages/foo/quux.so.0
+	dh_link /usr/lib/python${DPY}/dist-packages/foo/quux.so.0.0.0 \
+		/usr/lib/python${DPY}/dist-packages/foo/quux.so
+	# ... and complex multiple symlinks
 	DH_VERBOSE=1 ../../dh_python2

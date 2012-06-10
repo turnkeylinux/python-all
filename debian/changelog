@@ -1,3 +1,10 @@
+python-defaults (2.7.3~rc2-2) unstable; urgency=low
+
+  * dh_python2: remove even more \.so.* dangling symlinks, thanks to Stefano
+    Rivera for providing a test case
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 10 Jun 2012 13:52:38 +0200
+
 python-defaults (2.7.3~rc2-1) unstable; urgency=low
 
   [ Scott Kitterman ]
