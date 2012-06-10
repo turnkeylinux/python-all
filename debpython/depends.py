@@ -112,15 +112,11 @@ class Dependencies(object):
         if stats['compile']:
             self.depend(MINPYCDEP)
 
-        if not options.ignore_shebangs:
-            for interpreter, version in stats['shebangs']:
-                self.depend(interpreter)
+        for interpreter, version in stats['shebangs']:
+            self.depend(interpreter)
 
         for private_dir, details in stats['private_dirs'].iteritems():
-            if options.ignore_shebangs:
-                versions = []
-            else:
-                versions = list(v for i, v in details.get('shebangs', []) if v)
+            versions = list(v for i, v in details.get('shebangs', []) if v)
 
             for v in versions:
                 if v in SUPPORTED:

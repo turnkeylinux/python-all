@@ -42,8 +42,8 @@ import debpython.namespace as ns
 from debpython.pydist import validate as validate_pydist, \
                              PUBLIC_DIR_RE
 from debpython.tools import sitedir, relative_symlink, \
-                            shebang2pyver, so2pyver, \
-                            clean_egg_name, \
+                            fix_shebang, shebang2pyver, \
+                            so2pyver, clean_egg_name, \
                             pyinstall, pyremove
 from debpython.option import Option
 
@@ -299,7 +299,7 @@ def share_2x(dir1, dir2, dc=None):
 
 
 ### PACKAGE DETAILS ############################################
-def scan(package, dname=None, clean_dbg_pkg=True):
+def scan(package, dname=None, options=None):
     """Gather statistics about Python files in given package."""
     r = {'requires.txt': set(),
          'nsp.txt': set(),
@@ -358,7 +358,7 @@ def scan(package, dname=None, clean_dbg_pkg=True):
         # handle some EGG related data (.egg-info dirs)
         for name in dirs:
             if name.endswith('.egg-info'):
-                if dbg_package and clean_dbg_pkg:
+                if dbg_package and options.clean_dbg_pkg:
                     rmtree(join(root, name))
                     dirs.remove(name)
                     continue
@@ -404,18 +404,22 @@ def scan(package, dname=None, clean_dbg_pkg=True):
                             os.remove(lpath)
                         log.info('renaming %s to %s', dstfpath, fn)
                         os.rename(dstfpath, fpath)
-                if dbg_package and clean_dbg_pkg and fext not in ('so', 'h'):
+                if dbg_package and options.clean_dbg_pkg and \
+                   fext not in ('so', 'h'):
                     os.remove(join(root, fn))
                     continue
 
             elif private_dir:
-                if exists(join(root, fn)):
-                    mode = os.stat(join(root, fn))[ST_MODE]
+                if exists(fpath):
+                    mode = os.stat(fpath)[ST_MODE]
                     if mode & S_IXUSR or mode & S_IXGRP or mode & S_IXOTH:
-                        res = shebang2pyver(join(root, fn))
-                        if res:
-                            r['private_dirs'].setdefault(private_dir, {})\
-                                .setdefault('shebangs', set()).add(res)
+                        if (options.no_shebang_rewrite or \
+                            fix_shebang(fpath, options.shebang)) and \
+                           not options.ignore_shebangs:
+                            res = shebang2pyver(fpath)
+                            if res:
+                                r['private_dirs'].setdefault(private_dir, {})\
+                                    .setdefault('shebangs', set()).add(res)
 
             if public_dir or private_dir:
                 if fext == 'so':
@@ -452,11 +456,14 @@ def scan(package, dname=None, clean_dbg_pkg=True):
                 continue
             # search for scripts in bin dirs
             if bin_dir:
-                res = shebang2pyver(fpath)
-                if res:
-                    r['shebangs'].add(res)
+                if (options.no_shebang_rewrite or \
+                    fix_shebang(fpath, options.shebang)) and \
+                   not options.ignore_shebangs:
+                     res = shebang2pyver(fpath)
+                     if res:
+                         r['shebangs'].add(res)
 
-    if dbg_package and clean_dbg_pkg:
+    if dbg_package and options.clean_dbg_pkg:
         # remove empty directories in -dbg packages
         proot = proot + '/usr/lib'
         for root, dirs, file_names in os.walk(proot, topdown=False):
@@ -519,6 +526,8 @@ def main():
         help='recreate __init__.py files for given namespaces at install time')
     parser.add_option('--clean-pycentral', action='store_true', default=False,
         help='generate maintainer script that will remove pycentral files')
+    parser.add_option('--shebang',
+        help='use given command as shebang in scripts')
     parser.add_option('--ignore-shebangs', action='store_true', default=False,
         help='do not translate shebangs into Debian dependencies')
     parser.add_option('--ignore-namespace', action='store_true', default=False,
@@ -526,6 +535,8 @@ def main():
     parser.add_option('--no-dbg-cleaning', action='store_false',
             dest='clean_dbg_pkg', default=True,
         help='do not remove files from debug packages')
+    parser.add_option('--no-shebang-rewrite', action='store_true',
+            default=False, help='do not rewrite shebangs')
     # ignore some debhelper options:
     parser.add_option('-O', help=SUPPRESS_HELP)
 
@@ -593,7 +604,7 @@ def main():
             if not pyremove(package, options.vrange):
                 exit(5)
             fix_locations(package)
-        stats = scan(package, private_dir, options.clean_dbg_pkg)
+        stats = scan(package, private_dir, options)
         if not private_dir:
             share(package, stats, options)
             pyshared_dir = "debian/%s/usr/share/pyshared/" % package

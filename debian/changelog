@@ -1,7 +1,15 @@
 python-defaults (2.7.3~rc2-2) unstable; urgency=low
 
-  * dh_python2: remove even more \.so.* dangling symlinks, thanks to Stefano
-    Rivera for providing a test case
+  * dh_python2:
+    - remove even more \.so.* dangling symlinks, thanks to Stefano
+      Rivera for providing a test case
+    - rewrite shebangs by default (disable via --no-shebang-rewrite),
+      examples:
+       + "/usr/bin/env python*" → "/usr/bin/python*"
+       + "/usr/local/bin/python foo" → "/usr/bin/python foo"
+       + "/usr/bin/python2" → "/usr/bin/python"
+    - new --shebang option to replace all shebangs in bin dirs
+      (example: --shebang /usr/bin/python2.6)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 10 Jun 2012 13:52:38 +0200
 

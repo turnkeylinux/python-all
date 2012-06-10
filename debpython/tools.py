@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Copyright © 2010 Piotr Ożarowski <piotr@debian.org>
+# Copyright © 2010-2012 Piotr Ożarowski <piotr@debian.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ from debpython.version import RANGE_PATTERN, getver, get_requested_versions
 
 log = logging.getLogger(__name__)
 EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d(?:-[^.]*)?)?(\.egg-info|\.pth)$')
-SHEBANG_RE = re.compile(r'^#!\s*/usr/bin/(?:env\s+)?(python(\d+\.\d+)?(?:-dbg)?).*')
+SHEBANG_RE = re.compile(r'^#!\s*(.*?/bin/.*?)(python(\d+\.\d+)?(?:-dbg)?)(?:\s(.*))?')
 SHAREDLIB_RE = re.compile(r'NEEDED.*libpython(\d\.\d)')
 INSTALL_RE = re.compile(r"""
     (?P<pattern>.+?)  # file pattern
@@ -92,6 +92,39 @@ def relative_symlink(target, link):
     return os.symlink(relpath(target, link), link)
 
 
+def fix_shebang(fpath, replacement=None):
+    """Normalize file's shebang.
+
+    :param replacement: new shebang command (path to interpreter and options)
+    """
+    try:
+        with open(fpath) as fp:
+            fcontent = fp.readlines()
+    except IOError:
+        log.error('cannot open %s', fpath)
+        return False
+
+    match = SHEBANG_RE.match(fcontent[0])
+    if not match:
+        return None
+    if not replacement:
+        path, interpreter, version, argv = match.groups()
+        if path != '/usr/bin':  # f.e. /usr/local/* or */bin/env
+            replacement = "/usr/bin/%s" % interpreter
+        if interpreter == 'python2':
+            replacement = '/usr/bin/python'
+        if replacement and argv:
+            replacement += " %s" % argv
+    if replacement:
+        log.info('replacing shebang in %s (%s)', fpath, fcontent[0])
+        # do not catch IOError here, the file is zeroed at this stage so it's
+        # better to fail dh_python2
+        with open(fpath, 'w') as fp:
+            fp.write("#! %s\n" % replacement)
+            fp.writelines(fcontent[1:])
+    return True
+
+
 def shebang2pyver(fpath):
     """Check file's shebang.
 
@@ -105,10 +138,10 @@ def shebang2pyver(fpath):
             if not match:
                 return None
             res = match.groups()
-            if res != (None, None):
-                if res[1]:
-                    res = res[0], getver(res[1])
-                return res
+            if res[1:3] != (None, None):
+                if res[2]:
+                    return res[1], getver(res[2])
+                return res[1], None
     except IOError:
         log.error('cannot open %s', fpath)
 
