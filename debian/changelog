@@ -1,5 +1,6 @@
-python-defaults (2.7.3~rc2-2) unstable; urgency=low
+python-defaults (2.7.3-1) unstable; urgency=low
 
+  [ Piotr Ożarowski ]
   * dh_python2:
     - remove even more \.so.* dangling symlinks, thanks to Stefano
       Rivera for providing a test case
@@ -11,7 +12,10 @@ python-defaults (2.7.3~rc2-2) unstable; urgency=low
     - new --shebang option to replace all shebangs in bin dirs
       (example: --shebang /usr/bin/python2.6)
 
- -- Piotr Ożarowski <piotr@debian.org>  Sun, 10 Jun 2012 13:52:38 +0200
+  [ Scott Kitterman ]
+  * Bump upstream version to match current unstable/wheezy python2.7 version
+
+ -- Scott Kitterman <scott@kitterman.com>  Mon, 18 Jun 2012 23:09:10 -0400
 
 python-defaults (2.7.3~rc2-1) unstable; urgency=low
 
