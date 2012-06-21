@@ -330,7 +330,7 @@
 	  <item>
 	    <p>
 	      /usr/share/python/runtime.d/*.rtremove: these are called when
-	      a runtime is installed or stops being supported.  The first
+	      a runtime is removed or stops being supported.  The first
 	      argument is "rtremove", and the second argument is the
 	      affected runtime (for example
 	      python<var>X</var>.<var>Y</var>).
