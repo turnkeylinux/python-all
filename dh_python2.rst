@@ -99,6 +99,16 @@ Examples:
  * `*.pth` (removes .pth files from .../dist-packages/)
  * `bar/baz.py 2.5` (removes .../python2.5/site-packages/bar/baz.py)
 
+overriding supported / default Python versions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you want to override system's list of supported Python versions or the
+default one (f.e. to build a package that includes symlinks for older version
+of Python or compile .py files only for given interpreter version), you can do
+that via DEBPYTHON_SUPPORTED and/or DEBPYTHON_DEFAULT env. variables.
+
+Example: "2.5,2.7" limits the list of supported Python versions to Python 2.5
+and Python 2.7.
+
 
 OPTIONS
 =======
