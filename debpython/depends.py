@@ -94,11 +94,13 @@ class Dependencies(object):
             tpl = 'python-dbg' if dbgpkg else 'python'
             minv = pub_vers[0]
             maxv = pub_vers[-1]
-            if dbgpkg:
-                tpl2 = 'python%d.%d-dbg'
-            else:
-                tpl2 = 'python%d.%d'
-            self.depend(' | '.join(tpl2 % i for i in debsorted(pub_vers)))
+            # generating "python2.X | python2.Y | python2.Z" dependencies
+            # disabled (see #625740):
+            #if dbgpkg:
+            #    tpl2 = 'python%d.%d-dbg'
+            #else:
+            #    tpl2 = 'python%d.%d'
+            #self.depend(' | '.join(tpl2 % i for i in debsorted(pub_vers)))
 
             # additional Depends to block python package transitions
             if minv <= DEFAULT:
