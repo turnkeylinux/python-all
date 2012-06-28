@@ -14,6 +14,8 @@ python-defaults (2.7.3-1) unstable; urgency=low
   * pyversions, dh_python2, pycompile: allow to override system's list of
     supported Python versions via DEBPYTHON_SUPPORTED and default Python
     version via DEBPYTHON_DEFAULT env. variables
+  * Debhelper's python2 sequence now inserts dh_python2 before dh_installinit
+    (closes: 670418)
 
   [ Scott Kitterman ]
   * Bump upstream version to match current unstable/wheezy python2.7 version
