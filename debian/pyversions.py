@@ -110,7 +110,8 @@ def unsupported_versions(version_only=False):
     else:
         return _unsupported_versions
 
-_supported_versions = None
+_supported_versions = ["python%s" % ver for ver in \
+                       os.environ.get('DEBPYTHON_SUPPORTED', '').split()]
 def supported_versions(version_only=False):
     global _supported_versions
     if not _supported_versions:
@@ -144,7 +145,9 @@ def supported_versions(version_only=False):
     else:
         return _supported_versions
 
-_default_version = None
+_default_version = "python%s" % os.environ.get('DEBPYTHON_DEFAULT', '')
+if _default_version == 'python':
+    _default_version = None
 def default_version(version_only=False):
     global _default_version
     if not _default_version:

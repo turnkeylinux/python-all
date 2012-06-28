@@ -11,9 +11,9 @@ python-defaults (2.7.3-1) unstable; urgency=low
        + "/usr/bin/python2" → "/usr/bin/python"
     - new --shebang option to replace all shebangs in bin dirs
       (example: --shebang /usr/bin/python2.6)
-  * dh_python2, pycompile: allow to override system's list of supported
-    Python versions via DEBPYTHON_SUPPORTED and default Python version via
-    DEBPYTHON_DEFAULT env. variables
+  * pyversions, dh_python2, pycompile: allow to override system's list of
+    supported Python versions via DEBPYTHON_SUPPORTED and default Python
+    version via DEBPYTHON_DEFAULT env. variables
 
   [ Scott Kitterman ]
   * Bump upstream version to match current unstable/wheezy python2.7 version
