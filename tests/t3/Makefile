@@ -1,11 +1,7 @@
 #!/usr/bin/make -f
 
-all: run check
-
-DPY=$(shell PYTHONPATH=../../ python -c 'import debpython.version as v; print(v.vrepr(v.DEFAULT))')
-
-run: clean
-	dpkg-buildpackage -b -us -uc
+include ../common.mk
+DPY=$(DEBPYTHON_DEFAULT)
 
 check:
 	grep -q "pycompile -p python-foo /usr/lib/python-foo -V $(DPY)"\
@@ -22,6 +18,5 @@ check:
 	test ! -L debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/quux.so.0
 	test ! -f debian/python-foo/usr/lib/python${DPY}/dist-packages/foo/quux.so.0.0.0
 
-clean:
-	./debian/rules clean
+clean: clean-common
 	rm -rf lib/Foo.egg-info build

@@ -41,8 +41,7 @@ _supported = environ.get('DEBPYTHON_SUPPORTED')
 _default = environ.get('DEBPYTHON_DEFAULT')
 if not _supported or not _default:
     _config = SafeConfigParser()
-    _config.read(['/usr/share/python/debian_defaults',
-                 join(dirname(__file__), '..', 'debian', 'debian_defaults')])
+    _config.read('/usr/share/python/debian_defaults')
     if not _default:
         _default = _config.get('DEFAULT', 'default-version')[6:]
     if not _supported:

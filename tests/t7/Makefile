@@ -1,10 +1,7 @@
 #!/usr/bin/make -f
 
-all: run check
-
-
-run: clean
-	dpkg-buildpackage -b -us -uc
+include ../common.mk
+clean: clean-common
 
 check:
 	# python2.4 hardcoded via `dh_python2 -shebang ...python2.4`
@@ -19,6 +16,3 @@ check:
 	# /local removed from shebang 
 	grep -q '#! /usr/bin/python' debian/foo/usr/share/foo/baz.py
 	grep -q '#! /usr/bin/python2.6' debian/foo/usr/share/foo/foo.py
-
-clean:
-	./debian/rules clean

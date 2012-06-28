@@ -1,10 +1,7 @@
 #!/usr/bin/make -f
 
-all: run check
-
-
-run: clean
-	dpkg-buildpackage -b -us -uc
+include ../common.mk
+clean: clean-common
 
 check:
 	# python2.4 hardcoded via `dh_python2 -V 2.4`
@@ -19,6 +16,3 @@ check:
 	grep -q Depends:.*python2.6 debian/foo/DEBIAN/control
 	grep -q '\-V 2.6 /usr/share/foo' debian/foo/usr/share/python/runtime.d/foo.rtupdate
 	grep -q '/usr/share/foo \-V 2.6' debian/foo/DEBIAN/postinst
-
-clean:
-	./debian/rules clean

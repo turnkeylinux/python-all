@@ -1,10 +1,7 @@
 #!/usr/bin/make -f
 
-all: run check
-
-
-run: clean
-	dpkg-buildpackage -b -us -uc
+include ../common.mk
+clean: clean-common
 
 check:
 	# test dh_python2
@@ -29,6 +26,3 @@ check:
 	do [ `ls debian/python-foo/usr/lib/python2.*/*-packages/$$i/__init__.py 2>/dev/null || true | wc -l` = 0 ];\
 	[ `ls debian/python-foo/usr/lib/python2.*/*-packages/$$i/__init__.pyc 2>/dev/null || true | wc -l` = 0 ];\
 	done
-
-clean:
-	./debian/rules clean

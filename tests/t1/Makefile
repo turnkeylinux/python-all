@@ -1,11 +1,7 @@
 #!/usr/bin/make -f
 
-all: run check
-
-DPY=$(shell PYTHONPATH=../../ python -c 'import debpython.version as v; print(v.vrepr(v.DEFAULT))')
-
-run: clean
-	dpkg-buildpackage -b -us -uc
+include ../common.mk
+DPY=$(DEBPYTHON_DEFAULT)
 
 check:
 	grep -q "Depends: .*python-mako" debian/python-foo/DEBIAN/control
@@ -15,6 +11,5 @@ check:
 	[ `readlink debian/python-foo/usr/lib/python$(DPY)/dist-packages/foo/absolute_link_to_tmp` = /tmp ]
 	[ `readlink debian/python-foo/usr/lib/python$(DPY)/dist-packages/foo/link_to_parent_dir` = .. ]
 
-clean:
-	./debian/rules clean
+clean: clean-common
 	rm -rf lib/Foo.egg-info
