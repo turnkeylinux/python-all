@@ -24,6 +24,7 @@ import logging
 import os
 import re
 from os.path import exists, isdir, join
+from string import maketrans
 from subprocess import PIPE, Popen
 from debpython.version import vrepr, getver, get_requested_versions
 from debpython.tools import memoize
@@ -41,7 +42,7 @@ PYDIST_RE = re.compile(r"""
         ;\s*
         (?P<standard>PEP386)?                    # PEP-386 mode
         \s*
-        (?P<rules>s/.*)?                         # translator rules
+        (?P<rules>(?:s|tr|y).*)?                 # translator rules
     )?
     """, re.VERBOSE)
 REQUIRES_RE = re.compile(r'''
@@ -117,13 +118,13 @@ def guess_dependency(req, version=None):
     req = safe_name(name) + rest
 
     data = load()
-    req_dict = REQUIRES_RE.match(req)
-    if not req_dict:
+    req_d = REQUIRES_RE.match(req)
+    if not req_d:
         log.info('please ask dh_python2 author to fix REQUIRES_RE '
                  'or your upstream author to fix requires.txt')
         raise Exception('requirement is not valid: %s' % req)
-    req_dict = req_dict.groupdict()
-    name = req_dict['name']
+    req_d = req_d.groupdict()
+    name = req_d['name']
     details = data.get(name.lower())
     if details:
         for item in details:
@@ -134,12 +135,13 @@ def guess_dependency(req, version=None):
             if not item['dependency']:
                 return  # this requirement should be ignored
             if item['dependency'].endswith(')'):
-                # no need to translate versions if version is hardcoded in Debian
-                # dependency
+                # no need to translate versions if version is hardcoded in
+                # Debian dependency
                 return item['dependency']
-            if req_dict['version']:
-                # FIXME: translate it (rules, versions)
-                return item['dependency']
+            if req_d['version'] and (item['standard'] or item['rules']) and\
+               req_d['operator'] not in (None, '=='):
+                v = _translate(req_d['version'], item['rules'], item['standard'])
+                return "%s (%s %s)" % (item['dependency'], req_d['operator'], v)
             else:
                 return item['dependency']
 
@@ -231,3 +233,53 @@ def sensible_pname(egg_name):
 def ci_regexp(name):
     """Return case insensitive dpkg -S regexp."""
     return ''.join("[%s%s]" % (i.upper(), i) if i.isalpha() else i for i in name.lower())
+
+
+PRE_VER_RE = re.compile(r'[-.]?(alpha|beta|rc|dev|a|b|c)')
+GROUP_RE = re.compile(r'\$(\d+)')
+
+
+def _pl2py(pattern):
+    """Convert Perl RE patterns used in uscan to Python's
+
+    >>> print _pl2py('foo$3')
+    foo\g<3>
+    """
+    return GROUP_RE.sub(r'\\g<\1>', pattern)
+
+
+def _translate(version, rules, standard):
+    """Translate Python version into Debian one.
+
+    >>> _translate('1.C2betac', ['s/c//gi'], None)
+    '1.2beta'
+    >>> _translate('5-fooa1.2beta3-fooD',
+    ...     ['s/^/1:/', 's/-foo//g', 's:([A-Z]):+$1:'], 'PEP386')
+    '1:5~a1.2~beta3+D'
+    >>> _translate('x.y.x.z', ['tr/xy/ab/', 'y,z,Z,'], None)
+    'a.b.a.Z'
+    """
+    for rule in rules:
+        # uscan supports s, tr and y operations
+        if rule.startswith(('tr', 'y')):
+            # Note: no support for escaped separator in the pattern
+            pos = 1 if rule.startswith('y') else 2
+            tmp = rule[pos + 1:].split(rule[pos])
+            version = version.translate(maketrans(tmp[0], tmp[1]))
+        elif rule.startswith('s'):
+            # uscan supports: g, u and x flags
+            tmp = rule[2:].split(rule[1])
+            pattern = re.compile(tmp[0])
+            count = 1
+            if tmp[2:]:
+                flags = tmp[2]
+                if 'g' in flags:
+                    count = 0
+                if 'i' in flags:
+                    pattern = re.compile(tmp[0], re.I)
+            version = pattern.sub(_pl2py(tmp[1]), version, count)
+        else:
+            log.warn('unknown rule ignored: %s', rule)
+    if standard == 'PEP386':
+        version = PRE_VER_RE.sub('~\g<1>', version)
+    return version

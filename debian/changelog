@@ -13,6 +13,9 @@ python-defaults (2.7.3-1) unstable; urgency=low
       (example: --shebang /usr/bin/python2.6)
     - no longer generates python2.X | python2.Y depenendies for public modules
       (Closes: 625740)
+    - translate Python version numbers into Debian ones for those
+      require.txt items that have a pydist file with (uscan like) rules
+      or PEP386 flag (Closes: #653740)
   * pyversions, dh_python2, pycompile: allow to override system's list of
     supported Python versions via DEBPYTHON_SUPPORTED and default Python
     version via DEBPYTHON_DEFAULT env. variables

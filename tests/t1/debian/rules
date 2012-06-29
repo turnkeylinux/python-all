@@ -12,5 +12,5 @@ override_dh_pysupport:
 	DH_VERBOSE=1 ../../dh_python2\
 		--depends 'SQLAlchemy >= 0.6.1'\
 		--recommends Mako\
-		--suggests 'Foo >= 0.1'\
+		--suggests 'Foo >= 0.1rc2'\
 		--suggests 'bar >= 1.0'
