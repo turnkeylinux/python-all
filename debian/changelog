@@ -27,7 +27,7 @@ python-defaults (2.7.3-1) unstable; urgency=low
   [ Scott Kitterman ]
   * Bump upstream version to match current unstable/wheezy python2.7 version
 
- -- Scott Kitterman <scott@kitterman.com>  Mon, 18 Jun 2012 23:09:10 -0400
+ -- Piotr Ożarowski <piotr@debian.org>  Sat, 30 Jun 2012 20:23:59 +0200
 
 python-defaults (2.7.3~rc2-1) unstable; urgency=low
 
