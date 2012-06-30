@@ -1,8 +1,7 @@
 #! /usr/bin/python
-# -*- coding: UTF-8 -*-
-# vim: et ts=4 sw=4
-
-# Copyright © 2010-2011 Piotr Ożarowski <piotr@debian.org>
+# -*- coding: UTF-8 -*- vim: et ts=4 sw=4
+#
+# Copyright © 2010-2012 Piotr Ożarowski <piotr@debian.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
