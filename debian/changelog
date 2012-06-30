@@ -16,6 +16,8 @@ python-defaults (2.7.3-1) unstable; urgency=low
     - translate Python version numbers into Debian ones for those
       require.txt items that have a pydist file with (uscan like) rules
       or PEP386 flag (Closes: #653740)
+  * Improve dh_python2 manpage a bit, add information about cleaning debug
+    packages (Closes: #653741)
   * pyversions, dh_python2, pycompile: allow to override system's list of
     supported Python versions via DEBPYTHON_SUPPORTED and default Python
     version via DEBPYTHON_DEFAULT env. variables

@@ -22,13 +22,13 @@ QUICK GUIDE FOR MAINTAINERS
  * build module/application using its standard build system,
    remember to build extensions for all supported Python versions (loop over
    ``pyversions -vr``),
- * install files to the *standard* locations, add ``--install-layout=deb`` to
+ * install files to the *standard* locations, add `--install-layout=deb` to
    setup.py's install command if your package is using distutils,
- * add ``python2`` to dh's ``--with`` option, or:
- * include /usr/share/cdbs/1/class/python-distutils.mk in debian/rules and
-   depend on cdbs (>= 0.4.90), or:
- * call dh_python2 in the binary-* target,
- * add ${python:Depends} to Depends,
+ * add `python2` to dh's --with option, or:
+ * `include /usr/share/cdbs/1/class/python-distutils.mk` in debian/rules and
+   depend on `cdbs (>= 0.4.90)`, or:
+ * call ``dh_python2`` in the `binary-*` target,
+ * add `${python:Depends}` to Depends
 
 NOTES
 -----
@@ -43,11 +43,13 @@ competitors, though.
 dependencies
 ~~~~~~~~~~~~
 dh_python2 tries to translate Python dependencies from requires.txt file to
-Debian dependencies, use debian/pydist-overrides or --no-guessing-deps option
-to override it. If you want dh_python2 to generate more strict dependencies
-(f.e. to avoid ABI problems) create debian/python-foo.pydist file. See
-/usr/share/doc/python-doc/README.PyDist (provided by python-doc package) for
-more information.
+Debian dependencies. Use debian/pydist-overrides or --no-guessing-deps option
+to override it if the guess is incorrect. If you want dh_python2 to generate
+more strict dependencies (f.e. to avoid ABI problems) create
+debian/python-foo.pydist file. See /usr/share/doc/python-doc/README.PyDist
+(provided by python-doc package) for more information. If the pydist file
+contains PEP386 flag or set of (uscan like) rules, dh_python2 will make the
+depedency versioned (version requirements are ignored by default).
 
 namespace feature
 ~~~~~~~~~~~~~~~~~
@@ -70,24 +72,33 @@ Python versions) for a private directory that is checked by default, invoke
 dh_python2 with --skip-private option and add another call with a path to this
 directory and new options.
 
+debug packages
+~~~~~~~~~~~~~~
+In binary packages which name ends with `-dbg`, all files in
+`/usr/lib/python2.X/{site,dist}-packages/` directory 
+that have extensions different than `so` or `h` are removed by default.
+Use --no-dbg-cleaning option to disable this feature.
+
 pyinstall files
 ~~~~~~~~~~~~~~~
 Files listed in debian/pkg.pyinstall file will be installed as public modules
 for all requested Python versions (dh_install doesn't know about python's site-
 vs. dist-packages issue).
 
-Syntax: "path/to/file [VERSION_RANGE] [NAMESPACE]". debian directory is
-automatically removed from the path, so you can place your files in debian/
-directory and install them from this location (if you want to install them in
-"debian" namespace, set NAMESPACE to debian). If NAMESPACE is set, all listed
-files will be installed in .../dist-packages/NAMESPACE/ directory.
+Syntax: ``path/to/file [VERSION_RANGE] [NAMESPACE]``
+
+debian directory is automatically removed from the path, so you can place your
+files in debian/ directory and install them from this location (if you want to
+install them in "debian" namespace, set NAMESPACE to debian). If NAMESPACE is
+set, all listed files will be installed in .../dist-packages/NAMESPACE/
+directory.
 
 Examples:
- * `foo.py` (installs .../dist-packages/foo.py for all supported Python versions)
- * `foo/bar.py 2.6-` (installs .../dist-packages/foo/bar.py for versions >= 2.6)
- * `foo/bar.py spam` (installs .../dist-packages/spam/bar.py)
- * `debian/*.py spam.egg 2.5` (installs .../python2.5/site-packages/spam/egg/\*.py
-   files)
+ * ``foo.py`` installs .../dist-packages/foo.py for all supported Python versions
+ * ``foo/bar.py 2.6-`` installs .../dist-packages/foo/bar.py for versions >= 2.6
+ * ``foo/bar.py spam`` installs .../dist-packages/spam/bar.py
+ * ``debian/*.py spam.egg 2.5`` installs .../python2.5/site-packages/spam/egg/\*.py
+   files
 
 pyremove files
 ~~~~~~~~~~~~~~
@@ -96,17 +107,17 @@ Python versions or only from a subset of these versions), add them to
 debian/pkg.pyremove file.
 
 Examples:
- * `*.pth` (removes .pth files from .../dist-packages/)
- * `bar/baz.py 2.5` (removes .../python2.5/site-packages/bar/baz.py)
+ * ``*.pth`` removes .pth files from .../dist-packages/
+ * ``bar/baz.py 2.5`` removes .../python2.5/site-packages/bar/baz.py
 
 overriding supported / default Python versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If you want to override system's list of supported Python versions or the
 default one (f.e. to build a package that includes symlinks for older version
 of Python or compile .py files only for given interpreter version), you can do
-that via DEBPYTHON_SUPPORTED and/or DEBPYTHON_DEFAULT env. variables.
+that via `DEBPYTHON_SUPPORTED` and/or `DEBPYTHON_DEFAULT` env. variables.
 
-Example: "2.5,2.7" limits the list of supported Python versions to Python 2.5
+Example: ``2.5,2.7`` limits the list of supported Python versions to Python 2.5
 and Python 2.7.
 
 

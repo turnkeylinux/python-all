@@ -30,6 +30,9 @@ install: install-dev install-runtime
 %.1: %.rst
 	rst2man $< > $@
 
+%.html: %.rst
+	rst2html $< > $@
+
 manpages: $(MANPAGES)
 
 dist_fallback:
