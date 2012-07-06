@@ -2,6 +2,7 @@ python python
 setuptools python-pkg-resources
 wsgiref python (>= 2.5) | python-wsgiref
 argparse python (>= 2.7) | python-argparse
+pil python-imaging
 AddOns python-peak.util
 BatchModify trac-batchmodify
 BitTornado bittornado
@@ -193,6 +194,7 @@ debpartial_mirror debpartial-mirror
 deluge deluge-common
 devscripts devscripts
 dicompyler dicompyler
+dispcalGUI dispcalgui
 dissy dissy
 djagios djagios
 django_ajax_selects django-ajax-selects
@@ -372,7 +374,6 @@ openstack.common python-openstack-common
 osc osc
 pYsearch python-yahoo
 pbundler pbundler
-pdfposter pdfposter
 pdfshuffler pdfshuffler
 pep8 pep8
 perroquet perroquet
@@ -405,7 +406,6 @@ py_rrdtool python-rrdtool
 pyacidobasic python-acidobasic
 pyacoustid python-acoustid
 pyalsaaudio python-alsaaudio
-pybackpack pybackpack
 pybloom python-bloomfilter
 pybridge pybridge
 pybtex pybtex
@@ -450,7 +450,6 @@ pyrit pyrit
 pyrite_publisher pyrite-publisher
 pysane python-imaging-sane
 pysatellites python-satellites
-pysendfile python-sendfile
 pyserial python-serial
 pysnmp python-pysnmp4
 pysnmp_apps python-pysnmp4-apps
@@ -625,9 +624,9 @@ ubuntu_sso_client ubuntu-sso-client
 udev_discover udev-discover
 ufw ufw
 unattended_upgrades unattended-upgrades
-undertaker undertaker
 unittest_xml_reporting python-xmlrunner
 urlscan urlscan
+vamos undertaker
 vboxapi virtualbox
 virtaal virtaal
 virtinst virtinst
