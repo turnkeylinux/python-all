@@ -2,6 +2,7 @@ python-defaults (2.7.3-2) UNRELEASED; urgency=low
 
   * dist_fallback: add python-imaging (which wasn't recognized before due to
     .pth file)
+  * dh_python2: ignore empty files while trying to normalize shebangs
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 06 Jul 2012 23:03:32 +0200
 

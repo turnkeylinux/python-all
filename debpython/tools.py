@@ -100,6 +100,9 @@ def fix_shebang(fpath, replacement=None):
     try:
         with open(fpath) as fp:
             fcontent = fp.readlines()
+        if not fcontent:
+            log.debug('fix_shebang: ignoring empty file: %s', fpath)
+            return None
     except IOError:
         log.error('cannot open %s', fpath)
         return False
