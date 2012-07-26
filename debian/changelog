@@ -1,11 +1,14 @@
-python-defaults (2.7.3-2) UNRELEASED; urgency=low
+python-defaults (2.7.3-2) unstable; urgency=low
 
-  * dist_fallback: add python-imaging (which wasn't recognized before due to
-    .pth file)
   * dh_python2: ignore empty files while trying to normalize shebangs
     (Closes: #680793)
+  * Fix lack of python-imaging in pydist/dist_fallback
+    - Add python-imaging override to pydist/generate_fallback_list.py
+    - pydist/dist_fallback: Regenerate to add python-imaging (which wasn't
+      recognized before due to .pth file) along with a few automatic
+      adjustments 
 
- -- Piotr Ożarowski <piotr@debian.org>  Fri, 06 Jul 2012 23:03:32 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 26 Jul 2012 23:03:32 +0200
 
 python-defaults (2.7.3-1) unstable; urgency=low
 
