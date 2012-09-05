@@ -33,7 +33,7 @@ from debpython.version import RANGE_PATTERN, getver, get_requested_versions
 
 log = logging.getLogger(__name__)
 EGGnPTH_RE = re.compile(r'(.*?)(-py\d\.\d(?:-[^.]*)?)?(\.egg-info|\.pth)$')
-SHEBANG_RE = re.compile(r'^#!\s*(.*?/bin/.*?)(python(\d+\.\d+)?(?:-dbg)?)(?:\s(.*))?')
+SHEBANG_RE = re.compile(r'^#!\s*(.*?/bin/.*?)(python(2\.\d+)?(?:-dbg)?)(?:\s(.*))?$')
 SHAREDLIB_RE = re.compile(r'NEEDED.*libpython(\d\.\d)')
 INSTALL_RE = re.compile(r"""
     (?P<pattern>.+?)  # file pattern
