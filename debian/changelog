@@ -1,5 +1,6 @@
 python-defaults (2.7.3-3) UNRELEASED; urgency=low
 
+  [ Piotr Ożarowski ]
   * dh_python2:
     - no longer sensitive to trailing slash in private dir names
       (closes: #686358)
@@ -7,6 +8,10 @@ python-defaults (2.7.3-3) UNRELEASED; urgency=low
       python3-* ones
     - TODO: parse interpreter version number from --shebang option and add
       apropriate dependency/rt* script arguments
+
+  [ Dmitry Shachnev ]
+  * debian/python.postrm.in: Handle purge command the same way as remove
+    (thanks to Mitsuya Shibata for the bug report)
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 31 Aug 2012 18:06:26 +0200
 
