@@ -110,8 +110,9 @@ def unsupported_versions(version_only=False):
     else:
         return _unsupported_versions
 
-_supported_versions = ["python%s" % ver for ver in \
-                       os.environ.get('DEBPYTHON_SUPPORTED', '').split()]
+_supported_versions = ["python%s" % ver.strip() for ver in
+                       os.environ.get('DEBPYTHON_SUPPORTED', '').split(',')
+                       if ver.strip()]
 def supported_versions(version_only=False):
     global _supported_versions
     if not _supported_versions:

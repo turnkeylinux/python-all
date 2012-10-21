@@ -8,6 +8,9 @@ python-defaults (2.7.3-3) UNRELEASED; urgency=low
       python3-* ones
     - TODO: parse interpreter version number from --shebang option and add
       apropriate dependency/rt* script arguments
+  * pyversions.py: fix parsing DEBPYTHON_SUPPORTED env. variable
+    (versions should be separated using comma, as in debian_defaults
+    config file)
 
   [ Dmitry Shachnev ]
   * debian/python.{pre,post}rm.in: Handle purge command the same way as
