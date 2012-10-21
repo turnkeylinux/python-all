@@ -6,6 +6,8 @@ python-defaults (2.7.3-3) UNRELEASED; urgency=low
       (closes: #686358)
     - ignore /usr/bin/python3 shebangs in all packages, not just in
       python3-* ones
+    - generates correct "python (<< 2.X)" dependencies for packages with
+      private Python extensions (typo fixed)
     - TODO: parse interpreter version number from --shebang option and add
       apropriate dependency/rt* script arguments
   * pyversions.py: fix parsing DEBPYTHON_SUPPORTED env. variable
