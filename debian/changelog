@@ -1,4 +1,4 @@
-python-defaults (2.7.3-3) UNRELEASED; urgency=low
+python-defaults (2.7.3-3) unstable; urgency=low
 
   [ Piotr Ożarowski ]
   * dh_python2:
@@ -8,8 +8,6 @@ python-defaults (2.7.3-3) UNRELEASED; urgency=low
       python3-* ones
     - generates correct "python (<< 2.X)" dependencies for packages with
       private Python extensions (typo fixed)
-    - TODO: parse interpreter version number from --shebang option and add
-      apropriate dependency/rt* script arguments
   * pyversions.py: fix parsing DEBPYTHON_SUPPORTED env. variable
     (versions should be separated using comma, as in debian_defaults
     config file)
@@ -18,7 +16,7 @@ python-defaults (2.7.3-3) UNRELEASED; urgency=low
   * debian/python.{pre,post}rm.in: Handle purge command the same way as
     remove (thanks to Mitsuya Shibata for the bug report)
 
- -- Piotr Ożarowski <piotr@debian.org>  Fri, 31 Aug 2012 18:06:26 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 21 Oct 2012 22:40:55 +0200
 
 python-defaults (2.7.3-2) unstable; urgency=low
 
