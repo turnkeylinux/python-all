@@ -17,12 +17,12 @@ check:
 	# test pycompile
 	DESTDIR=debian/python-foo/ ../../pycompile -v debian/python-foo/usr/lib/
 	set -e; for i in remove_this_one bar bar/baz;\
-	do [ `ls debian/python-foo/usr/lib/python2.*/*-packages/$$i/__init__.py | wc -l` != '0' ];\
-	[ `ls debian/python-foo/usr/lib/python2.*/*-packages/$$i/__init__.pyc | wc -l` != '0' ];\
+	do [ "`ls debian/python-foo/usr/lib/python2.*/*-packages/$$i/__init__.py | wc -l`" != '0' ];\
+	[ "`ls debian/python-foo/usr/lib/python2.*/*-packages/$$i/__init__.pyc | wc -l`" != '0' ];\
 	done
 	# test pyclean
 	DESTDIR=debian/python-foo/ ../../pyclean -v debian/python-foo/usr/lib/
 	set -e; for i in remove_this_one bar bar/baz;\
-	do [ `ls debian/python-foo/usr/lib/python2.*/*-packages/$$i/__init__.py 2>/dev/null || true | wc -l` = 0 ];\
-	[ `ls debian/python-foo/usr/lib/python2.*/*-packages/$$i/__init__.pyc 2>/dev/null || true | wc -l` = 0 ];\
+	do [ "`ls debian/python-foo/usr/lib/python2.*/*-packages/$$i/__init__.py 2>/dev/null || true | wc -l`" = 0 ];\
+	[ "`ls debian/python-foo/usr/lib/python2.*/*-packages/$$i/__init__.pyc 2>/dev/null || true | wc -l`" = 0 ];\
 	done
