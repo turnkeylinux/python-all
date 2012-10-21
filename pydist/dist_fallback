@@ -8,7 +8,6 @@ BatchModify trac-batchmodify
 BitTornado bittornado
 BitTorrent bittorrent
 Bitten trac-bitten-slave
-Bugs_Everywhere bugs-everywhere
 BytecodeAssembler python-peak.util
 BzrPipeline bzr-pipeline
 BzrTools bzrtools
@@ -29,12 +28,10 @@ Doconce doconce
 Dosage dosage
 DouF00 douf00
 Editra editra
-Eikazo eikazo
 Extremes python-peak.util
 Fabric fabric
 FeinCMS python-django-feincms
 Flask_WTF python-flaskext.wtf
-Gally gally
 GaussSum gausssum
 GeoIP_Python python-geoip
 GitPython python-git
@@ -79,7 +76,6 @@ PyWebDAV python-webdav
 PyYAML python-yaml
 Py_ python-py++
 Pygmy pygmy
-Pyjamas pyjamas-pyjs
 Pymacs pymacs
 Pyste libboost-python1.49-dev
 PythonDaap python-daap
@@ -92,7 +88,6 @@ ScientificPython python-scientific
 Shinken shinken-core
 Sonata sonata
 South python-django-south
-SpreadModule python-spread
 SymbolType python-peak.util
 Symbolic python-swiginac
 TcosConfigurator tcos-configurator
@@ -116,7 +111,6 @@ TracSubTicketsPlugin trac-subtickets
 TracTags trac-tags
 TracVirtualTicketPermissions trac-virtualticketpermissions
 TracWikiPrintPlugin trac-wikiprint
-TracWikiRename trac-wikirename
 TracWysiwyg trac-wysiwyg
 TracXMLRPC trac-xmlrpc
 Trac_jsGantt trac-jsgantt
@@ -145,13 +139,11 @@ aptoncd aptoncd
 arandr arandr
 archivemail archivemail
 archmage archmage
-arcjobtool arcjobtool
 arista arista
 atheist atheist
 autokey autokey-common
 beautifulsoup4 python-bs4
 bicyclerepair bicyclerepair
-bitbake bitbake
 bley bley
 bookletimposer bookletimposer
 bpython bpython
@@ -194,7 +186,6 @@ debpartial_mirror debpartial-mirror
 deluge deluge-common
 devscripts devscripts
 dicompyler dicompyler
-dispcalGUI dispcalgui
 dissy dissy
 djagios djagios
 django_ajax_selects django-ajax-selects
@@ -257,9 +248,9 @@ fts_clacks fts-clacks
 fts_fai fts-fai-ldap
 fts_ltsp fts-ltsp-ldap
 fts_opsi fts-opsi
+funkload funkload
 fuse_python python-fuse
 fusil fusil
-fusion_icon fusion-icon
 fuss_launcher fuss-launcher
 galternatives galternatives
 gameclock gameclock
@@ -284,19 +275,15 @@ gnome_app_install gnome-codec-install
 gnomecatalog gnomecatalog
 gnuplot_py python-gnuplot
 go2 go2
-googlecl googlecl
 gozerbot gozerbot
 gozerplugs gozerbot-plugins
 gpodder gpodder
 gquilt gquilt
-gracie gracie
 graphviz trac-graphviz
-groundcontrol groundcontrol
 gunicorn gunicorn
 gvb gvb
 gwrite gwrite
 gyp gyp
-hellanzb hellanzb
 hgnested mercurial-nested
 hgsvn hgsvn
 hitchhhiker hitchhiker
@@ -322,7 +309,6 @@ kiki kiki
 lastfmsubmitd lastfmsubmitd
 lazygal lazygal
 legit legit
-libsbml libsbml5-python
 libtpclient_py python-tp-client
 libtpproto_py python-tp-netlib
 lio lio-utils
@@ -374,6 +360,7 @@ openstack.common python-openstack-common
 osc osc
 pYsearch python-yahoo
 pbundler pbundler
+pdfposter pdfposter
 pdfshuffler pdfshuffler
 pep8 pep8
 perroquet perroquet
@@ -403,6 +390,7 @@ pyPortMidi python-pypm
 py_Asterisk python-asterisk
 py_pypcap python-pypcap
 py_rrdtool python-rrdtool
+py_sendfile python-sendfile
 pyacidobasic python-acidobasic
 pyacoustid python-acoustid
 pyalsaaudio python-alsaaudio
@@ -428,7 +416,6 @@ pygrib python-grib
 pyliblo python-liblo
 pyliblzma python-lzma
 pylibpcap python-libpcap
-pylibtiff python-libtiff
 pylint pylint
 pylogsparser python-logsparser
 pymecavideo python-mecavideo
@@ -525,7 +512,6 @@ screenlets screenlets
 seivot seivot
 sensitivetickets trac-sensitivetickets
 servefile servefile
-sessioninstaller sessioninstaller
 shedskin shedskin
 slapos.core slapos-client
 slimit slimit
@@ -620,8 +606,6 @@ turpial turpial
 tw.forms python-toscawidgets
 txLibravatar python-twisted-libravatar
 ubuntu_dev_tools ubuntu-dev-tools
-ubuntu_sso_client ubuntu-sso-client
-udev_discover udev-discover
 ufw ufw
 unattended_upgrades unattended-upgrades
 unittest_xml_reporting python-xmlrunner
