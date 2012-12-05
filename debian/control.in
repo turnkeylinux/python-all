@@ -11,7 +11,8 @@ Vcs-Bzr: http://alioth.debian.org/anonscm/bzr/pkg-python/python-defaults-debian
 Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-debian/files
 
 Package: python
-Architecture: all
+Architecture: any
+Multi-Arch: allowed
 Priority: standard
 Depends: ${misc:Depends}, @PVER@ (>= @PREVVER@), python-minimal (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (= ${binary:Version})
@@ -28,7 +29,8 @@ Description: interactive high-level object-oriented language (default version)
  Python version (currently v@VER@).
 
 Package: python-minimal
-Architecture: all
+Architecture: any
+Multi-Arch: allowed
 Priority: standard
 Depends: ${misc:Depends}, @PVER@-minimal (>= @PREVVER@), dpkg (>= 1.13.20)
 Recommends: python
@@ -52,8 +54,21 @@ Description: examples for the Python language (default version)
  Python version (currently v@VER@).
 
 Package: python-dev
-Architecture: all
-Depends: ${misc:Depends}, python (= ${binary:Version}), @PVER@-dev (>= @PREVVER@)
+Architecture: any
+Multi-Arch: allowed
+Depends: ${misc:Depends}, python (= ${binary:Version}), libpython-dev (= ${binary:Version}), @PVER@-dev (>= @PREVVER@)
+Description: header files and a static library for Python (default)
+ Header files, a static library and development tools for building
+ Python modules, extending the Python interpreter or embedding Python
+ in applications.
+ .
+ This package is a dependency package, which depends on Debian's default
+ Python version (currently v@VER@).
+
+Package: libpython-dev
+Architecture: any
+Multi-Arch: same
+Depends: lib@PVER@-dev (>= @PREVVER@), ${misc:Depends}
 Description: header files and a static library for Python (default)
  Header files, a static library and development tools for building
  Python modules, extending the Python interpreter or embedding Python
@@ -101,17 +116,28 @@ Description: documentation for the high-level object-oriented language Python
  Python version (currently v@VER@).
 
 Package: python-dbg
-Architecture: all
+Architecture: any
+Multi-Arch: allowed
 Section: debug
 Priority: extra
-Depends: ${misc:Depends}, python (= ${binary:Version}), python@VER@-dbg (>= @PREVVER@)
+Depends: ${misc:Depends}, python (= ${binary:Version}), libpython-dbg (= ${binary:Version}), python@VER@-dbg (>= @PREVVER@)
 Provides: python-gdbm-dbg, python-tk-dbg
 Description: debug build of the Python Interpreter (version @VER@)
  Python interpreter configured with --pydebug. Dynamically loaded modules are
  searched in /usr/lib/python@VER@/lib-dynload/debug first.
 
+Package: libpython-dbg
+Architecture: any
+Multi-Arch: same
+Section: debug
+Priority: extra
+Depends: lib@PVER@-dbg (>= @PREVVER@), ${misc:Depends}
+Description: debug build of the Python Interpreter (version @VER@)
+ Python interpreter configured with --pydebug. Dynamically loaded modules
+ are searched in /usr/lib/python@VER@/lib-dynload/debug first.
+
 Package: python-all
-Architecture: all
+Architecture: any
 Depends: ${misc:Depends}, python (= ${binary:Version}), python2.6 (>= 2.6.7-3), python2.7 (>= 2.7.2-3)
 Description: package depending on all supported Python runtime versions
  The package currently depends on python2.6 and python2.7, in the future,
@@ -122,7 +148,7 @@ Description: package depending on all supported Python runtime versions
  avoid hardcoded dependencies on specific Python runtimes.
 
 Package: python-all-dev
-Architecture: all
+Architecture: any
 Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), python-dev (= ${binary:Version}), python2.6-dev (>= 2.6.5-2), python2.7-dev (>= 2.7-7)
 Description: package depending on all supported Python development packages
  The package currently depends on python2.6-dev and python2.7-dev, in the
@@ -133,7 +159,7 @@ Description: package depending on all supported Python development packages
  avoid hardcoded dependencies on specific Python development packages.
 
 Package: python-all-dbg
-Architecture: all
+Architecture: any
 Section: debug
 Priority: extra
 Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), python-dbg (= ${binary:Version}), python2.6-dbg (>= 2.6.5-2), python2.7-dbg (>= 2.7-7)
