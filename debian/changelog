@@ -1,4 +1,4 @@
-python-defaults (2.7.3-10) UNRELEASED; urgency=low
+python-defaults (2.7.3-10) experimental; urgency=low
 
   * Build dependency packages as architecture dependent packages.
   * Make python, python-{minimal,dev,dbg} Multi-Arch: allowed.
@@ -6,7 +6,7 @@ python-defaults (2.7.3-10) UNRELEASED; urgency=low
     $(DEB_HOST_GNU_TYPE/DEB_HOST_MULTIARCH)-python-config symlinks.
   * Provide python2 symlinks.
 
- -- Matthias Klose <doko@debian.org>  Tue, 04 Dec 2012 17:35:26 +0100
+ -- Matthias Klose <doko@debian.org>  Wed, 12 Dec 2012 00:25:00 +0100
 
 python-defaults (2.7.3-3) unstable; urgency=low
 
