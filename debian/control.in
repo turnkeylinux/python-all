@@ -170,3 +170,32 @@ Description: package depending on all supported Python debugging packages
  .
  This package is used as a build dependency for other packages to
  avoid hardcoded dependencies on specific Python development packages.
+
+#Package: libpython-all-dev
+#Architecture: any
+#Multi-Arch: same
+#Depends: libpython-dev (= ${binary:Version}), ${misc:Depends},
+# libpython2.7-dev
+#Description: package depending on all supported Python development packages
+# The package currently depends on libpython2.7-dev, in the
+# future, dependencies on jython (Python for a JVM) and ironpython (Python
+# for Mono) may be added.
+# .
+# This package is a dependency package used as a build dependency for other
+# packages to avoid hardcoded dependencies on specific Python development
+# packages.
+
+#Package: libpython-all-dbg
+#Architecture: any
+#Multi-Arch: same
+#Section: debug
+#Priority: extra
+#Depends: libpython-dbg (= ${binary:Version}), ${misc:Depends},
+# libpython2.7-dbg
+#Description: package depending on all supported Python debugging packages
+# The package currently depends on libpython2.7-dbg, in the
+# future, dependencies on jython (Python for a JVM) and ironpython (Python
+# for Mono) may be added.
+# .
+# This package is a dependency package used as a build dependency for other
+# packages to avoid hardcoded dependencies on specific Python debug packages.
