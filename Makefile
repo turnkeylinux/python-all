@@ -56,9 +56,6 @@ pdebuild:
 nose:
 	nosetests --with-doctest --with-coverage
 
-unittests:
-	python2.7 -m unittest discover -v
-
 tests: nose
 	make -C tests
 
