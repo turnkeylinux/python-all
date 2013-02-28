@@ -121,7 +121,6 @@ Multi-Arch: allowed
 Section: debug
 Priority: extra
 Depends: ${misc:Depends}, python (= ${binary:Version}), libpython-dbg (= ${binary:Version}), python2.7-dbg (>= 2.7.3-10~)
-Provides: python-gdbm-dbg, python-tk-dbg
 Description: debug build of the Python Interpreter (version 2.7)
  Python interpreter configured with --pydebug. Dynamically loaded modules are
  searched in /usr/lib/python2.7/lib-dynload/debug first.
