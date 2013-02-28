@@ -1,3 +1,9 @@
+python-defaults (2.7.3-12) experimental; urgency=low
+
+  * Move python-docutils to build-depends (from build-depends-indep).
+
+ -- Matthias Klose <doko@debian.org>  Thu, 28 Feb 2013 15:58:09 +0100
+
 python-defaults (2.7.3-11) experimental; urgency=low
 
   * Add Multi-Arch: same packages libpython-all-{dev,dbg} (not yet built,
