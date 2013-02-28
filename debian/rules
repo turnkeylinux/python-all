@@ -207,7 +207,7 @@ endif
 	dh_builddeb -i $(NOPKGS)
 
 # Build architecture-dependent files here.
-binary-arch: build install
+binary-arch: build install stamp-doc
 	dh_testdir -a
 	dh_testroot -a
 	dh_installman -a

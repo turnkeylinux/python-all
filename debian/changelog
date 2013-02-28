@@ -1,3 +1,9 @@
+python-defaults (2.7.3-13) experimental; urgency=low
+
+  * Always build the policy files.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 28 Feb 2013 16:46:08 +0100
+
 python-defaults (2.7.3-12) experimental; urgency=low
 
   * Move python-docutils to build-depends (from build-depends-indep).
