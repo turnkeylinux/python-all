@@ -15,6 +15,7 @@ Architecture: any
 Multi-Arch: allowed
 Priority: standard
 Depends: ${misc:Depends}, python2.7 (>= 2.7.3-10~), python-minimal (= ${binary:Version})
+#Depends: ${misc:Depends}, python2.7 (>= 2.7.3-10~), python-minimal (= ${binary:Version}), libpython-stdlib (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (= ${binary:Version})
 Conflicts: python-central (<< 0.5.5)
 Breaks: python-csv (<< 1.0-4), python-bz2 (<< 1.1-8), python-email (<< 2.5.5-3), update-manager-core (<< 0.200.5-2)
@@ -76,6 +77,18 @@ Description: header files and a static library for Python (default)
  .
  This package is a dependency package, which depends on Debian's default
  Python version (currently v2.7).
+
+#Package: libpython-stdlib
+#Architecture: any
+#Multi-Arch: same
+#Depends: libpython2.7-stdlib (>= 2.7.3-10~), ${misc:Depends}
+#Description: interactive high-level object-oriented language (default python version)
+# Python, the high-level, interactive object oriented language,
+# includes an extensive class library with lots of goodies for
+# network programming, system administration, sounds and graphics.
+# .
+# This package is a dependency package, which depends on Debian's default
+# Python version (currently v2.7).
 
 Package: idle
 Architecture: all
@@ -169,3 +182,32 @@ Description: package depending on all supported Python debugging packages
  .
  This package is used as a build dependency for other packages to
  avoid hardcoded dependencies on specific Python development packages.
+
+#Package: libpython-all-dev
+#Architecture: any
+#Multi-Arch: same
+#Depends: libpython-dev (= ${binary:Version}), ${misc:Depends},
+# libpython2.7-dev
+#Description: package depending on all supported Python development packages
+# The package currently depends on libpython2.7-dev, in the
+# future, dependencies on jython (Python for a JVM) and ironpython (Python
+# for Mono) may be added.
+# .
+# This package is a dependency package used as a build dependency for other
+# packages to avoid hardcoded dependencies on specific Python development
+# packages.
+
+#Package: libpython-all-dbg
+#Architecture: any
+#Multi-Arch: same
+#Section: debug
+#Priority: extra
+#Depends: libpython-dbg (= ${binary:Version}), ${misc:Depends},
+# libpython2.7-dbg
+#Description: package depending on all supported Python debugging packages
+# The package currently depends on libpython2.7-dbg, in the
+# future, dependencies on jython (Python for a JVM) and ironpython (Python
+# for Mono) may be added.
+# .
+# This package is a dependency package used as a build dependency for other
+# packages to avoid hardcoded dependencies on specific Python debug packages.

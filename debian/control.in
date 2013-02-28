@@ -15,6 +15,7 @@ Architecture: any
 Multi-Arch: allowed
 Priority: standard
 Depends: ${misc:Depends}, @PVER@ (>= @PREVVER@), python-minimal (= ${binary:Version})
+#Depends: ${misc:Depends}, @PVER@ (>= @PREVVER@), python-minimal (= ${binary:Version}), libpython-stdlib (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (= ${binary:Version})
 Conflicts: python-central (<< 0.5.5)
 Breaks: python-csv (<< 1.0-4), python-bz2 (<< 1.1-8), python-email (<< 2.5.5-3), update-manager-core (<< 0.200.5-2)
@@ -76,6 +77,18 @@ Description: header files and a static library for Python (default)
  .
  This package is a dependency package, which depends on Debian's default
  Python version (currently v@VER@).
+
+#Package: libpython-stdlib
+#Architecture: any
+#Multi-Arch: same
+#Depends: libpython@VER@-stdlib (>= @PREVVER@), ${misc:Depends}
+#Description: interactive high-level object-oriented language (default python version)
+# Python, the high-level, interactive object oriented language,
+# includes an extensive class library with lots of goodies for
+# network programming, system administration, sounds and graphics.
+# .
+# This package is a dependency package, which depends on Debian's default
+# Python version (currently v@VER@).
 
 Package: idle
 Architecture: all
