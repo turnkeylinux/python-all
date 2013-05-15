@@ -22,7 +22,10 @@ export PVER=python2.7
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
 # first version with Multi-Arch: allowed
-PREVVER := 2.7.3-10~
+PREVVER := 2.7.5-1~
+
+# not yet allowed
+#ma_allowed	= yes
 
 PWD		:= $(shell pwd)
 
@@ -61,7 +64,9 @@ control-file:
 	    -e "s/@NVER@/$(NVER)/g" \
 	    -e "s/@VER@/$(VER)/g" \
 	    -e "s/@PREVVER@/$(PREVVER)/g" \
-		<debian/control.in >debian/control.tmp
+		<debian/control.in \
+	    $(if $(ma_allowed),,| grep -v '^Multi-Arch: allowed$$') \
+		>debian/control.tmp
 ifeq ($(distribution),Ubuntu)
   ifneq (,$(findstring ubuntu, $(PKGVERSION)))
 	m='Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>'; \

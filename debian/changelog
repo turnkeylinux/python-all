@@ -1,3 +1,13 @@
+python-defaults (2.7.5-1) UNRELEASED; urgency=low
+
+  * Bump version to 2.7.5.
+  * Drop python2.6 as a supported python version.
+  * Bump standards version to 3.9.4.
+  * Start building the libpython-stdlib, libpython-all-dev, libpython-all-dbg
+    packages.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 15 May 2013 21:55:11 +0200
+
 python-defaults (2.7.3-13) experimental; urgency=low
 
   * Always build the policy files.
@@ -28,6 +38,12 @@ python-defaults (2.7.3-10) experimental; urgency=low
   * Provide python2 symlinks.
 
  -- Matthias Klose <doko@debian.org>  Wed, 12 Dec 2012 00:25:00 +0100
+
+python-defaults (2.7.3-5) unstable; urgency=low
+
+  * Drop Python 2.6 as a supported Python version.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 06 May 2013 02:48:48 +0200
 
 python-defaults (2.7.3-4) unstable; urgency=low
 
