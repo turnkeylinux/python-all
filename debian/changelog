@@ -1,10 +1,15 @@
 python-defaults (2.7.5-1) UNRELEASED; urgency=low
 
+  [ Matthias Klose ]
   * Bump version to 2.7.5.
   * Drop python2.6 as a supported python version.
   * Bump standards version to 3.9.4.
   * Start building the libpython-stdlib, libpython-all-dev, libpython-all-dbg
     packages.
+
+  [ Scott Kitterman ]
+  * When X(S)-Python-Version or debian/pyversions is not present, do not
+    describe them as missing, just indicate they are not there
 
  -- Matthias Klose <doko@debian.org>  Wed, 15 May 2013 21:55:11 +0200
 

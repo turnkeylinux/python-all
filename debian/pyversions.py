@@ -278,11 +278,11 @@ def extract_pyversion_attribute(fn, pkg):
     if pkg == 'Source':
         if sversion == None:
             raise MissingVersionValueError, \
-                  'missing X(S)-Python-Version in control file'
+                  'no X(S)-Python-Version in control file'
         return sversion
     if version == None:
         raise MissingVersionValueError, \
-              'missing XB-Python-Version for package `%s' % pkg
+              'no XB-Python-Version for package `%s' % pkg
     return version
 
 # compatibility functions to parse debian/pyversions
