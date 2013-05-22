@@ -88,7 +88,7 @@
 	  Python helper programs such as python-support and python-central.  None of
 	  these references apply to Python 3.  It is a design goal to fully specify
 	  required interfaces and functions in policy for Python 3 and to avoid
-	  enshrining specific implmentation details in policy.  Except as noted,
+	  enshrining specific implementation details in policy.  Except as noted,
 	  policy for Python 3 is the same as Python with the addition of the version
 	  number as needed to distinguish them.
 	</p>
