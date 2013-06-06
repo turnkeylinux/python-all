@@ -1,3 +1,9 @@
+python-defaults (2.7.5-2) UNRELEASED; urgency=low
+
+  * Add dependencies on the new libpython-{stdlib,all-dev,all-dbg} packages.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 06 Jun 2013 17:49:32 +0200
+
 python-defaults (2.7.5-1) unstable; urgency=low
 
   [ Matthias Klose ]

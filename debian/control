@@ -13,8 +13,7 @@ Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-
 Package: python
 Architecture: any
 Priority: standard
-Depends: ${misc:Depends}, python2.7 (>= 2.7.5-1~), python-minimal (= ${binary:Version})
-#Depends: ${misc:Depends}, python2.7 (>= 2.7.5-1~), python-minimal (= ${binary:Version}), libpython-stdlib (= ${binary:Version})
+Depends: ${misc:Depends}, python2.7 (>= 2.7.5-1~), python-minimal (= ${binary:Version}), libpython-stdlib (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (>= 2.7.5-1~)
 Conflicts: python-central (<< 0.5.5)
 Breaks: python-csv (<< 1.0-4), python-bz2 (<< 1.1-8), python-email (<< 2.5.5-3), update-manager-core (<< 0.200.5-2)
@@ -158,7 +157,7 @@ Description: package depending on all supported Python runtime versions
 
 Package: python-all-dev
 Architecture: any
-Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), python-dev (= ${binary:Version}), python2.7-dev (>= 2.7-7)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), libpython-all-dev (= ${binary:Version}), python-dev (= ${binary:Version}), python2.7-dev (>= 2.7-7)
 Description: package depending on all supported Python development packages
  The package currently depends on python2.7-dev, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python
@@ -172,7 +171,7 @@ Package: python-all-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), python-dbg (= ${binary:Version}), python2.7-dbg (>= 2.7-7)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), libpython-all-dbg (= ${binary:Version}), python-dbg (= ${binary:Version}), python2.7-dbg (>= 2.7-7)
 Description: package depending on all supported Python debugging packages
  The package currently depends on python2.7-dbg, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python
