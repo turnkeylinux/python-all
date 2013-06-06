@@ -156,7 +156,7 @@ stamp-dh_python:
 	dh_testdir
 	dh_testroot
 	dh_installdirs
-	make check_versions
+	-make check_versions
 	DESTDIR=debian/python PREFIX=/usr make install-dev
 	DESTDIR=debian/python-minimal PREFIX=/usr make install-runtime manpages
 	# disabled by default, run manually if you want to update it
@@ -291,7 +291,7 @@ binary-arch: build install stamp-doc
 	ln -sf python$(VER)-config.1.gz \
 		debian/python-dev/usr/share/man/man1/python-config.1.gz
 	ln -sf python$(VER)-config.1.gz \
-		debian/python-dev/usr/share/man/man1/python-config2.1.gz
+		debian/python-dev/usr/share/man/man1/python2-config.1.gz
 
 	: # provide pkgconfig defaults
 	mkdir -p debian/python-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig
@@ -363,10 +363,10 @@ endif
 	  rm -rf debian/$$p/usr/share/doc/$$p; \
 	  ln -sf python debian/$$p/usr/share/doc/$$p; \
 	done
-#	rm -rf debian/libpython-all-dev/usr/share/doc/libpython-all-dev
-#	ln -sf libpython-dev debian/libpython-all-dev/usr/share/doc/libpython-all-dev
-#	rm -rf debian/libpython-all-dbg/usr/share/doc/libpython-all-dev
-#	ln -sf libpython-dbg debian/libpython-all-dbg/usr/share/doc/libpython-all-dbg
+	rm -rf debian/libpython-all-dev/usr/share/doc/libpython-all-dev
+	ln -sf libpython-dev debian/libpython-all-dev/usr/share/doc/libpython-all-dev
+	rm -rf debian/libpython-all-dbg/usr/share/doc/libpython-all-dev
+	ln -sf libpython-dbg debian/libpython-all-dbg/usr/share/doc/libpython-all-dbg
 
 	dh_compress -a $(NOPKGS)
 	dh_fixperms -a $(NOPKGS)

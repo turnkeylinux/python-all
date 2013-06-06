@@ -15,7 +15,7 @@ Architecture: any
 Priority: standard
 Depends: ${misc:Depends}, python2.7 (>= 2.7.5-1~), python-minimal (= ${binary:Version})
 #Depends: ${misc:Depends}, python2.7 (>= 2.7.5-1~), python-minimal (= ${binary:Version}), libpython-stdlib (= ${binary:Version})
-Suggests: python-doc (= ${binary:Version}), python-tk (= ${binary:Version})
+Suggests: python-doc (= ${binary:Version}), python-tk (>= 2.7.5-1~)
 Conflicts: python-central (<< 0.5.5)
 Breaks: python-csv (<< 1.0-4), python-bz2 (<< 1.1-8), python-email (<< 2.5.5-3), update-manager-core (<< 0.200.5-2)
 Replaces: python-dev (<< 2.6.5-2)
@@ -44,7 +44,7 @@ Description: minimal subset of the Python language (default version)
 
 Package: python-examples
 Architecture: all
-Depends: ${misc:Depends}, python (= ${binary:Version}), python2.7-examples (>= 2.7.5-1~)
+Depends: ${misc:Depends}, python (>= ${binary:Version}), python2.7-examples (>= 2.7.5-1~)
 Description: examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in
  the upstream Python distribution.
@@ -66,6 +66,7 @@ Description: header files and a static library for Python (default)
 Package: libpython-dev
 Architecture: any
 Multi-Arch: same
+Section: libdevel
 Depends: libpython2.7-dev (>= 2.7.5-1~), ${misc:Depends}
 Description: header files and a static library for Python (default)
  Header files, a static library and development tools for building
@@ -89,7 +90,7 @@ Description: interactive high-level object-oriented language (default python ver
 
 Package: idle
 Architecture: all
-Depends: ${misc:Depends}, python (= ${binary:Version}), python-tk (>= 2.4.3-3), idle-python2.7
+Depends: ${misc:Depends}, python (>= ${binary:Version}), python-tk, idle-python2.7
 Enhances: python
 Replaces: python (<< 2.7.3-1~)
 Breaks: python (<< 2.7.3-1~)
@@ -146,42 +147,44 @@ Description: debug build of the Python Interpreter (version 2.7)
 
 Package: python-all
 Architecture: any
-Depends: ${misc:Depends}, python (= ${binary:Version}), python2.6 (>= 2.6.7-3), python2.7 (>= 2.7.2-3)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python2.7 (>= 2.7.2-3)
 Description: package depending on all supported Python runtime versions
- The package currently depends on python2.6 and python2.7, in the future,
+ The package currently depends on python2.7, in the future,
  dependencies on jython (Python for a JVM) and ironpython (Python for Mono)
  may be added.
  .
- This package is used as a build dependency for other packages to
- avoid hardcoded dependencies on specific Python runtimes.
+ This package is a dependency package used as a build dependency for other
+ packages to avoid hardcoded dependencies on specific Python runtimes.
 
 Package: python-all-dev
 Architecture: any
-Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), python-dev (= ${binary:Version}), python2.6-dev (>= 2.6.5-2), python2.7-dev (>= 2.7-7)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), python-dev (= ${binary:Version}), python2.7-dev (>= 2.7-7)
 Description: package depending on all supported Python development packages
- The package currently depends on python2.6-dev and python2.7-dev, in the
+ The package currently depends on python2.7-dev, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python
  for Mono) may be added.
  .
- This package is used as a build dependency for other packages to
- avoid hardcoded dependencies on specific Python development packages.
+ This package is a dependency package used as a build dependency for other
+ packages to avoid hardcoded dependencies on specific Python development
+ packages.
 
 Package: python-all-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), python-dbg (= ${binary:Version}), python2.6-dbg (>= 2.6.5-2), python2.7-dbg (>= 2.7-7)
+Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), python-dbg (= ${binary:Version}), python2.7-dbg (>= 2.7-7)
 Description: package depending on all supported Python debugging packages
- The package currently depends on python2.6-dbg and python2.7-dbg, in the
+ The package currently depends on python2.7-dbg, in the
  future, dependencies on jython (Python for a JVM) and ironpython (Python
  for Mono) may be added.
  .
- This package is used as a build dependency for other packages to
- avoid hardcoded dependencies on specific Python development packages.
+ This package is a dependency package used as a build dependency for other
+ packages to avoid hardcoded dependencies on specific Python debug packages.
 
 Package: libpython-all-dev
 Architecture: any
 Multi-Arch: same
+Section: libdevel
 Depends: libpython-dev (= ${binary:Version}), ${misc:Depends},
  libpython2.7-dev
 Description: package depending on all supported Python development packages

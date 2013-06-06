@@ -6,6 +6,9 @@
 removes .pyc and .pyo files
 ---------------------------
 
+:Manual section: 1
+:Author: Piotr Ożarowski, 2012-201
+
 SYNOPSIS
 ========
   pyclean [-p PACKAGE | DIR_OR_FILE]

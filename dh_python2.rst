@@ -6,6 +6,9 @@
 calculates Python dependencies, adds maintainer scripts to byte compile files, etc.
 -----------------------------------------------------------------------------------
 
+:Manual section: 1
+:Author: Piotr Ożarowski, 2012-2013
+
 SYNOPSIS
 ========
   dh_python2 -p PACKAGE [-V [X.Y][-][A.B]] DIR_OR_FILE [-X REGEXPR]

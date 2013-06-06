@@ -6,6 +6,9 @@
 byte compile Python source files
 --------------------------------
 
+:Manual section: 1
+:Author: Piotr Ożarowski, 2012-2013
+
 SYNOPSIS
 ========
   pycompile [-V [X.Y][-][A.B]] DIR_OR_FILE [-X REGEXPR]

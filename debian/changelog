@@ -1,4 +1,4 @@
-python-defaults (2.7.5-1) UNRELEASED; urgency=low
+python-defaults (2.7.5-1) unstable; urgency=low
 
   [ Matthias Klose ]
   * Bump version to 2.7.5.
@@ -6,12 +6,14 @@ python-defaults (2.7.5-1) UNRELEASED; urgency=low
   * Bump standards version to 3.9.4.
   * Start building the libpython-stdlib, libpython-all-dev, libpython-all-dbg
     packages.
+  * Drop Python 2.6 as a supported Python version.
+  * Fix some lintian warnings.
 
   [ Scott Kitterman ]
   * When X(S)-Python-Version or debian/pyversions is not present, do not
     describe them as missing, just indicate they are not there
 
- -- Matthias Klose <doko@debian.org>  Wed, 15 May 2013 21:55:11 +0200
+ -- Matthias Klose <doko@debian.org>  Thu, 06 Jun 2013 14:57:03 +0200
 
 python-defaults (2.7.3-13) experimental; urgency=low
 
