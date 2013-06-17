@@ -365,7 +365,7 @@ endif
 	done
 	rm -rf debian/libpython-all-dev/usr/share/doc/libpython-all-dev
 	ln -sf libpython-dev debian/libpython-all-dev/usr/share/doc/libpython-all-dev
-	rm -rf debian/libpython-all-dbg/usr/share/doc/libpython-all-dev
+	rm -rf debian/libpython-all-dbg/usr/share/doc/libpython-all-dbg
 	ln -sf libpython-dbg debian/libpython-all-dbg/usr/share/doc/libpython-all-dbg
 
 	dh_compress -a $(NOPKGS)
