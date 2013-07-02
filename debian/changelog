@@ -1,6 +1,11 @@
 python-defaults (2.7.5-3) UNRELEASED; urgency=low
 
+  [ Matthias Klose ]
   * Fix libpython-all-dbg doc dir symlink. Closes: #712270.
+
+  [ Piotr Ożarowski ]
+  * Replace /usr/bin/dh_python2 with a shell script that invokes
+    dh-python's dh_python2 if debian/control mentions dh-python
 
  -- Matthias Klose <doko@debian.org>  Mon, 17 Jun 2013 11:09:36 +0200
 

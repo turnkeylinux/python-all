@@ -32,7 +32,6 @@ from os.path import isabs, isdir, islink, exists, join, normpath, realpath,\
  split
 from shutil import rmtree, copy as fcopy
 from stat import ST_MODE, S_IXUSR, S_IXGRP, S_IXOTH
-sys.path.insert(1, '/usr/share/python/')
 from debpython.debhelper import DebHelper
 from debpython.depends import Dependencies
 from debpython.version import SUPPORTED, DEFAULT, \
