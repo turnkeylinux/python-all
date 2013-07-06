@@ -6,6 +6,8 @@ python-defaults (2.7.5-3) UNRELEASED; urgency=low
   [ Piotr Ożarowski ]
   * Replace /usr/bin/dh_python2 with a shell script that invokes
     dh-python's dh_python2 if debian/control mentions dh-python
+  * dh_python2: warnings about --install-layout=deb and translating
+    dependencies are just an info now
 
  -- Matthias Klose <doko@debian.org>  Mon, 17 Jun 2013 11:09:36 +0200
 

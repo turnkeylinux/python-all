@@ -84,7 +84,7 @@ def fix_locations(package):
                               'found in two locations:\n %s\n %s',
                               ver, location, found_versions[ver])
                     exit(2)
-                log.warn('Python %s should install files in %s. '
+                log.info('Python %s should install files in %s. '
                          'Did you forget "--install-layout=deb"?',
                          ver, sitedir(version))
                 if not isdir(dstdir):
