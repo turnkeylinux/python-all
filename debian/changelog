@@ -1,4 +1,4 @@
-python-defaults (2.7.5-3) UNRELEASED; urgency=low
+python-defaults (2.7.5-3) unstable; urgency=low
 
   [ Matthias Klose ]
   * Fix libpython-all-dbg doc dir symlink. Closes: #712270.
@@ -9,7 +9,7 @@ python-defaults (2.7.5-3) UNRELEASED; urgency=low
   * dh_python2: warnings about --install-layout=deb and translating
     dependencies are just an info now
 
- -- Matthias Klose <doko@debian.org>  Mon, 17 Jun 2013 11:09:36 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Fri, 02 Aug 2013 08:54:32 +0200
 
 python-defaults (2.7.5-2) unstable; urgency=low
 
