@@ -1,3 +1,10 @@
+python-defaults (2.7.5-4) unstable; urgency=low
+
+  * Add libpython-all-dbg.postinst to convert the doc directory to a symlink
+    on upgrade (Closes: #718736)
+
+ -- Scott Kitterman <scott@kitterman.com>  Tue, 13 Aug 2013 00:23:58 -0400
+
 python-defaults (2.7.5-3) unstable; urgency=low
 
   [ Matthias Klose ]
