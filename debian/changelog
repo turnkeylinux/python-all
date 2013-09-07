@@ -1,3 +1,10 @@
+python-defaults (2.7.5-4.1) UNRELEASED; urgency=low
+
+  * Non-maintainer upload.
+  * Adjust debpython/depends.py to be multiarch-friendly.
+
+ -- Steve Langasek <vorlon@debian.org>  Fri, 06 Sep 2013 17:18:18 -0700
+
 python-defaults (2.7.5-4) unstable; urgency=low
 
   * Add libpython-all-dbg.postinst to convert the doc directory to a symlink
