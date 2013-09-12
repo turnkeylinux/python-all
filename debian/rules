@@ -25,7 +25,7 @@ PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); 
 PREVVER := 2.7.5-1~
 
 # not yet allowed
-#ma_allowed	= yes
+ma_allowed	= yes
 
 PWD		:= $(shell pwd)
 
