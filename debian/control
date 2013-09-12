@@ -12,6 +12,7 @@ Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-
 
 Package: python
 Architecture: any
+Multi-Arch: allowed
 Priority: standard
 Depends: ${misc:Depends}, python2.7 (>= 2.7.5-1~), python-minimal (= ${binary:Version}), libpython-stdlib (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (>= 2.7.5-1~)
@@ -29,6 +30,7 @@ Description: interactive high-level object-oriented language (default version)
 
 Package: python-minimal
 Architecture: any
+Multi-Arch: allowed
 Priority: standard
 Depends: ${misc:Depends}, python2.7-minimal (>= 2.7.5-1~), dpkg (>= 1.13.20)
 Recommends: python
@@ -127,6 +129,7 @@ Description: documentation for the high-level object-oriented language Python
 
 Package: python-dbg
 Architecture: any
+Multi-Arch: allowed
 Section: debug
 Priority: extra
 Depends: ${misc:Depends}, python (= ${binary:Version}), libpython-dbg (= ${binary:Version}), python2.7-dbg (>= 2.7.5-1~)
@@ -146,6 +149,7 @@ Description: debug build of the Python Interpreter (version 2.7)
 
 Package: python-all
 Architecture: any
+Multi-Arch: allowed
 Depends: ${misc:Depends}, python (= ${binary:Version}), python2.7 (>= 2.7.2-3)
 Description: package depending on all supported Python runtime versions
  The package currently depends on python2.7, in the future,
@@ -157,6 +161,7 @@ Description: package depending on all supported Python runtime versions
 
 Package: python-all-dev
 Architecture: any
+Multi-Arch: allowed
 Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), libpython-all-dev (= ${binary:Version}), python-dev (= ${binary:Version}), python2.7-dev (>= 2.7-7)
 Description: package depending on all supported Python development packages
  The package currently depends on python2.7-dev, in the
@@ -169,6 +174,7 @@ Description: package depending on all supported Python development packages
 
 Package: python-all-dbg
 Architecture: any
+Multi-Arch: allowed
 Section: debug
 Priority: extra
 Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), libpython-all-dbg (= ${binary:Version}), python-dbg (= ${binary:Version}), python2.7-dbg (>= 2.7-7)

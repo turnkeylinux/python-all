@@ -1,9 +1,13 @@
-python-defaults (2.7.5-4.1) UNRELEASED; urgency=low
+python-defaults (2.7.5-5) unstable; urgency=low
 
-  * Non-maintainer upload.
+  [ Steve Langasek ]
   * Adjust debpython/depends.py to be multiarch-friendly.
 
- -- Steve Langasek <vorlon@debian.org>  Fri, 06 Sep 2013 17:18:18 -0700
+  [ Piotr Ożarowski ]
+  * Set "Multi-Arch: allowed" in python, python-minimal, python-dbg,
+    python-all, python-all-dev, python-all-dbg
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 12 Sep 2013 21:25:01 +0200
 
 python-defaults (2.7.5-4) unstable; urgency=low
 
