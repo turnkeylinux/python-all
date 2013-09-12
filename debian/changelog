@@ -6,6 +6,8 @@ python-defaults (2.7.5-5) unstable; urgency=low
   [ Piotr Ożarowski ]
   * Set "Multi-Arch: allowed" in python, python-dev, python-minimal,
     python-dbg, python-all, python-all-dev, python-all-dbg
+  * Replace /usr/bin/dh_python2 with a Python script that invokes
+    dh-python's dh_python2 if Build-Depends{,-Indep} contains dh-python
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 12 Sep 2013 21:25:01 +0200
 
