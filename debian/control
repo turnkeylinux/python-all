@@ -55,6 +55,7 @@ Description: examples for the Python language (default version)
 
 Package: python-dev
 Architecture: any
+Multi-Arch: allowed
 Depends: ${misc:Depends}, python (= ${binary:Version}), libpython-dev (= ${binary:Version}), python2.7-dev (>= 2.7.5-1~)
 Description: header files and a static library for Python (default)
  Header files, a static library and development tools for building

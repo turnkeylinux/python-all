@@ -4,8 +4,8 @@ python-defaults (2.7.5-5) unstable; urgency=low
   * Adjust debpython/depends.py to be multiarch-friendly.
 
   [ Piotr Ożarowski ]
-  * Set "Multi-Arch: allowed" in python, python-minimal, python-dbg,
-    python-all, python-all-dev, python-all-dbg
+  * Set "Multi-Arch: allowed" in python, python-dev, python-minimal,
+    python-dbg, python-all, python-all-dev, python-all-dbg
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 12 Sep 2013 21:25:01 +0200
 
