@@ -18,7 +18,7 @@ if exists(NEW) and exists('debian/control'):
                 break
             line_lower = line.lower()
             if inside:
-                if line.startswith(' '):
+                if line.startswith((' ', "\t")):
                     if has_dhpython(line):
                         binary = NEW
                         break
