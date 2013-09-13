@@ -67,7 +67,7 @@ def get_requested_versions(vrange=None, available=None):
     :type available: bool
 
     >>> sorted(get_requested_versions([(2, 5), (3, 0)]))
-    [(2, 6), (2, 7)]
+    [(2, 7)]
     >>> sorted(get_requested_versions('')) == sorted(SUPPORTED)
     True
     >>> sorted(get_requested_versions([None, None])) == sorted(SUPPORTED)
