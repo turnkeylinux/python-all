@@ -24,3 +24,4 @@ OPTIONS
 -q, --quiet	be quiet
 
 -p PACKAGE, --package=PACKAGE	specify Debian package name to clean
+  (combining with DIR_OR_FILE will additionally limit list of files)
