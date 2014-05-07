@@ -5,7 +5,7 @@ Maintainer: Matthias Klose <doko@debian.org>
 Uploaders: Scott Kitterman <scott@kitterman.com>, Piotr Ożarowski <piotr@debian.org>
 Build-Depends: debhelper (>= 8~), python-docutils (>= 0.4-3),
   libhtml-tree-perl, debiandoc-sgml, lsb-release
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Homepage: http://www.python.org/
 Vcs-Bzr: http://alioth.debian.org/anonscm/bzr/pkg-python/python-defaults-debian
 Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-debian/files
