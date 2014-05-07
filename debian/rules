@@ -50,7 +50,7 @@ stamp-build:
 stamp-doc-policy:
 	debiandoc2text debian/python-policy.sgml
 	mv -f python-policy.txt debian/
-	debiandoc2html debian/python-policy.sgml
+	debiandoc2html -l en.UTF-8 debian/python-policy.sgml
 	rm -rf debian/python-policy.html
 	mv -f python-policy.html debian/
 	make -C pydist README.PyDist.html
