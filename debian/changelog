@@ -1,11 +1,12 @@
-python-defaults (2.7.6-1) UNRELEASED; urgency=medium
+python-defaults (2.7.6-1) unstable; urgency=medium
 
   * Bump version to 2.7.6.
   * dh_python2: no longer move files to /usr/share/pyshared, don't create
     /usr/lib/pyshared symlinks for extensions.
   * Use UTF-8 encoding for the python policy in HTML format. Closes: #689931.
+  * Add a chapter for the python policy to prefer Python 3 over Python 2.
 
- -- Matthias Klose <doko@debian.org>  Wed, 07 May 2014 14:40:27 +0200
+ -- Matthias Klose <doko@debian.org>  Mon, 12 May 2014 12:16:34 +0200
 
 python-defaults (2.7.5-5) unstable; urgency=low
 
