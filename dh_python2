@@ -123,11 +123,8 @@ def share(package, stats, options):
                 dc = dircmp(dir1, dir2)
                 share_2x(dir1, dir2, dc)
     elif len(pubvers) == 1:
-        # TODO: remove this once file conflicts will not be needed anymore
-        move_to_pyshared(sitedir(pubvers[0], package))
-
-    for version in stats['ext']:
-        create_ext_links(sitedir(version, package))
+        # don't install into pyshared anymore
+        pass
 
     if options.guess_versions and pubvers:
         for version in get_requested_versions(options.vrange):

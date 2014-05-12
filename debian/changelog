@@ -1,6 +1,8 @@
 python-defaults (2.7.6-1) UNRELEASED; urgency=medium
 
   * Bump version to 2.7.6.
+  * dh_python2: no longer move files to /usr/share/pyshared, don't create
+    /usr/lib/pyshared symlinks for extensions.
   * Use UTF-8 encoding for the python policy in HTML format. Closes: #689931.
 
  -- Matthias Klose <doko@debian.org>  Wed, 07 May 2014 14:40:27 +0200
