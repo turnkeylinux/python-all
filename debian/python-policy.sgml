@@ -499,7 +499,7 @@
           executable, in a Debian policy compliant way.  The set of packages
           providing wheels for this purpose are (by source package name):
           chardet, distlib, html5lib, python-colorama, python-pip,
-          python-setuptools, python-urllib3, requests, six, and urllib3.
+          python-setuptools, python-urllib3, requests, and six.
         </p><p>
           Wheel packages supporting <prgn>pyvenv</prgn> and <prgn>pip</prgn>
           are named with the <var>python-</var> prefix, and the <var>-whl</var>

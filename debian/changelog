@@ -1,7 +1,14 @@
+python-defaults (2.7.6-3) UNRELEASED; urgency=medium
+
+  * Fix typo in wheel package exception list.
+  * Add myself to Uploaders.
+
+ -- Barry Warsaw <barry@debian.org>  Wed, 21 May 2014 15:13:19 -0400
+
 python-defaults (2.7.6-2) unstable; urgency=medium
 
   [ Barry Warsaw ]
-  * Add python policy for Python Wheels
+  * Add python policy for Python Wheels.
 
  -- Scott Kitterman <scott@kitterman.com>  Wed, 21 May 2014 00:04:16 -0400
 
