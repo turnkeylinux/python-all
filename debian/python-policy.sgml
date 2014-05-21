@@ -32,7 +32,11 @@
         <name>Scott Kitterman</name>
 	<email>scott@kitterman.com</email>
       </author>
-      <version>version 0.9.5</version>
+      <author>
+        <name>Barry Warsaw</name>
+        <email>barry@debian.org</email>
+      </author>
+      <version>version 0.10.0</version>
 
       <abstract>
 	This document describes the packaging of Python within the
@@ -467,6 +471,44 @@
 	  generally only accessible to a specific program or suite of
 	  programs included in the same package.
 	</p>
+      </sect>
+      <sect id="wheels">
+        <heading>Wheels</heading>
+        <p>
+          <url id="http://legacy.python.org/dev/peps/pep-0427/"
+               name="PEP 427">
+          defines a built-package format called "wheels", which is a zip
+          format archive containing Python code and a "dist-info" metadata
+          directory, in a single file named with the .whl suffix.  As zip
+          files, wheels containing pure-Python can be put on sys.path and
+          modules in the wheel can be imported directly by Python's "import"
+          statement. (Importing extension modules from wheels is not yet
+          supported as of Python 3.4.)
+        </p><p>
+          Except as described below, packages must not build or provide
+          wheels.  They are redundant to the established way of providing
+          Python libraries to Debian users, take no advantage of distro-based
+          tools, and are less convenient to use.  E.g. they must be explicitly
+          added to sys.path, cannot be easily grepped, and stack traces
+          through zips are more difficult to debug.
+        </p><p>
+          A very limited set of wheel packages are available in the archive,
+          but these support the narrow purpose of providing the Python 3
+          built-in virtual environment creation executable
+          <prgn>pyvenv-3.x</prgn>, as well as the within-venv <prgn>pip</prgn>
+          executable, in a Debian policy compliant way.  The set of packages
+          providing wheels for this purpose are (by source package name):
+          chardet, distlib, html5lib, python-colorama, python-pip,
+          python-setuptools, python-urllib3, requests, six, and urllib3.
+        </p><p>
+          Wheel packages supporting <prgn>pyvenv</prgn> and <prgn>pip</prgn>
+          are named with the <var>python-</var> prefix, and the <var>-whl</var>
+          suffix, e.g. <package>python-chardet-whl</package>.  When these
+          binary packages are installed, their .whl files must be placed in
+          the /usr/share/python-wheels directory.  Such wheels must be built
+          with the <tt>--universal</tt> flag so as to generate wheels
+          compatible with both Python 2 and Python 3.
+        </p>
       </sect>
       <sect id="package_names">
 	<heading>Module Package Names</heading>

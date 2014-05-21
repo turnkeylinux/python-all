@@ -1,3 +1,10 @@
+python-defaults (2.7.6-2) unstable; urgency=medium
+
+  [ Barry Warsaw ]
+  * Add python policy for Python Wheels
+
+ -- Scott Kitterman <scott@kitterman.com>  Wed, 21 May 2014 00:04:16 -0400
+
 python-defaults (2.7.6-1) unstable; urgency=medium
 
   * Bump version to 2.7.6.
