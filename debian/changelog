@@ -1,3 +1,9 @@
+python-defaults (2.7.7-1) UNRELEASED; urgency=medium
+
+  * Bump version to 2.7.7.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 02 Jun 2014 19:54:25 +0200
+
 python-defaults (2.7.6-2) unstable; urgency=medium
 
   [ Barry Warsaw ]
