@@ -14,8 +14,8 @@ Package: python
 Architecture: any
 Multi-Arch: allowed
 Priority: standard
-Depends: ${misc:Depends}, python2.7 (>= 2.7.6-1~), python-minimal (= ${binary:Version}), libpython-stdlib (= ${binary:Version})
-Suggests: python-doc (= ${binary:Version}), python-tk (>= 2.7.6-1~)
+Depends: ${misc:Depends}, python2.7 (>= 2.7.7-1~), python-minimal (= ${binary:Version}), libpython-stdlib (= ${binary:Version})
+Suggests: python-doc (= ${binary:Version}), python-tk (>= 2.7.7-1~)
 Conflicts: python-central (<< 0.5.5)
 Breaks: python-csv (<< 1.0-4), python-bz2 (<< 1.1-8), python-email (<< 2.5.5-3), update-manager-core (<< 0.200.5-2)
 Replaces: python-dev (<< 2.6.5-2)
@@ -32,7 +32,7 @@ Package: python-minimal
 Architecture: any
 Multi-Arch: allowed
 Priority: standard
-Depends: ${misc:Depends}, python2.7-minimal (>= 2.7.6-1~), dpkg (>= 1.13.20)
+Depends: ${misc:Depends}, python2.7-minimal (>= 2.7.7-1~), dpkg (>= 1.13.20)
 Recommends: python
 Conflicts: python-central (<< 0.5.5)
 Breaks: python (<= 2.7.3-1~), python-dev (<< 2.6), python-dbg (<< 2.6), python-all (<< 2.6), python-all-dev (<< 2.6), python-all-dbg (<< 2.6), python-examples (<< 2.6), idle (<< 2.6), python2.5-minimal (<< 2.5.5-7), python2.6-minimal (<< 2.6.5~rc2-2), python3.1-minimal (<< 3.1.2~rc1-2), python-support (<< 1.0.10ubuntu2)
@@ -45,7 +45,7 @@ Description: minimal subset of the Python language (default version)
 
 Package: python-examples
 Architecture: all
-Depends: ${misc:Depends}, python (>= ${binary:Version}), python2.7-examples (>= 2.7.6-1~)
+Depends: ${misc:Depends}, python (>= ${binary:Version}), python2.7-examples (>= 2.7.7-1~)
 Description: examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in
  the upstream Python distribution.
@@ -56,7 +56,7 @@ Description: examples for the Python language (default version)
 Package: python-dev
 Architecture: any
 Multi-Arch: allowed
-Depends: ${misc:Depends}, python (= ${binary:Version}), libpython-dev (= ${binary:Version}), python2.7-dev (>= 2.7.6-1~)
+Depends: ${misc:Depends}, python (= ${binary:Version}), libpython-dev (= ${binary:Version}), python2.7-dev (>= 2.7.7-1~)
 Description: header files and a static library for Python (default)
  Header files, a static library and development tools for building
  Python modules, extending the Python interpreter or embedding Python
@@ -69,7 +69,7 @@ Package: libpython-dev
 Architecture: any
 Multi-Arch: same
 Section: libdevel
-Depends: libpython2.7-dev (>= 2.7.6-1~), ${misc:Depends}
+Depends: libpython2.7-dev (>= 2.7.7-1~), ${misc:Depends}
 Description: header files and a static library for Python (default)
  Header files, a static library and development tools for building
  Python modules, extending the Python interpreter or embedding Python
@@ -81,7 +81,7 @@ Description: header files and a static library for Python (default)
 Package: libpython-stdlib
 Architecture: any
 Multi-Arch: same
-Depends: libpython2.7-stdlib (>= 2.7.6-1~), ${misc:Depends}
+Depends: libpython2.7-stdlib (>= 2.7.7-1~), ${misc:Depends}
 Description: interactive high-level object-oriented language (default python version)
  Python, the high-level, interactive object oriented language,
  includes an extensive class library with lots of goodies for
@@ -106,7 +106,7 @@ Description: IDE for Python using Tkinter (default version)
 Package: python-doc
 Section: doc
 Architecture: all
-Depends: ${misc:Depends}, python2.7-doc (>= 2.7.6-1~)
+Depends: ${misc:Depends}, python2.7-doc (>= 2.7.7-1~)
 Suggests: python-examples, python (= ${binary:Version})
 Breaks: python (<< 2.3.5)
 Replaces: python (<< 2.3.5)
@@ -133,7 +133,7 @@ Architecture: any
 Multi-Arch: allowed
 Section: debug
 Priority: extra
-Depends: ${misc:Depends}, python (= ${binary:Version}), libpython-dbg (= ${binary:Version}), python2.7-dbg (>= 2.7.6-1~)
+Depends: ${misc:Depends}, python (= ${binary:Version}), libpython-dbg (= ${binary:Version}), python2.7-dbg (>= 2.7.7-1~)
 Description: debug build of the Python Interpreter (version 2.7)
  Python interpreter configured with --pydebug. Dynamically loaded modules are
  searched in /usr/lib/python2.7/lib-dynload/debug first.
@@ -143,7 +143,7 @@ Architecture: any
 Multi-Arch: same
 Section: debug
 Priority: extra
-Depends: libpython2.7-dbg (>= 2.7.6-1~), ${misc:Depends}
+Depends: libpython2.7-dbg (>= 2.7.7-1~), ${misc:Depends}
 Description: debug build of the Python Interpreter (version 2.7)
  Python interpreter configured with --pydebug. Dynamically loaded modules
  are searched in /usr/lib/python2.7/lib-dynload/debug first.
