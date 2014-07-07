@@ -14,7 +14,7 @@ changelog_values := $(shell dpkg-parsechangelog \
 PKGSOURCE  := $(word 1, $(changelog_values))
 PKGVERSION := $(word 2, $(changelog_values))
 
-distribution := $(shell lsb_release -is)
+distribution := $(shell dpkg-vendor --query Vendor)
 
 export VER=2.7
 export NVER=2.8

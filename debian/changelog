@@ -10,6 +10,9 @@ python-defaults (2.7.7-1) UNRELEASED; urgency=medium
   [ Scott Kitterman ]
   * Fix error in pydist package relationship regex (Closes: #735163)
     - Thanks to Rafael Laboissiere for the patch
+  * Switch from using lsb-release to dpkg-vendor to determine distro and drop
+    lsb-release from build-depends (Closes: #751706)
+    - Thanks to Peter Pentchev for the patch
 
  -- Matthias Klose <doko@debian.org>  Mon, 02 Jun 2014 19:54:25 +0200
 
