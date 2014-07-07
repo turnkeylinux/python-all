@@ -3,8 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Matthias Klose <doko@debian.org>
 Uploaders: Scott Kitterman <scott@kitterman.com>, Piotr Ożarowski <piotr@debian.org>, Barry Warsaw <barry@debian.org>
-Build-Depends: debhelper (>= 8~), python-docutils (>= 0.4-3),
-  libhtml-tree-perl, debiandoc-sgml
+Build-Depends: debhelper (>= 8~), python-docutils (>= 0.4-3), debiandoc-sgml
 Standards-Version: 3.9.5
 Homepage: http://www.python.org/
 Vcs-Bzr: http://alioth.debian.org/anonscm/bzr/pkg-python/python-defaults-debian

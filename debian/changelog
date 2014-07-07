@@ -13,6 +13,7 @@ python-defaults (2.7.7-1) UNRELEASED; urgency=medium
   * Switch from using lsb-release to dpkg-vendor to determine distro and drop
     lsb-release from build-depends (Closes: #751706)
     - Thanks to Peter Pentchev for the patch
+  * Drop unused build-depends on libhtml-tree-perl
 
  -- Matthias Klose <doko@debian.org>  Mon, 02 Jun 2014 19:54:25 +0200
 
