@@ -36,7 +36,7 @@
         <name>Barry Warsaw</name>
         <email>barry@debian.org</email>
       </author>
-      <version>version 0.10.0</version>
+      <version>version 0.10.0.1</version>
 
       <abstract>
 	This document describes the packaging of Python within the
@@ -122,11 +122,6 @@
 	  </item>
 	</enumlist></p>
 
-	<p>
-	  Python 3 (3.1) was released in June 2009, and is available in
-	  the Debian 6.0 (squeeze) release (3.1), and in the Debian 7
-	  (wheezy) release (3.2).
-	</p>
     </chapt>
 
     <chapt id="python">
@@ -525,6 +520,10 @@
 	  allows, but this is not required if the binary package ships
 	  multiple modules.  In the latter case the maintainer chooses the
 	  name of the module which represents the package the most.
+
+          For subpackages such as <var>foo.bar</var>, the recommendation is to
+          name the binary packages <package>python-<var>foo.bar</var></package>
+          and <package>python3-<var>foo.bar</var></package>.
 
 	  Such a package should support the current Debian Python version,
 	  and more if possible (there are several tools to help implement
