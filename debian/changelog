@@ -1,7 +1,4 @@
-python-defaults (2.7.7-1) UNRELEASED; urgency=medium
-
-  [ Matthias Klose ]
-  * Bump version to 2.7.7.
+python-defaults (2.7.8-1) unstable; urgency=medium
 
   [ Barry Warsaw ]
   * Fix typo in policy doc re: wheel package exception list.
@@ -20,8 +17,11 @@ python-defaults (2.7.7-1) UNRELEASED; urgency=medium
   * Stop automatically regenerating static content (dh_python2 man pages and
     Python FAQ) and drop build-dep on python-docutils to ease bootstrapping
     (Closes: #754060)
+    - Add direct build-dep on python-all to replace indirect build-dep
+  * Bump version to 2.7.8
+  * Drop ancient Breaks on python-csv, python-bz2, and python-email
 
- -- Matthias Klose <doko@debian.org>  Mon, 02 Jun 2014 19:54:25 +0200
+ -- Scott Kitterman <scott@kitterman.com>  Fri, 11 Jul 2014 17:10:37 -0400
 
 python-defaults (2.7.6-2) unstable; urgency=medium
 

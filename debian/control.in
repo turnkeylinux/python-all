@@ -3,7 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Matthias Klose <doko@debian.org>
 Uploaders: Scott Kitterman <scott@kitterman.com>, Piotr Ożarowski <piotr@debian.org>, Barry Warsaw <barry@debian.org>
-Build-Depends: debhelper (>= 8~), debiandoc-sgml
+Build-Depends: debhelper (>= 8~), python-all, debiandoc-sgml
 Standards-Version: 3.9.5
 Homepage: http://www.python.org/
 Vcs-Bzr: http://alioth.debian.org/anonscm/bzr/pkg-python/python-defaults-debian
@@ -16,7 +16,7 @@ Priority: standard
 Depends: ${misc:Depends}, @PVER@ (>= @PREVVER@), python-minimal (= ${binary:Version}), libpython-stdlib (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (>= @PREVVER@)
 Conflicts: python-central (<< 0.5.5)
-Breaks: python-csv (<< 1.0-4), python-bz2 (<< 1.1-8), python-email (<< 2.5.5-3), update-manager-core (<< 0.200.5-2)
+Breaks: update-manager-core (<< 0.200.5-2)
 Replaces: python-dev (<< 2.6.5-2)
 Provides: python-email, python-ctypes, python-wsgiref, python-importlib, python-profiler
 Description: interactive high-level object-oriented language (default version)
