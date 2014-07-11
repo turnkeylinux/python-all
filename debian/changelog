@@ -16,6 +16,7 @@ python-defaults (2.7.7-1) UNRELEASED; urgency=medium
   * Drop unused build-depends on libhtml-tree-perl
   * Clarify discussion of requirement to use python:Provides (Closes: #669346)
   * Add clarification of naming requirements for submocules (Closes: #701192)
+  * Minor cleanups in debian/pyversions.py
 
  -- Matthias Klose <doko@debian.org>  Mon, 02 Jun 2014 19:54:25 +0200
 
