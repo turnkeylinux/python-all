@@ -81,6 +81,7 @@ endif
 
 faqs = index general programming library extending windows gui installed
 get-faq:
+	# Note: This rule is broken due to web site reorg at python.org
 	rm -rf faq
 	mkdir faq
 	cd faq && \
@@ -95,6 +96,14 @@ get-faq:
 	) >> faq/FAQ.ht
 	rm -f faq/index.ht
 
+MANPAGES ?= dh_python2.1 pycompile.1 pyclean.1
+
+%.1: %.rst
+	rst2man $< > $@
+
+# Manually run this rule if there is a need to update the dh_python2 man pages
+make-man: $(MANPAGES)
+
 clean: control-file
 	dh_testdir
 	dh_testroot
@@ -103,7 +112,6 @@ clean: control-file
 
 	rm -f debian/python-policy.txt
 	rm -rf debian/python-policy.html
-	rm -f faq/*.h2 faq/*.html
 
 	set -e;\
 	for f in debian/*.in; do \

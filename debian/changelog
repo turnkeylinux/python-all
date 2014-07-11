@@ -17,6 +17,9 @@ python-defaults (2.7.7-1) UNRELEASED; urgency=medium
   * Clarify discussion of requirement to use python:Provides (Closes: #669346)
   * Add clarification of naming requirements for submocules (Closes: #701192)
   * Minor cleanups in debian/pyversions.py
+  * Stop automatically regenerating static content (dh_python2 man pages and
+    Python FAQ) and drop build-dep on python-docutils to ease bootstrapping
+    (Closes: #754060)
 
  -- Matthias Klose <doko@debian.org>  Mon, 02 Jun 2014 19:54:25 +0200
 

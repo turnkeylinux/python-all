@@ -7,7 +7,7 @@ clean:
 	make -C tests clean
 	make -C pydist clean
 	find . -name '*.py[co]' -delete
-	rm -f .coverage $(MANPAGES)
+	rm -f .coverage
 
 install-dev:
 	$(INSTALL) -m 755 -d $(DESTDIR)$(PREFIX)/bin \
@@ -27,14 +27,6 @@ install-runtime:
 	$(INSTALL) -m 755 pyclean $(DESTDIR)$(PREFIX)/bin/
 
 install: install-dev install-runtime
-
-%.1: %.rst
-	rst2man $< > $@
-
-%.html: %.rst
-	rst2html $< > $@
-
-manpages: $(MANPAGES)
 
 dist_fallback:
 	make -C pydist $@
