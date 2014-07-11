@@ -96,6 +96,17 @@ get-faq:
 	) >> faq/FAQ.ht
 	rm -f faq/index.ht
 
+make-faq:
+	set -e; \
+	cd faq && \
+	for p in *.ht; do \
+	  p=`basename $$p .ht`; \
+	  echo $(rst2html) $$p.ht $$p.html; \
+	  awk 'NR > 2' $$p.ht > $$p.ht2; \
+	  $(rst2html) $$p.ht2 $$p.html; \
+	  rm -f $$p.ht2; \
+	done
+
 MANPAGES ?= dh_python2.1 pycompile.1 pyclean.1
 
 %.1: %.rst
@@ -149,11 +160,7 @@ stamp-install: stamp-build control-file stamp-control
 	cd faq && \
 	for p in *.ht; do \
 	  p=`basename $$p .ht`; \
-	  echo $(rst2html) $$p.ht $$p.html; \
-	  awk 'NR > 2' $$p.ht > $$p.ht2; \
-	  $(rst2html) $$p.ht2 $$p.html; \
 	  mv $$p.html ../debian/python/usr/share/doc/python/faq/; \
-	  rm -f $$p.ht2; \
 	done
 	mv debian/python/usr/share/doc/python/faq/FAQ.html \
 		debian/python/usr/share/doc/python/
