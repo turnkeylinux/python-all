@@ -614,9 +614,10 @@ XS-Python-Version: all
           Provides in binary packages of the form
           <package>python-<var>X</var>.<var>Y</var><var>>foo</var></package>
 	  must be specified if the package contains an extension for more
-	  than one python version and other package with version specific
+	  than one python version and an other package with version specific
 	  dependencies on the package require it.  Provides are only for
-	  extensions, not modules.
+	  extensions, not modules.  Provides should only be rarely used for
+          Python packages and never for Python 3.
 	</p>
       </sect>
 

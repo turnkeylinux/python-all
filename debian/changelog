@@ -14,6 +14,7 @@ python-defaults (2.7.7-1) UNRELEASED; urgency=medium
     lsb-release from build-depends (Closes: #751706)
     - Thanks to Peter Pentchev for the patch
   * Drop unused build-depends on libhtml-tree-perl
+  * Clarify discussion of requirement to use python:Provides (Closes: #669346)
 
  -- Matthias Klose <doko@debian.org>  Mon, 02 Jun 2014 19:54:25 +0200
 
