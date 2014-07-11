@@ -53,7 +53,7 @@ stamp-doc-policy:
 	debiandoc2html -l en.UTF-8 debian/python-policy.sgml
 	rm -rf debian/python-policy.html
 	mv -f python-policy.html debian/
-	make -C pydist README.PyDist.html
+	make -C pydist
 	touch stamp-doc-policy
 
 stamp-doc: stamp-doc-policy
@@ -114,6 +114,8 @@ MANPAGES ?= dh_python2.1 pycompile.1 pyclean.1
 
 # Manually run this rule if there is a need to update the dh_python2 man pages
 make-man: $(MANPAGES)
+	cd pydist && \
+	rst2html README.PyDist > README.PyDist.html
 
 clean: control-file
 	dh_testdir
@@ -173,7 +175,7 @@ stamp-dh_python:
 	dh_installdirs
 	-make check_versions
 	DESTDIR=debian/python PREFIX=/usr make install-dev
-	DESTDIR=debian/python-minimal PREFIX=/usr make install-runtime manpages
+	DESTDIR=debian/python-minimal PREFIX=/usr make install-runtime
 	# disabled by default, run manually if you want to update it
 	# (requires apt-file and network connection)
 	#make -C pydist dist_fallback
