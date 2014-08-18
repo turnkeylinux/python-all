@@ -8,6 +8,7 @@ export SHELL = /bin/bash
 
 DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
 DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+DEB_HOST_GNU_TYPE := $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 
 changelog_values := $(shell dpkg-parsechangelog \
 			| awk '/^(Version|Source):/ {print $$2}')
@@ -15,6 +16,7 @@ PKGSOURCE  := $(word 1, $(changelog_values))
 PKGVERSION := $(word 2, $(changelog_values))
 
 distribution := $(shell dpkg-vendor --query Vendor)
+distrelease  := $(shell lsb_release -cs)
 
 export VER=2.7
 export NVER=2.8
@@ -22,10 +24,15 @@ export PVER=python2.7
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
 # first version with Multi-Arch: allowed
-PREVVER := 2.7.8-1~
+PREVVER := 2.7.8-5~
 
 # not yet allowed
 ma_allowed	= yes
+
+ifeq (,$(filter $(distrelease),lenny etch squeeze wheezy lucid maverick natty oneiric precise quantal raring saucy trusty))
+  bd_i586 = dpkg-dev (>= 1.17.11), python2.7 (>= 2.7.8-5)
+endif
+
 
 PWD		:= $(shell pwd)
 
@@ -64,6 +71,7 @@ control-file:
 	    -e "s/@NVER@/$(NVER)/g" \
 	    -e "s/@VER@/$(VER)/g" \
 	    -e "s/@PREVVER@/$(PREVVER)/g" \
+	    -e "s/@bd_i586@/$(bd_i586)/g" \
 		<debian/control.in \
 	    $(if $(ma_allowed),,| grep -v '^Multi-Arch: allowed$$') \
 		>debian/control.tmp
