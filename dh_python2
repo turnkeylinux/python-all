@@ -476,6 +476,7 @@ def scan(package, dname=None, options=None):
 
 ################################################################
 def main():
+    log.warn('Please add dh-python package to Build-Depends')
     usage = '%prog -p PACKAGE [-V [X.Y][-][A.B]] DIR [-X REGEXPR]\n'
     parser = OptionParser(usage, version='%prog 2.1',
                                    option_class=Option)

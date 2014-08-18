@@ -1,7 +1,11 @@
 python-defaults (2.7.8-2) UNRELEASED; urgency=medium
 
+  [ Matthias Klose ]
   * Build-depend on python2.7 and dpkg-dev versions to consistently
     generate the i586-* symlinks. Closes: #758301.
+
+  [ Piotr Ożarowski ]
+  * dh_python2: add a warning abount missing dh-python in Build-Depends
 
  -- Matthias Klose <doko@debian.org>  Mon, 18 Aug 2014 10:11:03 +0200
 
