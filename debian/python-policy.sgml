@@ -36,7 +36,7 @@
         <name>Barry Warsaw</name>
         <email>barry@debian.org</email>
       </author>
-      <version>version 0.10.0.1</version>
+      <version>version 0.10.0.2</version>
 
       <abstract>
 	This document describes the packaging of Python within the
@@ -344,10 +344,12 @@
 	  common file. Version specific directories for identical source code
           are not required for python3 and must not be used for this.
 
-	  A common location to share, across Python versions,
-	  arch-independent files which would otherwise go to the directory
-	  of system public modules is /usr/share/pyshared. For python3,
-	  a special location is not required, use
+	  Since python2.7 is the last python2 version and the only supported
+          version in wheezy and later releases, a common location to share
+          arch-independent files across Python versions is no longer needed.
+          Historically the location for this was /usr/share/pyshared.  For
+          python2.7, use of /usr/lib/python2.7/dist-packages is sufficient.
+          For python3, a special location is not required, use
 	  /usr/lib/python3/dist-packages
 	</p>
       </sect>
@@ -868,8 +870,7 @@ Build-Depends: python3-all-dev (>= 3.2)
 	  python-support is deprecated. It is a system intended to provide
 	  a simple way to byte-compile pure Python modules and manage dependencies.
 	  It integrates with <package>debhelper</package>, manages
-	  byte-compilation, private modules, will properly use the
-	  /usr/share/pyshared directory, integrates with runtime update
+	  byte-compilation, private modules, integrates with runtime update
 	  hooks, and will fill-in the <tt>${python:Depends}</tt>,
 	  <tt>${python:Versions}</tt>, and <tt>${python:Provides}</tt>
 	  substvars.
@@ -880,18 +881,10 @@ Build-Depends: python3-all-dev (>= 3.2)
       </sect>
 
       <sect id="pycentral">
-	<heading>python-central (deprecated)</heading>
+	<heading>python-central (removed)</heading>
 	<p>
-	  python-central is deprecated. It provides another way to manage
-	  Python modules. It integrates with <package>debhelper</package>,
-	  manages byte-compilation, private modules, will properly use the
-	  /usr/share/pyshared directory, integrates with runtime update
-	  hooks, and will fill-in the <tt>${python:Depends}</tt>,
-	  <tt>${python:Versions}</tt>, and <tt>${python:Provides}</tt>
-	  substvars.
-
-	  See the python-central documentation in the pycentral(1) and
-	  dh_pycentral(1) man pages.
+	  python-central has been removed from Jessie and later releases.  It
+          provided another way to manage Python modules.
 	</p>
       </sect>
 

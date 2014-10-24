@@ -1,4 +1,4 @@
-python-defaults (2.7.8-2) UNRELEASED; urgency=medium
+python-defaults (2.7.8-2) unstable; urgency=medium
 
   [ Matthias Klose ]
   * Build-depend on python2.7 and dpkg-dev versions to consistently
@@ -7,7 +7,14 @@ python-defaults (2.7.8-2) UNRELEASED; urgency=medium
   [ Piotr Ożarowski ]
   * dh_python2: add a warning abount missing dh-python in Build-Depends
 
- -- Matthias Klose <doko@debian.org>  Mon, 18 Aug 2014 10:11:03 +0200
+  [ Scott Kitterman ]
+  * Minor updates to python policy
+    - Reflect disuse of pyshared directory in favor of /usr/lib/python2.7/
+      dist-packages since python2.7 is the last and only python version
+      supported (Closes: #763451)
+    - Update python-central information to reflect its removal from Jessie
+
+ -- Scott Kitterman <scott@kitterman.com>  Fri, 24 Oct 2014 10:58:42 -0400
 
 python-defaults (2.7.8-1) unstable; urgency=medium
 
