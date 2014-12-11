@@ -6,8 +6,9 @@ Uploaders: Scott Kitterman <scott@kitterman.com>, Piotr Ożarowski <piotr@debian
 Build-Depends: debhelper (>= 8~), @bd_i586@,
   lsb-release,
   python-all,
+  @PVER@ (>= @PREVVER@),
   debiandoc-sgml,
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: http://www.python.org/
 Vcs-Bzr: http://alioth.debian.org/anonscm/bzr/pkg-python/python-defaults-debian
 Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-debian/files

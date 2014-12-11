@@ -24,7 +24,7 @@ export PVER=python2.7
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
 # first version with Multi-Arch: allowed
-PREVVER := 2.7.8-5~
+PREVVER := 2.7.9-1~
 
 # not yet allowed
 ma_allowed	= yes
