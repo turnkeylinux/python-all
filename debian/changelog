@@ -4,6 +4,13 @@ python-defaults (2.7.9-1) UNRELEASED; urgency=medium
 
  -- Matthias Klose <doko@debian.org>  Thu, 11 Dec 2014 11:42:20 +0100
 
+python-defaults (2.7.8-3) unstable; urgency=medium
+
+  [ Michael Gilbert ]
+  * Make python-minimal a pre-dependency for python (closes: #769106).
+
+ -- Scott Kitterman <scott@kitterman.com>  Mon, 02 Feb 2015 16:12:38 -0500
+
 python-defaults (2.7.8-2) unstable; urgency=medium
 
   [ Matthias Klose ]
