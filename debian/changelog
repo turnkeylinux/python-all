@@ -4,6 +4,13 @@ python-defaults (2.7.9-1) UNRELEASED; urgency=medium
 
  -- Matthias Klose <doko@debian.org>  Thu, 11 Dec 2014 11:42:20 +0100
 
+python-defaults (2.7.8-4) unstable; urgency=medium
+
+  * Update policy document to clarify the purpose and use of the wheel
+    files.  No actual change in policy is made.
+
+ -- Barry Warsaw <barry@debian.org>  Fri, 27 Feb 2015 18:03:06 -0500
+
 python-defaults (2.7.8-3) unstable; urgency=medium
 
   [ Michael Gilbert ]
