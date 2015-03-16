@@ -17,8 +17,8 @@ Package: python
 Architecture: any
 Multi-Arch: allowed
 Priority: standard
-Depends: ${misc:Depends}, python2.7 (>= 2.7.9-1~), libpython-stdlib (= ${binary:Version})
 Pre-Depends: python-minimal (= ${binary:Version})
+Depends: ${misc:Depends}, python2.7 (>= 2.7.9-1~), libpython-stdlib (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (>= 2.7.9-1~)
 Conflicts: python-central (<< 0.5.5)
 Breaks: update-manager-core (<< 0.200.5-2)
