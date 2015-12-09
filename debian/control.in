@@ -85,6 +85,7 @@ Description: header files and a static library for Python (default)
 Package: libpython-stdlib
 Architecture: any
 Multi-Arch: same
+Priority: standard
 Depends: libpython@VER@-stdlib (>= @PREVVER@), ${misc:Depends}
 Description: interactive high-level object-oriented language (default python version)
  Python, the high-level, interactive object oriented language,

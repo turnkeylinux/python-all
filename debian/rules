@@ -24,13 +24,13 @@ export PVER=python2.7
 
 PREVVER	:= $(shell awk '/^python/ && NR > 1 {print substr($$2,2,length($$2)-2); exit}' debian/changelog)
 # first version with Multi-Arch: allowed
-PREVVER := 2.7.9-1~
+PREVVER := 2.7.11-1~
 
 # not yet allowed
 ma_allowed	= yes
 
 ifeq (,$(filter $(distrelease),lenny etch squeeze wheezy lucid maverick natty oneiric precise quantal raring saucy trusty))
-  bd_i586 = dpkg-dev (>= 1.17.11), python2.7 (>= 2.7.8-5)
+  bd_i586 = dpkg-dev (>= 1.17.11), python2.7 (>= 2.7.11-2)
 endif
 
 
@@ -170,7 +170,7 @@ stamp-install: stamp-build control-file stamp-control
 	cd faq && \
 	for p in *.ht; do \
 	  p=`basename $$p .ht`; \
-	  mv $$p.html ../debian/python/usr/share/doc/python/faq/; \
+	  cp $$p.html ../debian/python/usr/share/doc/python/faq/; \
 	done
 	mv debian/python/usr/share/doc/python/faq/FAQ.html \
 		debian/python/usr/share/doc/python/
@@ -220,7 +220,6 @@ endif
 #	dh_installdebconf -i $(NOPKGS)
 	dh_lintian -i
 	dh_installdocs -i $(NOPKGS) --all debian/README.Debian
-	dh_installmenu -i $(NOPKGS)
 	dh_installchangelogs -i $(NOPKGS)
 
 	for p in examples idle; do \
@@ -380,7 +379,6 @@ endif
 
 	dh_lintian -a
 	dh_installdocs -a $(NOPKGS) --all debian/README.Debian
-	dh_installmenu -a $(NOPKGS)
 	dh_installchangelogs -a $(NOPKGS)
 
 	for p in all all-dev all-dbg dbg dev; do \

@@ -1,4 +1,5 @@
 # this is the only package that can depend on it
-depends-on-python-minimal depends
-# manpage is in python-minimal package:
-binary-without-manpage usr/bin/pyversions
+python binary: depends-on-python-minimal
+
+# we rely on our patched python library, don't pick up a local version
+python binary: command-with-path-in-maintainer-script
