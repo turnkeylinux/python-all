@@ -36,7 +36,7 @@
         <name>Barry Warsaw</name>
         <email>barry@debian.org</email>
       </author>
-      <version>version 0.10.0.2</version>
+      <version>version 0.10.1.0</version>
 
       <abstract>
 	This document describes the packaging of Python within the
@@ -135,8 +135,8 @@
 	  Debian Python 3 version.  As far as is reasonable, python and python3
 	  should be treated as separate runtime systems with minimal
 	  interdependencies.  In some cases, Python policy explicitly references
-	  Python helper programs such as python-support and python-central.  None of
-	  these references apply to Python 3.  It is a design goal to fully specify
+	  Python helper programs.  For stretch, dh-python is the only such program.
+	  previous helpers have been removed.  It is a design goal to fully specify
 	  required interfaces and functions in policy for Python 3 and to avoid
 	  enshrining specific implementation details in policy.  Except as noted,
 	  policy for Python 3 is the same as Python with the addition of the version
@@ -157,7 +157,7 @@
 	  reasonable to provide them.  (Note: For the scope of this
 	  document, Python versions are synonymous to feature
 	  releases, i.e. Python 2.7 and 2.7.1 are sub-minor versions of
-	  the same Python version 2.7, but Python 2.6 and 2.7 are
+	  the same Python version 2.7, but Python 3.4 and 3.5 are
 	  indeed different versions.)
 	</p>
 	<p>
@@ -295,41 +295,25 @@
 	<p>
 	  By default, Python modules are searched in the directories listed
 	  in the PYTHONPATH environment variable and in the sys.path Python
-	  variable.  Since python2.4 version 2.4.5-3, python2.5 version
-	  2.5.2-7, python2.6 version 2.6.2-1, and in all python2.7 versions,
-          sys.path does not include a
-	  /usr/lib/python<var>X</var><var>Y</var>.zip entry anymore.
+	  variable.  For all supported Debian releases, sys.path does not
+	  include a /usr/lib/python<var>X</var><var>Y</var>.zip entry.
 
 	  Directories with private Python modules must be absent from the
 	  sys.path.
 
-	  Public Python modules not handled by python-central or
-	  python-support must be installed in the system Python modules
-	  directory, /usr/lib/python<var>X</var>.<var>Y</var>/dist-packages
-	  for python2.6 and later, and
-	  /usr/lib/python<var>X</var>.<var>Y</var>/site-packages for
-	  python2.5 and earlier. Public Python 3 modules must be installed in
-	  /usr/lib/python3/dist-packages.
-
-	  Modules managed by python-support are installed in another
-	  directory which is added to the sys.path using the .pth mechanism.
-	  The .pth mechanism is documented in the Python documentation of the
-	  <tt>site</tt> module.
+	  Public Python modules must be installed in the system Python modules
+	  directory, /usr/lib/python<var>X</var>.<var>Y</var>/dist-packages.
+	  Public Python 3 modules must be installed in /usr/lib/python3/dist-packages.
 
 	  A special directory is dedicated to public Python modules
 	  installed by the local administrator,
 	  /usr/lib/python3/dist-packages for all python3 versions, 
-	  /usr/local/lib/python2.<var>Y</var>/dist-packages for python2.6 and
-	  later, and /usr/local/lib/python2.<var>Y</var>/site-packages for
-	  python2.5 and earlier.
+	  /usr/local/lib/python2.<var>Y</var>/dist-packages for python2.7.
 
-	  For a local installation by the administrator of python2.6 and
-	  later, a special directory is reserved to Python modules which
-	  should only be available to this Python,
-	  /usr/local/lib/python2.<var>Y</var>/site-packages (and
-	  /usr/local/lib/python3/site-packages for all python3 versions).
-	  Unfortunately, for python2.5 and earlier this directory is also
-	  visible to the system Python.
+	  For a local installation by the administrator of python2.7, a
+	  special directory is reserved to Python modules which should only be
+	  available to this Python, /usr/local/lib/python2.<var>Y</var>/site-packages
+	  (and /usr/local/lib/python3/site-packages for all python3 versions).
 
 	  Additional information on appending site-specific paths to the
 	  module search path is available in the official documentation of
@@ -340,7 +324,7 @@
 	  When binary packages ship identical source code for multiple
 	  Python versions, for instance
 	  /usr/lib/python2.6/dist-packages/foo.py and
-	  /usr/lib/python2.5/site-packages/foo.py, these should point to a
+	  /usr/lib/python2.7/dist-packages/foo.py, these should point to a
 	  common file. Version specific directories for identical source code
           are not required for python3 and must not be used for this.
 
@@ -544,10 +528,11 @@ import foo
 	<p>
 	  The optional <tt>X-Python-Version</tt> (preferred) or <tt>
 	  XS-Python-Version</tt> field in the general paragraph (the first one,
-	  for the source package) of <file>debian/control</file> specifies the
-	  versions of Python (not versions of Python 3) supported by the
-	  source package. Similarly, <tt>X-Python3-Version</tt> is used to
-	  specify the versions of Python 3 supported by the package.  When not
+	  for the source package) of <file>debian/control</file> were methods to
+	  specify the versions of Python (not versions of Python 3) supported by the
+	  source package (they are obsolete and can be removed now that there is only
+	  <package>python2.7</package>). Similarly, <tt>X-Python3-Version</tt> is
+	  used to specify the versions of Python 3 supported by the package.  When not
 	  specified, they default to all currently supported Python (or Python 3)
 	  versions.
 
@@ -555,8 +540,8 @@ import foo
 	  appropriate Depends and Provides lines. The format of the
 	  field may be one of the following:
 	  <example>
-X-Python-Version: >= X.Y
-X-Python-Version: >= A.B, << X.Y
+X-Python3-Version: >= X.Y
+X-Python3-Version: >= A.B, << X.Y
 XS-Python-Version: A.B, X.Y
 XS-Python-Version: all
 	  </example>
@@ -594,29 +579,26 @@ XS-Python-Version: all
 	  (&gt;=&nbsp;<var>X</var>.<var>Y</var></package>)". If they
 	  require other modules to work, they must depend on the
 	  corresponding <package>python-foo</package>. They must not
-	  depend on
-	  any <package>python<var>X</var>.<var>Y</var>-foo</package>.
+	  depend on any <package>python<var>X</var>.<var>Y</var>-foo</package>.
 	</p>
 	<p>
-	  Packaged modules available for one particular version of Python must
-	  depend on the corresponding
-	  <package>python<var>X</var>.<var>Y</var></package> package instead.
-	  If they need other modules, they must depend on the corresponding
-	  <package>python<var>X</var>.<var>Y</var>-foo</package> packages, and
-	  must not depend on any <package>python-foo</package>.
+	  All python module packages and python3 binary extension packages must
+	  also declare a maximum version they support as currently built (this
+	  is accomplished by declaring a maximum version constraint strictly
+	  less than one higher than the current maxiumum version, i.e. 
+	  "<package>python (&lt;&lt;&nbsp;<var>X</var>.<var>Y</var></package>)"
 	</p>
       </sect>
 
       <sect id="provides">
 	<heading>Provides</heading>
 	<p>
-          Provides in binary packages of the form
+          Python Provides in binary packages of the form
           <package>python-<var>X</var>.<var>Y</var><var>>foo</var></package>
-	  must be specified if the package contains an extension for more
-	  than one python version and an other package with version specific
-	  dependencies on the package require it.  Provides are only for
-	  extensions, not modules.  Provides should only be rarely used for
-          Python packages and never for Python 3.
+	  were never supported for Python 3 and are no longer useful for
+	  Python.  They should be removed in the normal course of package
+	  updates.  Future provision of values for the substituation variable
+	  python:Provides is not guaranteed.
 	</p>
       </sect>
 
@@ -696,8 +678,7 @@ XS-Python-Version: all
 	    Programs that have private compiled extensions must either
 	    handle multiple version support themselves, or declare a
 	    tight dependency on the current Python version
-	    (e.g. <tt>Depends: python (>= 2.6), python (<< 2.7)</tt>. No 
-	    tools currently exist to alleviate this situation.
+	    (e.g. <tt>Depends: python (>= 2.7), python (<< 2.8)</tt>.
 	  </p>
 	</sect1>
       </sect>
@@ -710,15 +691,8 @@ XS-Python-Version: all
 	  <tt>#!/usr/bin/python<var>X</var>.<var>Y</var></tt> (or
 	  <tt>#!/usr/bin/env python<var>X</var>.<var>Y</var></tt>). It
 	  must also specify a dependency on
-	  <package>python<var>X</var>.<var>Y</var></package> and on
-	  any <package>python<var>X</var>.<var>Y</var>-foo</package>
-	  package providing necessary modules. It should not depend on
-	  any <package>python-foo</package> package, unless it
-	  requires a specific version of the package (since virtual
-	  packages cannot be versioned). If this is the case, it
-	  should depend on both the virtual package and the main
-	  package (e.g. <tt>Depends: python2.7-foo, python-foo (>=
-	  1.0)</tt>).
+	  <package>python<var>X</var>.<var>Y</var></package> and on any
+	  package providing necessary modules.
 	</p>
 	<p>
 	  The notes on installation directories and byte-compilation
@@ -800,16 +774,11 @@ Build-Depends: python (>= 2.6.6-9)
 Build-Depends: python-all
 
 Build-Depends: python2.7-dev
-Build-Depends: python2.6-dev (>= 2.6-1)
+Build-Depends: python3.5-dev (>= 3.5.1-1)
 Build-Depends: python-dev (>= 2.6.6-9)
 Build-Depends: python-all-dev
 Build-Depends: python3-all-dev (>= 3.2)
 	</example>
-      </p>
-      <p>
-	If you use either <package>python-support</package> or
-	<package>python-central</package> you must additionally
-	Build-Depend on those. 
       </p>
     </appendix>
 
@@ -831,20 +800,10 @@ Build-Depends: python3-all-dev (>= 3.2)
 	  and to add a new flag to the "install" command to override the
 	  default, <prgn>--install-layout=</prgn>.
 
-	  To allow the use this flag, maintainers should ensure that at
-	  least version 2.6.2-1 will be used for python2.6, version 2.5.4-1
-	  for python2.5, and version 2.4.6-2 for python2.4.  This flag is
-	  parsed but ignored in python2.4 and python2.5.
-
 	  Public Python modules installed with a modified distutils default
 	  to /usr/local/lib/python<var>X</var>.<var>Y</var>/dist-packages
 	  for python2.6 and later.  This directory is seen by the
 	  system-provided python2.6.
-
-	  When using a system-provided python2.4 or python2.5, the default
-	  is /usr/lib/python<var>X</var>.<var>Y</var>/site-packages which is
-	  seen by the system-provided python2.4 and python2.5 versions, but
-	  not by a system-provided python2.6 and later versions.
 
 	  When using a local Python installation, the default is
 	  /usr/local/lib/python<var>X</var>.<var>Y</var>/site-packages which
@@ -855,44 +814,9 @@ Build-Depends: python3-all-dev (>= 3.2)
 	  later versions, Python modules will be installed to
 	  /usr/lib/python<var>X</var>.<var>Y</var>/dist-packages which is only
 	  seen by the system-provided python, not by a local installation.
-
-	  Using the <prgn>--install-layout=deb</prgn> flag to
-	  <prgn>setup.py</prgn> with a system-provided python2.4 or
-	  python2.5 does not affect the default installation directory.
 	</p>
       </sect>
 
-      <sect id="pysupport">
-	<heading>python-support (deprecated)</heading>
-	<p>
-	  python-support is deprecated. It is a system intended to provide
-	  a simple way to byte-compile pure Python modules and manage dependencies.
-	  It integrates with <package>debhelper</package>, manages
-	  byte-compilation, private modules, integrates with runtime update
-	  hooks, and will fill-in the <tt>${python:Depends}</tt>,
-	  <tt>${python:Versions}</tt>, and <tt>${python:Provides}</tt>
-	  substvars.
-
-	  See the python-support documentation in
-	  /usr/share/doc/python-support for details.
-	</p>
-      </sect>
-
-      <sect id="pycentral">
-	<heading>python-central (removed)</heading>
-	<p>
-	  python-central has been removed from Jessie and later releases.  It
-          provided another way to manage Python modules.
-	</p>
-      </sect>
-
-      <sect id="cdbs">
-	<heading>CDBS</heading>
-	<p>
-	  The CDBS python-distutils.mk class helps packaging of setup.py
-	  based Python packages.
-	</p>
-      </sect>
       <sect id="dh_python2_3">
 	<heading>dh_python2 and dh_python3</heading>
 	<p>
@@ -904,6 +828,41 @@ Build-Depends: python3-all-dev (>= 3.2)
 
 	 See man dh_python2 or man dh_python3 for details.
 	</p>
+      </sect>
+
+      <sect id="pybuild">
+	<heading>pybuild</heading>
+	<p>
+	 Pybuild is a Debian Python specific build system that invokes various
+	 build systems for requested Python versions in order to build modules
+	 and extensions.  It supports automatically building for multiple python
+	 and python3 versions.
+	</p>
+      </sect>
+
+      <sect id="cdbs">
+	<heading>CDBS</heading>
+	<p>
+	  The CDBS python-distutils.mk class helps packaging of setup.py
+	  based Python packages.
+	</p>
+      </sect>
+
+      <sect id="pysupport">
+	<heading>python-support (removed)</heading>
+	<p>
+	  python-support has been removed from Stretch and later released.  It
+	  provided another way to manage Python modules.
+	</p>
+      </sect>
+
+      <sect id="pycentral">
+	<heading>python-central (removed)</heading>
+	<p>
+	  python-central has been removed from Jessie and later releases.  It
+          provided another way to manage Python modules.
+	</p>
+      </sect>
 
     </appendix>
 
@@ -962,6 +921,41 @@ Build-Depends: python3-all-dev (>= 3.2)
 	  </item>
 	</enumlist>
       </p>
+      <p>
+	The necessary package builds are typcially done in three phases in order
+	to keep transitions as smooth as possible.  For python3, there is no
+	general need to update architecture all packages for a new python3
+	version.  Only architecture any packages need to be rebuilt.
+	<enumlist>
+	  <item>
+	    <p>
+	      The new python3 version is added to supported releases and packages
+	      that support multiple python3 versions are binNMUed.  They now support
+	      both the new and older python3 verions.  This requires transition
+	      assistance from the release team in the form of a transition tracker
+	      and binNMU scheduling, but is not a transition that can cause
+	      entanglements with other transitions in the distribution.
+	    </p>
+	  </item>
+	  <item>
+	    <p>
+	      Once the default python3 version is changed, binNMUs are done for
+	      packages that only support one python3 version.  Some transient
+	      uninstallability is unavoidable.  This is a transition that can
+	      entangle other transitions in the distribution and requires more
+	      careful coordination with the release team.
+            </p>
+	  </item>
+	  <item>
+	    <p>
+	      After the old python3 version is dropped from supported versions
+	      then packages with multi-version support are binNMUed again to
+	      remove support for the old python3 version.  This is not a true
+	      transition and only needs a tracker and binNMU scheduling.
+	    <p>
+	  </item>
+	</enumlist>
+	      
     </appendix>
   </book>
 </debiandoc>
