@@ -546,8 +546,8 @@ import foo
 	  appropriate Depends and Provides lines. The format of the
 	  field may be one of the following:
 	  <example>
-X-Python3-Version: >= X.Y
-X-Python3-Version: >= A.B, << X.Y
+X-Python3-Version: &gt;= X.Y
+X-Python3-Version: &gt;= A.B, &lt;&lt; X.Y
 XS-Python-Version: A.B, X.Y
 XS-Python-Version: all
 	  </example>
@@ -600,10 +600,10 @@ XS-Python-Version: all
 	<heading>Provides</heading>
 	<p>
 	  Python Provides in binary packages of the form
-	  <package>python-<var>X</var>.<var>Y</var><var>>foo</var></package>
+	  <package>python-<var>X</var>.<var>Y</var><var>foo</var></package>
 	  were never supported for Python 3 and are no longer useful for
-	  Python.  They should be removed in the normal course of package
-	  updates.  Future provision of values for the substituation variable
+	  Python. They should be removed in the normal course of package
+	  updates. Future provision of values for the substituation variable
 	  python:Provides is not guaranteed.
 	</p>
       </sect>
@@ -682,9 +682,9 @@ XS-Python-Version: all
 	  </p>
 	  <p>
 	    Programs that have private compiled extensions must either
-	    handle multiple version support themselves, or declare a
-	    tight dependency on the current Python version
-	    (e.g. <tt>Depends: python (>= 2.7), python (<< 2.8)</tt>.
+	    handle multiple version support themselves, or declare a tight
+	    dependency on the current Python version (e.g. <tt>Depends:
+	    python (&gt;= 2.7), python (&lt;&lt; 2.8)</tt>.
 	  </p>
 	</sect1>
       </sect>
@@ -775,15 +775,15 @@ XS-Python-Version: all
 	Build-Depend on at least:
 	<example>
 Build-Depends: python2.7
-Build-Depends: python2.6 (>= 2.6-1)
-Build-Depends: python (>= 2.6.6-9)
+Build-Depends: python2.6 (&gt;= 2.6-1)
+Build-Depends: python (&gt;= 2.6.6-9)
 Build-Depends: python-all
 
 Build-Depends: python2.7-dev
-Build-Depends: python3.5-dev (>= 3.5.1-1)
-Build-Depends: python-dev (>= 2.6.6-9)
+Build-Depends: python3.5-dev (&gt;= 3.5.1-1)
+Build-Depends: python-dev (&gt;= 2.6.6-9)
 Build-Depends: python-all-dev
-Build-Depends: python3-all-dev (>= 3.2)
+Build-Depends: python3-all-dev (&gt;= 3.2)
 	</example>
       </p>
     </appendix>
