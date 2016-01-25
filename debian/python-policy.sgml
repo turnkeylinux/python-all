@@ -90,7 +90,7 @@
 	  time.
 	  <url id="http://legacy.python.org/dev/peps/pep-0404/"
 	  name="PEP 404"> states that no more major Python 2 releases
-	  are planned, although the last released major version 2.7
+	  are planned, although the latest released minor version 2.7
 	  will see some extended support, documented in
 	  <url id="http://legacy.python.org/dev/peps/pep-0466/"
 	  name="PEP 466">.
@@ -148,22 +148,23 @@
 	  number as needed to distinguish them.
 	</p>
 	<p>
-	  The default Debian Python version should always be the latest stable
-	  upstream release that can be fully integrated in the distribution.
+	  The default Debian Python version should always be the latest
+	  stable upstream version that can be fully integrated in Debian.
 	  There may be newer supported or unsupported versions included in
-	  the distribution if they are not fully integrated for a particular
+	  the Debian if they are not fully integrated for a particular
 	  release.
 	</p>
 	<p>
-	  Apart from the default version, legacy versions of Python
-	  or beta versions of future releases
-	  may be included as well in the distribution, as long as they
-	  are needed by other packages, or as long as it seems
-	  reasonable to provide them.  (Note: For the scope of this
-	  document, Python versions are synonymous to feature
-	  releases, i.e. Python 2.7 and 2.7.1 are sub-minor versions of
-	  the same Python version 2.7, but Python 3.4 and 3.5 are
-	  indeed different versions.)
+	  Apart from the default version, legacy versions of Python or beta
+	  releases of future upstream versions may be included as well in
+	  Debian, as long as they are needed by other packages, or as long
+	  as it seems reasonable to provide them.
+	</p>
+	<p>
+	  Note: For the scope of this document, a Python version is
+	  synonymous with all micro versions within that minor version. e.g.
+	  Python 3.5.0 and 3.5.1 are micro versions of the same Python
+	  version 3.5, but Python 3.4 and 3.5 are indeed different versions.
 	</p>
 	<p>
 	  For any version, the main binary package must be called
@@ -202,7 +203,7 @@
       <sect id="base">
 	<heading>Main packages</heading>
 	<p>
-	  For every Python version provided in the distribution, the binary
+	  For every Python version provided in Debian, the binary
 	  package <package>python<var>X</var>.<var>Y</var></package> shall
 	  provide a complete distribution for <em>deployment</em> of Python
 	  scripts and applications. The package must ensure that the binary
@@ -253,8 +254,7 @@
       <sect id="minimal">
 	<heading>Minimal packages</heading>
 	<p>
-	  For every Python version provided in the distribution, the
-	  binary package
+	  For every Python version provided in Debian, the binary package
 	  <package>python<var>X</var>.<var>Y</var></package>-minimal might
 	  exist and should not be depended upon by other packages except the
 	  Python runtime packages themselves.
@@ -333,7 +333,9 @@
 	  /usr/lib/python2.7/dist-packages/foo.py, these should point to a
 	  common file. Version specific directories for identical source code
 	  are not required for Python 3 and must not be used for this.
+	</p>
 
+	<p>
 	  Since Python 2.7 is the last Python 2 version and the only supported
 	  version in Wheezy and later releases, a common location to share
 	  arch-independent files across Python versions is no longer needed.
@@ -746,7 +748,7 @@ XS-Python-Version: all
 	version.
       </p>
       <p>
-	If you install a different sub-release of the version of Python
+	If you install a different micro version of the version of Python
 	you have got installed, you will need to be careful to install all
 	the modules you use for that version of Python too.
       </p>
@@ -858,16 +860,16 @@ Build-Depends: python3-all-dev (&gt;= 3.2)
       <sect id="pysupport">
 	<heading>python-support (removed)</heading>
 	<p>
-	  python-support has been removed from Stretch and later released.  It
-	  provided another way to manage Python modules.
+	  python-support provided another way to manage Python modules. It
+	  has been removed from Debian Stretch and later releases.
 	</p>
       </sect>
 
       <sect id="pycentral">
 	<heading>python-central (removed)</heading>
 	<p>
-	  python-central has been removed from Jessie and later releases.  It
-	  provided another way to manage Python modules.
+	  python-central provided another way to manage Python modules. It
+	  has been removed from Debian Jessie and later releases.
 	</p>
       </sect>
 
@@ -877,16 +879,15 @@ Build-Depends: python3-all-dev (&gt;= 3.2)
       <heading>Upgrade Procedure</heading>
       <p>
 	This section describes the procedure for the upgrade when the
-	default Python version is changed in the <tt>unstable</tt>
-	distribution, requiring recompilation of many Python-related
-	packages.
+	default Python version is changed in the Debian <tt>unstable</tt>
+	release, requiring recompilation of many Python-related packages.
       </p>
       <p>
 	<enumlist>
 	  <item>
 	    <p>
 	      Selected pre-releases and release candidates of new Python
-	      versions are uploaded to Experimental to support
+	      versions are uploaded to Debian Experimental to support
 	      pre-transition work and testing.
 	    </p>
 	  </item>
@@ -921,7 +922,7 @@ Build-Depends: python3-all-dev (&gt;= 3.2)
 	  </item>
 	  <item>
 	    <p>
-	      The release team schedules rebuilds for packages that
+	      The Debian release team schedules rebuilds for packages that
 	      may need it. Packages that require additional manual work get
 	      updated and uploaded.
 	    </p>
@@ -936,13 +937,13 @@ Build-Depends: python3-all-dev (&gt;= 3.2)
 	<enumlist>
 	  <item>
 	    <p>
-	      The new Python 3 version is added to supported releases and
+	      The new Python 3 version is added to supported versions and
 	      packages that support multiple Python 3 versions are binNMUed.
-	      They now support both the new and older Python 3 verions. This
-	      requires transition assistance from the release team in the
-	      form of a transition tracker and binNMU scheduling, but is not
-	      a transition that can cause entanglements with other
-	      transitions in the distribution.
+	      They now support both the new and older Python 3 versions.
+	      This requires transition assistance from the release team in
+	      the form of a transition tracker and binNMU scheduling, but is
+	      not a transition that can cause entanglements with other
+	      transitions in Debian.
 	    </p>
 	  </item>
 	  <item>
@@ -950,9 +951,8 @@ Build-Depends: python3-all-dev (&gt;= 3.2)
 	      Once the default Python 3 version is changed, binNMUs are done
 	      for packages that only support one Python 3 version. Some
 	      transient uninstallability is unavoidable. This is a
-	      transition that can entangle other transitions in the
-	      distribution and requires more careful coordination with the
-	      release team.
+	      transition that can entangle other transitions in Debian and
+	      requires more careful coordination with the release team.
 	    </p>
 	  </item>
 	  <item>
