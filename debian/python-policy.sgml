@@ -36,6 +36,10 @@
 	<name>Barry Warsaw</name>
 	<email>barry@debian.org</email>
       </author>
+      <author>
+	<name>Ben Finney</name>
+	<email>ben+debian@benfinney.id.au</email>
+      </author>
       <version>version 0.10.1.0</version>
 
       <abstract>
