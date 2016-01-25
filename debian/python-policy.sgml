@@ -959,3 +959,12 @@ Build-Depends: python3-all-dev (>= 3.2)
     </appendix>
   </book>
 </debiandoc>
+<!--
+  Local variables:
+  coding: utf-8
+  mode: sgml
+  indent-tabs-mode: t
+  fill-column: 76
+  End:
+-->
+<!-- vim: set fenc=utf-8 ft=sgml ai noet sts=2 sw=2 tw=76 : -->
