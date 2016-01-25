@@ -17,24 +17,24 @@
 	<email>flight@debian.org</email>
       </author>
       <author>
-        <name>Josselin Mouette</name>
+	<name>Josselin Mouette</name>
 	<email>joss@debian.org</email>
       </author>
       <author>
-        <name>Joe Wreschnig</name>
+	<name>Joe Wreschnig</name>
 	<email>piman@debian.org</email>
       </author>
       <author>
-        <name>Lo&iuml;c Minier</name>
+	<name>Lo&iuml;c Minier</name>
 	<email>lool@debian.org</email>
       </author>
       <author>
-        <name>Scott Kitterman</name>
+	<name>Scott Kitterman</name>
 	<email>scott@kitterman.com</email>
       </author>
       <author>
-        <name>Barry Warsaw</name>
-        <email>barry@debian.org</email>
+	<name>Barry Warsaw</name>
+	<email>barry@debian.org</email>
       </author>
       <version>version 0.10.1.0</version>
 
@@ -83,11 +83,11 @@
 	  Debian currently supports two Python stacks, one for Python 2
 	  and one for Python 3.  The long term goal for Debian is to
 	  reduce this to one stack, dropping the Python 2 stack at some
-	  time.  
+	  time.
 	  <url id="http://legacy.python.org/dev/peps/pep-0404/"
 	  name="PEP 404"> states that no more major Python 2 releases
 	  are planned, although the last released major version 2.7
-	  will see some extended support, documented in 
+	  will see some extended support, documented in
 	  <url id="http://legacy.python.org/dev/peps/pep-0466/"
 	  name="PEP 466">.
 	</p>
@@ -97,7 +97,7 @@
 	  upload, new upstream versions for existing packages should
 	  use Python 3 if the new upstream version supports it.
 	</p>
-	    
+
 	<p><enumlist>
 	  <item>
 	    <p>
@@ -209,7 +209,7 @@
 	  some exceptions.
 	</p>
 	<p>
-	  Excluded are modules  that cannot be included for licensing
+	  Excluded are modules that cannot be included for licensing
 	  reasons (for example the profile module), for dependency tracking
 	  purposes (for example the GPL-licensed gdbm module) or that should
 	  not be included for packaging reasons (for example the tk module
@@ -257,37 +257,37 @@
       </sect>
 
       <sect id="interpreter">
-        <heading>Python Interpreter</heading>
-        <sect1 id="interpreter_name">
-          <heading>Interpreter Name</heading>
-          <p>
+	<heading>Python Interpreter</heading>
+	<sect1 id="interpreter_name">
+	  <heading>Interpreter Name</heading>
+	  <p>
 	    Python scripts depending on the default Python version (see <ref
 	    id="base">) or not depending on a specific Python version should
 	    use <file>python</file> (without a version) as the interpreter name.
 	    </p>
-          <p>
+	  <p>
 	    Python scripts that only work with a specific Python version must
 	    explicitly use the versioned interpreter name
 	    (<file>python<var>X</var>.<var>Y</var></file>).
-          </p>
-        </sect1>
-        <sect1 id="interpreter_loc">
-          <heading>Interpreter Location</heading>
-          <p>
+	  </p>
+	</sect1>
+	<sect1 id="interpreter_loc">
+	  <heading>Interpreter Location</heading>
+	  <p>
 	    The preferred specification for the Python interpreter is
-            <file>/usr/bin/python</file> or
-            <file>/usr/bin/python<var>X</var>.<var>Y</var></file>.
+	    <file>/usr/bin/python</file> or
+	    <file>/usr/bin/python<var>X</var>.<var>Y</var></file>.
 	    This ensures that a Debian installation of python is used
 	    and all dependencies on additional python modules are met.
-          </p>
-          <p>
+	  </p>
+	  <p>
 	    Maintainers should not override the Debian Python interpreter using
 	    <file>/usr/bin/env python</file> or
 	    <file>/usr/bin/env python<var>X</var>.<var>Y</var></file>. This is
 	    not advisable as it bypasses Debian's dependency checking and makes
 	    the package vulnerable to incomplete local installations of python.
 	  </p>
-        </sect1>
+	</sect1>
       </sect>
 
       <sect id="paths">
@@ -307,7 +307,7 @@
 
 	  A special directory is dedicated to public Python modules
 	  installed by the local administrator,
-	  /usr/lib/python3/dist-packages for all python3 versions, 
+	  /usr/lib/python3/dist-packages for all python3 versions,
 	  /usr/local/lib/python2.<var>Y</var>/dist-packages for python2.7.
 
 	  For a local installation by the administrator of python2.7, a
@@ -326,14 +326,14 @@
 	  /usr/lib/python2.6/dist-packages/foo.py and
 	  /usr/lib/python2.7/dist-packages/foo.py, these should point to a
 	  common file. Version specific directories for identical source code
-          are not required for python3 and must not be used for this.
+	  are not required for python3 and must not be used for this.
 
 	  Since python2.7 is the last python2 version and the only supported
-          version in wheezy and later releases, a common location to share
-          arch-independent files across Python versions is no longer needed.
-          Historically the location for this was /usr/share/pyshared.  For
-          python2.7, use of /usr/lib/python2.7/dist-packages is sufficient.
-          For python3, a special location is not required, use
+	  version in wheezy and later releases, a common location to share
+	  arch-independent files across Python versions is no longer needed.
+	  Historically the location for this was /usr/share/pyshared.  For
+	  python2.7, use of /usr/lib/python2.7/dist-packages is sufficient.
+	  For python3, a special location is not required, use
 	  /usr/lib/python3/dist-packages
 	</p>
       </sect>
@@ -433,14 +433,14 @@
 	</p>
 	<p>
 	  Python packages are a way of structuring Python’s module namespace
-	  by using “dotted module names”.  See 
+	  by using “dotted module names”.  See
 	  <url id="http://docs.python.org/tutorial/modules.html#packages"
 	  name="Python's documentation"> for details on how packages are
 	  defined in Python terms (A package in the Python sense is unrelated to a
-          Debian package). Python packages must be packaged into the
-          same directory (as done by upstream). Splitting components
-          of a package across directories changes the import order and
-          may confuse documentation tools and IDEs.
+	  Debian package). Python packages must be packaged into the
+	  same directory (as done by upstream). Splitting components
+	  of a package across directories changes the import order and
+	  may confuse documentation tools and IDEs.
 	</p>
 	<p>
 	  There are two ways to distribute Python modules. Public
@@ -454,40 +454,40 @@
 	</p>
       </sect>
       <sect id="wheels">
-        <heading>Wheels</heading>
-        <p>
-          <url id="http://legacy.python.org/dev/peps/pep-0427/"
-               name="PEP 427">
-          defines a built-package format called "wheels", which is a zip
-          format archive containing Python code and a "dist-info" metadata
-          directory, in a single file named with the .whl suffix.  As zip
-          files, wheels containing pure-Python can be put on sys.path and
-          modules in the wheel can be imported directly by Python's "import"
-          statement. (Importing extension modules from wheels is not yet
-          supported as of Python 3.4.)
-        </p><p>
-          Except as described below, packages must not build or provide
-          wheels.  They are redundant to the established way of providing
-          Python libraries to Debian users, take no advantage of distro-based
-          tools, and are less convenient to use.  E.g. they must be explicitly
-          added to sys.path, cannot be easily grepped, and stack traces
-          through zips are more difficult to debug.
-        </p><p>
-          A very limited set of wheel packages are available in the archive,
-          but these support the narrow purpose of enabling
-          the <prgn>pip</prgn> tool, in a Debian policy compliant way.  The
-          set of packages providing wheels for this purpose are (by source
-          package name): chardet, distlib, html5lib, python-colorama,
-          python-pip, python-setuptools, python-urllib3, requests, and six.
-        </p><p>
-          Wheel packages supporting <prgn>pyvenv</prgn> and <prgn>pip</prgn>
-          are named with the <var>python-</var> prefix, and the <var>-whl</var>
-          suffix, e.g. <package>python-chardet-whl</package>.  When these
-          binary packages are installed, their .whl files must be placed in
-          the /usr/share/python-wheels directory.  Such wheels must be built
-          with the <tt>--universal</tt> flag so as to generate wheels
-          compatible with both Python 2 and Python 3.
-        </p>
+	<heading>Wheels</heading>
+	<p>
+	  <url id="http://legacy.python.org/dev/peps/pep-0427/"
+	       name="PEP 427">
+	  defines a built-package format called "wheels", which is a zip
+	  format archive containing Python code and a "dist-info" metadata
+	  directory, in a single file named with the .whl suffix.  As zip
+	  files, wheels containing pure-Python can be put on sys.path and
+	  modules in the wheel can be imported directly by Python's "import"
+	  statement. (Importing extension modules from wheels is not yet
+	  supported as of Python 3.4.)
+	</p><p>
+	  Except as described below, packages must not build or provide
+	  wheels.  They are redundant to the established way of providing
+	  Python libraries to Debian users, take no advantage of distro-based
+	  tools, and are less convenient to use.  E.g. they must be explicitly
+	  added to sys.path, cannot be easily grepped, and stack traces
+	  through zips are more difficult to debug.
+	</p><p>
+	  A very limited set of wheel packages are available in the archive,
+	  but these support the narrow purpose of enabling
+	  the <prgn>pip</prgn> tool, in a Debian policy compliant way.  The
+	  set of packages providing wheels for this purpose are (by source
+	  package name): chardet, distlib, html5lib, python-colorama,
+	  python-pip, python-setuptools, python-urllib3, requests, and six.
+	</p><p>
+	  Wheel packages supporting <prgn>pyvenv</prgn> and <prgn>pip</prgn>
+	  are named with the <var>python-</var> prefix, and the <var>-whl</var>
+	  suffix, e.g. <package>python-chardet-whl</package>.  When these
+	  binary packages are installed, their .whl files must be placed in
+	  the /usr/share/python-wheels directory.  Such wheels must be built
+	  with the <tt>--universal</tt> flag so as to generate wheels
+	  compatible with both Python 2 and Python 3.
+	</p>
       </sect>
       <sect id="package_names">
 	<heading>Module Package Names</heading>
@@ -505,9 +505,9 @@
 	  multiple modules.  In the latter case the maintainer chooses the
 	  name of the module which represents the package the most.
 
-          For subpackages such as <var>foo.bar</var>, the recommendation is to
-          name the binary packages <package>python-<var>foo.bar</var></package>
-          and <package>python3-<var>foo.bar</var></package>.
+	  For subpackages such as <var>foo.bar</var>, the recommendation is to
+	  name the binary packages <package>python-<var>foo.bar</var></package>
+	  and <package>python3-<var>foo.bar</var></package>.
 
 	  Such a package should support the current Debian Python version,
 	  and more if possible (there are several tools to help implement
@@ -558,14 +558,14 @@ XS-Python-Version: all
 	  The keyword "current" has been deprecated and used to mean that
 	  the package would only have to support a single version (even
 	  across default version changes).  It must be ignored for Python 3
-	  versions. 
+	  versions.
 	</p>
 	<p>
 	  The use of XB-Python-Version in the binary package paragraphs of
 	  debian/control file has been deprecated and should be removed in the
 	  normal course of package updates. It never achieved sufficient
 	  deployment to support it's intended purpose of managing Python
-          transitions.  This can be adequately accomplished by examining
+	  transitions.  This can be adequately accomplished by examining
 	  package dependencies.
 	</p>
       </sect>
@@ -585,7 +585,7 @@ XS-Python-Version: all
 	  All python module packages and python3 binary extension packages must
 	  also declare a maximum version they support as currently built (this
 	  is accomplished by declaring a maximum version constraint strictly
-	  less than one higher than the current maxiumum version, i.e. 
+	  less than one higher than the current maxiumum version, i.e.
 	  "<package>python (&lt;&lt;&nbsp;<var>X</var>.<var>Y</var></package>)"
 	</p>
       </sect>
@@ -593,8 +593,8 @@ XS-Python-Version: all
       <sect id="provides">
 	<heading>Provides</heading>
 	<p>
-          Python Provides in binary packages of the form
-          <package>python-<var>X</var>.<var>Y</var><var>>foo</var></package>
+	  Python Provides in binary packages of the form
+	  <package>python-<var>X</var>.<var>Y</var><var>>foo</var></package>
 	  were never supported for Python 3 and are no longer useful for
 	  Python.  They should be removed in the normal course of package
 	  updates.  Future provision of values for the substituation variable
@@ -603,7 +603,7 @@ XS-Python-Version: all
       </sect>
 
       <sect id="byte_compilation">
-        <heading>Modules Byte-Compilation</heading>
+	<heading>Modules Byte-Compilation</heading>
 	<p>
 	  If a binary package provides any binary-independent modules
 	  (<file>foo.py</file> files), the corresponding byte-compiled
@@ -615,13 +615,13 @@ XS-Python-Version: all
 	  <file>foo.pyo</file> are removed.
 	</p>
 	<p>
-          A binary package should only byte-compile the files which belong to
-          the package.
+	  A binary package should only byte-compile the files which belong to
+	  the package.
 	</p>
 	<p>
-          The file <file>/etc/python/debian_config</file> allows
-          configuration how modules should be byte-compiled. The
-          postinst scripts should respect these settings.
+	  The file <file>/etc/python/debian_config</file> allows
+	  configuration how modules should be byte-compiled. The
+	  postinst scripts should respect these settings.
 	</p>
 	<p>
 	  Pure Python modules in private installation directories that are
@@ -656,8 +656,8 @@ XS-Python-Version: all
 	  package ships multiple modules.
 	</p>
 
-        <sect1 id="current_version_progs">
-          <heading>Programs Shipping Private Modules</heading>
+	<sect1 id="current_version_progs">
+	  <heading>Programs Shipping Private Modules</heading>
 	  <p>
 	    A program using <file>/usr/bin/python</file> as
 	    interpreter can come up with private Python modules. These
@@ -860,7 +860,7 @@ Build-Depends: python3-all-dev (>= 3.2)
 	<heading>python-central (removed)</heading>
 	<p>
 	  python-central has been removed from Jessie and later releases.  It
-          provided another way to manage Python modules.
+	  provided another way to manage Python modules.
 	</p>
       </sect>
 
@@ -944,7 +944,7 @@ Build-Depends: python3-all-dev (>= 3.2)
 	      uninstallability is unavoidable.  This is a transition that can
 	      entangle other transitions in the distribution and requires more
 	      careful coordination with the release team.
-            </p>
+	    </p>
 	  </item>
 	  <item>
 	    <p>
@@ -955,7 +955,7 @@ Build-Depends: python3-all-dev (>= 3.2)
 	    <p>
 	  </item>
 	</enumlist>
-	      
+
     </appendix>
   </book>
 </debiandoc>
