@@ -508,7 +508,7 @@
 	  the <prgn>pip</prgn> tool, in a Debian policy compliant way.  The
 	  set of packages providing wheels for this purpose are (by source
 	  package name):
-	  <list>
+	  <list compact="compact">
 	    <item><package>chardet</package></item>
 	    <item><package>distlib</package></item>
 	    <item><package>html5lib</package></item>
