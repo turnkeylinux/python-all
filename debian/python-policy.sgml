@@ -138,11 +138,17 @@
 	  binary package <package>python3</package> will represent the
 	  current Debian Python 3 version. As far as is reasonable, Python
 	  and Python 3 should be treated as separate runtime systems with
-	  minimal interdependencies. In some cases, Python policy explicitly
-	  references Python helper programs. For stretch, dh-python is the
-	  only such program. previous helpers have been removed. It is a
-	  design goal to fully specify required interfaces and functions in
-	  policy for Python 3 and to avoid enshrining specific
+	  minimal interdependencies.
+	</p>
+	<p>
+	  In some cases, Python policy explicitly references Python helper
+	  tools. For Debian Stretch, the <package>dh-python</package>
+	  package provides the only such tools; earlier helpers have been
+	  removed from Debian.
+	</p>
+	<p>
+	  It is a design goal to fully specify required interfaces and
+	  functions in policy for Python 3 and to avoid enshrining specific
 	  implementation details in policy. Except as noted, policy for
 	  Python 3 is the same as Python with the addition of the version
 	  number as needed to distinguish them.
@@ -255,7 +261,7 @@
 	<heading>Minimal packages</heading>
 	<p>
 	  For every Python version provided in Debian, the binary package
-	  <package>python<var>X</var>.<var>Y</var></package>-minimal might
+	  <package>python<var>X</var>.<var>Y</var>-minimal</package> might
 	  exist and should not be depended upon by other packages except the
 	  Python runtime packages themselves.
 	</p>
@@ -473,39 +479,54 @@
 	  modules in the wheel can be imported directly by Python's "import"
 	  statement. (Importing extension modules from wheels is not yet
 	  supported as of Python 3.4.)
-	</p><p>
+	</p>
+	<p>
 	  Except as described below, packages must not build or provide
 	  wheels.  They are redundant to the established way of providing
 	  Python libraries to Debian users, take no advantage of distro-based
 	  tools, and are less convenient to use.  E.g. they must be explicitly
 	  added to sys.path, cannot be easily grepped, and stack traces
 	  through zips are more difficult to debug.
-	</p><p>
+	</p>
+	<p>
 	  A very limited set of wheel packages are available in the archive,
 	  but these support the narrow purpose of enabling
 	  the <prgn>pip</prgn> tool, in a Debian policy compliant way.  The
 	  set of packages providing wheels for this purpose are (by source
-	  package name): chardet, distlib, html5lib, python-colorama,
-	  python-pip, python-setuptools, python-urllib3, requests, and six.
-	</p><p>
+	  package name):
+	  <list>
+	    <item><package>chardet</package></item>
+	    <item><package>distlib</package></item>
+	    <item><package>html5lib</package></item>
+	    <item><package>python-colorama</package></item>
+	    <item><package>python-pip</package></item>
+	    <item><package>python-setuptools</package></item>
+	    <item><package>python-urllib3</package></item>
+	    <item><package>requests</package></item>
+	    <item><package>six</package></item>
+	  </list>
+	</p>
+	<p>
 	  Wheel packages supporting <prgn>pyvenv</prgn> and <prgn>pip</prgn>
-	  are named with the <var>python-</var> prefix, and the <var>-whl</var>
-	  suffix, e.g. <package>python-chardet-whl</package>.  When these
-	  binary packages are installed, their .whl files must be placed in
-	  the /usr/share/python-wheels directory.  Such wheels must be built
-	  with the <tt>--universal</tt> flag so as to generate wheels
-	  compatible with both Python 2 and Python 3.
+	  are named with the <package>python-</package> prefix, and
+	  the <package>-whl</package> suffix,
+	  e.g. <package>python-chardet-whl</package>. When these binary
+	  packages are installed, their .whl files must be placed in the
+	  /usr/share/python-wheels directory. Such wheels must be built with
+	  the <tt>--universal</tt> flag so as to generate wheels compatible
+	  with both Python 2 and Python 3.
 	</p>
       </sect>
       <sect id="package_names">
 	<heading>Module Package Names</heading>
 	<p>
 	  Public modules used by other packages must have their binary
-	  package name prefixed with <var>python-</var>.  It is recommended
-	  to use this prefix for all packages with public modules as they may
-	  be used by other packages in the future.  Python 3 modules must be
-	  in a separate binary package prefixed with <var>python3-</var> to
-	  preserve run time separation between Python and Python 3.
+	  package name prefixed with <package>python-</package>. It is
+	  recommended to use this prefix for all packages with public
+	  modules as they may be used by other packages in the future.
+	  Python 3 modules must be in a separate binary package prefixed
+	  with <package>python3-</package> to preserve run time separation
+	  between Python and Python 3.
 
 	  The binary package for module foo should preferably be named
 	  <package>python-<var>foo</var></package>, if the module name
@@ -581,20 +602,20 @@ XS-Python-Version: all
       <sect id="dependencies">
 	<heading>Dependencies</heading>
 	<p>
-	  Packaged modules available for the default Python version
-	  (or many versions including the default) as described
-	  in <ref id="package_names"> must depend on "<package>python
-	  (&gt;=&nbsp;<var>X</var>.<var>Y</var></package>)". If they
+	  Packaged modules available for the default Python version (or many
+	  versions including the default) as described
+	  in <ref id="package_names"> must declare "Depends:
+	  python&nbsp;(&gt;=&nbsp;<var>X</var>.<var>Y</var>)". If they
 	  require other modules to work, they must depend on the
-	  corresponding <package>python-foo</package>. They must not
-	  depend on any <package>python<var>X</var>.<var>Y</var>-foo</package>.
+	  corresponding <package>python-foo</package>. They must not depend
+	  on any <package>python<var>X</var>.<var>Y</var>-foo</package>.
 	</p>
 	<p>
 	  All Python module packages and Python 3 binary extension packages must
 	  also declare a maximum version they support as currently built (this
 	  is accomplished by declaring a maximum version constraint strictly
 	  less than one higher than the current maxiumum version, i.e.
-	  "<package>python (&lt;&lt;&nbsp;<var>X</var>.<var>Y</var></package>)"
+	  "Depends: python&nbsp;(&lt;&lt;&nbsp;<var>X</var>.<var>Y</var>)".
 	</p>
       </sect>
 
@@ -721,7 +742,7 @@ XS-Python-Version: all
 	  Programs which embed a Python interpreter must declare a
 	  <tt>Build-Depends</tt> on
 	  <package>python<var>X</var>.<var>Y</var>-dev</package>, where
-	  python<var>X</var>.<var>Y</var> is the Python version the program
+	  <var>X</var>.<var>Y</var> is the Python version the program
 	  builds against. It should be the current default Python version
 	  unless the program does not work correctly with this version.
 	</p>
@@ -768,9 +789,10 @@ XS-Python-Version: all
       <p>
 	Some applications and pure Python modules may be able to
 	build-depend only on <package>python</package>
-	or <package>python-all</package> and not require the -dev
-	packages. Packages that do not require the -dev packages must not
-	build-depend on them.
+	or <package>python-all</package> and not require
+	the <package>-dev</package> packages. A package that does not
+	require the <package>-dev</package> packages must not declare
+	Build-Depends on them.
       </p>
 
       <p>
@@ -826,15 +848,16 @@ Build-Depends: python3-all-dev (&gt;= 3.2)
 	</p>
       </sect>
 
-      <sect id="dh_python2_3">
-	<heading>dh_python2 and dh_python3</heading>
+      <sect id="dh-python">
+	<heading><package>dh-python</package></heading>
 	<p>
-	 dh_python2 and dh_python3 are <package>debhelper</package> extensions
-	 provided as part of Python and Python 3 to make it easier to package
-	 Python modules and extensions. They calculate Python dependencies, add
-	 maintainer scripts to byte compile files, etc. Their use is not
+	 <package>dh-python</package> provides extensions
+	 for <package>debhelper</package> to make it easier to package
+	 Python modules and extensions. They calculate Python dependencies,
+	 add maintainer scripts to byte compile files, etc. Their use is not
 	 mandatory, but they are recommended by the Python maintainers.
-
+	</p>
+	<p>
 	 See man dh_python2 or man dh_python3 for details.
 	</p>
       </sect>
@@ -858,18 +881,20 @@ Build-Depends: python3-all-dev (&gt;= 3.2)
       </sect>
 
       <sect id="pysupport">
-	<heading>python-support (removed)</heading>
+	<heading><package>python-support</package> (removed)</heading>
 	<p>
-	  python-support provided another way to manage Python modules. It
-	  has been removed from Debian Stretch and later releases.
+	  <package>python-support</package> provided another way to manage
+	  Python modules. It has been removed from Debian Stretch and later
+	  releases.
 	</p>
       </sect>
 
       <sect id="pycentral">
-	<heading>python-central (removed)</heading>
+	<heading><package>python-central</package> (removed)</heading>
 	<p>
-	  python-central provided another way to manage Python modules. It
-	  has been removed from Debian Jessie and later releases.
+	  <package>python-central</package> provided another way to manage
+	  Python modules. It has been removed from Debian Jessie and later
+	  releases.
 	</p>
       </sect>
 
