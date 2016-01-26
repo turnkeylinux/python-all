@@ -68,7 +68,7 @@
 	  A copy of the GNU General Public License is available as
 	  <tt>/usr/share/common-licences/GPL</tt> in the Debian GNU/Linux
 	  distribution or on the World Wide Web at
-	  <url id="http://www.gnu.org/copyleft/gpl.html"
+	  <url id="https://www.gnu.org/copyleft/gpl.html"
 	  name="The GNU General Public License">.
 	</p>
 	<p>
@@ -88,11 +88,11 @@
 	  and one for Python 3.  The long term goal for Debian is to
 	  reduce this to one stack, dropping the Python 2 stack at some
 	  time.
-	  <url id="http://legacy.python.org/dev/peps/pep-0404/"
+	  <url id="https://www.python.org/dev/peps/pep-0404/"
 	  name="PEP 404"> states that no more major Python 2 releases
 	  are planned, although the latest released minor version 2.7
 	  will see some extended support, documented in
-	  <url id="http://legacy.python.org/dev/peps/pep-0466/"
+	  <url id="https://www.python.org/dev/peps/pep-0466/"
 	  name="PEP 466">.
 	</p>
 	<p>
@@ -245,7 +245,7 @@
 	<p>
 	  Because upstream has started providing it, there will be a symlink
 	  for <file>/usr/bin/python2</file> for Wheezy and later releases.  See
-	  <url id="http://www.python.org/dev/peps/pep-0394/" name="PEP-0394">
+	  <url id="https://www.python.org/dev/peps/pep-0394/" name="PEP 394">
 	  for details. Packages must be careful to depend on a sufficient
 	  version of <package>python</package> if they make use of this symlink.
 	</p>
@@ -441,14 +441,14 @@
 	</p>
 	<p>
 	  Python packages are a way of structuring Python’s module namespace
-	  by using “dotted module names”.  See
-	  <url id="http://docs.python.org/tutorial/modules.html#packages"
-	  name="Python's documentation"> for details on how packages are
-	  defined in Python terms (A package in the Python sense is unrelated to a
-	  Debian package). Python packages must be packaged into the
-	  same directory (as done by upstream). Splitting components
-	  of a package across directories changes the import order and
-	  may confuse documentation tools and IDEs.
+	  by using “dotted module names”. See
+	  <url id="https://docs.python.org/3/glossary.html#term-package"
+	  name="Python's glossary"> for details on how packages are defined
+	  in Python terms (a package in the Python sense is unrelated to a
+	  Debian package). Python packages must be packaged into the same
+	  directory (as done by upstream). Splitting components of a package
+	  across directories changes the import order and may confuse
+	  documentation tools and IDEs.
 	</p>
 	<p>
 	  There are two ways to distribute Python modules. Public
@@ -464,7 +464,7 @@
       <sect id="wheels">
 	<heading>Wheels</heading>
 	<p>
-	  <url id="http://legacy.python.org/dev/peps/pep-0427/"
+	  <url id="https://www.python.org/dev/peps/pep-0427/"
 	       name="PEP 427">
 	  defines a built-package format called "wheels", which is a zip
 	  format archive containing Python code and a "dist-info" metadata
