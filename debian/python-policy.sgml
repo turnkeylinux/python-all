@@ -65,11 +65,11 @@
 	  the GNU General Public License for more details.
 	</p>
 	<p>
-	  A copy of the GNU General Public License is available as
-	  <tt>/usr/share/common-licences/GPL</tt> in the Debian GNU/Linux
-	  distribution or on the World Wide Web at
-	  <url id="https://www.gnu.org/copyleft/gpl.html"
-	  name="The GNU General Public License">.
+	  A copy of the GNU General Public License version 2 is available as
+	  <file>/usr/share/common-licences/GPL-2</file> in the Debian
+	  GNU/Linux system, or on the World Wide Web at
+	  <url id="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+	  name="GNU General Public License, version 2">.
 	</p>
 	<p>
 	  You can also obtain it by writing to the
