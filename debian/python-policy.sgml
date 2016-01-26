@@ -306,49 +306,59 @@
 	<p>
 	  By default, Python modules are searched in the directories listed
 	  in the PYTHONPATH environment variable and in the sys.path Python
-	  variable.  For all supported Debian releases, sys.path does not
-	  include a /usr/lib/python<var>X</var><var>Y</var>.zip entry.
-
+	  variable. For all supported Debian releases, sys.path does not
+	  include a <file>/usr/lib/python<var>X</var><var>Y</var>.zip</file>
+	  entry.
+	</p>
+	<p>
 	  Directories with private Python modules must be absent from the
 	  sys.path.
-
-	  Public Python modules must be installed in the system Python modules
-	  directory, /usr/lib/python<var>X</var>.<var>Y</var>/dist-packages.
-	  Public Python 3 modules must be installed in /usr/lib/python3/dist-packages.
-
+	</p>
+	<p>
+	  Public Python modules must be installed in the system Python
+	  modules directory,
+	  <file>/usr/lib/python<var>X</var>.<var>Y</var>/dist-packages</file>.
+	  Public Python 3 modules must be installed in
+	  <file>/usr/lib/python3/dist-packages</file>.
+	</p>
+	<p>
 	  A special directory is dedicated to public Python modules
 	  installed by the local administrator,
-	  /usr/lib/python3/dist-packages for all Python 3 versions,
-	  /usr/local/lib/python2.<var>Y</var>/dist-packages for Python 2.
-
+	  <file>/usr/lib/python3/dist-packages</file> for all Python 3 versions,
+	  <file>/usr/local/lib/python2.<var>Y</var>/dist-packages</file> for
+	  Python 2.
+	</p>
+	<p>
 	  For a local installation by the administrator of Python 2, a
 	  special directory is reserved to Python modules which should only
 	  be available to this Python,
-	  /usr/local/lib/python2.<var>Y</var>/site-packages (and
-	  /usr/local/lib/python3/site-packages for all Python 3 versions).
-
+	  <file>/usr/local/lib/python2.<var>Y</var>/site-packages</file> (and
+	  <file>/usr/local/lib/python3/site-packages</file> for all Python 3
+	  versions).
+	</p>
+	<p>
 	  Additional information on appending site-specific paths to the
 	  module search path is available in the official documentation of
 	  the site module.
 	</p>
-
 	<p>
 	  When binary packages ship identical source code for multiple
 	  Python versions, for instance
-	  /usr/lib/python2.6/dist-packages/foo.py and
-	  /usr/lib/python2.7/dist-packages/foo.py, these should point to a
-	  common file. Version specific directories for identical source code
-	  are not required for Python 3 and must not be used for this.
+	  <file>/usr/lib/python2.6/dist-packages/foo.py</file> and
+	  <file>/usr/lib/python2.7/dist-packages/foo.py</file>, these should
+	  point to a common file. Version specific directories for identical
+	  source code are not required for Python 3 and must not be used for
+	  this.
 	</p>
-
 	<p>
-	  Since Python 2.7 is the last Python 2 version and the only supported
-	  version in Wheezy and later releases, a common location to share
-	  arch-independent files across Python versions is no longer needed.
-	  Historically the location for this was /usr/share/pyshared.  For
-	  Python 2.7, use of /usr/lib/python2.7/dist-packages is sufficient.
+	  Since Python 2.7 is the last Python 2 version and the only
+	  supported version in Wheezy and later releases, a common location
+	  to share arch-independent files across Python versions is no
+	  longer needed. Historically the location for this
+	  was <file>/usr/share/pyshared</file>. For Python 2.7, use
+	  of <file>/usr/lib/python2.7/dist-packages</file> is sufficient.
 	  For Python 3, a special location is not required, use
-	  /usr/lib/python3/dist-packages
+	  <file>/usr/lib/python3/dist-packages</file>.
 	</p>
       </sect>
 
@@ -371,10 +381,11 @@
 	<p><enumlist>
 	  <item>
 	    <p>
-	      /usr/share/python/runtime.d/*.rtinstall: these are called when
-	      a runtime is installed or becomes supported.  The first
-	      argument is "rtinstall", the second argument is the affected
-	      runtime (for example python<var>X</var>.<var>Y</var>) and the
+	      <file>/usr/share/python/runtime.d/*.rtinstall</file>: these
+	      are called when a runtime is installed or becomes supported.
+	      The first argument is "rtinstall", the second argument is the
+	      affected runtime (for
+	      example <file>python<var>X</var>.<var>Y</var></file>) and the
 	      third and fourth argument are the old and new version of this
 	      packaged runtime if this runtime was already installed but
 	      unsupported.
@@ -382,24 +393,24 @@
 	  </item>
 	  <item>
 	    <p>
-	      /usr/share/python/runtime.d/*.rtremove: these are called when
-	      a runtime is removed or stops being supported.  The first
-	      argument is "rtremove", and the second argument is the
+	      <file>/usr/share/python/runtime.d/*.rtremove</file>: these are
+	      called when a runtime is removed or stops being supported. The
+	      first argument is "rtremove", and the second argument is the
 	      affected runtime (for example
-	      python<var>X</var>.<var>Y</var>).
+	      <file>python<var>X</var>.<var>Y</var></file>).
 	    </p>
 	  </item>
 	  <item>
 	    <p>
-	      /usr/share/python/runtime.d/*.rtupdate: these are called when
-	      the default runtime changes.  The first argument is either
-	      "pre-rtupdate", called before changing the default runtime, or
-	      "rtupdate", called when changing the default runtime, or
-	      "post-rtupdate", called immediately afterwards.  The second
-	      argument is the old default runtime (for example
-	      python<var>X</var>.<var>Y</var>), and the third argument is
-	      the new default runtime (for example
-	      python<var>X</var>.<var>Z</var>).
+	      <file>/usr/share/python/runtime.d/*.rtupdate</file>: these are
+	      called when the default runtime changes. The first argument is
+	      either "pre-rtupdate", called before changing the default
+	      runtime, or "rtupdate", called when changing the default
+	      runtime, or "post-rtupdate", called immediately afterwards.
+	      The second argument is the old default runtime (for example
+	      <file>python<var>X</var>.<var>Y</var></file>), and the third
+	      argument is the new default runtime (for example
+	      <file>python<var>X</var>.<var>Z</var></file>).
 	    </p>
 	  </item>
 	</enumlist></p>
@@ -423,13 +434,14 @@
       <heading>Packaged Modules</heading>
       <p>
 	The goal of these policies is to reduce the work necessary for
-	Python transitions. Python modules are internally very
-	dependent on a specific Python version. However, we want to
-	automate recompiling modules when possible, either during the
-	upgrade itself (re-byte-compiling pyc and pyo files) or shortly
-	thereafter with automated rebuilds (to handle C
-	extensions). These policies encourage automated dependency
-	generation and loose version bounds whenever possible.
+	Python transitions. Python modules are internally very dependent on
+	a specific Python version. However, we want to automate recompiling
+	modules when possible, either during the upgrade itself
+	(re-compiling bytecode files <file>*.pyc</file>
+	and <file>*.pyo</file>) or shortly thereafter with automated
+	rebuilds (to handle C extensions). These policies encourage
+	automated dependency generation and loose version bounds whenever
+	possible.
       <sect>
 	<heading>Types of Python Modules</heading>
 	<p>
@@ -439,11 +451,12 @@
 	  Python. Extensions are C code compiled and linked against a
 	  specific version of the Python runtime, and so can only
 	  be used by one version of Python.
-
+	</p>
+	<p>
 	  Some distributions link extensions to libpython, but this is not
 	  the case in Debian as symbols might as well be resolved by
 	  <file>/usr/bin/python<var>X</var>.<var>Y</var></file> which is not
-	  linked to libpython.
+	  linked to <file>libpython</file>.
 	</p>
 	<p>
 	  Python packages are a way of structuring Python’s module namespace
@@ -457,10 +470,10 @@
 	  documentation tools and IDEs.
 	</p>
 	<p>
-	  There are two ways to distribute Python modules. Public
-	  modules are installed in a public directory as listed
-	  in <ref id="paths">. They are accessible to any
-	  program. Private modules are installed in a private directory such
+	  There are two ways to distribute Python modules. Public modules
+	  are installed in a public directory as listed in <ref id="paths">.
+	  They are accessible to any program. Private modules are installed
+	  in a private directory such
 	  as <file>/usr/share/<var>package-name</var></file>
 	  or <file>/usr/lib/<var>package-name</var></file>. They are
 	  generally only accessible to a specific program or suite of
@@ -473,12 +486,13 @@
 	  <url id="https://www.python.org/dev/peps/pep-0427/"
 	       name="PEP 427">
 	  defines a built-package format called "wheels", which is a zip
-	  format archive containing Python code and a "dist-info" metadata
-	  directory, in a single file named with the .whl suffix.  As zip
-	  files, wheels containing pure Python can be put on sys.path and
-	  modules in the wheel can be imported directly by Python's "import"
-	  statement. (Importing extension modules from wheels is not yet
-	  supported as of Python 3.4.)
+	  format archive containing Python code and
+	  a <file>*.dist-info</file> metadata directory, in a single file
+	  named with the <file>.whl</file> suffix. As Zip files, wheels
+	  containing pure Python can be put on sys.path and modules in the
+	  wheel can be imported directly by Python's "import" statement.
+	  (Importing extension modules from wheels is not yet supported as
+	  of Python 3.4.)
 	</p>
 	<p>
 	  Except as described below, packages must not build or provide
@@ -486,7 +500,7 @@
 	  Python libraries to Debian users, take no advantage of distro-based
 	  tools, and are less convenient to use.  E.g. they must be explicitly
 	  added to sys.path, cannot be easily grepped, and stack traces
-	  through zips are more difficult to debug.
+	  through Zip files are more difficult to debug.
 	</p>
 	<p>
 	  A very limited set of wheel packages are available in the archive,
@@ -512,9 +526,9 @@
 	  the <package>-whl</package> suffix,
 	  e.g. <package>python-chardet-whl</package>. When these binary
 	  packages are installed, their .whl files must be placed in the
-	  /usr/share/python-wheels directory. Such wheels must be built with
-	  the <tt>--universal</tt> flag so as to generate wheels compatible
-	  with both Python 2 and Python 3.
+	  <file>/usr/share/python-wheels</file> directory. Such wheels must
+	  be built with the <tt>--universal</tt> flag so as to generate
+	  wheels compatible with both Python 2 and Python 3.
 	</p>
       </sect>
       <sect id="package_names">
@@ -527,17 +541,21 @@
 	  Python 3 modules must be in a separate binary package prefixed
 	  with <package>python3-</package> to preserve run time separation
 	  between Python and Python 3.
-
+	</p>
+	<p>
 	  The binary package for module foo should preferably be named
 	  <package>python-<var>foo</var></package>, if the module name
 	  allows, but this is not required if the binary package ships
 	  multiple modules.  In the latter case the maintainer chooses the
 	  name of the module which represents the package the most.
-
-	  For subpackages such as <var>foo.bar</var>, the recommendation is to
-	  name the binary packages <package>python-<var>foo.bar</var></package>
+	</p>
+	<p>
+	  For subpackages such as <var>foo.bar</var>, the recommendation is
+	  to name the binary
+	  packages <package>python-<var>foo.bar</var></package>
 	  and <package>python3-<var>foo.bar</var></package>.
-
+	</p>
+	<p>
 	  Such a package should support the current Debian Python version,
 	  and more if possible (there are several tools to help implement
 	  this, see <ref id="packaging_tools">). For example, if Python 2.5,
@@ -656,12 +674,14 @@ XS-Python-Version: all
 	  Pure Python modules in private installation directories that are
 	  byte-compiled with the default Python version must be forcefully
 	  byte-compiled again when the default Python version changes.
-
+	</p>
+	<p>
 	  Public Python extensions should be bin-NMUed.
-
+	</p>
+	<p>
 	  Private Python extensions should be subject to binary NMUs every
 	  time the default interpreter changes, unless the extension is
-	  updated through a .rtupdate script.
+	  updated through a <file>*.rtupdate</file> script.
 	</p>
       </sect>
     </chapt>
@@ -688,11 +708,10 @@ XS-Python-Version: all
 	<sect1 id="current_version_progs">
 	  <heading>Programs Shipping Private Modules</heading>
 	  <p>
-	    A program using <file>/usr/bin/python</file> as
-	    interpreter can come up with private Python modules. These
-	    modules should be installed in
-	    <tt>/usr/share/<var>module</var></tt>, or
-	    <tt>/usr/lib/<var>module</var></tt> if the modules are
+	    A program using <file>/usr/bin/python</file> as interpreter can
+	    come up with private Python modules. These modules should be
+	    installed in <file>/usr/share/<var>module</var></file>, or
+	    <file>/usr/lib/<var>module</var></file> if the modules are
 	    architecture-dependent (e.g. extensions).
 	  </p>
 	  <p>
@@ -752,10 +771,10 @@ XS-Python-Version: all
 	<heading>Embedded Python Dependencies</heading>
 	<p>
 	  Dependencies for programs linking against the shared Python
-	  library will be automatically created by
-	  <prgn>dpkg-shlibdeps</prgn>. The
-	  <tt>libpython<var>X</var>.<var>Y</var>.so.<var>Z</var></tt> library
-	  the program is built against is provided by the
+	  library will be automatically created
+	  by <prgn>dpkg-shlibdeps</prgn>. The
+	  <file>libpython<var>X</var>.<var>Y</var>.so.<var>Z</var></file>
+	  library the program is built against is provided by the
 	  <package>python<var>X</var>.<var>Y</var></package> package.
 	</p>
       </sect>
@@ -829,21 +848,25 @@ Build-Depends: python3-all-dev (&gt;= 3.2)
 	  change the default installation directory of public Python modules
 	  and to add a new flag to the "install" command to override the
 	  default, <prgn>--install-layout=</prgn>.
-
+	</p>
+	<p>
 	  Public Python modules installed with a modified distutils default
-	  to /usr/local/lib/python<var>X</var>.<var>Y</var>/dist-packages
-	  for Python 2.6 and later.  This directory is seen by the
+	  to
+	  <file>/usr/local/lib/python<var>X</var>.<var>Y</var>/dist-packages</file>
+	  for Python 2.6 and later. This directory is seen by the
 	  system-provided Python 2.6.
-
+	</p>
+	<p>
 	  When using a local Python installation, the default is
-	  /usr/local/lib/python<var>X</var>.<var>Y</var>/site-packages which
-	  is only seen by the local Python installation.
-
+	  <file>/usr/local/lib/python<var>X</var>.<var>Y</var>/site-packages</file>
+	  which is only seen by the local Python installation.
+	</p>
+	<p>
 	  Using the <prgn>--install-layout=deb</prgn> flag to the "install"
 	  command of <prgn>setup.py</prgn> with a system-provided Python 2.6
 	  or later versions, Python modules will be installed to
-	  /usr/lib/python<var>X</var>.<var>Y</var>/dist-packages which is
-	  only seen by the system-provided Python, not by a local
+	  <file>/usr/lib/python<var>X</var>.<var>Y</var>/dist-packages</file>
+	  which is only seen by the system-provided Python, not by a local
 	  installation.
 	</p>
       </sect>
