@@ -458,13 +458,12 @@
         <p>
           <url id="http://legacy.python.org/dev/peps/pep-0427/"
                name="PEP 427">
-          defines a built-package format called "wheels", which is a zip
-          format archive containing Python code and a "dist-info" metadata
+          defines a built-package format called "wheels", a zip
+          archive containing Python code and a "dist-info" metadata
           directory, in a single file named with the .whl suffix.  As zip
           files, wheels containing pure-Python can be put on sys.path and
           modules in the wheel can be imported directly by Python's "import"
-          statement. (Importing extension modules from wheels is not yet
-          supported as of Python 3.4.)
+          statement.
         </p><p>
           Except as described below, packages must not build or provide
           wheels.  They are redundant to the established way of providing
@@ -475,18 +474,20 @@
         </p><p>
           A very limited set of wheel packages are available in the archive,
           but these support the narrow purpose of enabling
-          the <prgn>pip</prgn> tool, in a Debian policy compliant way.  The
-          set of packages providing wheels for this purpose are (by source
-          package name): chardet, distlib, html5lib, python-colorama,
-          python-pip, python-setuptools, python-urllib3, requests, and six.
+          the <prgn>pip</prgn>, <prgn>virtualenv</prgn>,
+          and <prgn>pyvenv</prgn> tools in a Debian policy compliant way.
+          These packages build their own dependent wheels through the use of
+          the <prgn>dirtbike</prgn> "rewheeling" tool, which takes installed
+          Debian packages and turns them back into wheels.  Only universal
+          wheels (i.e. pure-Python, Python 2 and 3 compatible packages) are
+          supported.  Since only the programs that require wheels need build
+          them, only they may provide <var>-whl</var> packages,
+          e.g. <package>python-pip-whl</package>.
         </p><p>
-          Wheel packages supporting <prgn>pyvenv</prgn> and <prgn>pip</prgn>
-          are named with the <var>python-</var> prefix, and the <var>-whl</var>
-          suffix, e.g. <package>python-chardet-whl</package>.  When these
-          binary packages are installed, their .whl files must be placed in
-          the /usr/share/python-wheels directory.  Such wheels must be built
-          with the <tt>--universal</tt> flag so as to generate wheels
-          compatible with both Python 2 and Python 3.
+          When these binary packages are installed, .whl files must be placed
+          in the /usr/share/python-wheels directory.  The location inside a
+          virtual environment will be rooted in the virtual environment,
+          instead of in /usr.
         </p>
       </sect>
       <sect id="package_names">
