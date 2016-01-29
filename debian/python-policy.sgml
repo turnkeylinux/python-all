@@ -515,33 +515,24 @@
 	  debug.
 	</p>
 	<p>
-	  A very limited set of wheel packages are available in the archive,
-	  but these support the narrow purpose of enabling
-	  the <prgn>pip</prgn> tool, in a Debian policy compliant way. The
-	  set of packages providing wheels for this purpose are (by source
-	  package name):
-	  <list compact="compact">
-	    <item><package>chardet</package></item>
-	    <item><package>distlib</package></item>
-	    <item><package>html5lib</package></item>
-	    <item><package>python-colorama</package></item>
-	    <item><package>python-pip</package></item>
-	    <item><package>python-setuptools</package></item>
-	    <item><package>python-urllib3</package></item>
-	    <item><package>requests</package></item>
-	    <item><package>six</package></item>
-	  </list>
-	</p>
+          A very limited set of wheel packages are available in the archive,
+          but these support the narrow purpose of enabling
+          the <prgn>pip</prgn>, <prgn>virtualenv</prgn>,
+          and <prgn>pyvenv</prgn> tools in a Debian policy compliant way.
+          These packages build their own dependent wheels through the use of
+          the <prgn>dirtbike</prgn> "rewheeling" tool, which takes installed
+          Debian packages and turns them back into wheels.  Only universal
+          wheels (i.e. pure-Python, Python 2 and 3 compatible packages) are
+          supported.  Since only the programs that require wheels need build
+          them, only they may provide <var>-whl</var> packages,
+          e.g. <package>python-pip-whl</package>.
+        </p>
 	<p>
-	  Wheel packages supporting <prgn>pyvenv</prgn> and <prgn>pip</prgn>
-	  are named with the <package>python-</package> prefix, and
-	  the <package>-whl</package> suffix,
-	  e.g. <package>python-chardet-whl</package>. When these binary
-	  packages are installed, their <file>*.whl</file> files must be
-	  placed in the <file>/usr/share/python-wheels</file> directory.
-	  Such wheels must be built with the <tt>--universal</tt> flag so as
-	  to generate wheels compatible with both Python 2 and Python 3.
-	</p>
+          When these binary packages are installed, .whl files must be placed
+          in the /usr/share/python-wheels directory.  The location inside a
+          virtual environment will be rooted in the virtual environment,
+          instead of in /usr.
+        </p>
       </sect>
       <sect id="package_names">
 	<heading>Module Package Names</heading>
