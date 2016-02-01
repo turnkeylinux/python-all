@@ -242,19 +242,15 @@
 	</p>
 	<p>
 	  At any time, the <package>python</package> binary package must
-	  ensure that <file>/usr/bin/python</file> is provided as a symlink
-	  to the current <file>python<var>X</var>.<var>Y</var></file>
-	  executable.
+	  ensure that <file>/usr/bin/python</file> is provided, as a symlink
+	  to the current <file>python2.<var>Y</var></file> executable.
 	</p>
 	<p>
 	  The <package>python</package> binary package must also depend on
-	  the appropriate <package>python<var>X</var>.<var>Y</var></package>
-	  to ensure this runtime is installed.
-	</p>
-	<p>
-	  The version of the <package>python</package> binary package must
-	  be greater than or equal to <var>X</var>.<var>Y</var> and smaller
-	  than <var>X</var>.<var>Y+1</var>.
+	  the appropriate <package>python2.<var>Y</var></package> to ensure
+	  this runtime is installed. The version of
+	  the <package>python</package> binary package must be greater than
+	  or equal to 2.<var>Y</var> and smaller than 2.<var>Y+1</var>.
 	</p>
 	<p>
 	  Because upstream has started providing it, there will be a symlink
@@ -296,16 +292,17 @@
 	  <p>
 	    The preferred specification for the Python 2 interpreter is
 	    <file>/usr/bin/python</file> or
-	    <file>/usr/bin/python<var>X</var>.<var>Y</var></file>.
+	    <file>/usr/bin/python2.<var>Y</var></file>.
 	    This ensures that a Debian installation of Python is used
 	    and all dependencies on additional Python modules are met.
 	  </p>
 	  <p>
 	    Maintainers should not override the Debian Python 2 interpreter
 	    using <file>/usr/bin/env python</file> or
-	    <file>/usr/bin/env python<var>X</var>.<var>Y</var></file>. This is
-	    not advisable as it bypasses Debian's dependency checking and makes
-	    the package vulnerable to incomplete local installations of Python.
+	    <file>/usr/bin/env python2.<var>Y</var></file>. This is not
+	    advisable as it bypasses Debian's dependency checking and makes
+	    the package vulnerable to incomplete local installations of
+	    Python.
 	  </p>
 	</sect1>
       </sect>
@@ -325,8 +322,9 @@
 	</p>
 	<p>
 	  Public Python 2 modules must be installed in the system Python 2
-	  modules directory,
-	  <file>/usr/lib/python<var>X</var>.<var>Y</var>/dist-packages</file>.
+	  modules directory
+	  <file>/usr/lib/python2.<var>Y</var>/dist-packages</file>, where
+	  2.<var>Y</var> is the Python 2 version.
 	  Public Python 3 modules must be installed in the system Python 3
 	  modules directory, <file>/usr/lib/python3/dist-packages</file>.
 	</p>
@@ -396,10 +394,9 @@
 	      are called when a runtime is installed or becomes supported.
 	      The first argument is <tt>rtinstall</tt>, the second argument
 	      is the affected runtime (for
-	      example <file>python<var>X</var>.<var>Y</var></file>) and the
-	      third and fourth argument are the old and new version of this
-	      packaged runtime if this runtime was already installed but
-	      unsupported.
+	      example <file>python2.<var>Y</var></file>) and the third and
+	      fourth argument are the old and new version of this packaged
+	      runtime if this runtime was already installed but unsupported.
 	    </p>
 	  </item>
 	  <item>
@@ -407,8 +404,8 @@
 	      <file>/usr/share/python/runtime.d/*.rtremove</file>: These are
 	      called when a runtime is removed or stops being supported. The
 	      first argument is <tt>rtremove</tt>, and the second argument
-	      is the affected runtime (for example
-	      <file>python<var>X</var>.<var>Y</var></file>).
+	      is the affected runtime (for
+	      example <file>python2.<var>Y</var></file>).
 	    </p>
 	  </item>
 	  <item>
@@ -419,10 +416,9 @@
 	      default runtime, or <tt>rtupdate</tt>, called when changing
 	      the default runtime, or <tt>post-rtupdate</tt>, called
 	      immediately afterwards. The second argument is the old default
-	      runtime (for example
-	      <file>python<var>X</var>.<var>Y</var></file>), and the third
-	      argument is the new default runtime (for example
-	      <file>python<var>X</var>.<var>Z</var></file>).
+	      runtime (for example <file>python2.<var>Y</var></file>), and
+	      the third argument is the new default runtime (for example
+	      <file>python2.<var>Z</var></file>).
 	    </p>
 	  </item>
 	</enumlist></p>
