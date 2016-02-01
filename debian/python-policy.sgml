@@ -564,16 +564,16 @@
 	<p>
 	  Such a package should support the current Debian Python version,
 	  and more if possible (there are several tools to help implement
-	  this, see <ref id="packaging_tools">). For example, if Python 2.5,
-	  2.6, and 2.7 are supported, the Python statement
+	  this, see <ref id="packaging_tools">). For example, if Python 3.3,
+	  3.4, and 3.5 are supported, the Python statement
 	  <example>
 import foo
 	  </example>
-	  should import the module when the user is running any
-	  of <prgn>/usr/bin/python2.5</prgn>, <prgn>/usr/bin/python2.6</prgn>,
-	  and <prgn>/usr/bin/python2.7</prgn>. This requirement also
-	  applies to extension modules; binaries for all the supported
-	  Python versions should be included in a single package.
+	  should import the module when the program interpreter is any
+	  of <prgn>/usr/bin/python3.3</prgn>, <prgn>/usr/bin/python3.4</prgn>,
+	  and <prgn>/usr/bin/python3.5</prgn>. This requirement also applies
+	  to extension modules; binaries for all the supported Python
+	  versions should be included in a single package.
 	</p>
       </sect>
       <sect id="specifying_versions">
@@ -742,8 +742,8 @@ XS-Python-Version: all
 	    Programs that have private compiled extensions must either
 	    handle multiple version support themselves, or declare a tight
 	    dependency on the current Python version (e.g. <tt>Depends:
-	    python&nbsp;(&gt;=&nbsp;2.7),
-	    python&nbsp;(&lt;&lt;&nbsp;2.8)</tt>.
+	    python3&nbsp;(&gt;=&nbsp;3.5),
+	    python3&nbsp;(&lt;&lt;&nbsp;3.6)</tt>.
 	  </p>
 	</sect1>
       </sect>
