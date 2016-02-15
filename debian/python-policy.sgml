@@ -842,7 +842,7 @@ XS-Python-Version: all
 	<p>
 	  A program which requires a specific minor version of Python must
 	  specify the versioned
-	  interpreter <prgn>python<var>X</var>.<var>Y</var></tt>. The
+	  interpreter <prgn>python<var>X</var>.<var>Y</var></prgn>. The
 	  package that installs the programs must also specify a dependency
 	  on
 	  <package>python<var>X</var>.<var>Y</var></package> and on any
