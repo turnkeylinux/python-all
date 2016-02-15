@@ -308,7 +308,7 @@
 	  <p>
 	    Python scripts may specify <file>python</file> as the
 	    interpreter name only if they do not require any particular
-	    version of Python.
+	    version of Python. (Note: this means any python2 version)
 	  </p>
 	  <p>
 	    Python scripts that only work with a specific Python minor
@@ -981,6 +981,21 @@ Build-Depends: python3-all-dev (&gt;= 3.2)
 	  which is only seen by the system-provided Python, not by a local
 	  installation.
 	</p>
+      </sect>
+
+      <sect id="setuptools">
+        <heading>setuptools</heading>
+        <p>
+          The related Python <tt>setuptools</tt> module has been modified in
+          Debian along the same lines as <tt>distutils</tt>.
+        </p>
+        <p>
+          Upstream focus on developments and improvements for Python packaging
+          tools has largely shifted away from <tt>distutils</tt> and to
+          <tt>setuptools</tt>.  They offer a similar API and at some point in
+          the future, <tt>setuptools</tt> may fully replace <tt>distutils</tt>
+          in Debian package builds.
+        </p>
       </sect>
 
       <sect id="dh-python">
