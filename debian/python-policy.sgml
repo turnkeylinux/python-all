@@ -84,10 +84,12 @@
     <chapt id="python3">
       <heading>On the move to Python 3</heading>
 	<p>
-	  Debian currently supports two Python stacks, one for Python 2
-	  and one for Python 3.  The long term goal for Debian is to
+	  Debian currently supports two Python stacks, one for Python 3
+	  and one for Python 2.  The long term goal for Debian is to
 	  reduce this to one stack, dropping the Python 2 stack at some
 	  time.
+	</p>
+	<p>
 	  <url id="https://www.python.org/dev/peps/pep-0404/"
 	  name="PEP 404"> states that no more major Python 2 releases
 	  are planned, although the latest released minor version 2.7
@@ -112,10 +114,10 @@
 	  </item>
 	  <item>
 	    <p>
-	      Python libraries should be always packaged for Python 3
-	      if supported.  Python 2 libraries should be packaged, if
-	      applications found in the reverse dependencies are not
-	      yet supported by Python 3.
+	      Python libraries, if they support Python 3, should be always
+	      packaged for Python 3. If an application supports only Python
+	      2, the Python libraries for that application should also be
+	      packaged for Python 2.
 	    </p>
 	  </item>
 	  <item>
@@ -133,12 +135,12 @@
       <sect id="versions">
 	<heading>Versions</heading>
 	<p>
-	  At any given time, the binary package <package>python</package>
-	  will represent the current default Debian Python version. The
-	  binary package <package>python3</package> will represent the
-	  current Debian Python 3 version. As far as is reasonable, Python
-	  and Python 3 should be treated as separate runtime systems with
-	  minimal interdependencies.
+	  At any given time, the binary package <package>python3</package>
+	  will represent the current default Debian Python 3 version; the
+	  binary package <package>python</package> will represent the
+	  current default Debian Python 2 version. As far as is reasonable,
+	  Python 3 and Python 2 should be treated as separate runtime
+	  systems with minimal interdependencies.
 	</p>
 	<p>
 	  In some cases, Python policy explicitly references Python helper
@@ -150,15 +152,17 @@
 	  It is a design goal to fully specify required interfaces and
 	  functions in policy for Python 3 and to avoid enshrining specific
 	  implementation details in policy. Except as noted, policy for
-	  Python 3 is the same as Python with the addition of the version
-	  number as needed to distinguish them.
+	  Python 2 is the same as Python 3 with the exception of the
+	  different major version number as needed to distinguish them.
 	</p>
 	<p>
-	  The default Debian Python version should always be the latest
-	  stable upstream version that can be fully integrated in Debian.
+	  The default Debian Python version, for each of Python 3 and Python
+	  2, should always be the latest stable upstream version that can be
+	  fully integrated in Debian.
+	</p>
+	<p>
 	  There may be newer supported or unsupported versions included in
-	  the Debian if they are not fully integrated for a particular
-	  release.
+	  Debian if they are not fully integrated for a particular release.
 	</p>
 	<p>
 	  Apart from the default version, legacy versions of Python or beta
@@ -178,17 +182,17 @@
 	</p>
 
 	<p>
-	  The set of currently supported Python versions can be found in
-	  <file>/usr/share/python/debian_defaults</file>; the supported
-	  interface to this information is <prgn>/usr/bin/pyversions</prgn>.
 	  The set of currently supported Python 3 versions can be found
 	  in <file>/usr/share/python3/debian_defaults</file>; the supported
 	  interface to this information is
 	  through <prgn>/usr/bin/py3versions</prgn>.
+	  The set of currently supported Python 2 versions can be found in
+	  <file>/usr/share/python/debian_defaults</file>; the supported
+	  interface to this information is <prgn>/usr/bin/pyversions</prgn>.
 	</p>
 	<p>
-	  These files are in Python ConfigParser format. They define (in
-	  the <tt>DEFAULT</tt> section) the following options:
+	  These files are in Python <tt>configparser</tt> format. They
+	  define (in the <tt>DEFAULT</tt> section) the following options:
 	  <list>
 	    <item><tt>default-version</tt>: The name of the interpreter for
 	      the current default Debian Python.</item>
@@ -228,7 +232,7 @@
 	<p>
 	  Excluded are modules that cannot be included for licensing reasons
 	  (for example the <tt>profile</tt> module), for dependency tracking
-	  purposes (for example the GPL-licensed <tt>gdbm</tt> module) or
+	  purposes (for example the GPL-licensed <tt>gdbm</tt> module), or
 	  that should not be included for packaging reasons (for example
 	  the <tt>tk</tt> module which depends on Xorg).
 	</p>
@@ -241,27 +245,37 @@
 	  Documentation will be provided separately as well.
 	</p>
 	<p>
+	  At any time, the <package>python3</package> binary package must
+	  ensure that <file>/usr/bin/python3</file> is provided, as a
+	  symlink to the current <file>python3.<var>Y</var></file>
+	  executable. The package must depend on
+	  the <package>python3.<var>Y</var></package> package that installs
+	  the executable.
+	</p>
+	<p>
+	  The version of the <package>python3</package> package must be
+	  greater than or equal to 3.<var>Y</var> and lower than
+	  3.<var>Y+1</var>.
+	</p>
+	<p>
 	  At any time, the <package>python</package> binary package must
-	  ensure that <file>/usr/bin/python</file> is provided as a symlink
-	  to the current <file>python<var>X</var>.<var>Y</var></file>
-	  executable.
+	  ensure that <file>/usr/bin/python2</file> is provided, as a
+	  symlink to the current <file>python2.<var>Y</var></file>
+	  executable. The package must depend on
+	  the <package>python2.<var>Y</var></package> package that installs
+	  the executable.
 	</p>
 	<p>
-	  The <package>python</package> binary package must also depend on
-	  the appropriate <package>python<var>X</var>.<var>Y</var></package>
-	  to ensure this runtime is installed.
+	  The version of the <package>python</package> package must be
+	  greater than or equal to 2.<var>Y</var> and lower than
+	  2.<var>Y+1</var>.
 	</p>
 	<p>
-	  The version of the <package>python</package> binary package must
-	  be greater than or equal to <var>X</var>.<var>Y</var> and smaller
-	  than <var>X</var>.<var>Y+1</var>.
-	</p>
-	<p>
-	  Because upstream has started providing it, there will be a symlink
-	  for <file>/usr/bin/python2</file> for Wheezy and later releases.  See
-	  <url id="https://www.python.org/dev/peps/pep-0394/" name="PEP 394">
-	  for details. Packages must be careful to depend on a sufficient
-	  version of <package>python</package> if they make use of this symlink.
+	  The <package>python</package> binary package must also ensure
+	  that <file>/usr/bin/python</file> is provided, as a symlink to the
+	  current <file>python2.<var>Y</var></file> executable. See
+	  <url id="https://www.python.org/dev/peps/pep-0394/" name="PEP
+	  394"> for details.
 	</p>
       </sect>
 
@@ -280,31 +294,57 @@
 	<sect1 id="interpreter_name">
 	  <heading>Interpreter Name</heading>
 	  <p>
-	    Python scripts depending on the default Python version (see <ref
-	    id="base">) or not depending on a specific Python version should
-	    use <file>python</file> (without a version) as the interpreter name.
-	    </p>
+	    The different Python major versions require different
+	    interpreters (see <ref id="base">).
+	  </p>
 	  <p>
-	    Python scripts that only work with a specific Python version must
-	    explicitly use the versioned interpreter name
+	    Python scripts that require the default Python 3 version should
+	    specify <file>python3</file> as the interpreter name.
+	  </p>
+	  <p>
+	    Python scripts that require the default Python 2 version should
+	    specify <file>python2</file> as the interpreter name.
+	  </p>
+	  <p>
+	    Python scripts may specify <file>python</file> as the
+	    interpreter name only if they do not require any particular
+	    version of Python.
+	  </p>
+	  <p>
+	    Python scripts that only work with a specific Python minor
+	    version must explicitly use the versioned interpreter name
 	    (<file>python<var>X</var>.<var>Y</var></file>).
 	  </p>
 	</sect1>
 	<sect1 id="interpreter_loc">
 	  <heading>Interpreter Location</heading>
 	  <p>
-	    The preferred specification for the Python interpreter is
-	    <file>/usr/bin/python</file> or
-	    <file>/usr/bin/python<var>X</var>.<var>Y</var></file>.
-	    This ensures that a Debian installation of Python is used
-	    and all dependencies on additional Python modules are met.
+	    Python scripts should specify the Debian Python interpreter, to
+	    ensure that the Debian Python installation is used and all
+	    dependencies on additional Python modules are met.
 	  </p>
 	  <p>
-	    Maintainers should not override the Debian Python interpreter using
-	    <file>/usr/bin/env python</file> or
-	    <file>/usr/bin/env python<var>X</var>.<var>Y</var></file>. This is
-	    not advisable as it bypasses Debian's dependency checking and makes
-	    the package vulnerable to incomplete local installations of Python.
+	    The preferred specification for the Python 3 interpreter is
+	    <file>/usr/bin/python3</file> (or
+	    <file>/usr/bin/python3.<var>Y</var></file> if it requires Python
+	    3.<var>Y</var>).
+	  </p>
+	  <p>
+	    The preferred specification for the Python 2 interpreter is
+	    <file>/usr/bin/python2</file> (or
+	    <file>/usr/bin/python2.<var>Y</var></file> if it requires Python
+	    2.<var>Y</var>).
+	  </p>
+	  <p>
+	    Scripts requiring the default Python 2 version may instead
+	    specify the interpreter <file>/usr/bin/python</file>.
+	  </p>
+	  <p>
+	    Maintainers should not override the Debian Python interpreter
+	    using <file>/usr/bin/env <var>name</var></file>. This is not
+	    advisable as it bypasses Debian's dependency checking and makes
+	    the package vulnerable to incomplete local installations of
+	    Python.
 	  </p>
 	</sect1>
       </sect>
@@ -323,11 +363,14 @@
 	  <tt>sys.path</tt>.
 	</p>
 	<p>
-	  Public Python modules must be installed in the system Python
-	  modules directory,
-	  <file>/usr/lib/python<var>X</var>.<var>Y</var>/dist-packages</file>.
-	  Public Python 3 modules must be installed in
-	  <file>/usr/lib/python3/dist-packages</file>.
+	  Public Python 3 modules must be installed in the system Python 3
+	  modules directory, <file>/usr/lib/python3/dist-packages</file>.
+	</p>
+	<p>
+	  Public Python 2 modules must be installed in the system Python 2
+	  modules directory
+	  <file>/usr/lib/python2.<var>Y</var>/dist-packages</file>, where
+	  2.<var>Y</var> is the Python 2 version.
 	</p>
 	<p>
 	  A special directory is dedicated to public Python modules
@@ -337,12 +380,12 @@
 	  Python 2.
 	</p>
 	<p>
-	  For a local installation by the administrator of Python 2, a
-	  special directory is reserved to Python modules which should only
-	  be available to this Python,
-	  <file>/usr/local/lib/python2.<var>Y</var>/site-packages</file> (and
-	  <file>/usr/local/lib/python3/site-packages</file> for all Python 3
-	  versions).
+	  For local installation of Python modules by the system
+	  administrator, special directories are reserved. The
+	  directory <file>/usr/local/lib/python3/site-packages</file> is in
+	  the Python 3 runtime module search path. The
+	  directory <file>/usr/local/lib/python2.<var>Y</var>/site-packages</file>
+	  is in the Python 2.<var>Y</var> runtime module search path.
 	</p>
 	<p>
 	  Additional information on appending site-specific paths to the
@@ -350,23 +393,23 @@
 	  the <tt>site</tt> module.
 	</p>
 	<p>
-	  When binary packages ship identical source code for multiple
-	  Python versions, for instance
+	  Python modules which work with multiple supported Python 2
+	  versions must install to version-specific locations, for instance
 	  <file>/usr/lib/python2.6/dist-packages/foo.py</file> and
-	  <file>/usr/lib/python2.7/dist-packages/foo.py</file>, these should
-	  point to a common file. Version-specific directories for identical
-	  source code are not required for Python 3 and must not be used for
-	  this.
+	  <file>/usr/lib/python2.7/dist-packages/foo.py</file>. These should
+	  point to a common file.
 	</p>
 	<p>
+	  Architecture-independent public Python 3 modules must be installed
+	  to <file>/usr/lib/python3/dist-packages</file>.
+	</p>
+	<p>
+	  Architecture-independent public Python 2 modules should be
+	  installed to <file>/usr/lib/python2.7/dist-packages</file>. The
+	  historical location for this was <file>/usr/share/pyshared</file>.
 	  Since Python 2.7 is the last Python 2 version and the only
-	  supported version in Wheezy and later releases, a common location
-	  to share arch-independent files across Python versions is no
-	  longer needed. Historically the location for this
-	  was <file>/usr/share/pyshared</file>. For Python 2.7, use
-	  of <file>/usr/lib/python2.7/dist-packages</file> is sufficient.
-	  For Python 3, a special location is not required, use
-	  <file>/usr/lib/python3/dist-packages</file>.
+	  supported version in Wheezy and later releases, a version-specific
+	  location is sufficient.
 	</p>
       </sect>
 
@@ -391,6 +434,7 @@
 	<p><enumlist>
 	  <item>
 	    <p>
+	      <file>/usr/share/python3/runtime.d/*.rtinstall</file>,
 	      <file>/usr/share/python/runtime.d/*.rtinstall</file>: These
 	      are called when a runtime is installed or becomes supported.
 	      The first argument is <tt>rtinstall</tt>, the second argument
@@ -403,24 +447,26 @@
 	  </item>
 	  <item>
 	    <p>
+	      <file>/usr/share/python3/runtime.d/*.rtremove</file>,
 	      <file>/usr/share/python/runtime.d/*.rtremove</file>: These are
 	      called when a runtime is removed or stops being supported. The
 	      first argument is <tt>rtremove</tt>, and the second argument
-	      is the affected runtime (for example
-	      <file>python<var>X</var>.<var>Y</var></file>).
+	      is the affected runtime (for
+	      example <file>python<var>X</var>.<var>Y</var></file>).
 	    </p>
 	  </item>
 	  <item>
 	    <p>
+	      <file>/usr/share/python3/runtime.d/*.rtupdate</file>,
 	      <file>/usr/share/python/runtime.d/*.rtupdate</file>: These are
 	      called when the default runtime changes. The first argument is
 	      either <tt>pre-rtupdate</tt>, called before changing the
 	      default runtime, or <tt>rtupdate</tt>, called when changing
 	      the default runtime, or <tt>post-rtupdate</tt>, called
 	      immediately afterwards. The second argument is the old default
-	      runtime (for example
-	      <file>python<var>X</var>.<var>Y</var></file>), and the third
-	      argument is the new default runtime (for example
+	      runtime (for
+	      example <file>python<var>X</var>.<var>Y</var></file>), and the
+	      third argument is the new default runtime (for example
 	      <file>python<var>X</var>.<var>Z</var></file>).
 	    </p>
 	  </item>
@@ -431,9 +477,13 @@
 	<heading>Documentation</heading>
 	<p>
 	  Python documentation is split out in separate binary packages
-	  <package>python<var>X</var>.<var>Y</var>-doc</package>. The binary
-	  package <package>python-doc</package> will always provide the
-	  documentation for the default Debian Python version.
+	  <package>python<var>X</var>.<var>Y</var>-doc</package>.
+	</p>
+	<p>
+	  The binary package <package>python3-doc</package> will always
+	  provide the documentation for the default Debian Python 3 version.
+	  The binary package <package>python-doc</package> will always
+	  provide the documentation for the default Debian Python 2 version.
 	</p>
 	<p>
 	  TODO: Policy for documentation of third party packages.
@@ -464,8 +514,8 @@
 	  be used by one version of Python.
 	</p>
 	<p>
-	  Some distributions link extensions to libpython, but this is not
-	  the case in Debian as symbols might as well be resolved by
+	  Debian Python does not link extensions to <file>libpython</file>
+	  (as is done in some operating systems). Symbols are resolved by
 	  <file>/usr/bin/python<var>X</var>.<var>Y</var></file> which is not
 	  linked to <file>libpython</file>.
 	</p>
@@ -515,81 +565,91 @@
 	  debug.
 	</p>
 	<p>
-          A very limited set of wheel packages are available in the archive,
-          but these support the narrow purpose of enabling
-          the <prgn>pip</prgn>, <prgn>virtualenv</prgn>,
-          and <prgn>pyvenv</prgn> tools in a Debian policy compliant way.
-          These packages build their own dependent wheels through the use of
-          the <prgn>dirtbike</prgn> "rewheeling" tool, which takes installed
-          Debian packages and turns them back into wheels.  Only universal
-          wheels (i.e. pure-Python, Python 2 and 3 compatible packages) are
-          supported.  Since only the programs that require wheels need build
-          them, only they may provide <var>-whl</var> packages,
-          e.g. <package>python-pip-whl</package>.
-        </p>
+	  A very limited set of wheel packages are available in the archive,
+	  but these support the narrow purpose of enabling
+	  the <prgn>pip</prgn>, <prgn>virtualenv</prgn>,
+	  and <prgn>pyvenv</prgn> tools in a Debian policy compliant way.
+	  These packages build their own dependent wheels through the use of
+	  the <prgn>dirtbike</prgn> "rewheeling" tool, which takes installed
+	  Debian packages and turns them back into wheels.  Only universal
+	  wheels (i.e. pure-Python, Python 3 and 2 compatible packages) are
+	  supported.  Since only the programs that require wheels need build
+	  them, only they may provide <file>-whl</file> packages,
+	  e.g. <package>python3-pip-whl</package>.
+	</p>
 	<p>
-          When these binary packages are installed, .whl files must be placed
-          in the /usr/share/python-wheels directory.  The location inside a
-          virtual environment will be rooted in the virtual environment,
-          instead of in /usr.
-        </p>
+	  When these binary packages are installed, <file>*.whl</file> files
+	  must be placed in the <file>/usr/share/python-wheels</file>
+	  directory. The location inside a virtual environment will be
+	  rooted in the virtual environment, instead of <file>/usr</file>.
+	</p>
       </sect>
       <sect id="package_names">
 	<heading>Module Package Names</heading>
 	<p>
-	  Public modules used by other packages must have their binary
-	  package name prefixed with <package>python-</package>. It is
-	  recommended to use this prefix for all packages with public
-	  modules as they may be used by other packages in the future.
-	  Python 3 modules must be in a separate binary package prefixed
-	  with <package>python3-</package> to preserve run time separation
-	  between Python and Python 3.
+	  Public Python modules must be packages separately by major Python
+	  version, to preserve run time separation between Python 2 and
+	  Python 3.
 	</p>
 	<p>
-	  The binary package for module foo should preferably be named
-	  <package>python-<var>foo</var></package>, if the module name
-	  allows, but this is not required if the binary package ships
-	  multiple modules.  In the latter case the maintainer chooses the
-	  name of the module which represents the package the most.
+	  Public Python 3 modules used by other packages must have their
+	  binary package name prefixed with <package>python3-</package>.
+	  Public Python 2 modules used by other packages must have their
+	  binary package name prefixed with <package>python-</package>.
+	  It is recommended to use this prefix for all packages with public
+	  modules as they may be used by other packages in the future.
+	</p>
+	<p>
+	  The binary package for module <var>foo</var> should preferably be
+	  named <package>python3-<var>foo</var></package> (for Python 3)
+	  or <package>python-<var>foo</var></package> (for Python 2), if the
+	  module name allows. This is not required if the binary package
+	  installs multiple modules, in which case the maintainer shall
+	  choose the name of the module which best represents the package.
 	</p>
 	<p>
 	  For subpackages such as <var>foo.bar</var>, the recommendation is
 	  to name the binary
-	  packages <package>python-<var>foo.bar</var></package>
-	  and <package>python3-<var>foo.bar</var></package>.
+	  package <package>python3-<var>foo.bar</var></package> (for Python
+	  3) or <package>python-<var>foo.bar</var></package> (for Python 2).
 	</p>
 	<p>
 	  Such a package should support the current Debian Python version,
 	  and more if possible (there are several tools to help implement
-	  this, see <ref id="packaging_tools">). For example, if Python 2.5,
-	  2.6, and 2.7 are supported, the Python statement
+	  this, see <ref id="packaging_tools">). For example, if Python 3.3,
+	  3.4, and 3.5 are supported, the Python statement
 	  <example>
 import foo
 	  </example>
-	  should import the module when the user is running any
-	  of <prgn>/usr/bin/python2.5</prgn>, <prgn>/usr/bin/python2.6</prgn>,
-	  and <prgn>/usr/bin/python2.7</prgn>. This requirement also
-	  applies to extension modules; binaries for all the supported
-	  Python versions should be included in a single package.
+	  should import the module when the program interpreter is any
+	  of <prgn>/usr/bin/python3.3</prgn>, <prgn>/usr/bin/python3.4</prgn>,
+	  and <prgn>/usr/bin/python3.5</prgn>. This requirement also applies
+	  to extension modules; binaries for all the supported Python
+	  versions should be included in a single package.
 	</p>
       </sect>
       <sect id="specifying_versions">
 	<heading>Specifying Supported Versions</heading>
 	<p>
-	  The optional <tt>X-Python-Version</tt> (preferred) or <tt>
-	  XS-Python-Version</tt> field in the general paragraph (the first one,
-	  for the source package) of <file>debian/control</file> were methods to
-	  specify the versions of Python (not versions of Python 3) supported by the
-	  source package (they are obsolete and can be removed now that there is only
-	  <package>python2.7</package>). Similarly, <tt>X-Python3-Version</tt> is
-	  used to specify the versions of Python 3 supported by the package.  When not
-	  specified, they default to all currently supported Python (or Python 3)
-	  versions.
+	  The <file>debian/control</file> source paragraph may contain
+	  optional fields to specify the versions of Python the package
+	  supports.
 	</p>
 	<p>
-	  They are used by some packaging scripts to automatically generate
-	  appropriate Depends and Provides lines. The format of the field
-	  may be one of the following:
+	  The optional <tt>X-Python3-Version</tt> field specifies the
+	  versions of Python 3 supported. When not specified, it defaults to
+	  all currently supported Python 3 versions.
+	</p>
+	<p>
+	  Similarly, the optional fields <tt>X-Python-Version</tt>
+	  or <tt>XS-Python-Version</tt> were used to specify the versions of
+	  Python 2 supported by the source package. They are obsolete and
+	  can be removed now that only Python 2.7 is supported.
+	</p>
+	<p>
+	  These fields are used by some packaging scripts to automatically
+	  generate appropriate Depends and Provides lines. The format of the
+	  field may be one of the following:
 	  <example>
 X-Python3-Version: &gt;= X.Y
 X-Python3-Version: &gt;= A.B, &lt;&lt; X.Y
@@ -599,21 +659,24 @@ XS-Python-Version: all
 	</p>
 	<p>
 	  The keyword <tt>all</tt> means that the package supports any
-	  Python version available but might be deprecated in the future
+	  Python 2 version available but might be deprecated in the future
 	  since using version numbers is clearer than <tt>all</tt> and
 	  encodes more information. The keyword <tt>all</tt> is limited to
-	  Python versions and must be ignored for Python 3 versions. Lists
-	  of multiple individual versions (e.g. 2.4, 2.5, 2.6) work
-	  for <tt>XS-Python-Version</tt> and will continue to be supported,
-	  but are not recommended and are not supported
-	  by <tt>X-Python-Version</tt> or <tt>X-Python3-Version</tt> for
-	  Wheezy and later releases.
+	  Python 2 versions and must be ignored for Python 3 versions.
+	</p>
+	<p>
+	  A comma-separated list of multiple individual versions
+	  (e.g. <tt>3.3, 3.4, 3.5</tt>) in <tt>XS-Python-Version</tt> will
+	  continue to be supported, but is not recommended. The use of
+	  multiple individual versions in <tt>X-Python-Version</tt>
+	  or <tt>X-Python3-Version</tt> is not supported for Wheezy and
+	  later releases.
 	</p>
 	<p>
 	  The keyword <tt>current</tt> has been deprecated and used to mean
-	  that the package would only have to support a single version (even
-	  across default version changes). It must be ignored for Python 3
-	  versions.
+	  that the package would only have to support a single Python 2
+	  version (even across default version changes). It must be ignored
+	  for Python 3 versions.
 	</p>
 	<p>
 	  The use of <tt>XB-Python-Version</tt> in the binary package
@@ -628,31 +691,41 @@ XS-Python-Version: all
       <sect id="dependencies">
 	<heading>Dependencies</heading>
 	<p>
-	  Packaged modules available for the default Python version (or many
-	  versions including the default) as described
-	  in <ref id="package_names"> must declare <tt>Depends:
-	  python&nbsp;(&gt;=&nbsp;<var>X</var>.<var>Y</var>)</tt>. If they
-	  require other modules to work, they must depend on the
-	  corresponding <package>python-foo</package>. They must not depend
-	  on any <package>python<var>X</var>.<var>Y</var>-foo</package>.
+	  Any package that installs modules for the default Python version
+	  (or many versions including the default) as described
+	  in <ref id="package_names">, must declare a dependency on the
+	  default Python runtime package. If it requires other modules to
+	  work, the package must declare dependencies on the corresponding
+	  packaged modules. The package must not declare dependency on any
+	  version-specific Python runtime or module package.
 	</p>
 	<p>
-	  All Python module packages and Python 3 binary extension packages must
-	  also declare a maximum version they support as currently built (this
-	  is accomplished by declaring a maximum version constraint strictly
-	  less than one higher than the current maxiumum version, i.e.
-	  <tt>Depends:
-	  python&nbsp;(&lt;&lt;&nbsp;<var>X</var>.<var>Y</var>)</tt>.
+	  For Python 3, the correct dependencies are <tt>Depends:
+	  python3&nbsp;(&gt;=&nbsp;3.<var>Y</var>)</tt> and any
+	  corresponding <package>python3-<var>foo</var></package> packages.
+	</p>
+	<p>
+	  For Python 2, the correct dependencies are <tt>Depends:
+	  python&nbsp;(&gt;=&nbsp;2.<var>Y</var>)</tt> and any
+	  corresponding <package>python-<var>foo</var></package> packages.
+	</p>
+	<p>
+	  Any package that installs Python modules or Python 3 binary
+	  extensions must also declare a maximum version it supports as
+	  currently built. This is accomplished by declaring a maximum
+	  version constraint strictly less than one higher than the current
+	  maximum version, i.e. <tt>Depends:
+	  python3&nbsp;(&lt;&lt;&nbsp;<var>X</var>.<var>Y</var>)</tt>.
 	</p>
       </sect>
 
       <sect id="provides">
 	<heading>Provides</heading>
 	<p>
-	  Python Provides in binary packages of the form
+	  Binary packages that declare Provides dependencies of the form
 	  <package>python<var>X</var>.<var>Y</var>-<var>foo</var></package>
 	  were never supported for Python 3 and are no longer useful for
-	  Python. They should be removed in the normal course of package
+	  Python 2. They should be removed in the normal course of package
 	  updates. Future provision of values for the substituation variable
 	  <tt>python:Provides</tt> is not guaranteed.
 	</p>
@@ -699,28 +772,50 @@ XS-Python-Version: all
     <chapt id="programs">
       <heading>Python Programs</heading>
 
+      <sect id="interpreter-directive">
+	<heading>Interpreter directive (“Shebang”)</heading>
+	<p>
+	  Executables written for interpretation by Python must use an
+	  appropraite interpreter directive, or “shebang”, as the first line
+	  of the program. This line should be of the
+	  form <tt>#!<var>interpreter_location</var></tt>.
+	  See <ref id="interpreter_name"> for the interpreter name to use.
+	</p>
+	<p>
+	  As noted in <ref id="interpreter_loc">, the
+	  form <tt>#!/usr/bin/env <var>interpreter_name</var></tt> is
+	  deprecated.
+	</p>
+      </sect>
+
       <sect id="version_indep_progs">
 	<heading>Programs using the default Python</heading>
 	<p>
-	  Programs that can run with any version of Python must
-	  begin with <tt>#!/usr/bin/python</tt> or <tt>#!/usr/bin/env
-	  python</tt> (the former is strongly preferred). They must also
-	  specify a dependency on <package>python</package>, with a
-	  versioned dependency if necessary.
+	  A package that installs a program that can be run by any version
+	  of Python 3 must declare a dependency
+	  on <package>python3</package>, with a versioned dependency if
+	  necessary.
 	</p>
 	<p>
-	  If the program needs the Python module <tt>foo</tt>, it must
-	  depend on the real package providing this module, usually
-	  <package>python-foo</package> but this name might vary when the
-	  package ships multiple modules.
+	  A package that installs a program that can be run by any version
+	  of Python 2 must declare a dependency
+	  on <package>python2</package>, with a versioned dependency if
+	  necessary.
+	</p>
+	<p>
+	  If the program needs the public Python module <tt>foo</tt>, the
+	  package must depend on the binary package that installs
+	  the <tt>foo</tt> module. See <ref id="package_names"> for the
+	  naming of packages that install public Python modules.
 	</p>
 
 	<sect1 id="current_version_progs">
 	  <heading>Programs Shipping Private Modules</heading>
 	  <p>
-	    A program using <file>/usr/bin/python</file> as interpreter can
-	    come up with private Python modules. These modules should be
-	    installed in <file>/usr/share/<var>module</var></file>, or
+	    A program that specifies <prgn>python3</prgn>
+	    or <prgn>python</prgn> as its interpreter may require its own
+	    private Python modules. These modules should be installed
+	    in <file>/usr/share/<var>module</var></file>, or
 	    <file>/usr/lib/<var>module</var></file> if the modules are
 	    architecture-dependent (e.g. extensions).
 	  </p>
@@ -736,8 +831,8 @@ XS-Python-Version: all
 	    Programs that have private compiled extensions must either
 	    handle multiple version support themselves, or declare a tight
 	    dependency on the current Python version (e.g. <tt>Depends:
-	    python&nbsp;(&gt;=&nbsp;2.7),
-	    python&nbsp;(&lt;&lt;&nbsp;2.8)</tt>.
+	    python3&nbsp;(&gt;=&nbsp;3.5),
+	    python3&nbsp;(&lt;&lt;&nbsp;3.6)</tt>.
 	  </p>
 	</sect1>
       </sect>
@@ -745,13 +840,13 @@ XS-Python-Version: all
       <sect id="version_dep_progs">
 	<heading>Programs Using a Particular Python Version</heading>
 	<p>
-	  A program which requires a specific version of Python must
-	  begin with
-	  <tt>#!/usr/bin/python<var>X</var>.<var>Y</var></tt> (or
-	  <tt>#!/usr/bin/env python<var>X</var>.<var>Y</var></tt>). It
-	  must also specify a dependency on
+	  A program which requires a specific minor version of Python must
+	  specify the versioned
+	  interpreter <prgn>python<var>X</var>.<var>Y</var></tt>. The
+	  package that installs the programs must also specify a dependency
+	  on
 	  <package>python<var>X</var>.<var>Y</var></package> and on any
-	  package providing necessary modules.
+	  packages that install necessary modules.
 	</p>
 	<p>
 	  The notes on installation directories and byte-compilation
@@ -769,8 +864,8 @@ XS-Python-Version: all
       <sect id="build_embedded">
 	<heading>Building Embedded Programs</heading>
 	<p>
-	  Programs which embed a Python interpreter must declare
-	  <tt>Build-Depends</tt> on
+	  Any package that installs a program which embeds a Python
+	  interpreter must declare <tt>Build-Depends</tt> on
 	  <package>python<var>X</var>.<var>Y</var>-dev</package>, where
 	  <var>X</var>.<var>Y</var> is the Python version the program
 	  builds against. It should be the current default Python version
@@ -809,20 +904,25 @@ XS-Python-Version: all
     <appendix id="build_dependencies">
       <heading>Build Dependencies</heading>
       <p>
-	Build dependencies for Python dependent packages must be declared
+	Build dependencies for Python-dependent packages must be declared
 	for every Python version that the package is built for.
+      </p>
+      <p>
+	The <package>python3-all-dev</package> should be used when building
+	extensions for any or all Python 3 versions.
 	The <package>python-all-dev</package> should be used when building
-	extensions for any or all Python versions. To build for a specific
+	extensions for any or all Python 2 versions. To build for a specific
 	version or versions, declare <tt>Build-Depends</tt> on
 	<package>python<var>X</var>.<var>Y</var>-dev</package>.
       </p>
       <p>
-	Some applications and pure Python modules may be able to declare
-	<tt>Build-Depends</tt> on the runtime <package>python</package>
-	or <package>python-all</package> package, and not require
-	the <package>-dev</package> packages. A package that does not
-	require the <package>-dev</package> packages must not declare
-	<tt>Build-Depends</tt> on them.
+	Some applications and pure Python modules may be able to avoid
+	dependency on the <package>-dev</package> packages, and declare
+	<tt>Build-Depends</tt> on the runtime environment only
+	(<package>python3</package>, <package>python3-all</package>,
+	<package>python</package>, <package>python-all</package>). A package
+	that does not require the <package>-dev</package> packages must not
+	declare <tt>Build-Depends</tt> on them.
       </p>
 
       <p>
@@ -886,24 +986,26 @@ Build-Depends: python3-all-dev (&gt;= 3.2)
       <sect id="dh-python">
 	<heading><package>dh-python</package></heading>
 	<p>
-	 <package>dh-python</package> provides extensions
-	 for <package>debhelper</package> to make it easier to package
-	 Python modules and extensions. They calculate Python dependencies,
-	 add maintainer scripts to byte compile files, etc. Their use is not
-	 mandatory, but they are recommended by the Python maintainers.
+	  <package>dh-python</package> provides extensions
+	  for <package>debhelper</package> to make it easier to package
+	  Python modules and extensions. They calculate Python dependencies,
+	  add maintainer scripts to byte compile files, etc. Their use is
+	  not mandatory, but they are recommended by the Debian Python
+	  maintainers.
 	</p>
 	<p>
-	 See <tt>man dh_python2</tt> or <tt>man dh_python3</tt> for details.
+	  See <tt>man dh_python3</tt> or <tt>man dh_python2</tt> for
+	  details.
 	</p>
       </sect>
 
       <sect id="pybuild">
 	<heading>pybuild</heading>
 	<p>
-	 Pybuild is a Debian Python specific build system that invokes various
-	 build systems for requested Python versions in order to build modules
-	 and extensions.  It supports automatically building for multiple Python
-	 and Python 3 versions.
+	  Pybuild is a Debian Python specific build system that invokes
+	  various build systems for requested Python versions in order to
+	  build modules and extensions. It supports automatically building
+	  for multiple Python versions.
 	</p>
       </sect>
 
