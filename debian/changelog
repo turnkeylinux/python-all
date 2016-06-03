@@ -1,4 +1,4 @@
-python-defaults (2.7.11-2) UNRELEASED; urgency=medium
+python-defaults (2.7.11-2) unstable; urgency=medium
 
   [ Scott Kitterman ]
   * Python policy updates for Stretch (Many thanks to Ben Finney for all the
