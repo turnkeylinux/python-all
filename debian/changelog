@@ -1,3 +1,10 @@
+python-defaults (2.7.11-2.1) UNRELEASED; urgency=medium
+
+  [ Helmut Grohne ]
+  * Fix FTCBFS: Annotate python build dependencies with :any (Closes: #841682)
+
+ -- Scott Kitterman <scott@kitterman.com>  Sat, 22 Oct 2016 12:54:48 -0400
+
 python-defaults (2.7.11-2) unstable; urgency=medium
 
   [ Scott Kitterman ]

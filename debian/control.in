@@ -5,8 +5,8 @@ Maintainer: Matthias Klose <doko@debian.org>
 Uploaders: Scott Kitterman <scott@kitterman.com>, Piotr Ożarowski <piotr@debian.org>, Barry Warsaw <barry@debian.org>
 Build-Depends: debhelper (>= 9~), @bd_i586@,
   lsb-release,
-  python-all,
-  @PVER@ (>= @PREVVER@),
+  python-all:any,
+  @PVER@:any (>= @PREVVER@),
   debiandoc-sgml,
 Standards-Version: 3.9.8
 Homepage: http://www.python.org/

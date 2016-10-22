@@ -30,7 +30,7 @@ PREVVER := 2.7.11-11~
 ma_allowed	= yes
 
 ifeq (,$(filter $(distrelease),lenny etch squeeze wheezy lucid maverick natty oneiric precise quantal raring saucy trusty))
-  bd_i586 = dpkg-dev (>= 1.17.11), python2.7 (>= 2.7.11-11)
+  bd_i586 = dpkg-dev (>= 1.17.11), python2.7:any (>= 2.7.11-11)
 endif
 
 
