@@ -4,7 +4,8 @@ python-defaults (2.7.11-2) UNRELEASED; urgency=medium
   * Fix FTCBFS: Annotate python build dependencies with :any (Closes: #841682)
 
   [ Chris Lamb ]
-  * Consistently order python substvars to support reproducibility
+  * Consistently order python substvars to support reproducibility (Closes:
+    #844111)
 
  -- Scott Kitterman <scott@kitterman.com>  Sat, 12 Nov 2016 14:44:11 -0500
 
