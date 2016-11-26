@@ -7,7 +7,10 @@ python-defaults (2.7.11-3) UNRELEASED; urgency=medium
   * Consistently order python substvars to support reproducibility (Closes:
     #844111)
 
- -- Scott Kitterman <scott@kitterman.com>  Sat, 12 Nov 2016 14:44:11 -0500
+  [ Scott Kitterman ]
+  * Add Django specific binary naming policy to align to current practive
+
+ -- Scott Kitterman <scott@kitterman.com>  Sat, 26 Nov 2016 02:22:30 -0500
 
 python-defaults (2.7.11-2) unstable; urgency=medium
 

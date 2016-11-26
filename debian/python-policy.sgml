@@ -40,7 +40,7 @@
 	<name>Ben Finney</name>
 	<email>ben+debian@benfinney.id.au</email>
       </author>
-      <version>version 0.10.1.0</version>
+      <version>version 0.10.1.1</version>
 
       <abstract>
 	This document describes the packaging of Python within the
@@ -627,6 +627,15 @@ import foo
 	  to extension modules; binaries for all the supported Python
 	  versions should be included in a single package.
 	</p>
+	<p>
+	  As a special exception to the  <package>python3-</package> and
+	  <package>python-</package> binary naming policy, Python modules
+	   intended for use  with Django (<package>python3-django</package>/
+	  <package>python-django</package>) should add django to their binary
+	  package names to make it clear they are intended for use with Django
+	  and not general purpose Python modules, i.e.
+	  <package>python3-django-</package> and
+	  <package>python-django-</package> respectively.
       </sect>
       <sect id="specifying_versions">
 	<heading>Specifying Supported Versions</heading>
