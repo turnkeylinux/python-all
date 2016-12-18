@@ -111,6 +111,7 @@ Description: IDE for Python using Tkinter (default version)
 Package: python-doc
 Section: doc
 Architecture: all
+Multi-Arch: foreign
 Depends: ${misc:Depends}, python@VER@-doc (>= @PREVVER@)
 Suggests: python-examples, python (= ${binary:Version})
 Breaks: python (<< 2.3.5)

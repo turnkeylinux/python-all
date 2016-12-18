@@ -2,6 +2,8 @@ python-defaults (2.7.13-1) unstable; urgency=medium
 
   [ Matthias Klose ]
   * Bump version to 2.7.13.
+  * Mark python-doc as M-A: foreign.
+  * Bump debhelper version.
 
   [ Helmut Grohne ]
   * Fix FTCBFS: Annotate python build dependencies with :any (Closes: #841682)
