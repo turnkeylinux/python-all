@@ -1,4 +1,7 @@
-python-defaults (2.7.11-3) UNRELEASED; urgency=medium
+python-defaults (2.7.13-1) unstable; urgency=medium
+
+  [ Matthias Klose ]
+  * Bump version to 2.7.13.
 
   [ Helmut Grohne ]
   * Fix FTCBFS: Annotate python build dependencies with :any (Closes: #841682)
@@ -8,7 +11,7 @@ python-defaults (2.7.11-3) UNRELEASED; urgency=medium
     #844111)
 
   [ Scott Kitterman ]
-  * Add Django specific binary naming policy to align to current practive
+  * Add Django specific binary naming policy to align to current practice.
 
  -- Scott Kitterman <scott@kitterman.com>  Sat, 26 Nov 2016 02:22:30 -0500
 
