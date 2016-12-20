@@ -15,7 +15,7 @@ python-defaults (2.7.13-1) unstable; urgency=medium
   [ Scott Kitterman ]
   * Add Django specific binary naming policy to align to current practice.
 
- -- Scott Kitterman <scott@kitterman.com>  Sat, 26 Nov 2016 02:22:30 -0500
+ -- Matthias Klose <doko@debian.org>  Tue, 20 Dec 2016 11:15:12 +0100
 
 python-defaults (2.7.11-2) unstable; urgency=medium
 
