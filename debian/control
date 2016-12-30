@@ -16,7 +16,7 @@ Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-
 Package: python
 Architecture: any
 Multi-Arch: allowed
-Priority: standard
+Priority: optional
 Pre-Depends: python-minimal (= ${binary:Version})
 Depends: ${misc:Depends}, python2.7 (>= 2.7.13-1~), libpython-stdlib (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (>= 2.7.13-1~)
@@ -35,7 +35,7 @@ Description: interactive high-level object-oriented language (default version)
 Package: python-minimal
 Architecture: any
 Multi-Arch: allowed
-Priority: standard
+Priority: optional
 Depends: ${misc:Depends}, python2.7-minimal (>= 2.7.13-1~), dpkg (>= 1.13.20)
 Recommends: python
 Conflicts: python-central (<< 0.5.5)
@@ -85,7 +85,7 @@ Description: header files and a static library for Python (default)
 Package: libpython-stdlib
 Architecture: any
 Multi-Arch: same
-Priority: standard
+Priority: optional
 Depends: libpython2.7-stdlib (>= 2.7.13-1~), ${misc:Depends}
 Description: interactive high-level object-oriented language (default python version)
  Python, the high-level, interactive object oriented language,
