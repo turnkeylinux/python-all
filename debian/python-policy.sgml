@@ -628,14 +628,16 @@ import foo
 	  versions should be included in a single package.
 	</p>
 	<p>
-	  As a special exception to the  <package>python3-</package> and
-	  <package>python-</package> binary naming policy, Python modules
-	   intended for use  with Django (<package>python3-django</package>/
-	  <package>python-django</package>) should add django to their binary
-	  package names to make it clear they are intended for use with Django
-	  and not general purpose Python modules, i.e.
-	  <package>python3-django-</package> and
-	  <package>python-django-</package> respectively.
+          Packages intended for use with Django (<package>python3-django</package>/
+          <package>python-django</package>) are installed in the same namespace as
+          other python packages for a variety of reasons.  Many such packages are
+          named django_packagename upstream.  These are then packaged as
+          <package>python3-django-package</package> and
+          <package>python-django-package</package>.
+          This makes it clear that they are intended for use with Django
+          and not general purpose Python modules.  Debian maintainers are
+          encouraged to work with their upstreams to support consistent use of
+          this approach.
       </sect>
       <sect id="specifying_versions">
 	<heading>Specifying Supported Versions</heading>

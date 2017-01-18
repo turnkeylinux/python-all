@@ -1,8 +1,12 @@
 python-defaults (2.7.13-2) UNRELEASED; urgency=medium
 
+  [ Matthias Klose ]
   * Lower priority of packages from standard to optional.
 
- -- Matthias Klose <doko@debian.org>  Fri, 30 Dec 2016 07:03:55 +0100
+  [ Scott Kitterman ]
+  * Make another attempt at Django specific binary naming
+
+ -- Scott Kitterman <scott@kitterman.com>  Wed, 18 Jan 2017 01:41:29 -0500
 
 python-defaults (2.7.13-1) unstable; urgency=medium
 
