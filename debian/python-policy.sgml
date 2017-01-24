@@ -631,9 +631,9 @@ import foo
           Packages intended for use with Django (<package>python3-django</package>/
           <package>python-django</package>) are installed in the same namespace as
           other python packages for a variety of reasons.  Many such packages are
-          named django_packagename upstream.  These are then packaged as
-          <package>python3-django-package</package> and
-          <package>python-django-package</package>.
+          named django_$name upstream.  These are then packaged as
+          <package>python3-django-$name</package> and
+          <package>python-django-$name</package>.
           This makes it clear that they are intended for use with Django
           and not general purpose Python modules.  Debian maintainers are
           encouraged to work with their upstreams to support consistent use of
