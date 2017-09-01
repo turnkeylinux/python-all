@@ -49,7 +49,7 @@ Description: minimal subset of the Python language (default version)
 
 Package: python-examples
 Architecture: all
-Depends: ${misc:Depends}, python (>= ${binary:Version}), python2.7-examples (>= 2.7.13-1~)
+Depends: ${misc:Depends}, python:any (>= ${binary:Version}), python2.7-examples (>= 2.7.13-1~)
 Description: examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in
  the upstream Python distribution.
