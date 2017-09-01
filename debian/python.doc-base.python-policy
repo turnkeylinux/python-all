@@ -8,8 +8,8 @@ Abstract: This document describes the packaging of Python within the Debian
  The Debian Python Policy has still a draft status.
 Section: Debian
 
-Format: debiandoc-sgml
-Files: /usr/share/doc/python/python-policy.sgml.gz
+Format: docbook-xml
+Files: /usr/share/doc/python/python-policy.dbk.gz
 
 Format: text
 Files: /usr/share/doc/python/python-policy.txt.gz

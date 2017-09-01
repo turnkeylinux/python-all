@@ -7,8 +7,11 @@ Build-Depends: debhelper (>= 9~), @bd_i586@,
   lsb-release,
   python-all:any,
   @PVER@:any (>= @PREVVER@),
-  debiandoc-sgml,
-Standards-Version: 3.9.8
+  docbook-xml,
+  docbook-xsl,
+  w3m,
+  xsltproc,
+Standards-Version: 4.1.0
 Homepage: http://www.python.org/
 Vcs-Bzr: http://alioth.debian.org/anonscm/bzr/pkg-python/python-defaults-debian
 Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-debian/files

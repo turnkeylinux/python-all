@@ -55,10 +55,12 @@ stamp-build:
 	touch stamp-build
 
 stamp-doc-policy:
-	debiandoc2text debian/python-policy.sgml
+	xsltproc --nonet --novalid debian/html.xsl debian/python-policy.dbk \
+	    | w3m -o display_charset=UTF-8 -cols 70 -dump -no-graph -T text/html > python-policy.txt
 	mv -f python-policy.txt debian/
-	debiandoc2html -l en.UTF-8 debian/python-policy.sgml
 	rm -rf debian/python-policy.html
+	mkdir python-policy.html
+	( cd python-policy.html; xsltproc --nonet --novalid ../debian/chunk.xsl ../debian/python-policy.dbk )
 	mv -f python-policy.html debian/
 	make -C pydist
 	touch stamp-doc-policy
@@ -291,7 +293,7 @@ binary-arch: build install stamp-doc
 		debian/python/usr/share/man/man1/2to3.1.gz
 
 	mkdir -p debian/python/usr/share/doc/python
-	cp -a debian/python-policy.{html,sgml,txt} \
+	cp -a debian/python-policy.{html,dbk,txt} \
 		debian/python/usr/share/doc/python/
 
 	mkdir -p debian/python/usr/share/pixmaps
@@ -299,7 +301,7 @@ binary-arch: build install stamp-doc
 
 	: # add symlinks to policy files
 	mkdir -p debian/python/usr/share/doc/python$(VER)
-	for ext in html sgml.gz txt.gz; do \
+	for ext in html dbk.gz txt.gz; do \
 	  ln -sf ../python/python-policy.$$ext \
 		debian/python/usr/share/doc/python$(VER)/python-policy.$$ext; \
 	done
