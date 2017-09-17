@@ -1,10 +1,11 @@
 python-defaults (2.7.13-3) UNRELEASED; urgency=medium
 
+  * Bump version to 2.7.14.
   * python-examples: Fix Multi-Arch warning.
   * Change policy format from debiandoc SGML to DocBook/XML (W. Martin Borgert).
     Closes: #872421.
 
- -- Matthias Klose <doko@debian.org>  Fri, 01 Sep 2017 08:22:38 +0200
+ -- Matthias Klose <doko@debian.org>  Sun, 17 Sep 2017 13:22:29 +0200
 
 python-defaults (2.7.13-2) unstable; urgency=medium
 
