@@ -98,18 +98,18 @@ Description: interactive high-level object-oriented language (default python ver
  This package is a dependency package, which depends on Debian's default
  Python version (currently v@VER@).
 
-Package: idle
+Package: idle2
 Architecture: all
 Depends: ${misc:Depends}, python (>= ${binary:Version}), python-tk, idle-@PVER@
 Enhances: python
-Replaces: python (<< 2.7.3-1~)
-Breaks: python (<< 2.7.3-1~)
-Description: IDE for Python using Tkinter (default version)
+Replaces: python (<< 2.7.3-1~), idle (<< 2.7.14-2~)
+Breaks: python (<< 2.7.3-1~), idle (<< 2.7.14-2~)
+Description: IDE for Python2 using Tkinter (default version)
  IDLE is an Integrated Development Environment for Python.
  IDLE is written using Tkinter and therefore quite platform-independent.
  .
  This package is a dependency package, which depends on Debian's default
- Python version (currently v@VER@) of IDLE.
+ Python2 version (currently v@VER@) of IDLE.
 
 Package: python-doc
 Section: doc

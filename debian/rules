@@ -207,25 +207,25 @@ ifeq ($(with_doc),yes)
 endif
 
 	: # provide the idle and idle.1 defaults
-	mkdir -p debian/idle/usr/bin
-	install -m 755 debian/idle.py debian/idle/usr/bin/idle
+	mkdir -p debian/idle2/usr/bin
+	install -m 755 debian/idle.py debian/idle2/usr/bin/idle2
 
-	mkdir -p debian/idle/usr/share/man/man1
-	install -m 644 debian/idle.1 debian/idle/usr/share/man/man1/idle.1
+	mkdir -p debian/idle2/usr/share/man/man1
+	install -m 644 debian/idle.1 debian/idle2/usr/share/man/man1/idle2.1
 
-	mkdir -p debian/idle/usr/share/pixmaps
-	ln -sf python.xpm debian/idle/usr/share/pixmaps/idle.xpm
+	mkdir -p debian/idle2/usr/share/pixmaps
+	ln -sf python.xpm debian/idle2/usr/share/pixmaps/idle2.xpm
 
-	mkdir -p debian/idle/usr/share/applications
-	cp -p debian/idle.desktop debian/idle/usr/share/applications/
+	mkdir -p debian/idle2/usr/share/applications
+	cp -p debian/idle2.desktop debian/idle2/usr/share/applications/
 
 #	dh_installdebconf -i $(NOPKGS)
 	dh_lintian -i
 	dh_installdocs -i $(NOPKGS) --all debian/README.Debian
 	dh_installchangelogs -i $(NOPKGS)
 
-	for p in examples idle; do \
-	  [ $$p = idle ] || p=python-$$p; \
+	for p in examples idle2; do \
+	  [ $$p = idle2 ] || p=python-$$p; \
 	  rm -rf debian/$$p/usr/share/doc/$$p; \
 	  ln -sf python debian/$$p/usr/share/doc/$$p; \
 	done
@@ -384,7 +384,7 @@ endif
 	dh_installchangelogs -a $(NOPKGS)
 
 	for p in all all-dev all-dbg dbg dev; do \
-	  [ $$p = idle ] || p=python-$$p; \
+	  [ $$p = idle2 ] || p=python-$$p; \
 	  rm -rf debian/$$p/usr/share/doc/$$p; \
 	  ln -sf python debian/$$p/usr/share/doc/$$p; \
 	done
