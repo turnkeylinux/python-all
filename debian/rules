@@ -6,9 +6,9 @@ export SHELL = /bin/bash
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
-DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-DEB_HOST_GNU_TYPE := $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+DEB_HOST_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 
 changelog_values := $(shell dpkg-parsechangelog \
 			| awk '/^(Version|Source):/ {print $$2}')
@@ -198,6 +198,8 @@ binary-indep: build install stamp-doc
 	dh_installman -i
 
 ifeq ($(with_doc),yes)
+	dh_installdocs -ppython-doc debian/README.Debian
+	dh_installchangelogs -ppython-doc
 	mkdir -p debian/python-doc/usr/share/doc/python
 	ln -sf ../python$(VER)-doc/html \
 		debian/python-doc/usr/share/doc/python/html

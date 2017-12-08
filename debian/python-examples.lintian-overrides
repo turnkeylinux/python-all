@@ -1,0 +1,2 @@
+# lintian is wrong, se ##883852
+python-examples binary: usr-share-doc-symlink-without-dependency

@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 9~), @bd_i586@,
   docbook-xsl,
   w3m,
   xsltproc,
-Standards-Version: 4.1.0
+Standards-Version: 4.1.2
 Homepage: http://www.python.org/
 Vcs-Bzr: http://alioth.debian.org/anonscm/bzr/pkg-python/python-defaults-debian
 Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-debian/files

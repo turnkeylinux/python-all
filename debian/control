@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 9~), dpkg-dev (>= 1.17.11), python2.7:any (>= 2.7.1
   docbook-xsl,
   w3m,
   xsltproc,
-Standards-Version: 4.1.0
+Standards-Version: 4.1.2
 Homepage: http://www.python.org/
 Vcs-Bzr: http://alioth.debian.org/anonscm/bzr/pkg-python/python-defaults-debian
 Vcs-Browser: http://alioth.debian.org/scm/loggerhead/pkg-python/python-defaults-debian/files

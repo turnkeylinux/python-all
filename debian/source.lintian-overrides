@@ -6,3 +6,6 @@ python-defaults source: dbg-package-missing-depends libpython-dbg
 
 # it's upstream software, just splitted out.
 python-defaults source: native-package-with-dash-version
+
+# yes, that's going to be away as the second-last package ...
+python-defaults source: python-foo-but-no-python3-foo

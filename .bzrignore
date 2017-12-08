@@ -1,5 +1,6 @@
 stamp-*
-debian/idle
+debian/idle2
+debian/.debhelper
 debian/*.debhelper.log
 debian/*.substvars
 

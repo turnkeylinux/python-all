@@ -1,2 +1,5 @@
 # icon file available in a dependent package.
 idle2 binary: menu-icon-missing
+
+# yes, we already have idle3, and idle pointing to it
+idle2 binary: dependency-on-python-version-marked-for-end-of-life
