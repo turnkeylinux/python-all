@@ -141,7 +141,6 @@ Package: python-dbg
 Architecture: any
 Multi-Arch: allowed
 Section: debug
-Priority: extra
 Depends: ${misc:Depends}, python (= ${binary:Version}), libpython-dbg (= ${binary:Version}), python@VER@-dbg (>= @PREVVER@)
 Description: debug build of the Python Interpreter (version @VER@)
  Python interpreter configured with --pydebug. Dynamically loaded modules are
@@ -151,7 +150,6 @@ Package: libpython-dbg
 Architecture: any
 Multi-Arch: same
 Section: debug
-Priority: extra
 Depends: lib@PVER@-dbg (>= @PREVVER@), ${misc:Depends}
 Description: debug build of the Python Interpreter (version @VER@)
  Python interpreter configured with --pydebug. Dynamically loaded modules
@@ -186,7 +184,6 @@ Package: python-all-dbg
 Architecture: any
 Multi-Arch: allowed
 Section: debug
-Priority: extra
 Depends: ${misc:Depends}, python (= ${binary:Version}), python-all (= ${binary:Version}), libpython-all-dbg (= ${binary:Version}), python-dbg (= ${binary:Version}), python2.7-dbg (>= 2.7-7)
 Description: package depending on all supported Python debugging packages
  The package currently depends on python2.7-dbg, in the
@@ -215,7 +212,6 @@ Package: libpython-all-dbg
 Architecture: any
 Multi-Arch: same
 Section: debug
-Priority: extra
 Depends: libpython-dbg (= ${binary:Version}), ${misc:Depends},
  libpython2.7-dbg
 Description: package depending on all supported Python debugging packages
