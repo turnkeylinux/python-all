@@ -52,6 +52,7 @@ Description: minimal subset of the Python language (default version)
 
 Package: python-examples
 Architecture: all
+Multi-Arch: foreign
 Depends: ${misc:Depends}, python:any (>= ${binary:Version}), @PVER@-examples (>= @PREVVER@)
 Description: examples for the Python language (default version)
  Examples, Demos and Tools for Python. These are files included in

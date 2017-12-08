@@ -1,17 +1,16 @@
 python-defaults (2.7.14-2) UNRELEASED; urgency=medium
 
   * Stop using priority extra for the -dbg packages.
-
- -- Matthias Klose <doko@debian.org>  Fri, 08 Dec 2017 10:56:48 +0100
-
-python-defaults (2.7.14-2ubuntu1) artful; urgency=medium
-
   * pycompile, pyclean, pyversions: Use python2 as the shebang to guard
     against people fiddling around with the python symlink or having a
-    python3 installed as python in /usr/local. LP: #1715062.
+    python3 installed as python in /usr/local. Closes: #864599. LP: #1715062.
   * Rename the idle package to idle2. idle is now built for python3.
+  * Fix quoting in the prerm-clean autoscript. Closes: #815134.
+  * README.Debian: Reference 2.7 and point to the python3 package for the
+    Debian Python Policy.
+  * Mark python-examples as M-A: foreign.
 
- -- Matthias Klose <doko@ubuntu.com>  Sat, 23 Sep 2017 10:18:14 +0200
+ -- Matthias Klose <doko@debian.org>  Fri, 08 Dec 2017 10:56:48 +0100
 
 python-defaults (2.7.14-1) unstable; urgency=medium
 

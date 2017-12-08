@@ -1,6 +1,6 @@
 More documentation and README's for this package can be found in the directory
 
-	/usr/share/doc/python2.6/
+	/usr/share/doc/python2.7/
 
 The upstream documentation can be found after installation
 of the python-doc package in the directory
@@ -11,7 +11,7 @@ of the python-doc package in the directory
 A draft of the "Debian Python Policy", mostly needed for Debian package
 maintainers can be found in
 
-        /usr/share/doc/python
+        /usr/share/doc/python3
 
 Sometime it will be moved to /usr/share/doc/debian-policy in the
 debian-policy package.
