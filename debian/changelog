@@ -1,3 +1,18 @@
+python-defaults (2.7.15-5) UNRELEASED; urgency=medium
+
+  * debian/control.in (Michael Vogt):
+    - add Cnf-Visible-Pkgname hint to ensure command-not-found recommends
+      installing "python" instead of "python-minimal" when it is missing.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 10 Apr 2018 12:43:33 +0200
+
+python-defaults (2.7.14-4) unstable; urgency=medium
+
+  * Stop building the python-examples and idle2 packages.
+  * python: Stop shipping the 2to3 symlink (now in the 2to3 package).
+
+ -- Matthias Klose <doko@debian.org>  Wed, 13 Dec 2017 23:39:49 +0100
+
 python-defaults (2.7.14-3) unstable; urgency=medium
 
   * Stop using priority extra for the -dbg packages.

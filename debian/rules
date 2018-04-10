@@ -208,29 +208,10 @@ ifeq ($(with_doc),yes)
 		debian/python-doc/usr/share/doc/python-doc/html
 endif
 
-	: # provide the idle and idle.1 defaults
-	mkdir -p debian/idle2/usr/bin
-	install -m 755 debian/idle.py debian/idle2/usr/bin/idle2
-
-	mkdir -p debian/idle2/usr/share/man/man1
-	install -m 644 debian/idle.1 debian/idle2/usr/share/man/man1/idle2.1
-
-	mkdir -p debian/idle2/usr/share/pixmaps
-	ln -sf python.xpm debian/idle2/usr/share/pixmaps/idle2.xpm
-
-	mkdir -p debian/idle2/usr/share/applications
-	cp -p debian/idle2.desktop debian/idle2/usr/share/applications/
-
 #	dh_installdebconf -i $(NOPKGS)
 	dh_lintian -i
 	dh_installdocs -i $(NOPKGS) --all debian/README.Debian
 	dh_installchangelogs -i $(NOPKGS)
-
-	for p in examples idle2; do \
-	  [ $$p = idle2 ] || p=python-$$p; \
-	  rm -rf debian/$$p/usr/share/doc/$$p; \
-	  ln -sf python debian/$$p/usr/share/doc/$$p; \
-	done
 
 	dh_compress -i $(NOPKGS)
 	dh_fixperms -i $(NOPKGS)
@@ -278,7 +259,6 @@ binary-arch: build install stamp-doc
 	ln -sf pydoc$(VER) debian/python/usr/bin/pydoc
 	ln -sf pygettext$(VER) debian/python/usr/bin/pygettext
 	ln -sf pdb$(VER) debian/python/usr/bin/pdb
-	ln -sf 2to3-$(VER) debian/python/usr/bin/2to3
 
 	mkdir -p debian/python/usr/share/python
 	install -m 644 debian/python.mk \
@@ -291,8 +271,6 @@ binary-arch: build install stamp-doc
 		debian/python/usr/share/man/man1/pygettext.1.gz
 	ln -sf pdb$(VER).1.gz \
 		debian/python/usr/share/man/man1/pdb.1.gz
-	ln -sf 2to3-$(VER).1.gz \
-		debian/python/usr/share/man/man1/2to3.1.gz
 
 	mkdir -p debian/python/usr/share/doc/python
 	cp -a debian/python-policy.{html,dbk,txt} \
@@ -386,7 +364,7 @@ endif
 	dh_installchangelogs -a $(NOPKGS)
 
 	for p in all all-dev all-dbg dbg dev; do \
-	  [ $$p = idle2 ] || p=python-$$p; \
+	  p=python-$$p; \
 	  rm -rf debian/$$p/usr/share/doc/$$p; \
 	  ln -sf python debian/$$p/usr/share/doc/$$p; \
 	done
