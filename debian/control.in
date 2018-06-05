@@ -7,10 +7,6 @@ Build-Depends: debhelper (>= 9~), @bd_i586@,
   lsb-release,
   python-all:any,
   @PVER@:any (>= @PREVVER@),
-  docbook-xml,
-  docbook-xsl,
-  w3m,
-  xsltproc,
 Standards-Version: 4.1.4
 Homepage: https://www.python.org/
 Vcs-Git: https://salsa.debian.org/cpython-team/python-defaults.git

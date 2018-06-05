@@ -54,20 +54,6 @@ build-indep: stamp-build
 stamp-build:
 	touch stamp-build
 
-stamp-doc-policy:
-	xsltproc --nonet --novalid debian/html.xsl debian/python-policy.dbk \
-	    | w3m -o display_charset=UTF-8 -cols 70 -dump -no-graph -T text/html > python-policy.txt
-	mv -f python-policy.txt debian/
-	rm -rf debian/python-policy.html
-	mkdir python-policy.html
-	( cd python-policy.html; xsltproc --nonet --novalid ../debian/chunk.xsl ../debian/python-policy.dbk )
-	mv -f python-policy.html debian/
-	make -C pydist
-	touch stamp-doc-policy
-
-stamp-doc: stamp-doc-policy
-	touch stamp-doc
-
 control-file:
 	sed -e "s/@PVER@/$(PVER)/g" \
 	    -e "s/@NVER@/$(NVER)/g" \
@@ -104,9 +90,6 @@ clean: control-file
 	dh_testroot
 	rm -f stamp-*
 	rm -f patch-stamp*
-
-	rm -f debian/python-policy.txt
-	rm -rf debian/python-policy.html
 
 	set -e;\
 	for f in debian/*.in; do \
@@ -155,7 +138,7 @@ stamp-dh_python:
 	touch $@
 
 # Build architecture-independent files here.
-binary-indep: build install stamp-doc
+binary-indep: build install
 	dh_testdir -i
 	dh_testroot -i
 	dh_installman -i
@@ -191,7 +174,7 @@ endif
 	dh_builddeb -i $(NOPKGS)
 
 # Build architecture-dependent files here.
-binary-arch: build install stamp-doc
+binary-arch: build install
 	dh_testdir -a
 	dh_testroot -a
 	dh_installman -a
@@ -259,27 +242,11 @@ binary-arch: build install stamp-doc
 	ln -sf pdb2.1.gz \
 		debian/python/usr/share/man/man1/pdb.1.gz
 
-	mkdir -p debian/python2/usr/share/doc/python2
-	cp -a debian/python-policy.{html,dbk,txt} \
-		debian/python2/usr/share/doc/python2/
-
 	mkdir -p debian/python2/usr/share/pixmaps
 	ln -sf python$(VER).xpm debian/python2/usr/share/pixmaps/python2.xpm
 
 	mkdir -p debian/python/usr/share/pixmaps
 	ln -sf python$(VER).xpm debian/python/usr/share/pixmaps/python.xpm
-
-	: # add symlinks to policy files
-	mkdir -p debian/python/usr/share/doc/python$(VER)
-	for ext in html dbk.gz txt.gz; do \
-	  ln -sf ../python/python-policy.$$ext \
-		debian/python/usr/share/doc/python$(VER)/python-policy.$$ext; \
-	done
-	mkdir -p debian/python2/usr/share/doc/python$(VER)
-	for ext in html dbk.gz txt.gz; do \
-	  ln -sf ../python2/python-policy.$$ext \
-		debian/python2/usr/share/doc/python$(VER)/python-policy.$$ext; \
-	done
 
 	mkdir -p debian/python2/usr/share/apps/konsole
 	cp -p debian/python2.desktop debian/python2/usr/share/apps/konsole/
