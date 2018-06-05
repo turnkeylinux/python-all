@@ -1,10 +1,11 @@
-python-defaults (2.7.15-5) UNRELEASED; urgency=medium
+python-defaults (2.7.15~rc1-1) unstable; urgency=medium
 
+  * Bump version to 2.7.15~rc1.
   * debian/control.in (Michael Vogt):
     - add Cnf-Visible-Pkgname hint to ensure command-not-found recommends
       installing "python" instead of "python-minimal" when it is missing.
 
- -- Matthias Klose <doko@debian.org>  Tue, 10 Apr 2018 12:43:33 +0200
+ -- Matthias Klose <doko@debian.org>  Mon, 16 Apr 2018 16:31:18 +0200
 
 python-defaults (2.7.14-4) unstable; urgency=medium
 
