@@ -2,7 +2,7 @@ Source: python-defaults
 Section: python
 Priority: optional
 Maintainer: Matthias Klose <doko@debian.org>
-Uploaders: Scott Kitterman <scott@kitterman.com>, Piotr Ożarowski <piotr@debian.org>, Barry Warsaw <barry@debian.org>
+Uploaders: Scott Kitterman <scott@kitterman.com>, Piotr Ożarowski <piotr@debian.org>
 Build-Depends: debhelper (>= 9~), dpkg-dev (>= 1.17.11), python2.7:any (>= 2.7.11-11),
   lsb-release,
   python-all:any,

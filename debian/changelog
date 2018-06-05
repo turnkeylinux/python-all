@@ -1,6 +1,7 @@
 python-defaults (2.7.15~rc1-2) UNRELEASED; urgency=medium
 
   * Update Vcs attributes.
+  * Remove Barry Warsaw as uploader.
 
  -- Matthias Klose <doko@debian.org>  Wed, 06 Jun 2018 00:09:55 +0200
 
