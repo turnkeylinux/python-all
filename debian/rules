@@ -89,34 +89,6 @@ endif
 	  && rm -f debian/control.tmp && exit 0; \
 	  mv debian/control.tmp debian/control
 
-faqs = index general programming library extending windows gui installed
-get-faq:
-	# Note: This rule is broken due to web site reorg at python.org
-	rm -rf faq
-	mkdir faq
-	cd faq && \
-	  wget -nv $(foreach p,$(faqs),http://python.org/doc/faq/$(p).ht)
-	sed 's,\<\([a-zA-Z0-9]*\.html\)\>,faq/\1,' faq/index.ht \
-		| awk '/^Translations$$/ {exit} {print}' > faq/FAQ.ht
-	( \
-	  echo ''; \
-	  echo 'This is a local copy of the online FAQ located at'; \
-	  echo 'http://python.org/doc/faq.'; \
-	  echo "The copy was fetched and generated in `date '+%B %Y'`."; \
-	) >> faq/FAQ.ht
-	rm -f faq/index.ht
-
-make-faq:
-	set -e; \
-	cd faq && \
-	for p in *.ht; do \
-	  p=`basename $$p .ht`; \
-	  echo $(rst2html) $$p.ht $$p.html; \
-	  awk 'NR > 2' $$p.ht > $$p.ht2; \
-	  $(rst2html) $$p.ht2 $$p.html; \
-	  rm -f $$p.ht2; \
-	done
-
 MANPAGES ?= dh_python2.1 pycompile.1 pyclean.1
 
 %.1: %.rst
@@ -165,22 +137,8 @@ install: build stamp-dh_python stamp-install
 stamp-install: stamp-build control-file stamp-control
 	dh_testdir
 	dh_testroot
-	dh_installdirs -ppython2 usr/share/doc/python2/faq
 	dh_installdirs -ppython usr/share/doc/python
 	dh_install
-
-	set -e; \
-	cd faq && \
-	for p in *.ht; do \
-	  p=`basename $$p .ht`; \
-	  cp $$p.html ../debian/python2/usr/share/doc/python2/faq/; \
-	done
-	mv debian/python2/usr/share/doc/python2/faq/FAQ.html \
-		debian/python2/usr/share/doc/python2/
-	ln -sf ../python2/faq \
-		debian/python/usr/share/doc/python/faq
-	ln -sf ../python2/FAQ.html \
-		debian/python/usr/share/doc/python/FAQ.html
 
 	touch stamp-install
 
