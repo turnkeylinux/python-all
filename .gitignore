@@ -19,8 +19,18 @@ debian/python-doc
 debian/python-examples
 debian/python-minimal
 
+debian/libpython2-dbg
+debian/libpython2-dev
+debian/libpython2-stdlib
+debian/python2-dbg
+debian/python2-dev
+debian/python2-doc
+debian/python2-minimal
+debian/python2
+
 debian/files
 debian/python-minimal.postinst
+debian/python2-minimal.postinst
 debian/python.postinst
 debian/python.postrm
 debian/python.preinst

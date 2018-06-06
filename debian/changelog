@@ -1,4 +1,4 @@
-python-defaults (2.7.15-1) UNRELEASED; urgency=medium
+python-defaults (2.7.15-1) unstable; urgency=medium
 
   * Bump version to 2.7.15.
   * Split out a set of python2 packages, and let the python packages depend on
@@ -8,7 +8,7 @@ python-defaults (2.7.15-1) UNRELEASED; urgency=medium
   * Remove the FAQ for Python2.
   * Remove the Debian Python policy, now found in the python3 package.
 
- -- Matthias Klose <doko@debian.org>  Wed, 06 Jun 2018 00:09:55 +0200
+ -- Matthias Klose <doko@debian.org>  Wed, 06 Jun 2018 18:35:07 +0200
 
 python-defaults (2.7.15~rc1-1) unstable; urgency=medium
 
