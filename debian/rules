@@ -204,14 +204,6 @@ binary-arch: build install
 		debian/python2-minimal/usr/share/man/man1/
 	dh_link -ppython2-minimal /usr/share/python/pyversions.py /usr/bin/pyversions
 
-#	install -m 755 debian/pycompile \
-#		debian/python-minimal/usr/bin/
-#	install -m 755 debian/pyclean \
-#		debian/python-minimal/usr/bin/
-
-#	mkdir debian/python-minimal/usr/share/python-central
-#	cp -p debian/python.pycentral debian/python-minimal/usr/share/python-central/
-
 	mkdir -p debian/python2/usr/bin
 	ln -sf pydoc$(VER) debian/python2/usr/bin/pydoc2
 	ln -sf pygettext$(VER) debian/python2/usr/bin/pygettext2

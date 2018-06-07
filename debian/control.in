@@ -206,8 +206,8 @@ Pre-Depends: python2-minimal (= ${binary:Version})
 Depends: ${misc:Depends}, @PVER@ (>= @PREVVER@), libpython2-stdlib (= ${binary:Version})
 Suggests: python2-doc (= ${binary:Version}), python-tk (>= @PREVVER@)
 Conflicts: python-central (<< 0.5.5)
-Breaks: update-manager-core (<< 0.200.5-2), python (<< 2.7.15-1)
-Replaces: python-dev (<< 2.6.5-2), python (<< 2.7.15-1)
+Breaks: update-manager-core (<< 0.200.5-2), python (<< 2.7.15-2)
+Replaces: python-dev (<< 2.6.5-2), python (<< 2.7.15-2)
 Provides: python-email, python-ctypes, python-wsgiref, python-importlib, python-profiler
 Description: interactive high-level object-oriented language (Python2 version)
  Python2, the high-level, interactive object oriented language,
@@ -226,8 +226,8 @@ Priority: optional
 Depends: ${misc:Depends}, @PVER@-minimal (>= @PREVVER@), dpkg (>= 1.13.20)
 Recommends: python2
 Conflicts: python-central (<< 0.5.5)
-Breaks: python (<= 2.7.3-1~), python-dev (<< 2.6), python-dbg (<< 2.6), python-all (<< 2.6), python-all-dev (<< 2.6), python-all-dbg (<< 2.6), python-examples (<< 2.6), idle (<< 2.6), python2.5-minimal (<< 2.5.5-7), python2.6-minimal (<< 2.6.5~rc2-2), python3.1-minimal (<< 3.1.2~rc1-2), python-support (<< 1.0.10ubuntu2), python-minimal (<< 2.7.15-1)
-Replaces: python (<= 2.7.3-1~), python-minimal (<< 2.7.15-1)
+Breaks: python (<= 2.7.3-1~), python-dev (<< 2.6), python-dbg (<< 2.6), python-all (<< 2.6), python-all-dev (<< 2.6), python-all-dbg (<< 2.6), python-examples (<< 2.6), idle (<< 2.6), python2.5-minimal (<< 2.5.5-7), python2.6-minimal (<< 2.6.5~rc2-2), python3.1-minimal (<< 3.1.2~rc1-2), python-support (<< 1.0.10ubuntu2), python-minimal (<< 2.7.15-2)
+Replaces: python (<= 2.7.3-1~), python-minimal (<< 2.7.15-2)
 Description: minimal subset of the Python2 language
  This package contains the interpreter and some essential modules.  It's used
  in the boot process for some basic tasks.
@@ -239,8 +239,8 @@ Package: python2-dev
 Architecture: any
 Multi-Arch: allowed
 Depends: ${misc:Depends}, python2 (= ${binary:Version}), libpython2-dev (= ${binary:Version}), @PVER@-dev (>= @PREVVER@)
-Breaks: python-dev (<< 2.7.15-1)
-Replaces: python-dev (<< 2.7.15-1)
+Breaks: python-dev (<< 2.7.15-2)
+Replaces: python-dev (<< 2.7.15-2)
 Description: header files and a static library for Python2
  Header files, a static library and development tools for building
  Python2 modules, extending the Python2 interpreter or embedding Python2
@@ -254,8 +254,8 @@ Architecture: any
 Multi-Arch: same
 Section: libdevel
 Depends: lib@PVER@-dev (>= @PREVVER@), ${misc:Depends}
-Breaks: libpython-dev (<< 2.7.15-1)
-Replaces: libpython-dev (<< 2.7.15-1)
+Breaks: libpython-dev (<< 2.7.15-2)
+Replaces: libpython-dev (<< 2.7.15-2)
 Description: header files and a static library for Python2
  Header files, a static library and development tools for building
  Python2 modules, extending the Python2 interpreter or embedding Python2
@@ -269,8 +269,8 @@ Architecture: any
 Multi-Arch: same
 Priority: optional
 Depends: libpython@VER@-stdlib (>= @PREVVER@), ${misc:Depends}
-Breaks: libpython-stdlib (<< 2.7.15-1)
-Replaces: libpython-stdlib (<< 2.7.15-1)
+Breaks: libpython-stdlib (<< 2.7.15-2)
+Replaces: libpython-stdlib (<< 2.7.15-2)
 Description: interactive high-level object-oriented language (Python2)
  Python2, the high-level, interactive object oriented language,
  includes an extensive class library with lots of goodies for
@@ -285,8 +285,8 @@ Architecture: all
 Multi-Arch: foreign
 Depends: ${misc:Depends}, python@VER@-doc (>= @PREVVER@)
 Suggests: python2 (= ${binary:Version})
-Breaks: python-doc (<< 2.7.15-1)
-Replaces: python-doc (<< 2.7.15-1)
+Breaks: python-doc (<< 2.7.15-2)
+Replaces: python-doc (<< 2.7.15-2)
 Description: documentation for the high-level object-oriented language Python2
  This is the official set of documentation for the interactive high-level
  object-oriented language Python2 (v@VER@). All documents are provided
@@ -310,8 +310,8 @@ Architecture: any
 Multi-Arch: allowed
 Section: debug
 Depends: ${misc:Depends}, python2 (= ${binary:Version}), libpython2-dbg (= ${binary:Version}), python@VER@-dbg (>= @PREVVER@)
-Breaks: python-dbg (<< 2.7.15-1)
-Replaces: python-dbg (<< 2.7.15-1)
+Breaks: python-dbg (<< 2.7.15-2)
+Replaces: python-dbg (<< 2.7.15-2)
 Description: debug build of the Python2 interpreter (version @VER@)
  Python2 interpreter configured with --pydebug. Dynamically loaded modules are
  searched in /usr/lib/python@VER@/lib-dynload/debug first.
@@ -321,8 +321,8 @@ Architecture: any
 Multi-Arch: same
 Section: debug
 Depends: lib@PVER@-dbg (>= @PREVVER@), ${misc:Depends}
-Breaks: libpython-dbg (<< 2.7.15-1)
-Replaces: libpython-dbg (<< 2.7.15-1)
+Breaks: libpython-dbg (<< 2.7.15-2)
+Replaces: libpython-dbg (<< 2.7.15-2)
 Description: debug build of the Python2 interpreter (version @VER@)
  Python2 interpreter configured with --pydebug. Dynamically loaded modules
  are searched in /usr/lib/python@VER@/lib-dynload/debug first.
