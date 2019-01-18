@@ -3,11 +3,14 @@ python-defaults (2.7.15-4) UNRELEASED; urgency=medium
   [ Matthias Klose ]
   * Fix some lintian warnings.
   * Fix typo in dh_python2(1) (Chris Lamb). Closes: #901079.
+  * Bump standards version.
+  * python-minimal: Make the python-central conflict unversioned.
+    Closes: #910234.
 
   [ Scott Kitterman ]
   * Remove myself from uploaders 
 
- -- Matthias Klose <doko@debian.org>  Sat, 09 Jun 2018 18:55:51 -0400
+ -- Matthias Klose <doko@debian.org>  Fri, 18 Jan 2019 11:56:03 +0100
 
 python-defaults (2.7.15-3) unstable; urgency=medium
 

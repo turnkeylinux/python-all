@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 9~), @bd_i586@,
   lsb-release,
   python-all:any,
   @PVER@:any (>= @PREVVER@),
-Standards-Version: 4.1.4
+Standards-Version: 4.3.0
 Homepage: https://www.python.org/
 Vcs-Git: https://salsa.debian.org/cpython-team/python-defaults.git
 Vcs-Browser: https://salsa.debian.org/cpython-team/python-defaults
@@ -39,7 +39,7 @@ Multi-Arch: allowed
 Priority: optional
 Depends: ${misc:Depends}, @PVER@-minimal (>= @PREVVER@), dpkg (>= 1.13.20), python2-minimal (= ${binary:Version})
 Recommends: python
-Conflicts: python-central (<< 0.5.5)
+Conflicts: python-central
 Breaks: python (<= 2.7.3-1~), python-dev (<< 2.6), python-dbg (<< 2.6), python-all (<< 2.6), python-all-dev (<< 2.6), python-all-dbg (<< 2.6), python-examples (<< 2.6), idle (<< 2.6), python2.5-minimal (<< 2.5.5-7), python2.6-minimal (<< 2.6.5~rc2-2), python3.1-minimal (<< 3.1.2~rc1-2), python-support (<< 1.0.10ubuntu2)
 Replaces: python (<= 2.7.3-1~)
 Description: minimal subset of the Python2 language
