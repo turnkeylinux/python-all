@@ -1,8 +1,8 @@
-python-defaults (2.7.16-1) UNRELEASED; urgency=medium
+python-defaults (2.7.16-1) unstable; urgency=medium
 
   * Bump version to 2.7.16.
 
- -- Matthias Klose <doko@debian.org>  Mon, 25 Feb 2019 12:56:25 +0100
+ -- Matthias Klose <doko@debian.org>  Mon, 04 Mar 2019 16:48:56 +0100
 
 python-defaults (2.7.15-4) unstable; urgency=medium
 
