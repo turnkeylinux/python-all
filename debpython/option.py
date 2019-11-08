@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Copyright © 2010-2012 Piotr Ożarowski <piotr@debian.org>
+# Copyright © 2010-2019 Piotr Ożarowski <piotr@debian.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal

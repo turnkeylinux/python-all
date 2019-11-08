@@ -4,21 +4,13 @@ PREFIX ?= /usr/local
 MANPAGES ?= dh_python2.1 pycompile.1 pyclean.1
 
 clean:
-	make -C tests clean
-	make -C pydist clean
 	find . -name '*.py[co]' -delete
 	rm -f .coverage
 
 install-dev:
 	$(INSTALL) -m 755 -d $(DESTDIR)$(PREFIX)/bin \
-		$(DESTDIR)$(PREFIX)/share/python/runtime.d \
-		$(DESTDIR)$(PREFIX)/share/debhelper/autoscripts/ \
-		$(DESTDIR)$(PREFIX)/share/perl5/Debian/Debhelper/Sequence/
+		$(DESTDIR)$(PREFIX)/share/python/runtime.d
 	$(INSTALL) -m 755 runtime.d/* $(DESTDIR)$(PREFIX)/share/python/runtime.d/
-	$(INSTALL) -m 644 autoscripts/* $(DESTDIR)$(PREFIX)/share/debhelper/autoscripts/
-	$(INSTALL) -m 755 dh_python2 $(DESTDIR)$(PREFIX)/share/python/
-	$(INSTALL) -m 755 dh_python2.py $(DESTDIR)$(PREFIX)/bin/dh_python2
-	$(INSTALL) -m 644 python2.pm $(DESTDIR)$(PREFIX)/share/perl5/Debian/Debhelper/Sequence/
 
 install-runtime:
 	$(INSTALL) -m 755 -d $(DESTDIR)$(PREFIX)/share/python/debpython $(DESTDIR)$(PREFIX)/bin
@@ -27,9 +19,6 @@ install-runtime:
 	$(INSTALL) -m 755 pyclean $(DESTDIR)$(PREFIX)/bin/
 
 install: install-dev install-runtime
-
-dist_fallback:
-	make -C pydist $@
 
 check_versions:
 	@set -e;\
@@ -48,11 +37,5 @@ pdebuild:
 # TESTS
 nose:
 	nosetests --with-doctest --with-coverage
-
-tests: nose
-	make -C tests
-
-test%:
-	make -C tests $@
 
 .PHONY: clean tests test% check_versions

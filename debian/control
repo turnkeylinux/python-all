@@ -20,7 +20,7 @@ Pre-Depends: python-minimal (= ${binary:Version})
 Depends: ${misc:Depends}, python2.7 (>= 2.7.17~rc1-1~), libpython-stdlib (= ${binary:Version}), python2 (= ${binary:Version})
 Suggests: python-doc (= ${binary:Version}), python-tk (>= 2.7.17~rc1-1~)
 Conflicts: python-central (<< 0.5.5)
-Breaks: update-manager-core (<< 0.200.5-2)
+Breaks: update-manager-core (<< 0.200.5-2), dh-python (<< 4.20191109)
 Replaces: python-dev (<< 2.6.5-2)
 Provides: python-email, python-ctypes, python-wsgiref, python-importlib, python-profiler
 Description: interactive high-level object-oriented language (Python2 version)

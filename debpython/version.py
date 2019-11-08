@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Copyright © 2010-2012 Piotr Ożarowski <piotr@debian.org>
+# Copyright © 2010-2019 Piotr Ożarowski <piotr@debian.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@ import logging
 import re
 from ConfigParser import SafeConfigParser
 from os import environ
-from os.path import exists, dirname, join
+from os.path import exists
 from types import GeneratorType
 
 # will be overriden via debian_defaults file few lines later
@@ -53,7 +53,7 @@ except Exception:
     log.exception('cannot read debian_defaults')
 try:
     SUPPORTED = tuple(tuple(int(j) for j in i.strip().split('.'))
-                            for i in _supported.split(','))
+                      for i in _supported.split(','))
 except Exception:
     log.exception('cannot read debian_defaults')
 
@@ -142,102 +142,6 @@ def parse_vrange(value):
     return minv, maxv
 
 
-def parse_pycentral_vrange(value):
-    """Parse XS-Python-Version.
-
-    >>> parse_pycentral_vrange('current') == (DEFAULT, DEFAULT)
-    True
-    >>> parse_pycentral_vrange('all')
-    (None, None)
-    >>> parse_pycentral_vrange('all, >= 2.4')
-    ((2, 4), None)
-    >>> parse_pycentral_vrange('all, << 3.0')
-    (None, (3, 0))
-    >>> parse_pycentral_vrange('2.6')
-    ((2, 6), (2, 6))
-    >>> parse_pycentral_vrange('2.5, 2.6')
-    ((2, 5), None)
-    >>> parse_pycentral_vrange('>= 2.6.3')
-    ((2, 6), None)
-    """
-    get = lambda x: get_requested_versions(parse_vrange(x))
-
-    current = False
-    minv = maxv = None
-    hardcoded = set()
-
-    for item in value.split(','):
-        item = item.strip()
-
-        if item == 'all':
-            continue
-        elif item == 'current':
-            current = True
-            continue
-
-        match = re.match('>=\s*([\d\.]+)', item)
-        if match:
-            minv = "%.3s" % match.group(1)
-            continue
-        match = re.match('<<\s*([\d\.]+)', item)
-        if match:
-            maxv = "%.3s" % match.group(1)
-            continue
-        match = re.match('^[\d\.]+$', item)
-        if match:
-            hardcoded.add("%.3s" % match.group(0))
-
-    if len(hardcoded) == 1:
-        ver = hardcoded.pop()
-        return getver(ver), getver(ver)
-
-    if not minv and hardcoded:
-        # yeah, no maxv!
-        minv = sorted(hardcoded)[0]
-
-    if current:
-        versions = sorted(get("%s-%s" % (minv if minv else '',
-                                         maxv if maxv else '')))
-        if not versions:
-            raise ValueError("version range doesn't match installed Python versions: %s" % value)
-        # not really what "current" means...
-        if DEFAULT in versions:
-            return DEFAULT, DEFAULT
-        else:
-            return versions[0], versions[0]
-    return getver(minv) if minv else None, \
-           getver(maxv) if maxv else None
-
-
-def vrange_str(vrange):
-    """Return version range string from given range.
-
-    >>> vrange_str(((2, 4), None))
-    '2.4-'
-    >>> vrange_str(((2, 4), (2, 6)))
-    '2.4-2.6'
-    >>> vrange_str(((2, 4), (3, 0)))
-    '2.4-3.0'
-    >>> vrange_str((None, (2, 7)))
-    '-2.7'
-    >>> vrange_str(((2, 5), (2, 5)))
-    '2.5'
-    >>> vrange_str((None, None))
-    '-'
-    """
-    if vrange[0] is vrange[1] is None:
-        return '-'
-    if vrange[0] == vrange[1]:
-        return '.'.join(str(i) for i in vrange[0])
-    elif vrange[0] is None:
-        return '-' + '.'.join(str(i) for i in vrange[1])
-    elif vrange[1] is None:
-        return '.'.join(str(i) for i in vrange[0]) + '-'
-    else:
-        return "%s-%s" % ('.'.join(str(i) for i in vrange[0]),
-                          '.'.join(str(i) for i in vrange[1]))
-
-
 def vrepr(value):
     """
     >>> vrepr(([2, 7], [3, 2]))
@@ -252,7 +156,7 @@ def vrepr(value):
     if isinstance(value, basestring):
         return value
     elif not isinstance(value, (GeneratorType, set))\
-      and isinstance(value[0], int):
+            and isinstance(value[0], int):
         return '.'.join(str(i) for i in value)
 
     result = []

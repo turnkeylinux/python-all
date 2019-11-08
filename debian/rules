@@ -75,16 +75,6 @@ endif
 	  && rm -f debian/control.tmp && exit 0; \
 	  mv debian/control.tmp debian/control
 
-MANPAGES ?= dh_python2.1 pycompile.1 pyclean.1
-
-%.1: %.rst
-	rst2man $< > $@
-
-# Manually run this rule if there is a need to update the dh_python2 man pages
-make-man: $(MANPAGES)
-	cd pydist && \
-	rst2html README.PyDist > README.PyDist.html
-
 clean: control-file
 	dh_testdir
 	dh_testroot
@@ -116,7 +106,7 @@ stamp-control:
 	    fi; \
 	done
 
-install: build stamp-dh_python stamp-install
+install: build stamp-install
 stamp-install: stamp-build control-file stamp-control
 	dh_testdir
 	dh_testroot
@@ -124,18 +114,6 @@ stamp-install: stamp-build control-file stamp-control
 	dh_install
 
 	touch stamp-install
-
-stamp-dh_python:
-	dh_testdir
-	dh_testroot
-	dh_installdirs
-	-make check_versions
-	DESTDIR=debian/python2 PREFIX=/usr make install-dev
-	DESTDIR=debian/python2-minimal PREFIX=/usr make install-runtime
-	# disabled by default, run manually if you want to update it
-	# (requires apt-file and network connection)
-	#make -C pydist dist_fallback
-	touch $@
 
 # Build architecture-independent files here.
 binary-indep: build install

@@ -1,7 +1,7 @@
 #! /usr/bin/python2
 # -*- coding: utf-8 -*- vim: et ts=4 sw=4
 #
-# Copyright © 2010-2012 Piotr Ożarowski <piotr@debian.org>
+# Copyright © 2010-2019 Piotr Ożarowski <piotr@debian.org>
 # Copyright © 2010 Canonical Ltd
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -37,8 +37,7 @@ from debpython.version import SUPPORTED, debsorted, vrepr, \
 from debpython import files as dpf
 from debpython.namespace import add_namespace_files
 from debpython.option import Option, compile_regexpr
-from debpython.pydist import PUBLIC_DIR_RE
-from debpython.tools import memoize
+from debpython.tools import memoize, PUBLIC_DIR_RE
 
 # initialize script
 logging.basicConfig(format='%(levelname).1s: %(module)s:%(lineno)d: '

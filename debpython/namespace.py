@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Copyright © 2011-2012 Piotr Ożarowski <piotr@debian.org>
+# Copyright © 2011-2019 Piotr Ożarowski <piotr@debian.org>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,7 @@ from os import environ, listdir, remove, rmdir
 from os.path import dirname, exists, join, getsize, split
 from subprocess import Popen, PIPE
 
-from debpython.pydist import PUBLIC_DIR_RE
-from debpython.tools import memoize, sitedir
+from debpython.tools import memoize, sitedir, PUBLIC_DIR_RE
 
 log = logging.getLogger(__name__)
 
@@ -122,41 +121,3 @@ def add_namespace_files(files, package=None, action=None):
                 log.debug(e)
             else:
                 yield fpath
-
-
-def remove_from_package(package, namespaces, versions):
-    """Remove empty __init__.py files for requested namespaces."""
-    if not isinstance(namespaces, set):
-        namespaces = set(namespaces)
-    keep = set()
-    for ns in namespaces:
-        for version in versions:
-            fpath = join(sitedir(version, package), *ns.split('.'))
-            fpath = join(fpath, '__init__.py')
-            if not exists(fpath):
-                continue
-            if getsize(fpath) != 0:
-                log.warning('file not empty, cannot share %s namespace', ns)
-                keep.add(ns)
-                break
-
-    # return a set of namespaces that should be handled by pycompile/pyclean
-    result = namespaces - keep
-
-    # remove empty __init__.py files, if available
-    for ns in result:
-        for version in versions:
-            dpath = join(sitedir(version, package), *ns.split('.'))
-            fpath = join(dpath, '__init__.py')
-            if exists(fpath):
-                remove(fpath)
-                if not listdir(dpath):
-                    rmdir(dpath)
-        # clean pyshared dir as well
-        dpath = join('debian', package, 'usr/share/pyshared', *ns.split('.'))
-        fpath = join(dpath, '__init__.py')
-        if exists(fpath):
-            remove(fpath)
-            if not listdir(dpath):
-                rmdir(dpath)
-    return result
