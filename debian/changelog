@@ -1,10 +1,16 @@
-python-defaults (2.7.17-2) UNRELEASED; urgency=medium
+python-defaults (2.7.17-3) UNRELEASED; urgency=medium
 
   * Remove deprecated dh_python2. Please add dh-python or
     dh-sequence-python2 to Build-Depends if your package still supports
     Python 2.X.
 
  -- Piotr Ożarowski <piotr@debian.org>  Fri, 08 Nov 2019 14:16:26 +0100
+
+python-defaults (2.7.17-2) unstable; urgency=medium
+
+  * dh_python2.py: Use python2 in the shebang. Closes: #944894.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 18 Nov 2019 07:36:33 +0100
 
 python-defaults (2.7.17-1) unstable; urgency=medium
 
