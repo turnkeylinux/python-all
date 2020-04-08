@@ -12,6 +12,7 @@ python-defaults (2.7.17-3) UNRELEASED; urgency=medium
       package heders
   * Stop building the python, python-dev, python-dbg, python-doc,
     python-minimal, libpython-dev, libpython-dbg, libpython-stdlib packages.
+  * Bump standards version.
 
  -- Matthias Klose <doko@debian.org>  Wed, 08 Apr 2020 10:11:25 +0200
 
