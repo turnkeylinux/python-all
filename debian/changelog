@@ -1,10 +1,19 @@
 python-defaults (2.7.17-3) UNRELEASED; urgency=medium
 
+  [ Piotr Ożarowski ]
   * Remove deprecated dh_python2. Please add dh-python or
     dh-sequence-python2 to Build-Depends if your package still supports
     Python 2.X.
 
- -- Piotr Ożarowski <piotr@debian.org>  Fri, 08 Nov 2019 14:16:26 +0100
+  [ Matthias Klose ]
+  * Correct command-not-found XB-Cnf headers:
+    - Drop Extra-Commands headers, not needed
+    - Add XB- to ensure Visible-Pkgname actually is included in the binary
+      package heders
+  * Stop building the python, python-dev, python-dbg, python-doc,
+    python-minimal, libpython-dev, libpython-dbg, libpython-stdlib packages.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 08 Apr 2020 10:11:25 +0200
 
 python-defaults (2.7.17-2) unstable; urgency=medium
 
