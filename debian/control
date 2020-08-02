@@ -3,7 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Matthias Klose <doko@debian.org>
 Uploaders: Piotr Ożarowski <piotr@debian.org>
-Build-Depends: debhelper (>= 9~), dpkg-dev (>= 1.17.11), python2.7:any (>= 2.7.18~),
+Build-Depends: debhelper (>= 11~), dpkg-dev (>= 1.17.11), python2.7:any (>= 2.7.18~),
   lsb-release,
   python-all:any,
   python2.7:any (>= 2.7.18~),

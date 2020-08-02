@@ -1,4 +1,4 @@
-python-defaults (2.7.18-1) UNRELEASED; urgency=medium
+python-defaults (2.7.18-1) unstable; urgency=medium
 
   [ Piotr Ożarowski ]
   * Remove deprecated dh_python2. Please add dh-python or
@@ -14,8 +14,9 @@ python-defaults (2.7.18-1) UNRELEASED; urgency=medium
     python-minimal, libpython-dev, libpython-dbg, libpython-stdlib packages.
   * Bump standards version.
   * Bump version to 2.7.18.
+  * Bump debhelper version.
 
- -- Matthias Klose <doko@debian.org>  Wed, 08 Apr 2020 10:11:25 +0200
+ -- Matthias Klose <doko@debian.org>  Sun, 02 Aug 2020 14:51:22 +0200
 
 python-defaults (2.7.17-2) unstable; urgency=medium
 

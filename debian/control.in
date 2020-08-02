@@ -3,7 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Matthias Klose <doko@debian.org>
 Uploaders: Piotr Ożarowski <piotr@debian.org>
-Build-Depends: debhelper (>= 9~), @bd_i586@,
+Build-Depends: debhelper (>= 11~), @bd_i586@,
   lsb-release,
   python-all:any,
   @PVER@:any (>= @PREVVER@),
