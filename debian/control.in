@@ -87,8 +87,8 @@ Pre-Depends: python2-minimal (= ${binary:Version})
 Depends: ${misc:Depends}, @PVER@ (>= @PREVVER@), libpython2-stdlib (= ${binary:Version})
 Suggests: python2-doc (= ${binary:Version}), python-tk (>= @PREVVER@)
 Conflicts: python-central (<< 0.5.5)
-Breaks: update-manager-core (<< 0.200.5-2), python (<< 2.7.15-2)
-Replaces: python-dev (<< 2.6.5-2), python (<< 2.7.15-2)
+Breaks: update-manager-core (<< 0.200.5-2), python (<< 2.7.15-2), python2-doc (<< 2.7.18-2)
+Replaces: python-dev (<< 2.6.5-2), python (<< 2.7.15-2), python2-doc (<< 2.7.18-2)
 Provides: python-email, python-ctypes, python-wsgiref, python-importlib, python-profiler
 Description: interactive high-level object-oriented language (Python2 version)
  Python2, the high-level, interactive object oriented language,

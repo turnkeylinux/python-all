@@ -1,3 +1,9 @@
+python-defaults (2.7.18-2) unstable; urgency=medium
+
+  * Don't ship a duplicate README.Debian in python2-doc. Closes: #966823.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 04 Aug 2020 10:22:34 +0200
+
 python-defaults (2.7.18-1) unstable; urgency=medium
 
   [ Piotr Ożarowski ]

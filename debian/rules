@@ -136,6 +136,7 @@ endif
 #	dh_installdebconf -i $(NOPKGS)
 	dh_lintian -i
 	dh_installdocs -i $(NOPKGS) --all debian/README.Debian
+	rm -f debian/python2-doc/usr/share/doc/python2/README.Debian
 	dh_installchangelogs -i $(NOPKGS)
 
 	dh_compress -i $(NOPKGS)
