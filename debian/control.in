@@ -47,7 +47,6 @@ Description: minimal subset of the Python2 language
  in the boot process for some basic tasks.
  See /usr/share/doc/@PVER@-minimal/README.Debian for a list of the modules
  contained in this package.
-Cnf-Visible-Pkgname: python
 
 Package: python-dev
 Architecture: any
@@ -233,7 +232,6 @@ Description: minimal subset of the Python2 language
  in the boot process for some basic tasks.
  See /usr/share/doc/@PVER@-minimal/README.Debian for a list of the modules
  contained in this package.
-Cnf-Visible-Pkgname: python2
 
 Package: python2-dev
 Architecture: any
